@@ -62,7 +62,6 @@ beforeEach(function() {
 
         // if the keys represent an object make sure that it matches.
         else if(object1[key] instanceof Array && object2[key] instanceof Array) {
-          console.log(arrySignaturesMatch(object1[key],object2[key]));
           if(!arrySignaturesMatch(object1[key],object2[key])){
             return false;
           }
@@ -115,13 +114,23 @@ beforeEach(function() {
       return true;
     },
 
+    toQuackLike:function(thing){
+      if(thing instanceof Array){
+        return arrySignaturesMatch(this.actual, thing);
+      } else if(typeof thing === "object"){
+        return objectSignaturesMatch(this.actual, thing);
+      } else {
+        return typeof this.actual === type;
+      }
+    },
+
     // this expects an objec to loosly match another objects signature
-    objectToLooselyMatch: function(obj){
+    objectToQuackLike: function(obj){
       return objectSignaturesMatch(this.actual, obj);
     },
 
     // this expects an array to loosly match another objects signature
-    arrayToLooselyMatch: function(arr){
+    arrayToQuackLike: function(arr){
       return arrySignaturesMatch(this.actual, arr);
     },
 
