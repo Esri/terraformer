@@ -12,7 +12,7 @@
 #
 src_files:
   - spec/javascripts/libs/arcgis-3.2.js
-  - src/terraformer.js
+  - src/terraformer-arcgis.js
 
 # stylesheets
 #
