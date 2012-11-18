@@ -20,25 +20,25 @@
   var findGeometryType = function(input){
 
     if(input.coordinates && input.type){
-      if(input.type == "Point"){
+      if(input.type === "Point"){
         return Terraformer.Types.POINT;
       }
-      if(input.type == "LineString"){
+      if(input.type === "LineString"){
         return Terraformer.Types.LINE;
       }
-      if(input.type == "Polygon"){
+      if(input.type === "Polygon"){
         return Terraformer.Types.POLYGON;
       }
-      if(input.type == "MultiPoint"){
+      if(input.type === "MultiPoint"){
         return Terraformer.Types.MULTIPOINT;
       }
-      if(input.type == "MultiLineString"){
+      if(input.type === "MultiLineString"){
         return Terraformer.Types.MULTILINE;
       }
-      if(input.type == "MultiPolygon"){
+      if(input.type === "MultiPolygon"){
         return Terraformer.Types.MULTIPOLYGON;
       }
-      if(input.type == "Feature"){
+      if(input.type === "Feature"){
         return Terraformer.Types.FEATURE;
       }
       throw "Terraformer: invalid GeoJSON object. Are you sure your data is properly formatted?";
@@ -139,12 +139,12 @@
     var result;
 
     // if this is a feautre pull out its geometry and recalculate its type
-    if(type == Terraformer.Types.FEATURE){
+    if(type === Terraformer.Types.FEATURE){
       geojson = geojson.geometry;
       type = findGeometryType(geojson);
     }
 
-    if(!((outputSpatialReference.wkid == 4326) || (outputSpatialReference.wkid == 102100))){
+    if(!((outputSpatialReference.wkid === 4326) || (outputSpatialReference.wkid === 102100))){
       throw "Terraformer: cannot use a spatial reference system other then web mercator or geographic";
     }
 
@@ -157,7 +157,7 @@
       });
       break;
     case Terraformer.Types.MULTIPOINT:
-      result = new esri.geometry.MultiPoint({
+      result = new esri.geometry.Multipoint({
         points: geojson.coordinates,
         spatialReference: inputSpatialReference
       });

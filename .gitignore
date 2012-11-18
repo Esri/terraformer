@@ -13,6 +13,9 @@ Icon
 # SASS
 .sass-cache
 
+#Node
+node_modules
+
 # Ruby
 *.gem
 *.rbc
