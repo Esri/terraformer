@@ -1,10 +1,15 @@
 (function (root, factory) {
-  // Set a browser globals
-  root.Terraformer = factory();
-
-  // AMD. Register an anonymous module.
   if (typeof define === 'function' && define.amd) {
-    define("Terraformer", [], factory);
+    // define and anonymous AMD module
+    define(factory);
+  } else {
+    // define a browser global
+    root.Terraformer = factory();
+  }
+
+  // if we are testing we want a global
+  if(typeof jasmine === 'object') {
+    root.Terraformer = factory(); 
   }
 }(this, function(){
   var Terraformer = {};
