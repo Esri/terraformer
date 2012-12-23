@@ -56,3 +56,7 @@ Just open the `SpecRunner.html` file in the `spec` folder and open it in your we
 * Geojson input/output is assumed to be in WGS84 (Also called Geographic, LatLng, or 4326)
 * ArcGIS output is limited to WGS84/Geographic/LatLng/4326 or 102100/WebMercator
 * Testing through Grunt/PhantomJS doesn't work right now
+
+### Todos
+* Remove ArcGIS Javascript as a dependancy
+* Make this work in Node.js

@@ -9,7 +9,7 @@
 
   // if we are testing we want a global
   if(typeof jasmine === 'object') {
-    root.Terraformer = factory(); 
+    root.Terraformer = factory();
   }
 }(this, function(){
   var Terraformer = {};
@@ -76,7 +76,7 @@
     var result;
 
     if(arcgis.spatialReference.wkid === 102100){
-      arcgis = esri.geometry.geographicToWebMercator(arcgis);
+      arcgis = esri.geometry.webMercatorToGeographic(arcgis);
     } else if(arcgis.spatialReference.wkid !== 4326) {
       throw "Terraformer: cannot use a spatial reference system other then web mercator or geographic";
     }
