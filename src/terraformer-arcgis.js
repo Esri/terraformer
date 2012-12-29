@@ -22,6 +22,23 @@
     }
   };
 
+  // This function flattens holes in multipolygons to one array of polygons
+  var flattenHoles = function(array){
+    var output = [];
+    for (var i = 0; i < array.length; i++) {
+      polygon = array[i];
+      if(polygon.length > 1){
+        for (var ii = 0; ii < polygon.length; ii++) {
+          output.push(polygon[ii]);
+        };
+      } else {
+        output.push(polygon[0]);
+      }
+      
+    };
+    return output;
+  };
+        
   var findGeometryType = function(input){
 
     if(input.coordinates && input.type){
@@ -109,7 +126,7 @@
     case Terraformer.Types.POLYGON:
       result = {
         type: "Polygon",
-        coordinates: arcgis.rings[0]
+        coordinates: arcgis.rings
       };
       break;
     case Terraformer.Types.MULTIPOLYGON:
@@ -181,13 +198,13 @@
       break;
     case Terraformer.Types.POLYGON:
       result = new esri.geometry.Polygon({
-        rings: [geojson.coordinates],
+        rings: geojson.coordinates,
         spatialReference: inputSpatialReference
       });
       break;
     case Terraformer.Types.MULTIPOLYGON:
       result = new esri.geometry.Polygon({
-        rings: geojson.coordinates,
+        rings: flattenHoles(geojson.coordinates),
         spatialReference: inputSpatialReference
       });
       break;
