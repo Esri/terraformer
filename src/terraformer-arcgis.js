@@ -43,41 +43,41 @@
 
     if(input.coordinates && input.type){
       if(input.type === "Point"){
-        return Terraformer.Types.POINT;
+        return "Point";
       }
       if(input.type === "LineString"){
-        return Terraformer.Types.LINE;
+        return "LineString";
       }
       if(input.type === "Polygon"){
-        return Terraformer.Types.POLYGON;
+        return "Polygon";
       }
       if(input.type === "MultiPoint"){
-        return Terraformer.Types.MULTIPOINT;
+        return "MultiPoint";
       }
       if(input.type === "MultiLineString"){
-        return Terraformer.Types.MULTILINE;
+        return "MultiLineString";
       }
       if(input.type === "MultiPolygon"){
-        return Terraformer.Types.MULTIPOLYGON;
+        return "MultiPolygon";
       }
       if(input.type === "Feature"){
-        return Terraformer.Types.FEATURE;
+        return "Feature";
       }
       throw "Terraformer: invalid GeoJSON object. Are you sure your data is properly formatted?";
     }
 
     if(input.spatialReference){
       if(input.x && input.y){
-        return Terraformer.Types.POINT;
+        return "Point";
       }
       if(input.points){
-        return Terraformer.Types.MULTIPOINT;
+        return "MultiPoint";
       }
       if(input.paths) {
-        return (input.paths.length === 1) ? Terraformer.Types.LINE : Terraformer.Types.MULTILINE;
+        return (input.paths.length === 1) ? "LineString" : "MultiLineString";
       }
       if(input.rings) {
-        return (input.rings.length === 1) ? Terraformer.Types.POLYGON : Terraformer.Types.MULTIPOLYGON;
+        return (input.rings.length === 1) ? "Polygon" : "MultiPolygon";
       }
       throw "Terraformer: invalid ArcGIS input. Are you sure your data is properly formatted?";
     }
@@ -90,7 +90,9 @@
     var type = findGeometryType(arcgis);
     var returnString = (options.stringify) ? options.stringify : Terraformer.config.stringifyGeoJSON;
     var returnFeature = (options.feature) ? options.feature : Terraformer.config.returnFeatures;
-    var result;
+    var result = {
+      type: type
+    };
 
     if(arcgis.spatialReference.wkid === 102100){
       arcgis = esri.geometry.webMercatorToGeographic(arcgis);
@@ -99,41 +101,23 @@
     }
 
     switch(type){
-    case Terraformer.Types.POINT:
-      result = {
-        type: "Point",
-        coordinates: [arcgis.x, arcgis.y]
-      };
+    case "Point":
+      result.coordinates = [arcgis.x, arcgis.y];
       break;
-    case Terraformer.Types.MULTIPOINT:
-      result = {
-        type: "MultiPoint",
-        coordinates: arcgis.points
-      };
+    case "MultiPoint":
+      result.coordinates = arcgis.points;
       break;
-    case Terraformer.Types.LINE:
-      result = {
-        type: "LineString",
-        coordinates: arcgis.paths[0]
-      };
+    case "LineString":
+      result.coordinates = arcgis.paths[0];
       break;
-    case Terraformer.Types.MULTILINE:
-      result = {
-        type: "MultiLineString",
-        coordinates: arcgis.paths
-      };
+    case "MultiLineString":
+      result.coordinates = arcgis.paths;
       break;
-    case Terraformer.Types.POLYGON:
-      result = {
-        type: "Polygon",
-        coordinates: arcgis.rings
-      };
+    case "Polygon":
+      result.coordinates = arcgis.rings;
       break;
-    case Terraformer.Types.MULTIPOLYGON:
-      result = {
-        type: "MultiPolygon",
-        coordinates: arcgis.rings
-      };
+    case "MultiPolygon":
+      result.coordinates = arcgis.rings;
       break;
     }
 
@@ -161,7 +145,7 @@
     var result;
 
     // if this is a feautre pull out its geometry and recalculate its type
-    if(type === Terraformer.Types.FEATURE){
+    if(type === "Feature"){
       geojson = geojson.geometry;
       type = findGeometryType(geojson);
     }
@@ -171,38 +155,38 @@
     }
 
     switch(type){
-    case Terraformer.Types.POINT:
+    case "Point":
       result = new esri.geometry.Point({
         x: geojson.coordinates[0],
         y: geojson.coordinates[1],
         spatialReference: inputSpatialReference
       });
       break;
-    case Terraformer.Types.MULTIPOINT:
+    case "MultiPoint":
       result = new esri.geometry.Multipoint({
         points: geojson.coordinates,
         spatialReference: inputSpatialReference
       });
       break;
-    case Terraformer.Types.LINE:
+    case "LineString":
       result = new esri.geometry.Polyline({
         paths: [geojson.coordinates],
         spatialReference: inputSpatialReference
       });
       break;
-    case Terraformer.Types.MULTILINE:
+    case "MultiLineString":
       result = new esri.geometry.Polyline({
         paths: geojson.coordinates,
         spatialReference: inputSpatialReference
       });
       break;
-    case Terraformer.Types.POLYGON:
+    case "Polygon":
       result = new esri.geometry.Polygon({
         rings: geojson.coordinates,
         spatialReference: inputSpatialReference
       });
       break;
-    case Terraformer.Types.MULTIPOLYGON:
+    case "MultiPolygon":
       result = new esri.geometry.Polygon({
         rings: flattenHoles(geojson.coordinates),
         spatialReference: inputSpatialReference
@@ -216,59 +200,6 @@
       return result;
     }
   };
-
-  /*****************************************************************************
-  EMUMS
-
-  This makes real ENUMS in your browser.
-  From: http://www.2ality.com/2011/10/enums.html
-  *****************************************************************************/
-
-  function Symbol(name) {
-    this.name = name;
-    Object.freeze(this);
-  }
-  
-  Symbol.prototype = Object.create(null);
-  Symbol.prototype.constructor = Symbol;
-  
-  Symbol.prototype.toString = function () {
-    return "|"+this.name+"|";
-  };
-
-  Object.freeze(Symbol.prototype);
-
-  Enum = function (obj) {
-    Array.prototype.forEach.call(arguments, function (name) {
-      this[name] = new Symbol(name);
-    }, this);
-    Object.freeze(this);
-  };
-
-  Enum.prototype.symbols = function() {
-    return Object.keys(this).map(
-      function(key) {
-        return this[key];
-      }, this
-    );
-  };
-  
-  Enum.prototype.contains = function(sym) {
-    if (! sym instanceof Symbol){
-       return false;
-    }
-    return this[sym.name] === sym;
-  };
-
-  Enum.prototype.find = function(sym) {
-    if(this[sym]){
-      return this[sym];
-    } else if(this[sym.name]) {
-      return this[sym.name];
-    }
-  };
-
-  Terraformer.Types = new Enum("POINT", 'LINE', 'POLYGON', 'MULTIPOINT', 'MULTILINE', 'MULTIPOLYGON', 'FEATURE');
 
   return Terraformer;
 }));
