@@ -300,5 +300,60 @@ describe("arcgis to geojson conversions", function(){
       ]
     });
   });
+});
 
+describe("converter helpers", function(){
+  it("should iterate an array of coordinates", function(){
+    input = [ [100.0, 0.0], [101.0, 1.0] ];
+
+    output = iterateCoordinates(input, function(coordinate){
+      return [coordinate[0]*2, coordinate[1]*2];
+    });
+
+    expect(output).toEqual([ [200.0, 0.0], [202.0, 2.0] ])
+  });
+
+  it("should iterate an array of nested coordinates", function(){
+    input =[ 
+      [ [100.0, 0.0], [101.0, 1.0] ],
+      [ [200.0, 0.0], [202.0, 1.0] ],
+    ];
+
+    expectedOutput = [ 
+      [ [200.0, 0.0], [202.0, 2.0] ],
+      [ [400.0, 0.0], [404.0, 2.0] ],
+    ];
+
+    output = iterateCoordinates(input, function(coordinate){
+      return [coordinate[0]*2, coordinate[1]*2];
+    });
+
+    expect(output).toEqual(expectedOutput);
+  });
+});
+
+describe("to mercator conversions", function(){
+  it("should convert a position to mercator", function(){
+    input = [-122.6764, 45.5165]
+    expectedOutput = [-13656274.380351715, 5703203.671949966];
+    output = positionToMercator(input);
+    expect(output).toEqual(expectedOutput);
+  });
+
+  it("should convert a point to mercator", function(){
+    input = { "type": "Point", "coordinates": [-122.6764, 45.5165] }
+    expectedOutput = { 
+      "type": "Point", 
+      "coordinates": [-13656274.380351715, 5703203.671949966],
+      "crs": {
+        "type": "link",
+        "properties": {
+          "href": "http://spatialreference.org/ref/sr-org/6928/ogcwkt/",
+          "type": "ogcwkt"
+        }
+      }
+    }
+    output = pointToMercator(input);
+    expect(output).toEqual(expectedOutput);
+  });
 });
