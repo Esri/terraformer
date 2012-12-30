@@ -17,17 +17,25 @@ module.exports = function(grunt) {
       dist: {
         src: ['<banner:meta.banner>', 'src/terraformer.js'],
         dest: 'dist/terraformer.min.js'
+      },
+      version: {
+        src: ['<banner:meta.banner>', 'src/terraformer.js'],
+        dest: 'versions/terraformer-<%= meta.version %>.min.js'
       }
     },
     min: {
       dist: {
         src: ['<banner:meta.banner>', 'src/terraformer.js'],
         dest: 'dist/terraformer.min.js'
+      },
+      version: {
+        src: ['<banner:meta.banner>', 'src/terraformer.js'],
+        dest: 'versions/terraformer-<%= meta.version %>.min.js'
       }
     },
     watch: {
       files: '<config:lint.files>',
-      tasks: 'lint jasmine'
+      tasks: 'lint jasmine jasmine_node'
     },
     jshint: {
       options: {
@@ -73,7 +81,8 @@ module.exports = function(grunt) {
   });
 
   // Default task.
-  grunt.registerTask('default', 'lint jasmine_node jasmine concat min');
+  grunt.registerTask('default', 'lint jasmine_node jasmine concat min concat:version min:version');
+  grunt.registerTask('version', 'lint jasmine_node jasmine concat:version min:version');
   grunt.registerTask('node', 'lint jasmine_node');
   grunt.registerTask('browser', 'lint jasmine');
 
