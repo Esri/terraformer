@@ -80,7 +80,6 @@ module.exports = function(grunt) {
     }
   });
 
-  // Default task.
   grunt.registerTask('default', 'lint jasmine_node jasmine concat min concat:version min:version');
   grunt.registerTask('version', 'lint jasmine_node jasmine concat:version min:version');
   grunt.registerTask('node', 'lint jasmine_node');
