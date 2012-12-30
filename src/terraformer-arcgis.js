@@ -12,18 +12,78 @@
     root.Terraformer = factory();
   }
 }(this, function(){
-  var Terraformer = {};
+  var Terraformer = {},
+      EarthRadius = 6378137,
+      DegreesPerRadian = 57.295779513082320,
+      RadiansPerDegree =  0.017453292519943,
+      MercatorCRS = {
+        "type": "link",
+        "properties": {
+          "href": "http://spatialreference.org/ref/sr-org/6928/ogcwkt/",
+          "type": "ogcwkt"
+        }
+      },
+      GeographicCRS = {
+        "type": "link",
+        "properties": {
+          "href": "http://spatialreference.org/ref/epsg/4326/ogcwkt/",
+          "type": "ogcwkt"
+        }
+      };
 
-  Terraformer.config = {
-    stringifyGeoJSON: false,
-    returnFeatures: false,
-    outputSpatialReference: {
-      wkid: 102100
-    }
-  };
+  function radToDeg(rad) {
+    return rad * DegreesPerRadian;
+  }
+
+  function degToRad(deg) {
+    return deg * RadiansPerDegree;
+  }
+
+  function eachGeometry(geojson, func){
+    for (var i = 0; i < geojson.geometries.length; i++) {
+      geojson.geometries[i].geometry = eachPosition(geojson.features[i].geometry, func);
+    };
+    return geojson;
+  }
+
+  function eachFeature(geojson, func){
+    for (var i = 0; i < geojson.features.length; i++) {
+      geojson.features[i].geometry = eachPosition(geojson.features[i].geometry, func);
+    };
+    return geojson;
+  }
+
+  function eachPosition(coordinates, func) {
+    for (var i = 0; i < coordinates.length; i++) {
+      // we found a number so lets convert this pair
+      if(typeof coordinates[i][0] === "number"){
+        coordinates[i] = func(coordinates[i]);
+      }
+      // we found an coordinates array it again and run THIS function against it
+      if(typeof coordinates[i] === "object"){
+        coordinates[i] = eachPosition(coordinates[i], func);
+      }
+    };
+    return coordinates;
+  }
+
+  // Convert a GeoJSON Position object to Geographic (4326)
+  function positionToGeographic(position) {
+    var x = position[0];
+    var y = position[1];
+    return [radToDeg(x / EarthRadius) - (Math.floor((radToDeg(x / EarthRadius) + 180) / 360) * 360), radToDeg((Math.PI / 2) - (2 * Math.atan(Math.exp(-1.0 * y / EarthRadius))))];
+  }
+
+  // Convert a GeoJSON Position object to Web Mercator (102100)
+  function positionToMercator(position) {
+    var lng = position[0];
+      var lat = Math.max(Math.min(position[1], 89.99999), -89.99999);
+      
+      return [degToRad(lng) * EarthRadius, EarthRadius/2.0 * Math.log( (1.0 + Math.sin(degToRad(lat))) / (1.0 - Math.sin(degToRad(lat))) )];
+  }
 
   // This function flattens holes in multipolygons to one array of polygons
-  var flattenHoles = function(array){
+  function flattenHoles(array){
     var output = [];
     for (var i = 0; i < array.length; i++) {
       polygon = array[i];
@@ -39,8 +99,7 @@
     return output;
   };
         
-  var findGeometryType = function(input){
-
+  function findGeometryType(input){
     if(input.coordinates && input.type){
       if(input.type === "Point"){
         return "Point";
@@ -84,21 +143,44 @@
     throw "Terraformer: data is not a valid ArcGIS or GeoJSON object";
   };
 
+  function convert(geojson, converter){
+    if(geojson.type === "Point") {
+      geojson.coordinates = converter(geojson.coordinates);
+    } else if(geojson.type === "Feature") {
+      geojson.geometry = convert(geojson, converter);
+    } else if(geojson.type === "FeatureCollection") {
+      geojson.features = eachFeature(geojson, converter);
+    } else if(geojson.type === "GeometryCollection") {
+      geojson.geometries = eachGeometry(geojson, converter);
+    } else {
+      geojson.coordinates = eachPosition(geojson.coordinates, converter);
+    }
+    
+    if(converter === positionToMercator){
+      geojson.crs = MercatorCRS;
+    }
+
+    if(converter === positionToGeographic){
+      geojson.crs = GeographicCRS;
+    }
+
+    return geojson;
+  }
+
+  Terraformer.toMercator = function(geojson) {
+    return convert(geojson, positionToMercator);
+  }
+
+  Terraformer.toGeographic = function(geojson) {
+    return convert(geojson, positionToGeographic);
+  }
+
   // this takes an arcgis geometry and converts it to geojson
-  Terraformer.toGeoJSON = function(arcgis, opts){
-    var options = (typeof opts === "undefined") ? {} : opts;
+  Terraformer.toGeoJSON = function(arcgis){
     var type = findGeometryType(arcgis);
-    var returnString = (options.stringify) ? options.stringify : Terraformer.config.stringifyGeoJSON;
-    var returnFeature = (options.feature) ? options.feature : Terraformer.config.returnFeatures;
     var result = {
       type: type
     };
-
-    if(arcgis.spatialReference.wkid === 102100){
-      arcgis = esri.geometry.webMercatorToGeographic(arcgis);
-    } else if(arcgis.spatialReference.wkid !== 4326) {
-      throw "Terraformer: cannot use a spatial reference system other then web mercator or geographic";
-    }
 
     switch(type){
     case "Point":
@@ -120,29 +202,20 @@
       result.coordinates = arcgis.rings;
       break;
     }
-
-    if(returnFeature) {
-      result = {
-        type: "Feature",
-        bbox: [arcgis.extent.xmin, arcgis.extent.ymin, arcgis.extent.xmax, arcgis.extent.ymax],
-        geometry: result
-      };
+    
+    if(arcgis.spatialReference.wkid === 102100) {
+      result.crs = MercatorCRS;
     }
 
-    if(returnString) {
-      return JSON.stringify(result);
-    } else {
-      return result;
-    }
+    return result;
   };
 
   // this takes a point line or polygon geojson object and converts it to the appropriate
-  Terraformer.toArcGIS = function(geojson, opts){
-    var options = (typeof opts === "undefined") ? {} : opts;
-    var inputSpatialReference = new esri.SpatialReference(4326);
-    var outputSpatialReference = (options.spatialReference) ? options.spatialReference : Terraformer.config.outputSpatialReference;
+  Terraformer.toArcGIS = function(geojson, spatialReference){
     var type = findGeometryType(geojson);
-    var result;
+    var result = {
+      spatialReference: spatialReference || { wkid: 4326 }
+    };
 
     // if this is a feautre pull out its geometry and recalculate its type
     if(type === "Feature"){
@@ -150,55 +223,29 @@
       type = findGeometryType(geojson);
     }
 
-    if(!((outputSpatialReference.wkid === 4326) || (outputSpatialReference.wkid === 102100))){
-      throw "Terraformer: cannot use a spatial reference system other then web mercator or geographic";
-    }
-
     switch(type){
     case "Point":
-      result = new esri.geometry.Point({
-        x: geojson.coordinates[0],
-        y: geojson.coordinates[1],
-        spatialReference: inputSpatialReference
-      });
+      result.x = geojson.coordinates[0];
+      result.y = geojson.coordinates[1];
       break;
     case "MultiPoint":
-      result = new esri.geometry.Multipoint({
-        points: geojson.coordinates,
-        spatialReference: inputSpatialReference
-      });
+      result.points = geojson.coordinates;
       break;
     case "LineString":
-      result = new esri.geometry.Polyline({
-        paths: [geojson.coordinates],
-        spatialReference: inputSpatialReference
-      });
+      result.paths = [geojson.coordinates];
       break;
     case "MultiLineString":
-      result = new esri.geometry.Polyline({
-        paths: geojson.coordinates,
-        spatialReference: inputSpatialReference
-      });
+      result.paths = geojson.coordinates;
       break;
     case "Polygon":
-      result = new esri.geometry.Polygon({
-        rings: geojson.coordinates,
-        spatialReference: inputSpatialReference
-      });
+      result.rings = geojson.coordinates;
       break;
     case "MultiPolygon":
-      result = new esri.geometry.Polygon({
-        rings: flattenHoles(geojson.coordinates),
-        spatialReference: inputSpatialReference
-      });
+      result.rings = flattenHoles(geojson.coordinates);
       break;
     }
 
-    if(outputSpatialReference.wkid === 102100){
-      return esri.geometry.geographicToWebMercator(result);
-    } else {
-      return result;
-    }
+    return result;
   };
 
   return Terraformer;
