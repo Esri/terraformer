@@ -1,18 +1,23 @@
 (function (root, factory) {
-  if (typeof define === 'function' && define.amd) {
-    // define and anonymous AMD module
+
+  if(typeof module === 'object' && typeof module.exports === 'object') {
+    // Node. Does not work with strict CommonJS, but
+    // only CommonJS-like enviroments that support module.exports,
+    // like Node.
+    exports = module.exports = factory();
+  }else if(typeof define === 'function' && define.amd) {
+    // AMD. Register as an anonymous module.
     define(factory);
   } else {
-    // define a browser global
     root.Terraformer = factory();
   }
 
-  // if we are testing we want a global
-  if(typeof jasmine === 'object') {
+  if(typeof jasmine === "object") {
     root.Terraformer = factory();
   }
+
 }(this, function(){
-  var Terraformer = {},
+  var exports = {},
       EarthRadius = 6378137,
       DegreesPerRadian = 57.295779513082320,
       RadiansPerDegree =  0.017453292519943,
@@ -42,14 +47,14 @@
   function eachGeometry(geojson, func){
     for (var i = 0; i < geojson.geometries.length; i++) {
       geojson.geometries[i].geometry = eachPosition(geojson.features[i].geometry, func);
-    };
+    }
     return geojson;
   }
 
   function eachFeature(geojson, func){
     for (var i = 0; i < geojson.features.length; i++) {
       geojson.features[i].geometry = eachPosition(geojson.features[i].geometry, func);
-    };
+    }
     return geojson;
   }
 
@@ -63,7 +68,7 @@
       if(typeof coordinates[i] === "object"){
         coordinates[i] = eachPosition(coordinates[i], func);
       }
-    };
+    }
     return coordinates;
   }
 
@@ -84,20 +89,20 @@
 
   // This function flattens holes in multipolygons to one array of polygons
   function flattenHoles(array){
-    var output = [];
+    var output = [], polygon;
     for (var i = 0; i < array.length; i++) {
       polygon = array[i];
       if(polygon.length > 1){
         for (var ii = 0; ii < polygon.length; ii++) {
           output.push(polygon[ii]);
-        };
+        }
       } else {
         output.push(polygon[0]);
       }
       
-    };
+    }
     return output;
-  };
+  }
         
   function findGeometryType(input){
     if(input.coordinates && input.type){
@@ -141,7 +146,7 @@
       throw "Terraformer: invalid ArcGIS input. Are you sure your data is properly formatted?";
     }
     throw "Terraformer: data is not a valid ArcGIS or GeoJSON object";
-  };
+  }
 
   function convert(geojson, converter){
     if(geojson.type === "Point") {
@@ -167,16 +172,16 @@
     return geojson;
   }
 
-  Terraformer.toMercator = function(geojson) {
+  var toMercator = function(geojson) {
     return convert(geojson, positionToMercator);
-  }
+  };
 
-  Terraformer.toGeographic = function(geojson) {
+  var toGeographic = function(geojson) {
     return convert(geojson, positionToGeographic);
-  }
+  };
 
   // this takes an arcgis geometry and converts it to geojson
-  Terraformer.toGeoJSON = function(arcgis){
+  var toGeoJSON = function(arcgis){
     var type = findGeometryType(arcgis);
     var result = {
       type: type
@@ -202,7 +207,7 @@
       result.coordinates = arcgis.rings;
       break;
     }
-    
+
     if(arcgis.spatialReference.wkid === 102100) {
       result.crs = MercatorCRS;
     }
@@ -211,7 +216,7 @@
   };
 
   // this takes a point line or polygon geojson object and converts it to the appropriate
-  Terraformer.toArcGIS = function(geojson, spatialReference){
+  var toArcGIS = function(geojson, spatialReference){
     var type = findGeometryType(geojson);
     var result = {
       spatialReference: spatialReference || { wkid: 4326 }
@@ -248,5 +253,10 @@
     return result;
   };
 
-  return Terraformer;
+  exports.toArcGIS = toArcGIS;
+  exports.toGeoJSON = toGeoJSON;
+  exports.toMercator = toMercator;
+  exports.toGeographic = toGeographic;
+
+  return exports;
 }));

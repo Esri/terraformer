@@ -4,7 +4,7 @@ module.exports = function(grunt) {
   // Project configuration.
   grunt.initConfig({
     meta: {
-      version: '2.0.0alpha1',
+      version: '0.0.1',
       banner: '/*! Terraformer JS - <%= meta.version %> - <%= grunt.template.today("yyyy-mm-dd") %>\n' +
         '*   https://github.com/geoloqi/Terraformer\n' +
         '*   Copyright (c) <%= grunt.template.today("yyyy") %> Environmental Systems Research Institute, Inc.\n' +
@@ -15,14 +15,14 @@ module.exports = function(grunt) {
     },
     concat: {
       dist: {
-        src: ['<banner:meta.banner>', 'src/terraformer-arcgis.js'],
-        dest: 'dist/terraformer-arcgis.min.js'
+        src: ['<banner:meta.banner>', 'src/terraformer.js'],
+        dest: 'dist/terraformer.min.js'
       }
     },
     min: {
       dist: {
-        src: ['<banner:meta.banner>', 'src/terraformer-arcgis.js'],
-        dest: 'dist/terraformer-arcgis.min.js'
+        src: ['<banner:meta.banner>', 'src/terraformer.js'],
+        dest: 'dist/terraformer.min.js'
       }
     },
     watch: {
@@ -44,14 +44,10 @@ module.exports = function(grunt) {
         browser: true
       },
       globals: {
-        console: true,
-        XDomainRequest: true,
-        jQuery: true,
-        dojo: true,
-        require: true,
+        module: true,
         define: true,
-        esri: true,
-        Enum: true
+        require: true,
+        exports: true
       }
     },
     uglify: {},
@@ -59,15 +55,29 @@ module.exports = function(grunt) {
       all: {
         src:['spec/SpecRunner.html'],
         errorReporting: true,
-        timeout: 20000
+        timeout: 2000
+      }
+    },
+    jasmine_node: {
+      spec: "./spec/spec/TerraformerSpec.js",
+      projectRoot: ".",
+      requirejs: false,
+      forceExit: true,
+      jUnit: {
+        report: false,
+        savePath : "./build/reports/jasmine/",
+        useDotNotation: true,
+        consolidate: true
       }
     }
   });
 
   // Default task.
-  //grunt.registerTask('default', 'lint jasmine concat min');
-  grunt.registerTask('default', 'lint concat min');
+  grunt.registerTask('default', 'lint jasmine_node jasmine concat min');
+  grunt.registerTask('node', 'lint jasmine_node');
+  grunt.registerTask('browser', 'lint jasmine');
 
   grunt.loadNpmTasks('grunt-jasmine-task');
+  grunt.loadNpmTasks('grunt-jasmine-node');
 
 };

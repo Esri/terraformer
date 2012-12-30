@@ -1,0 +1,23 @@
+{
+  "name": "Terraformer",
+  "version": "0.0.1",
+  "description": "Tools for converting ArcGIS and GeoJSON, as well as converting spatial references.",
+  "main": "src/terraformer.js",
+  "devDependencies": {
+    "grunt": "0.3.17",
+    "grunt-jasmine-node": "0.0.5",
+    "grunt-jasmine-task": "0.2.3"
+  },
+  "scripts": {
+    "test": "./node_modules/grunt/bin/grunt node"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/geoloqi/terraformer.git"
+  },
+  "author": "Patrick Arlt <parlt@esri.com> (http://patrickarlt.com)",
+  "contributors": [
+    "Patrick Arlt <parlt@esri.com> (http://patrickarlt.com)"
+  ],
+  "license": "MIT"
+}

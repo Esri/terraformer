@@ -1,3 +1,7 @@
+if(typeof module === "object" && !Terraformer){
+  var Terraformer = require("../../src/terraformer.js");
+}
+
 describe("geojson to arcgis conversions", function(){
   it("should convert a point", function() {
     var input = {
@@ -290,11 +294,11 @@ describe("to mercator conversions", function(){
   it("should convert a Point to mercator", function(){
     var input = { 
       "type": "Point",
-      "coordinates": [-122.6764, 45.5165]
+      "coordinates": [-122, 45]
     };
     var expectedOutput = { 
       "type": "Point", 
-      "coordinates": [-13656274.380351715, 5703203.671949966],
+      "coordinates": [-13580977.876779145, 5621521.486191948],
       "crs": {
         "type": "link",
         "properties": {
@@ -310,11 +314,11 @@ describe("to mercator conversions", function(){
   it("should convert a MultiPoint to mercator", function(){
     var input = { 
       "type": "MultiPoint",
-      "coordinates": [ [-122.6764, 45.5165], [100,0], [-122.343724,48.92248] ]
+      "coordinates": [ [-122, 45], [100,0], [45, 62] ]
     };
     var expectedOutput = { 
       "type": "MultiPoint", 
-      "coordinates": [ [-13656274.380351715,5703203.671949966],[11131949.079327168,0],[-13619241.057432571,6261718.09354067] ],
+      "coordinates": [ [-13580977.876779145,5621521.486191948],[11131949.079327168,0],[5009377.085697226,8859142.800565446] ],
       "crs": {
         "type": "link",
         "properties": {
@@ -330,11 +334,11 @@ describe("to mercator conversions", function(){
   it("should convert a LineString to mercator", function(){
     var input = {
       "type": "LineString",
-      "coordinates": [ [6.6796875,47.8125],[-65.390625,52.3828125],[-52.3828125,42.5390625] ]
+      "coordinates": [ [-122, 45], [100,0], [45, 62] ]
     };
     var expectedOutput = { 
       "type": "LineString", 
-      "coordinates": [ [743579.411158182,6075718.008992066],[-7279251.077653782,6869641.046935855],[-5831228.013819427,5242073.5675988225] ],
+      "coordinates": [ [-13580977.876779145,5621521.486191948],[11131949.079327168,0],[5009377.085697226,8859142.800565446] ],
       "crs": {
         "type": "link",
         "properties": {
