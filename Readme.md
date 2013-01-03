@@ -47,7 +47,36 @@ If you do not want to run tests from the command line just open up `spec/SpecRun
 
 Make sure you have all the development dependancies installed with `npm install` then run `grunt` from the command line. If the files lints and passes all the tests it will be concatinated and minified to the `dist` folder and a versioned filename to the `versions` folder.
 
-### Todos
-* Convert FeatureCollections and GeometryCollections to arrys of ArcGIS geometries
-* Convert an array of ArcGIS Geometries to a GeometryCollections
-* Make a `isMercator()` and `isGeographic()` function
+### Notes
+# Interface
+new Terraformer.Position()
+new Terraformer.Point()
+new Terraformer.MultiPoint()
+new Terraformer.LineString()
+new Terraformer.MultiLineString()
+new Terraformer.Polygon()
+new Terraformer.MultiPolygon()
+new Terraformer.Feature()
+new Terraformer.FeatureCollection()
+new Terraformer.GeometryCollection()
+new Terraformer.Circle()
+
+new Terraformer.Parsers.ArcGIS(arcgis)
+new Terraformer.Parsers.WKT(wkt)
+
+new Terraformer.RTree(json);
+
+new Terraformer.GeoStore(store);
+new Terraformer.Stores.Local(namespace);
+new Terraformer.Stores.Memory(namespace);
+new Terraformer.Stores.WebSQL(namespace);
+new Terraformer.Stores.PostGIS(namespace);
+
+// Does shape one contain shape 2?
+Terraformer.Tools.contains(shape1, shape2)
+
+// Does shape one intersect shape 2?
+Terraformer.Tools.intersects(shape1, shape2);
+
+// Creates a 32 point polygon representing a circle
+Terraformer.Tools.createCircle(radius, [x,y], steps=32);
