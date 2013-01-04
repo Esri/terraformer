@@ -50,6 +50,7 @@ If you do not want to run tests from the command line just open up `spec/SpecRun
 Make sure you have all the development dependancies installed with `npm install` then run `grunt` from the command line. If the files lints and passes all the tests it will be concatinated and minified to the `dist` folder and a versioned filename to the `versions` folder.
 
 ### Notes
+* need to parse arcgis objects to primative
 * need to be able to parse array of arcgis objects to GeometryCollection
 * need to be able to parse FeatureCollection and GeometryCollection to an array of arcgis objects
 
@@ -57,8 +58,8 @@ Make sure you have all the development dependancies installed with `npm install`
 * Convert FeatureCollections and GeometryCollections to arrys of ArcGIS geometries
 * Convert an array of ArcGIS Geometries to a GeometryCollections
 * Make a `isMercator()` and `isGeographic()` function
+* TESTS!
 
-### Interface
 # Interface
 new Terraformer.Position()
 new Terraformer.Point()
@@ -72,9 +73,9 @@ new Terraformer.FeatureCollection()
 new Terraformer.GeometryCollection()
 new Terraformer.Circle()
 
-new Terraformer.ArcGIS.parse(arcgis)
-new Terraformer.ArcGIS.convert(geojson)
-new Terraformer.Parsers.WKT(wkt)
+new Terraformer.ArcGIS.parse(arcgis);
+new Terraformer.ArcGIS.to(geojson);
+new Terraformer.WKY.parse(wkt);
 
 new Terraformer.RTree(json);
 
@@ -91,4 +92,5 @@ Terraformer.Tools.contains(shape1, shape2)
 Terraformer.Tools.intersects(shape1, shape2);
 
 // Creates a 32 point polygon representing a circle
-Terraformer.Tools.createCircle(radius, [x,y], steps=32);
+
+Terraformer.Tools.createCircle([x,y], radius, steps=64);
