@@ -55,7 +55,9 @@ module.exports = function(grunt) {
         module: true,
         define: true,
         require: true,
-        exports: true
+        exports: true,
+        Terraformer: true,
+        console: true
       }
     },
     uglify: {},
