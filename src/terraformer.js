@@ -358,7 +358,7 @@
     }
 
     this.__defineGetter__("bbox", function(){
-      return calculateBoundsFromPoint(this);
+      return calculateBounds(this);
     });
 
   }

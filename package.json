@@ -6,7 +6,8 @@
   "devDependencies": {
     "grunt": "0.3.17",
     "grunt-jasmine-node": "0.0.5",
-    "grunt-jasmine-task": "0.2.3"
+    "grunt-jasmine-task": "0.2.3",
+    "jison": "~0.3.12"
   },
   "scripts": {
     "test": "./node_modules/grunt/bin/grunt node"
@@ -20,5 +21,7 @@
     "Patrick Arlt <parlt@esri.com> (http://patrickarlt.com)",
     "Jerry Sievert <jsievert@esri.com> (http://legitimatesounding.com)"
   ],
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+  }
 }
