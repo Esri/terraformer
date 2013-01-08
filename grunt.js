@@ -14,12 +14,16 @@ module.exports = function(grunt) {
         '*   Licensed MIT */'
     },
     lint: {
-      files: ['grunt.js', 'src/**/*.js']
+      files: ['grunt.js', 'src/*.js']
     },
     concat: {
       dist: {
         src: ['<banner:meta.banner>', 'src/terraformer.js'],
         dest: 'dist/terraformer.min.js'
+      },
+      node: {
+        src: ['<banner:meta.banner>', 'src/terraformer.js'],
+        dest: 'dist/node/terraformer.js'
       },
       version: {
         src: ['<banner:meta.banner>', 'src/terraformer.js'],
@@ -88,7 +92,7 @@ module.exports = function(grunt) {
 
   grunt.registerTask('default', 'lint jasmine_node jasmine concat min concat:version min:version build-wkt');
   grunt.registerTask('version', 'lint jasmine_node jasmine concat:version min:version');
-  grunt.registerTask('node', 'lint jasmine_node build-wkt');
+  grunt.registerTask('node', 'lint build-wkt concat:node');
   grunt.registerTask('browser', 'lint jasmine');
 
   grunt.registerTask('build-wkt', 'Building WKT Parser', function() {
