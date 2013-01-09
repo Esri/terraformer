@@ -338,7 +338,7 @@
           return new GeometryCollection(geojson);
 
         default:
-          throw Error("Unknown type: " + res.type);
+          throw new Error("Unknown type: " + res.type);
       }
     }
   }
@@ -437,6 +437,19 @@
     for (var i = 0; i < this.coodinates.length; i++) {
       func.apply(this, [this.coodinates[i], i, this.coodinates]);
     }
+    return this;
+  };
+  MultiPoint.prototype.addPoint = function(point){
+    this.coordinates.push(point);
+    return this;
+  };
+  MultiPoint.prototype.insertPoint = function(point, index){
+    this.coordinates.splice(index, 0, point);
+    return this;
+  };
+  MultiPoint.prototype.removePoint = function(index){
+    this.coordinates.splice(index, 1);
+    return this;
   };
 
   /*
@@ -468,7 +481,18 @@
 
   LineString.prototype = new Primitive();
   LineString.prototype.constructor = LineString;
-
+  MultiPoint.prototype.addVertex = function(point){
+    this.coordinates.push(point);
+    return this;
+  };
+  MultiPoint.prototype.insertVertex = function(point, index){
+    this.coordinates.splice(index, 0, point);
+    return this;
+  };
+  MultiPoint.prototype.removeVertex = function(index){
+    this.coordinates.splice(index, 1);
+    return this;
+  };
   /*
   GeoJSON MultiLineString Class
       new MultiLineString();
