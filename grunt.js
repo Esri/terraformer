@@ -77,7 +77,7 @@ module.exports = function(grunt) {
       }
     },
     jasmine_node: {
-      spec: "./spec/spec/TerraformerSpec.js",
+      spec: ["./spec/spec/SpecHelpers.js", "./spec/spec/TerraformerSpec.js", "./spec/spec/ArcGISSpec.js"],
       projectRoot: ".",
       requirejs: false,
       forceExit: true,
@@ -99,7 +99,7 @@ module.exports = function(grunt) {
     var results = grunt.helper('wkt-parser');
     grunt.log.write(results);
   });
-  
+
   // Register a helper.
   grunt.registerHelper('wkt-parser', function() {
     var grammar = fs.readFileSync('./src/Parsers/WKT/partials/wkt.yy', 'utf8');

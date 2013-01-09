@@ -37,6 +37,7 @@
   }
 
   function findGeometryType(input){
+    console.log(input);
     if(input.spatialReference){
       if(input.x && input.y){
         return "Point";
@@ -50,8 +51,10 @@
       if(input.rings) {
         return (input.rings.length === 1) ? "Polygon" : "MultiPolygon";
       }
+      throw "Terraformer: invalid ArcGIS input. Are you sure your data is properly formatted?";
+    } else {
+      throw "Terraformer: invalid ArcGIS input. Are you sure your data is properly formatted?";
     }
-    throw "Terraformer: invalid ArcGIS input. Are you sure your data is properly formatted?";
   }
 
   // this takes an arcgis geometry and converts it to geojson
@@ -79,6 +82,7 @@
       geojson.coordinates = arcgis.paths;
       break;
     case "Polygon":
+      geojson.coordinates = arcgis.rings;
       break;
     case "MultiPolygon":
       geojson.coordinates = arcgis.rings;
@@ -90,18 +94,16 @@
 
   // this takes a point line or polygon geojson object and converts it to the appropriate
   function convert(geojson, spatialReference){
-    var type = findGeometryType(geojson);
     var result = {
       spatialReference: spatialReference || { wkid: 4326 }
     };
 
     // if this is a feautre pull out its geometry and recalculate its type
-    if(type === "Feature"){
+    if(geojson.type === "Feature"){
       geojson = geojson.geometry;
-      type = findGeometryType(geojson);
     }
 
-    switch(type){
+    switch(geojson.type){
     case "Point":
       result.x = geojson.coordinates[0];
       result.y = geojson.coordinates[1];

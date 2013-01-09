@@ -53,7 +53,7 @@
   */
   function mergeObjects (base, add) {
     add = add || {};
-    
+
     var keys = Object.keys(add);
     for (var i in keys) {
       base[keys[i]] = add[keys[i]];
@@ -78,7 +78,7 @@
 
       case 'MultiLineString':
         return calculateBoundsFromNestedArrays(geojson.coordinates);
-      
+
       case 'Polygon':
         return calculateBoundsFromNestedArrays(geojson.coordinates);
 
@@ -128,7 +128,7 @@
     for (var i = array.length - 1; i >= 0; i--) {
       var lonlat = array[i];
       var lon = lonlat[0];
-      
+
       var lat = lonlat[1];
       if (x1 === undefined) {
         x1 = lon;
@@ -185,7 +185,7 @@
       extents.push([extent[0],extent[1]]);
       extents.push([extent[2],extent[3]]);
     }
-    
+
     return calculateBoundsFromArray(extents);
   }
 
@@ -257,7 +257,7 @@
     var lat = Math.max(Math.min(position[1], 89.99999), -89.99999);
     return [degToRad(lng) * EarthRadius, EarthRadius/2.0 * Math.log( (1.0 + Math.sin(degToRad(lat))) / (1.0 - Math.sin(degToRad(lat))) )];
   }
-    
+
   /*
   Public: Apply a function agaist all positions in a geojson object. Used by spatial reference converters.
   */
@@ -273,7 +273,7 @@
     } else {
       geojson.coordinates = eachPosition(geojson.coordinates, converter);
     }
-    
+
     if(converter === positionToMercator){
       geojson.crs = MercatorCRS;
     }
@@ -307,7 +307,41 @@
   /*
   Internal: Base GeoJSON Primitive
   */
-  function Primitive(){}
+  function Primitive(geojson){
+    if(geojson){
+      switch (geojson.type) {
+        case 'Point':
+          return new Point(geojson);
+
+        case 'MultiPoint':
+          return new MultiPoint(geojson);
+
+        case 'LineString':
+          return new LineString(geojson);
+
+        case 'MultiLineString':
+          return new MultiLineString(geojson);
+
+        case 'Polygon':
+          return new Polygon(geojson);
+
+        case 'MultiPolygon':
+          return new MultiPolygon(geojson);
+
+        case 'Feature':
+          return new Feature(geojson);
+
+        case 'FeatureCollection':
+          return new FeatureCollection(geojson);
+
+        case 'GeometryCollection':
+          return new GeometryCollection(geojson);
+
+        default:
+          throw Error("Unknown type: " + res.type);
+      }
+    }
+  }
 
   Primitive.prototype = {
     toMercator: function(){
@@ -386,7 +420,7 @@
     } else {
       throw "Terraformer: invalid input for Terraformer.MultiPoint";
     }
-    
+
     this.__defineGetter__("bbox", function(){
       return calculateBounds(this);
     });
@@ -455,7 +489,7 @@
     } else {
       throw "Terraformer: invalid input for Terraformer.MultiLineString";
     }
-    
+
     this.__defineGetter__("bbox", function(){
       return calculateBounds(this);
     });
@@ -473,7 +507,7 @@
       func.apply(this, [this.coodinates[i], i, this.coodinates ]);
     }
   };
-  
+
   /*
   GeoJSON Polygon Class
       new Polygon();
@@ -523,7 +557,7 @@
     } else {
       throw "Terraformer: invalid input for Terraformer.MultiPolygon";
     }
-    
+
     this.__defineGetter__("bbox", function(){
       return calculateBounds(this);
     });
@@ -688,6 +722,7 @@
   Circle.prototype = new Primitive();
   Circle.prototype.constructor = Circle;
 
+  exports.Primitive = Primitive;
   exports.Point = Point;
   exports.MultiPoint = MultiPoint;
   exports.LineString = LineString;
@@ -701,7 +736,7 @@
 
   exports.toMercator = toMercator;
   exports.toGeographic = toGeographic;
-  
+
   exports.Tools = {};
   exports.Tools.positionToMercator = positionToMercator;
   exports.Tools.positionToGeographic = positionToGeographic;
@@ -710,8 +745,6 @@
   exports.Tools.toGeographic = toGeographic;
 
   exports.Tools.calculateBounds = calculateBounds;
-  
-  exports.Stores = {};
 
   return exports;
 }));
