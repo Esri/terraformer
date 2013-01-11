@@ -19,7 +19,7 @@
     "Geography"
   ],
   "author": "",
-  "license": "BSD",
+  "license": "MIT",
   "dependencies": {
   },
   "devDependencies": {

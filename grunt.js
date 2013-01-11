@@ -90,17 +90,20 @@ module.exports = function(grunt) {
     }
   });
 
-  grunt.registerTask('default', 'lint jasmine_node jasmine concat min concat:version min:version build-wkt');
+  grunt.registerTask('default', 'lint jasmine_node jasmine concat min concat:version min:version build-wkt build-rtree');
   grunt.registerTask('version', 'lint jasmine_node jasmine concat:version min:version');
-  grunt.registerTask('node', 'lint build-wkt concat:node');
+  grunt.registerTask('node', 'lint build-wkt build-rtree concat:node');
   grunt.registerTask('browser', 'lint jasmine');
 
   grunt.registerTask('build-wkt', 'Building WKT Parser', function() {
-    var results = grunt.helper('wkt-parser');
-    grunt.log.write(results);
+    grunt.log.write(grunt.helper('wkt-parser'));
   });
 
-  // Register a helper.
+  grunt.registerTask('build-rtree', 'Building RTree node module', function () {
+    grunt.log.write(grunt.helper('rtree-exports'));
+  });
+
+  // Register helpers
   grunt.registerHelper('wkt-parser', function() {
     var grammar = fs.readFileSync('./src/Parsers/WKT/partials/wkt.yy', 'utf8');
 
@@ -117,8 +120,22 @@ module.exports = function(grunt) {
     fs.writeFileSync("./src/Parsers/WKT/wkt.js", wrapper, "utf8");
     fs.writeFileSync("./dist/node/Parsers/WKT/parser.js", wrapper, "utf8");
 
-    return 'done';
+    return 'Files created.';
   });
+
+  grunt.registerHelper('rtree-exports', function() {
+    var src = fs.readFileSync('./src/rtree.js', 'utf8');
+
+    var wrapper = fs.readFileSync('./src/partials/module-rtree.js', 'utf8');
+    
+    wrapper = wrapper.replace('"SOURCE";', src);
+    
+    fs.writeFileSync("./dist/rtree.js", wrapper, "utf8");
+    fs.writeFileSync("./dist/node/RTree/index.js", wrapper, "utf8");
+
+    return 'Files created.';
+  });
+
   grunt.loadNpmTasks('grunt-jasmine-task');
   grunt.loadNpmTasks('grunt-jasmine-node');
 
