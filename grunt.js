@@ -1,3 +1,6 @@
+var fs = require('fs'),
+    jison = require('jison');
+
 /*global module:false*/
 module.exports = function(grunt) {
 
@@ -11,12 +14,16 @@ module.exports = function(grunt) {
         '*   Licensed MIT */'
     },
     lint: {
-      files: ['grunt.js', 'src/**/*.js']
+      files: ['grunt.js', 'src/*.js']
     },
     concat: {
       dist: {
         src: ['<banner:meta.banner>', 'src/terraformer.js'],
         dest: 'dist/terraformer.min.js'
+      },
+      node: {
+        src: ['<banner:meta.banner>', 'src/terraformer.js'],
+        dest: 'dist/node/terraformer.js'
       },
       version: {
         src: ['<banner:meta.banner>', 'src/terraformer.js'],
@@ -57,7 +64,8 @@ module.exports = function(grunt) {
         require: true,
         exports: true,
         Terraformer: true,
-        console: true
+        console: true,
+        parser: true
       }
     },
     uglify: {},
@@ -69,7 +77,7 @@ module.exports = function(grunt) {
       }
     },
     jasmine_node: {
-      spec: "./spec/spec/TerraformerSpec.js",
+      spec: ["./spec/spec/SpecHelpers.js", "./spec/spec/TerraformerSpec.js", "./spec/spec/ArcGISSpec.js"],
       projectRoot: ".",
       requirejs: false,
       forceExit: true,
@@ -82,11 +90,35 @@ module.exports = function(grunt) {
     }
   });
 
-  grunt.registerTask('default', 'lint jasmine_node jasmine concat min concat:version min:version');
+  grunt.registerTask('default', 'lint jasmine_node jasmine concat min concat:version min:version build-wkt');
   grunt.registerTask('version', 'lint jasmine_node jasmine concat:version min:version');
-  grunt.registerTask('node', 'lint jasmine_node');
+  grunt.registerTask('node', 'lint build-wkt concat:node');
   grunt.registerTask('browser', 'lint jasmine');
 
+  grunt.registerTask('build-wkt', 'Building WKT Parser', function() {
+    var results = grunt.helper('wkt-parser');
+    grunt.log.write(results);
+  });
+
+  // Register a helper.
+  grunt.registerHelper('wkt-parser', function() {
+    var grammar = fs.readFileSync('./src/Parsers/WKT/partials/wkt.yy', 'utf8');
+
+    var wrapper = fs.readFileSync('./src/Parsers/WKT/partials/module-source.js', 'utf8');
+    
+    var Parser = jison.Parser;
+    var parser = new Parser(grammar);
+
+    // generate source, ready to be written to disk
+    var parserSource = parser.generate({ moduleType: "js" });
+    
+    wrapper = wrapper.replace('"SOURCE";', parserSource);
+    
+    fs.writeFileSync("./src/Parsers/WKT/wkt.js", wrapper, "utf8");
+    fs.writeFileSync("./dist/node/Parsers/WKT/parser.js", wrapper, "utf8");
+
+    return 'done';
+  });
   grunt.loadNpmTasks('grunt-jasmine-task');
   grunt.loadNpmTasks('grunt-jasmine-node');
 

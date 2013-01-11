@@ -1,3 +1,8 @@
+/*! Terraformer JS - 0.0.1 - 2013-01-08
+*   https://github.com/geoloqi/Terraformer
+*   Copyright (c) 2013 Environmental Systems Research Institute, Inc.
+*   Licensed MIT */
+
 (function (root, factory) {
 
   if(typeof module === 'object' && typeof module.exports === 'object') {
@@ -66,7 +71,6 @@
   Public: Calculate an bounding box for a geojson object
   */
   function calculateBounds (geojson) {
-
     switch (geojson.type) {
       case 'Point':
         return [ geojson.coordinates[0], geojson.coordinates[1], geojson.coordinates[0], geojson.coordinates[1]];
@@ -81,7 +85,7 @@
         return calculateBoundsFromNestedArrays(geojson.coordinates);
 
       case 'Polygon':
-        return calculateBoundsFromArray(geojson.coordinates[0]);
+        return calculateBoundsFromNestedArrays(geojson.coordinates);
 
       case 'MultiPolygon':
         return calculateBoundsFromNestedArrays(geojson.coordinates);
@@ -308,41 +312,7 @@
   /*
   Internal: Base GeoJSON Primitive
   */
-  function Primitive(geojson){
-    if(geojson){
-      switch (geojson.type) {
-        case 'Point':
-          return new Point(geojson);
-
-        case 'MultiPoint':
-          return new MultiPoint(geojson);
-
-        case 'LineString':
-          return new LineString(geojson);
-
-        case 'MultiLineString':
-          return new MultiLineString(geojson);
-
-        case 'Polygon':
-          return new Polygon(geojson);
-
-        case 'MultiPolygon':
-          return new MultiPolygon(geojson);
-
-        case 'Feature':
-          return new Feature(geojson);
-
-        case 'FeatureCollection':
-          return new FeatureCollection(geojson);
-
-        case 'GeometryCollection':
-          return new GeometryCollection(geojson);
-
-        default:
-          throw new Error("Unknown type: " + res.type);
-      }
-    }
-  }
+  function Primitive(){}
 
   Primitive.prototype = {
     toMercator: function(){
@@ -379,16 +349,29 @@
   function Point(input){
     var args = Array.prototype.slice.call(arguments);
 
+    console.log(input && input.type === "Point" && input.coordinates);
+    console.log(args.length && Array.isArray(args[0]));
+    console.log(args.length && Array.isArray(input));
+    console.log(!args.length);
+
+    // geojson
     if(input && input.type === "Point" && input.coordinates){
       extend(this, input);
+
+    // as position
     } else if(input && Array.isArray(input)) {
       this.type = "Point";
       this.coordinates = input;
+
+    // as x,y,z,wtf
     } else if(args.length >= 2) {
-      this.type = "Point";
       this.coordinates = args;
+
+    // no args
     } else if(!args.length) {
       this.type = "Point";
+
+    // throw an error
     } else {
       throw "Terraformer: invalid input for Terraformer.Point";
     }
@@ -436,26 +419,9 @@
   MultiPoint.prototype = new Primitive();
   MultiPoint.prototype.constructor = MultiPoint;
   MultiPoint.prototype.forEach = function(func){
-    for (var i = 0; i < this.length; i++) {
-      func.apply(this, [this.coordinates[i], i, this.coordinates]);
+    for (var i = 0; i < this.coodinates.length; i++) {
+      func.apply(this, [this.coodinates[i], i, this.coodinates]);
     }
-    return this;
-  };
-  MultiPoint.prototype.addPoint = function(point){
-    this.coordinates.push(point);
-    return this;
-  };
-  MultiPoint.prototype.insertPoint = function(point, index){
-    this.coordinates.splice(index, 0, point);
-    return this;
-  };
-  MultiPoint.prototype.removePoint = function(remove){
-    if(typeof remove === "number"){
-      this.coordinates.splice(remove, 1);
-    } else {
-      this.coordinates.splice(this.coordinates.indexOf(remove), 1);
-    }
-    return this;
   };
 
   /*
@@ -487,18 +453,7 @@
 
   LineString.prototype = new Primitive();
   LineString.prototype.constructor = LineString;
-  LineString.prototype.addVertex = function(point){
-    this.coordinates.push(point);
-    return this;
-  };
-  LineString.prototype.insertVertex = function(point, index){
-    this.coordinates.splice(index, 0, point);
-    return this;
-  };
-  LineString.prototype.removeVertex = function(remove){
-    this.coordinates.splice(remove, 1);
-    return this;
-  };
+
   /*
   GeoJSON MultiLineString Class
       new MultiLineString();
@@ -533,8 +488,8 @@
   MultiLineString.prototype = new Primitive();
   MultiLineString.prototype.constructor = MultiLineString;
   MultiLineString.prototype.forEach = function(func){
-    for (var i = 0; i < this.coordinates.length; i++) {
-      func.apply(this, [this.coordinates[i], i, this.coordinates ]);
+    for (var i = 0; i < this.coodinates.length; i++) {
+      func.apply(this, [this.coodinates[i], i, this.coodinates ]);
     }
   };
 
@@ -566,18 +521,6 @@
 
   Polygon.prototype = new Primitive();
   Polygon.prototype.constructor = Polygon;
-  Polygon.prototype.addVertex = function(point){
-    this.coordinates[0].push(point);
-    return this;
-  };
-  Polygon.prototype.insertVertex = function(point, index){
-    this.coordinates[0].splice(index, 0, point);
-    return this;
-  };
-  Polygon.prototype.removeVertex = function(remove){
-    this.coordinates[0].splice(remove, 1);
-    return this;
-  };
 
   /*
   GeoJSON MultiPolygon Class
@@ -612,8 +555,8 @@
   MultiPolygon.prototype = new Primitive();
   MultiPolygon.prototype.constructor = MultiPolygon;
   MultiPolygon.prototype.forEach = function(func){
-    for (var i = 0; i < this.coordinates.length; i++) {
-      func.apply(this, [this.coordinates[i], i, this.coordinates ]);
+    for (var i = 0; i < this.coodinates.length; i++) {
+      func.apply(this, [this.coodinates[i], i, this.coodinates ]);
     }
   };
 
@@ -691,16 +634,6 @@
       func.apply(this, [this.features[i], i, this.features]);
     }
   };
-  FeatureCollection.prototype.get = function(id){
-    var found;
-    this.forEach(function(feature){
-      console.log(feature.id, id);
-      if(feature.id === id){
-        found = feature;
-      }
-    });
-    return found;
-  };
 
   /*
   GeoJSON GeometryCollection Class
@@ -717,9 +650,6 @@
     } else if(Array.isArray(input)) {
       this.type = "GeometryCollection";
       this.geometries = input;
-    } else if(input.coordinates && input.type){
-      this.type = "GeometryCollection";
-      this.geometries = [input];
     } else if(!input) {
       this.type = "GeometryCollection";
     } else {
@@ -744,35 +674,27 @@
     }
   };
 
-  function createCircle(center, rad, interpolate){
-    var mercatorPosition = positionToMercator(center);
-    var steps = interpolate || 64;
-    var radius = rad || 250;
+  function Circle (position, radius, steps) {
+    steps = steps || 64;
+    var mercatorPosition = positionToMercator(position);
     var polygon = {
       type: "Polygon",
       coordinates: [[]]
     };
+
     for(var i=1; i<=steps; i++) {
+      // convert angle to raidans
       var radians = i * (360/steps) * Math.PI / 180;
+      // add point to the circle
       polygon.coordinates[0].push([mercatorPosition[0] + radius * Math.cos(radians), mercatorPosition[1] + radius * Math.sin(radians)]);
-    }
-    return toGeographic(polygon);
-  }
-
-  function Circle (center, rad, interpolate) {
-    var steps = interpolate || 64;
-    var radius = rad || 250;
-
-    if(!center || center.length < 2 || !radius || !steps) {
-      throw new Error("Terraformer: missing parameter for Terraformer.Circle");
     }
 
     extend(this, new Feature({
       type: "Feature",
-      geometry: createCircle(center, radius, steps),
+      geometry: toGeographic(polygon),
       properties: {
         radius: radius,
-        center: center,
+        position: position,
         steps: steps
       }
     }));
@@ -780,43 +702,11 @@
     this.__defineGetter__("bbox", function(){
       return calculateBounds(this);
     });
-
-    this.__defineGetter__("radius", function(){
-      return this.properties.radius;
-    });
-
-    this.__defineSetter__("radius", function(val){
-      this.properties.radius = val;
-      this.recalculate();
-    });
-
-    this.__defineGetter__("steps", function(){
-      return this.properties.steps;
-    });
-
-    this.__defineSetter__("steps", function(val){
-      this.properties.steps = val;
-      this.recalculate();
-    });
-
-    this.__defineGetter__("center", function(){
-      return this.properties.center;
-    });
-
-    this.__defineSetter__("center", function(val){
-      this.properties.center = val;
-      this.recalculate();
-    });
   }
 
   Circle.prototype = new Primitive();
   Circle.prototype.constructor = Circle;
-  Circle.prototype.recalculate = function(){
-    this.geometry = createCircle(this.center, this.radius, this.steps);
-    return this;
-  };
 
-  exports.Primitive = Primitive;
   exports.Point = Point;
   exports.MultiPoint = MultiPoint;
   exports.LineString = LineString;
@@ -837,12 +727,10 @@
   exports.Tools.applyConverter = applyConverter;
   exports.Tools.toMercator = toMercator;
   exports.Tools.toGeographic = toGeographic;
-  exports.Tools.createCircle = createCircle;
 
   exports.Tools.calculateBounds = calculateBounds;
 
-  exports.MercatorCRS = MercatorCRS;
-  exports.GeographicCRS = GeographicCRS;
+  exports.Stores = {};
 
   return exports;
 }));

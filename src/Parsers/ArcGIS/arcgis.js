@@ -31,11 +31,11 @@
       } else {
         output.push(polygon[0]);
       }
-      
+
     }
     return output;
   }
-        
+
   function findGeometryType(input){
     if(input.spatialReference){
       if(input.x && input.y){
@@ -51,8 +51,9 @@
         return (input.rings.length === 1) ? "Polygon" : "MultiPolygon";
       }
       throw "Terraformer: invalid ArcGIS input. Are you sure your data is properly formatted?";
+    } else {
+      throw "Terraformer: invalid ArcGIS input. Are you sure your data is properly formatted?";
     }
-    throw "Terraformer: data is not a valid ArcGIS or GeoJSON object";
   }
 
   // this takes an arcgis geometry and converts it to geojson
@@ -69,39 +70,39 @@
     switch(type){
     case "Point":
       geojson.coordinates = [arcgis.x, arcgis.y];
-      return Terraformer.Point(geojson);
+      break;
     case "MultiPoint":
       geojson.coordinates = arcgis.points;
-      return Terraformer.MultiPoint(geojson);
+      break;
     case "LineString":
       geojson.coordinates = arcgis.paths[0];
-      return Terraformer.LineString(geojson);
+      break;
     case "MultiLineString":
       geojson.coordinates = arcgis.paths;
-      return Terraformer.MultiLineString(geojson);
+      break;
     case "Polygon":
       geojson.coordinates = arcgis.rings;
-      return Terraformer.Polygon(geojson);
+      break;
     case "MultiPolygon":
       geojson.coordinates = arcgis.rings;
-      return Terraformer.MultiPolygon(geojson);
+      break;
     }
+
+    return new Terraformer.Primitive(geojson);
   }
 
   // this takes a point line or polygon geojson object and converts it to the appropriate
   function convert(geojson, spatialReference){
-    var type = findGeometryType(geojson);
     var result = {
       spatialReference: spatialReference || { wkid: 4326 }
     };
 
     // if this is a feautre pull out its geometry and recalculate its type
-    if(type === "Feature"){
+    if(geojson.type === "Feature"){
       geojson = geojson.geometry;
-      type = findGeometryType(geojson);
     }
 
-    switch(type){
+    switch(geojson.type){
     case "Point":
       result.x = geojson.coordinates[0];
       result.y = geojson.coordinates[1];
