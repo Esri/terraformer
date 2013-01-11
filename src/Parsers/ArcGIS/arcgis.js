@@ -37,7 +37,6 @@
   }
 
   function findGeometryType(input){
-    console.log(input);
     if(input.spatialReference){
       if(input.x && input.y){
         return "Point";

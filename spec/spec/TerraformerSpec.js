@@ -5,312 +5,396 @@ if(typeof module === "object"){
 describe("Primitives", function(){
 
   it("should create a Point from GeoJSON", function(){
-    expect(true).toBeFalsy();
+    var point = new Terraformer.Primitive(GeoJSON.points[1]);
+
+    expect(point).toBeInstanceOfClass(Terraformer.Point);
+    expect(point.coordinates).toEqual(GeoJSON.points[1].coordinates);
   });
 
   it("should create a MultiPoint from GeoJSON", function(){
-    expect(true).toBeFalsy();
+    var multiPoint = new Terraformer.Primitive(GeoJSON.multiPoints[1]);
+
+    expect(multiPoint).toBeInstanceOfClass(Terraformer.MultiPoint);
+    expect(multiPoint.coordinates).toEqual(GeoJSON.multiPoints[1].coordinates);
   });
 
   it("should create a LineString from GeoJSON", function(){
-    expect(true).toBeFalsy();
+    var lineString = new Terraformer.Primitive(GeoJSON.lineStrings[3]);
+
+    expect(lineString).toBeInstanceOfClass(Terraformer.LineString);
+    expect(lineString.coordinates).toEqual(GeoJSON.lineStrings[3].coordinates);
   });
 
   it("should create a MultiLineString from GeoJSON", function(){
-    expect(true).toBeFalsy();
+    var multiLineString = new Terraformer.Primitive(GeoJSON.multiLineStrings[1]);
+
+    expect(multiLineString).toBeInstanceOfClass(Terraformer.MultiLineString);
+    expect(multiLineString.coordinates).toEqual(GeoJSON.multiLineStrings[1].coordinates);
   });
 
   it("should create a Polygon from GeoJSON", function(){
-    expect(true).toBeFalsy();
+    var polygon = new Terraformer.Primitive(GeoJSON.polygons[2]);
+    expect(polygon).toBeInstanceOfClass(Terraformer.Polygon);
+    expect(polygon.coordinates).toEqual(GeoJSON.polygons[2].coordinates);
   });
 
   it("should create a MultiPolygon from GeoJSON", function(){
-    expect(true).toBeFalsy();
+    multiPolygon = new Terraformer.Primitive(GeoJSON.multiPolygons[1]);
+    expect(multiPolygon).toBeInstanceOfClass(Terraformer.MultiPolygon);
+    expect(multiPolygon.coordinates).toEqual(GeoJSON.multiPolygons[1].coordinates);
   });
 
   it("should create a Feature from GeoJSON", function(){
-    expect(true).toBeFalsy();
+    var feature = new Terraformer.Primitive(GeoJSON.features[0]);
+
+    expect(feature).toBeInstanceOfClass(Terraformer.Feature);
+    expect(feature.geometry.coordinates).toEqual(GeoJSON.features[0].geometry.coordinates);
+    expect(feature.geometry.type).toEqual("Polygon");
   });
 
   it("should create a FeatureCollection from GeoJSON", function(){
-    expect(true).toBeFalsy();
+    var featureCollection = new Terraformer.Primitive(GeoJSON.featureCollections[0]);
+
+    expect(featureCollection).toBeInstanceOfClass(Terraformer.FeatureCollection);
+    expect(featureCollection.features[0].geometry.coordinates).toEqual(featureCollection.features[0].geometry.coordinates);
+    expect(featureCollection.features[0].geometry.type).toEqual("Polygon");
   });
 
   it("should create a GeometryCollection from GeoJSON", function(){
-    expect(true).toBeFalsy();
+    var geometryCollection = new Terraformer.Primitive(GeoJSON.geometryCollections[0]);
+
+    expect(geometryCollection).toBeInstanceOfClass(Terraformer.GeometryCollection);
+    expect(geometryCollection.geometries.length).toEqual(2);
   });
 
   describe("Helper Methods", function(){
     it("should convert a Primitive to Web Mercator", function(){
-      expect(true).toBeFalsy();
+      var point = new Terraformer.Primitive(GeoJSON.points[2]);
+
+      var mercator = point.toMercator();
+
+      expect(mercator.coordinates).toEqual([11131949.079327168, 0]);
+      expect(mercator.crs).toEqual(Terraformer.MercatorCRS);
     });
 
     it("should convert a Primitive to Geographic coordinates", function(){
-      expect(true).toBeFalsy();
+      var point = new Terraformer.Primitive({
+        "type": "Point",
+        "coordinates": [11354588.06,222684.20]
+      });
+
+      var mercator = point.toGeographic();
+
+      expect(mercator.coordinates).toEqual([101.99999999179026, 1.9999999236399357]);
     });
 
     it("should convert a Primitive to JSON", function(){
-      expect(true).toBeFalsy();
+      var geometryCollection = new Terraformer.Primitive(GeoJSON.geometryCollections[0]);
+
+      var json = geometryCollection.toJSON();
+      expect(json.bbox).toBeTruthy();
+      expect(json.type).toBeTruthy();
+      expect(json.geometries).toBeTruthy();
+      expect(json.length).toBeFalsy();
     });
 
     it("should convert a Primitive to stringified JSON", function(){
-      expect(true).toBeFalsy();
+      var point = new Terraformer.Primitive(GeoJSON.points[0]);
+
+      var json = point.toJson();
+
+      expect(json).toEqual(JSON.stringify(point));
     });
   });
 
   describe("Point", function(){
     it("should create a Point from a 'x' and 'y'", function(){
-      expect(true).toBeFalsy();
+      var point = new Terraformer.Point(45, 60);
+      expect(point.coordinates).toEqual([45,60]);
     });
 
     it("should create a Point from a GeoJSON Position", function(){
-      expect(true).toBeFalsy();
+      var point = new Terraformer.Point([45, 60]);
+      expect(point.coordinates).toEqual([45,60]);
     });
 
     it("should throw an error when called invalid data", function(){
-      expect(true).toBeFalsy();
+      expect(function(){
+        new Terraformer.Point(GeoJSON.multiPoints[1]);
+      }).toThrow("Terraformer: invalid input for Terraformer.Point");
     });
   });
 
   describe("MultiPoint", function(){
+    beforeEach(function(){
+      multiPoint = new Terraformer.MultiPoint([ [100,0], [-45, 122] ]);
+    });
+
     it("should create a MultiPoint from an array of GeoJSON Positions", function(){
-      expect(true).toBeFalsy();
+      expect(multiPoint.coordinates).toEqual([ [100,0], [-45, 122] ]);
+      expect(multiPoint.type).toEqual("MultiPoint");
     });
 
     it("should throw an error when called invalid data", function(){
-      expect(true).toBeFalsy();
+      expect(function(){
+        new Terraformer.MultiPoint(GeoJSON.points[1]);
+      }).toThrow("Terraformer: invalid input for Terraformer.MultiPoint");
     });
 
     it("should have a getter for length", function(){
-      expect(true).toBeFalsy();
+      expect(multiPoint.length).toEqual(2);
     });
 
     it("should be able to add a point", function(){
-      expect(true).toBeFalsy();
+      multiPoint.addPoint([80,-60]);
+      expect(multiPoint.coordinates).toEqual([ [100,0],[-45, 122],[80,-60] ]);
     });
 
     it("should be able to insert a point", function(){
-      expect(true).toBeFalsy();
+      multiPoint.insertPoint([80,-60], 1);
+      expect(multiPoint.coordinates).toEqual([ [100,0],[80,-60],[-45, 122] ]);
     });
 
     it("should be able to remove a point by index", function(){
-      expect(true).toBeFalsy();
+      multiPoint.removePoint(1);
+      expect(multiPoint.coordinates).toEqual([ [100, 0] ]);
     });
 
     it("should be able to remove a point by position", function(){
-      expect(true).toBeFalsy();
+      multiPoint.removePoint([-45, 122]);
+      expect(multiPoint.coordinates).toEqual([ [100,0] ]);
     });
 
     it("should be able to itterate over all points", function(){
-      expect(true).toBeFalsy();
+      var spy = jasmine.createSpy();
+      multiPoint.forEach(spy);
+      expect(spy.callCount).toEqual(multiPoint.length);
+      expect(spy).toHaveBeenCalledWith([100,0], 0, multiPoint.coordinates);
+      expect(spy).toHaveBeenCalledWith([-45,122], 1, multiPoint.coordinates);
     });
   });
 
   describe("LineString", function(){
+    beforeEach(function(){
+      lineString = new Terraformer.LineString([ [100,0], [-45, 122] ]);
+    });
+
     it("should create a Line from an array of GeoJSON Positions", function(){
-      expect(true).toBeFalsy();
+      expect(lineString.type).toEqual("LineString");
+      expect(lineString.coordinates).toEqual([ [100,0], [-45, 122] ]);
     });
 
     it("should throw an error when called invalid data", function(){
-      expect(true).toBeFalsy();
+      expect(function(){
+        new Terraformer.LineString(GeoJSON.features[1]).toThrow();
+      }).toThrow("Terraformer: invalid input for Terraformer.LineString");
     });
 
     it("should be able to add a vertex", function(){
-      expect(true).toBeFalsy();
+      lineString.addVertex([80,-60]);
+      expect(lineString.coordinates).toEqual([ [100,0],[-45, 122],[80,-60] ]);
     });
 
     it("should be able to insert a vertex", function(){
-      expect(true).toBeFalsy();
+      lineString.insertVertex([80,-60], 1);
+      expect(lineString.coordinates).toEqual([ [100,0],[80,-60],[-45, 122] ]);
     });
 
     it("should be able to remove a vertex by index", function(){
-      expect(true).toBeFalsy();
-    });
-
-    it("should be able to remove a vertex by position", function(){
-      expect(true).toBeFalsy();
+      lineString.removeVertex(1);
+      expect(lineString.coordinates).toEqual([ [100, 0] ]);
     });
   });
 
   describe("MultiLineString", function(){
+    beforeEach(function(){
+      multiLineString = new Terraformer.MultiLineString([
+        [ [-105, 40], [-110, 45], [-115, 55] ],
+        [ [-100, 40], [-105, 45], [-110, 55] ]
+      ]);
+    });
+
     it("should create a MultiLineString from an array of GeoJSON LineStrings", function(){
-      expect(true).toBeFalsy();
+      expect(multiLineString.type).toEqual("MultiLineString");
+      expect(multiLineString.coordinates).toEqual([
+        [ [-105, 40], [-110, 45], [-115, 55] ],
+        [ [-100, 40], [-105, 45], [-110, 55] ]
+      ]);
     });
 
     it("should throw an error when called invalid data", function(){
-      expect(true).toBeFalsy();
+      expect(function(){
+        new Terraformer.MultiLineString(GeoJSON.features[1]).toThrow();
+      }).toThrow("Terraformer: invalid input for Terraformer.MultiLineString");
     });
 
     it("should have a getter for length", function(){
-      expect(true).toBeFalsy();
-    });
-
-    it("should be able to add a LineString", function(){
-      expect(true).toBeFalsy();
-    });
-
-    it("should be able to insert a LineString", function(){
-      expect(true).toBeFalsy();
-    });
-
-    it("should be able to remove a LineString by index", function(){
-      expect(true).toBeFalsy();
-    });
-
-    it("should be able to remove a LineString by position", function(){
-      expect(true).toBeFalsy();
+      expect(multiLineString.length).toEqual(2);
     });
   });
 
   describe("Polygon", function(){
+    beforeEach(function(){
+      polygon = new Terraformer.Polygon([ [ [100.0, 0.0],[101.0, 0.0],[101.0, 1.0],[100.0, 1.0],[100.0, 0.0] ] ]);
+    });
+
     it("should create a Polygon from an array of GeoJSON Positions", function(){
-      expect(true).toBeFalsy();
+      expect(polygon.type).toEqual("Polygon");
+      expect(polygon.coordinates).toEqual([ [ [100.0, 0.0],[101.0, 0.0],[101.0, 1.0],[100.0, 1.0],[100.0, 0.0] ] ]);
     });
 
     it("should throw an error when called invalid data", function(){
-      expect(true).toBeFalsy();
+      expect(function(){
+        new Terraformer.Polygon(GeoJSON.features[1]);
+      }).toThrow("Terraformer: invalid input for Terraformer.Polygon");
     });
 
     it("should be able to add a vertex", function(){
-      expect(true).toBeFalsy();
+      polygon.addVertex([45, 100]);
+      expect(polygon.coordinates).toEqual([ [ [100.0, 0.0],[101.0, 0.0],[101.0, 1.0],[100.0, 1.0],[100.0, 0.0],[45, 100] ] ]);
     });
 
     it("should be able to insert a vertex", function(){
-      expect(true).toBeFalsy();
+      polygon.insertVertex([45, 100], 1);
+      expect(polygon.coordinates).toEqual([ [ [100.0, 0.0],[45, 100],[101.0, 0.0],[101.0, 1.0],[100.0, 1.0],[100.0, 0.0] ] ]);
     });
 
     it("should be able to remove a vertex by index", function(){
-      expect(true).toBeFalsy();
-    });
-
-    it("should be able to remove a vertex by position", function(){
-      expect(true).toBeFalsy();
+      polygon.removeVertex(0);
+      expect(polygon.coordinates).toEqual([ [ [101.0, 0.0],[101.0, 1.0],[100.0, 1.0],[100.0, 0.0] ] ]);
     });
   });
 
   describe("MultiPolygon", function(){
+    beforeEach(function(){
+      multiPolygon = new Terraformer.MultiPolygon(GeoJSON.multiPolygons[1].coordinates);
+    });
+
     it("should create a MultiPolygon from an array of GeoJSON Polygons", function(){
-      expect(true).toBeFalsy();
+      expect(multiPolygon.type).toEqual("MultiPolygon");
+      expect(multiPolygon.coordinates).toEqual(GeoJSON.multiPolygons[1].coordinates);
     });
 
     it("should throw an error when called invalid data", function(){
-      expect(true).toBeFalsy();
+      expect(function(){
+        new Terraformer.MultiPolygon(GeoJSON.multiPoints[0]);
+      }).toThrow("Terraformer: invalid input for Terraformer.MultiPolygon");
     });
 
     it("should have a getter for length", function(){
-      expect(true).toBeFalsy();
-    });
-
-    it("should be able to add a Polygon", function(){
-      expect(true).toBeFalsy();
-    });
-
-    it("should be able to insert a Polygon", function(){
-      expect(true).toBeFalsy();
-    });
-
-    it("should be able to remove a Polygon by index", function(){
-      expect(true).toBeFalsy();
-    });
-
-    it("should be able to remove a Polygon by position", function(){
-      expect(true).toBeFalsy();
+      expect(multiPolygon.length).toEqual(2);
     });
   });
 
   describe("Circle", function(){
+    beforeEach(function(){
+      circle = new Terraformer.Circle([-122, 45], 1000, 128);
+    });
+
     it("should create a Circle Feature from a GeoJSON Position and a radius", function(){
-      expect(true).toBeFalsy();
+      expect(circle.type).toEqual("Feature");
+      expect(circle.geometry.type).toEqual("Polygon");
+      expect(circle.geometry.coordinates[0].length).toEqual(128);
     });
 
     it("should throw an error when called invalid data", function(){
-      expect(true).toBeFalsy();
+      expect(function(){
+        new Terraformer.Circle();
+      }).toThrow("Terraformer: missing parameter for Terraformer.Circle");
     });
 
     it("should have a getter for steps", function(){
-      expect(true).toBeFalsy();
+      expect(circle.steps).toEqual(128);
     });
 
     it("should have a setter for steps", function(){
-      expect(true).toBeFalsy();
+      circle.steps = 64;
+      expect(circle.steps).toEqual(64);
     });
 
     it("should have a getter for radius", function(){
-      expect(true).toBeFalsy();
+      expect(circle.radius).toEqual(1000);
     });
 
     it("should have a setter for radius", function(){
-      expect(true).toBeFalsy();
+      circle.radius = 500;
+      expect(circle.radius).toEqual(500);
     });
 
-    it("should have a getter for position", function(){
-      expect(true).toBeFalsy();
+    it("should have a getter for center", function(){
+      expect(circle.center).toEqual([-122,45]);
     });
 
-    it("should have a setter for position", function(){
-      expect(true).toBeFalsy();
+    it("should have a setter for center", function(){
+      circle.center = [80,50];
+      expect(circle.center).toEqual([80,50]);
     });
   });
 
   describe("Feature", function(){
+    beforeEach(function(){
+      feature = new Terraformer.Feature(GeoJSON.polygons[2]);
+    });
+
     it("should create a Feature from a GeoJSON Geometry", function(){
-      expect(true).toBeFalsy();
+      expect(feature.type).toEqual("Feature");
+      expect(feature.geometry.type).toEqual("Polygon");
+      expect(feature.geometry.coordinates).toEqual(GeoJSON.polygons[2].coordinates);
     });
 
     it("should throw an error when called invalid data", function(){
-      expect(true).toBeFalsy();
+      expect(function(){
+        new Terraformer.Feature({
+          type: "Polygon"
+        }).toThrow("Terraformer: invalid input for Terraformer.Feature");
+      });
     });
-
-    it("should get a property", function(){
-      expect(true).toBeFalsy();
-    });
-
-    it("should set a property", function(){
-      expect(true).toBeFalsy();
-    });
-
   });
 
   describe("FeatureCollection", function(){
-    it("should create a FeatureCollection from an array of GeoJSON Geatures", function(){
-      expect(true).toBeFalsy();
+    beforeEach(function(){
+      featureCollection = new Terraformer.FeatureCollection([
+        GeoJSON.features[0], GeoJSON.features[1]
+      ]);
+    });
+
+    it("should create a FeatureCollection from an array of GeoJSON Features", function(){
+      expect(featureCollection.features.length).toEqual(2);
+      expect(featureCollection.features[0]).toEqual(GeoJSON.features[0]);
+      expect(featureCollection.features[1]).toEqual(GeoJSON.features[1]);
     });
 
     it("should throw an error when called invalid data", function(){
-      expect(true).toBeFalsy();
-    });
-
-    it("should get a feature by index", function(){
-      expect(true).toBeFalsy();
-    });
-
-    it("should get features by properties", function(){
-      expect(true).toBeFalsy();
-    });
-
-    it("should get features by id(s)", function(){
-      expect(true).toBeFalsy();
+      expect(function(){
+        new Terraformer.FeatureCollection({
+          "type": "Polygon"
+        }).toThrow("Terraformer: invalid input for Terraformer.FeatureCollection");
+      });
     });
   });
 
   describe("GeometryCollection", function(){
+    beforeEach(function() {
+      geometryCollection = new Terraformer.GeometryCollection([GeoJSON.polygons[0], GeoJSON.polygons[1]]);
+    });
+
     it("should create a GeometryCollection from an array of GeoJSON Geometries", function(){
-      expect(true).toBeFalsy();
+      expect(geometryCollection.geometries.length).toEqual(2);
+      expect(geometryCollection.geometries[0]).toEqual(GeoJSON.polygons[0]);
+      expect(geometryCollection.geometries[1]).toEqual(GeoJSON.polygons[1]);
     });
 
     it("should throw an error when called invalid data", function(){
-      expect(true).toBeFalsy();
-    });
-
-    it("should return a geometry by index", function(){
-      expect(true).toBeFalsy();
+      expect(function(){
+        new Terraformer.GeometryCollection({
+          "type": "Polygon"
+        }).toThrow("Terraformer: invalid input for Terraformer.GeometryCollection");
+      });
     });
   });
 });
 
-
 describe("Spatial Reference Converters", function(){
-
   it("should convert a GeoJSON Point to Web Mercator", function(){
     var input = {
       "type": "Point",
@@ -557,9 +641,4 @@ describe("Spatial Reference Converters", function(){
     var output = Terraformer.toGeographic(input);
     expect(output).toEqual(expectedOutput);
   });
-
-});
-
-describe("Bounding Box calculations", function(){
-
 });
