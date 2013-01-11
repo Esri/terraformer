@@ -108,8 +108,11 @@ describe("Primitives", function(){
   });
 
   describe("Point", function(){
+    beforeEach(function(){
+      point = new Terraformer.Point(45, 60);
+    });
+
     it("should create a Point from a 'x' and 'y'", function(){
-      var point = new Terraformer.Point(45, 60);
       expect(point.coordinates).toEqual([45,60]);
     });
 
@@ -122,6 +125,10 @@ describe("Primitives", function(){
       expect(function(){
         new Terraformer.Point(GeoJSON.multiPoints[1]);
       }).toThrow("Terraformer: invalid input for Terraformer.Point");
+    });
+
+    it("should calculate bounds", function(){
+      expect(point.bbox).toEqual([45, 60, 45, 60]);
     });
   });
 
@@ -172,6 +179,10 @@ describe("Primitives", function(){
       expect(spy).toHaveBeenCalledWith([100,0], 0, multiPoint.coordinates);
       expect(spy).toHaveBeenCalledWith([-45,122], 1, multiPoint.coordinates);
     });
+
+    it("should calculate bounds", function(){
+      expect(multiPoint.bbox).toEqual([-45, 0, 100, 122]);
+    });
   });
 
   describe("LineString", function(){
@@ -204,6 +215,10 @@ describe("Primitives", function(){
       lineString.removeVertex(1);
       expect(lineString.coordinates).toEqual([ [100, 0] ]);
     });
+
+    it("should calculate bounds", function(){
+      expect(lineString.bbox).toEqual([-45, 0, 100, 122]);
+    });
   });
 
   describe("MultiLineString", function(){
@@ -230,6 +245,10 @@ describe("Primitives", function(){
 
     it("should have a getter for length", function(){
       expect(multiLineString.length).toEqual(2);
+    });
+
+    it("should calculate bounds", function(){
+      expect(multiLineString.bbox).toEqual([-115, 40, -100, 55]);
     });
   });
 
@@ -263,16 +282,20 @@ describe("Primitives", function(){
       polygon.removeVertex(0);
       expect(polygon.coordinates).toEqual([ [ [101.0, 0.0],[101.0, 1.0],[100.0, 1.0],[100.0, 0.0] ] ]);
     });
+
+    it("should calculate bounds", function(){
+      expect(polygon.bbox).toEqual([100, 0, 101, 1]);
+    });
   });
 
   describe("MultiPolygon", function(){
     beforeEach(function(){
-      multiPolygon = new Terraformer.MultiPolygon(GeoJSON.multiPolygons[1].coordinates);
+      multiPolygon = new Terraformer.MultiPolygon(GeoJSON.multiPolygons[0].coordinates);
     });
 
     it("should create a MultiPolygon from an array of GeoJSON Polygons", function(){
       expect(multiPolygon.type).toEqual("MultiPolygon");
-      expect(multiPolygon.coordinates).toEqual(GeoJSON.multiPolygons[1].coordinates);
+      expect(multiPolygon.coordinates).toEqual(GeoJSON.multiPolygons[0].coordinates);
     });
 
     it("should throw an error when called invalid data", function(){
@@ -283,6 +306,10 @@ describe("Primitives", function(){
 
     it("should have a getter for length", function(){
       expect(multiPolygon.length).toEqual(2);
+    });
+
+    it("should calculate bounds", function(){
+      expect(multiPolygon.bbox).toEqual([100, 0, 103, 3]);
     });
   });
 
@@ -329,17 +356,21 @@ describe("Primitives", function(){
       circle.center = [80,50];
       expect(circle.center).toEqual([80,50]);
     });
+
+    it("should calculate bounds", function(){
+      expect(circle.bbox).toEqual([ -122.00898315283914, 44.99364759960156, -121.99101684715673, 45.00635169618245 ]);
+    });
   });
 
   describe("Feature", function(){
     beforeEach(function(){
-      feature = new Terraformer.Feature(GeoJSON.polygons[2]);
+      feature = new Terraformer.Feature(GeoJSON.polygons[0]);
     });
 
     it("should create a Feature from a GeoJSON Geometry", function(){
       expect(feature.type).toEqual("Feature");
       expect(feature.geometry.type).toEqual("Polygon");
-      expect(feature.geometry.coordinates).toEqual(GeoJSON.polygons[2].coordinates);
+      expect(feature.geometry.coordinates).toEqual(GeoJSON.polygons[0].coordinates);
     });
 
     it("should throw an error when called invalid data", function(){
@@ -348,6 +379,10 @@ describe("Primitives", function(){
           type: "Polygon"
         }).toThrow("Terraformer: invalid input for Terraformer.Feature");
       });
+    });
+
+    it("should calculate bounds", function(){
+      expect(feature.bbox).toEqual([21.79, 33.75, 56.95, 71.01]);
     });
   });
 
@@ -371,6 +406,10 @@ describe("Primitives", function(){
         }).toThrow("Terraformer: invalid input for Terraformer.FeatureCollection");
       });
     });
+
+    it("should calculate bounds", function(){
+      expect(featureCollection.bbox).toEqual([ -104.99404, 33.75, 56.95, 71.01 ] );
+    });
   });
 
   describe("GeometryCollection", function(){
@@ -391,254 +430,9 @@ describe("Primitives", function(){
         }).toThrow("Terraformer: invalid input for Terraformer.GeometryCollection");
       });
     });
-  });
-});
 
-describe("Spatial Reference Converters", function(){
-  it("should convert a GeoJSON Point to Web Mercator", function(){
-    var input = {
-      "type": "Point",
-      "coordinates": [-122, 45]
-    };
-    var expectedOutput = {
-      "type": "Point",
-      "coordinates": [-13580977.876779145, 5621521.486191948],
-      "crs": {
-        "type": "link",
-        "properties": {
-          "href": "http://spatialreference.org/ref/sr-org/6928/ogcwkt/",
-          "type": "ogcwkt"
-        }
-      }
-    };
-    var output = Terraformer.toMercator(input);
-    expect(output).toEqual(expectedOutput);
-  });
-
-  it("should convert a GeoJSON MultiPoint to Web Mercator", function(){
-    var input = {
-      "type": "MultiPoint",
-      "coordinates": [ [-122, 45], [100,0], [45, 62] ]
-    };
-    var expectedOutput = {
-      "type": "MultiPoint",
-      "coordinates": [ [-13580977.876779145,5621521.486191948],[11131949.079327168,0],[5009377.085697226,8859142.800565446] ],
-      "crs": {
-        "type": "link",
-        "properties": {
-          "href": "http://spatialreference.org/ref/sr-org/6928/ogcwkt/",
-          "type": "ogcwkt"
-        }
-      }
-    };
-    var output = Terraformer.toMercator(input);
-    expect(output).toEqual(expectedOutput);
-  });
-
-  it("should convert a GeoJSON LineString to Web Mercator", function(){
-    var input = {
-      "type": "LineString",
-      "coordinates": [ [-122, 45], [100,0], [45, 62] ]
-    };
-    var expectedOutput = {
-      "type": "LineString",
-      "coordinates": [ [-13580977.876779145,5621521.486191948],[11131949.079327168,0],[5009377.085697226,8859142.800565446] ],
-      "crs": {
-        "type": "link",
-        "properties": {
-          "href": "http://spatialreference.org/ref/sr-org/6928/ogcwkt/",
-          "type": "ogcwkt"
-        }
-      }
-    };
-    var output = Terraformer.toMercator(input);
-    expect(output).toEqual(expectedOutput);
-  });
-
-  it("should convert a GeoJSON MultiLineString to Web Mercator", function(){
-    var input = {
-      "type": "MultiLineString",
-      "coordinates": [
-        [ [41.8359375,71.015625],[56.953125,33.75] ],
-        [ [21.796875,36.5625],[47.8359375,71.015625] ]
-      ]
-    };
-    var expectedOutput = {
-      "type": "MultiLineString",
-      "coordinates": [
-        [ [4657155.25935914,11407616.835043576],[6339992.874085551,3995282.329624161] ],
-        [ [2426417.025884594,4378299.115616046],[5325072.20411877,11407616.835043576] ]
-      ],
-      "crs": {
-        "type": "link",
-        "properties": {
-          "href": "http://spatialreference.org/ref/sr-org/6928/ogcwkt/",
-          "type": "ogcwkt"
-        }
-      }
-    };
-    var output = Terraformer.toMercator(input);
-    expect(output).toEqual(expectedOutput);
-  });
-
-  it("should convert a GeoJSON Polygon to Web Mercator", function(){
-    var input = {
-      "type": "Polygon",
-      "coordinates": [
-        [ [41.8359375,71.015625],[56.953125,33.75],[21.796875,36.5625],[41.8359375,71.015625] ]
-      ]
-    };
-    var expectedOutput = {
-      "type": "Polygon",
-      "coordinates": [
-        [ [4657155.25935914,11407616.835043576],[6339992.874085551,3995282.329624161],[2426417.025884594,4378299.115616046],[4657155.25935914,11407616.835043576] ]
-      ],
-      "crs": {
-        "type": "link",
-        "properties": {
-          "href": "http://spatialreference.org/ref/sr-org/6928/ogcwkt/",
-          "type": "ogcwkt"
-        }
-      }
-    };
-    var output = Terraformer.toMercator(input);
-    expect(output).toEqual(expectedOutput);
-  });
-
-  it("should convert a GeoJSON MultiPolygon to Web Mercator", function(){
-    var input = {
-      "type": "MultiPolygon",
-      "coordinates": [
-        [
-          [ [102.0, 2.0], [103.0, 2.0], [103.0, 3.0], [102.0, 3.0], [102.0, 2.0] ]
-        ],
-        [
-          [ [100.0, 0.0], [101.0, 0.0], [101.0, 1.0], [100.0, 1.0], [100.0, 0.0] ]
-        ]
-      ]
-    };
-
-    var expectedOutput = {
-      "type": "MultiPolygon",
-      "coordinates": [
-        [
-          [ [11354588.060913712,222684.2085055407],[11465907.551706985,222684.2085055407],[11465907.551706985,334111.1714019535],[11354588.060913712,334111.1714019535],[11354588.060913712,222684.2085055407] ]
-        ],
-        [
-          [ [11131949.079327168,0],[11243268.57012044,0],[11243268.57012044,111325.14286638329],[11131949.079327168,111325.14286638329],[11131949.079327168,0] ]
-        ]
-      ],
-      "crs": {
-        "type": "link",
-        "properties": {
-          "href": "http://spatialreference.org/ref/sr-org/6928/ogcwkt/",
-          "type": "ogcwkt"
-        }
-      }
-    };
-    var output = Terraformer.toMercator(input);
-    expect(output).toEqual(expectedOutput);
-  });
-
-  it("should convert a GeoJSON Point to Geographic coordinates", function(){
-    var input = {
-      "type": "Point",
-      "coordinates": [-13656274.380351715, 5703203.671949966]
-    };
-    var expectedOutput = {
-      "type": "Point",
-      "coordinates": [-122.67639999999793, 45.516499999999226]
-    };
-    var output = Terraformer.toGeographic(input);
-    expect(output).toEqual(expectedOutput);
-  });
-
-  it("should convert a GeoJSON MultiPoint to Geographic coordinates", function(){
-    var input = {
-      "type": "MultiPoint",
-      "coordinates": [ [-13656274.380351715,5703203.671949966],[11131949.079327168,0],[-13619241.057432571,6261718.09354067] ]
-    };
-    var expectedOutput = {
-      "type": "MultiPoint",
-      "coordinates": [ [-122.67639999999793,45.516499999999226],[99.99999999999831,0],[-122.34372399999793,48.92247999999917] ]
-    };
-    var output = Terraformer.toGeographic(input);
-    expect(output).toEqual(expectedOutput);
-  });
-
-  it("should convert a GeoJSON LineString to Geographic coordinates", function(){
-    var input = {
-      "type": "LineString",
-      "coordinates": [ [743579.411158182,6075718.008992066],[-7279251.077653782,6869641.046935855],[-5831228.013819427,5242073.5675988225] ]
-    };
-    var expectedOutput = {
-      "type": "LineString",
-      "coordinates": [ [6.679687499999886,47.8124999999992],[-65.3906249999989,52.38281249999911],[-52.38281249999912,42.539062499999275] ]
-    };
-    var output = Terraformer.toGeographic(input);
-    expect(output).toEqual(expectedOutput);
-  });
-
-  it("should convert a GeoJSON MultiLineString to Geographic coordinates", function(){
-    var input = {
-      "type": "MultiLineString",
-      "coordinates": [
-        [ [41.8359375,71.015625],[56.953125,33.75] ],
-        [ [21.796875,36.5625],[47.8359375,71.015625] ]
-      ]
-    };
-    var expectedOutput = {
-      "type": "MultiLineString",
-      "coordinates": [
-        [ [0.00037581862081719045,0.0006379442134689308],[0.0005116186266586962,0.00030318140838354136]],[[0.00019580465958542694,0.00032844652575519755],[0.0004297175378643617,0.0006379442134689308] ]
-      ]
-    };
-    var output = Terraformer.toGeographic(input);
-    expect(output).toEqual(expectedOutput);
-  });
-
-  it("should convert a GeoJSON Polygon to Geographic coordinates", function(){
-    var input = {
-      "type": "Polygon",
-      "coordinates": [
-        [ [41.8359375,71.015625],[56.953125,33.75],[21.796875,36.5625],[41.8359375,71.015625] ]
-      ]
-    };
-    var expectedOutput = {
-      "type": "Polygon",
-      "coordinates": [
-        [ [0.00037581862081719045,0.0006379442134689308],[0.0005116186266586962,0.00030318140838354136],[0.00019580465958542694,0.00032844652575519755],[0.00037581862081719045,0.0006379442134689308] ]
-      ]
-    };
-    var output = Terraformer.toGeographic(input);
-    expect(output).toEqual(expectedOutput);
-  });
-
-  it("should convert a GeoJSON MultiPolygon to Geographic coordinates", function(){
-    var input = {
-      "type": "MultiPolygon",
-      "coordinates": [
-        [
-          [ [102.0, 2.0], [103.0, 2.0], [103.0, 3.0], [102.0, 3.0], [102.0, 2.0] ]
-        ],
-        [
-          [ [100.0, 0.0], [101.0, 0.0], [101.0, 1.0], [100.0, 1.0], [100.0, 0.0] ]
-        ]
-      ]
-    };
-
-    var expectedOutput = {
-      "type": "MultiPolygon",
-      "coordinates": [
-        [
-            [ [0.000916281589801912,0.000017966305681987637],[0.0009252647426431071,0.000017966305681987637],[0.0009252647426431071,0.000026949458522981454],[0.000916281589801912,0.000026949458522981454],[0.000916281589801912,0.000017966305681987637] ]
-        ],
-        [
-          [ [0.0008983152841195215,0],[0.0009072984369607167,0],[0.0009072984369607167,0.000008983152840993819],[0.0008983152841195215,0.000008983152840993819],[0.0008983152841195215,0] ]
-        ]
-      ]
-    };
-    var output = Terraformer.toGeographic(input);
-    expect(output).toEqual(expectedOutput);
+    it("should calculate bounds", function(){
+      expect(geometryCollection.bbox).toEqual([ -84.32281494140625, 33.73804486328907, 56.95, 71.01 ]);
+    });
   });
 });

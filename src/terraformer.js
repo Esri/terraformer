@@ -66,6 +66,7 @@
   Public: Calculate an bounding box for a geojson object
   */
   function calculateBounds (geojson) {
+
     switch (geojson.type) {
       case 'Point':
         return [ geojson.coordinates[0], geojson.coordinates[1], geojson.coordinates[0], geojson.coordinates[1]];
@@ -80,7 +81,7 @@
         return calculateBoundsFromNestedArrays(geojson.coordinates);
 
       case 'Polygon':
-        return calculateBoundsFromNestedArrays(geojson.coordinates);
+        return calculateBoundsFromArray(geojson.coordinates[0]);
 
       case 'MultiPolygon':
         return calculateBoundsFromNestedArrays(geojson.coordinates);
@@ -384,12 +385,11 @@
       this.type = "Point";
       this.coordinates = input;
     } else if(args.length >= 2) {
+      this.type = "Point";
       this.coordinates = args;
     } else if(!args.length) {
       this.type = "Point";
-
     } else {
-
       throw "Terraformer: invalid input for Terraformer.Point";
     }
 
