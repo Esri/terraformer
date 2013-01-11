@@ -19,6 +19,7 @@
     root.Terraformer.Parsers.WKT = factory();
   }
 }(this, function() {
+  var exports = { };
 
   /* Jison generated parser */
 var parser = (function(){

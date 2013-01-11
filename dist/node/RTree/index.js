@@ -1,4 +1,24 @@
-/****************************************************************************** 
+(function (root, factory) {
+
+  if(typeof module === 'object' && typeof module.exports === 'object') {
+    // Node. Does not work with strict CommonJS, but
+    // only CommonJS-like enviroments that support module.exports,
+    // like Node.
+    exports = module.exports = factory();
+  }else if(typeof define === 'function' && define.amd) {
+    // AMD. Register as an anonymous module.
+    define(factory);
+  } else {
+    if (root.Terraformer === undefined) {
+      root.Terraformer = { };
+    }
+
+    root.Terraformer.RTree = factory();
+  }
+}(this, function() {
+  var exports = { };
+
+  /****************************************************************************** 
  rtree.js - General-Purpose Non-Recursive Javascript R-Tree Library
  Version 0.6.2, December 5st 2009
  Copyright (c) 2009 Jon-Carlos Rivera
@@ -855,3 +875,9 @@ RTree.Rectangle.make_MBR = function(nodes, rect) {
 
   return (rect);
 };
+
+
+  exports.RTree = RTree;
+
+  return exports;
+}));
