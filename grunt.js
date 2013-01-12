@@ -77,7 +77,7 @@ module.exports = function(grunt) {
       }
     },
     jasmine_node: {
-      spec: ["./spec/spec/SpecHelpers.js", "./spec/spec/TerraformerSpec.js", "./spec/spec/ArcGISSpec.js"],
+      spec: ["./spec/spec/GeoJSON.js", "./spec/spec/SpecHelpers.js", "./spec/spec/TerraformerSpec.js", "./spec/spec/ArcGISSpec.js"],
       projectRoot: ".",
       requirejs: false,
       forceExit: true,
@@ -105,15 +105,15 @@ module.exports = function(grunt) {
     var grammar = fs.readFileSync('./src/Parsers/WKT/partials/wkt.yy', 'utf8');
 
     var wrapper = fs.readFileSync('./src/Parsers/WKT/partials/module-source.js', 'utf8');
-    
+
     var Parser = jison.Parser;
     var parser = new Parser(grammar);
 
     // generate source, ready to be written to disk
     var parserSource = parser.generate({ moduleType: "js" });
-    
+
     wrapper = wrapper.replace('"SOURCE";', parserSource);
-    
+
     fs.writeFileSync("./src/Parsers/WKT/wkt.js", wrapper, "utf8");
     fs.writeFileSync("./dist/node/Parsers/WKT/parser.js", wrapper, "utf8");
 
