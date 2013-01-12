@@ -14,12 +14,16 @@ module.exports = function(grunt) {
         '*   Licensed MIT */'
     },
     lint: {
-      files: ['grunt.js', 'src/*.js']
+      files: ['grunt.js', 'src/*.js', 'src/Parsers/ArcGIS/*.js']
     },
     concat: {
       browser: {
         src: ['<banner:meta.banner>', 'src/terraformer.js'],
         dest: 'dist/browser/terraformer.js'
+      },
+      versioned_browser: {
+        src: ['<banner:meta.banner>', 'src/terraformer.js'],
+        dest: 'dist/browser/versions/<%= meta.version %>/terraformer-<%= meta.version %>.min.js'
       },
       node: {
         src: ['<banner:meta.banner>', 'src/terraformer.js'],
@@ -31,13 +35,25 @@ module.exports = function(grunt) {
         src: ["dist/browser/terraformer.js"],
         dest: 'dist/browser/terraformer.min.js'
       },
+      terraformer_versioned: {
+        src: ["dist/browser/terraformer.js"],
+        dest: 'dist/browser/versions/<%= meta.version %>/terraformer-<%= meta.version %>.min.js'
+      },
       rtree: {
         src: ["dist/browser/rtree.js"],
         dest: 'dist/browser/rtree.min.js'
       },
+      rtree_versioned: {
+        src: ["dist/browser/rtree.js"],
+        dest: 'dist/browser/versions/<%= meta.version %>/rtree-<%= meta.version %>.min.js'
+      },
       arcgis: {
         src: ["dist/browser/arcgis.js"],
         dest: 'dist/browser/arcgis.min.js'
+      },
+      arcgis_versioned: {
+        src: ["dist/browser/arcgis.js"],
+        dest: 'dist/browser/versions/<%= meta.version %>/arcgis-<%= meta.version %>.min.js'
       }
     },
     watch: {
@@ -91,13 +107,18 @@ module.exports = function(grunt) {
   });
 
   // By default build everything and run the tests
-  grunt.registerTask('default', 'lint build-terraformer build-wkt build-arcgis build-rtree jasmine jasmine_node');
+  grunt.registerTask('default', 'lint build-terraformer build-wkt build-arcgis build-rtree jasmine_node jasmine');
 
+  // build and minify
   grunt.registerTask('build', 'default minify');
+  grunt.registerTask('build-versioned', 'default minify-versioned');
 
+  // minify all the browser files
   grunt.registerTask('minify', 'min:terraformer min:rtree min:arcgis');
+  grunt.registerTask('minify-versioned', 'min:terraformer_versioned min:rtree_versioned min:arcgis_versioned');
 
-  grunt.registerTask('build-terraformer', 'concat:browser');
+  // build terraform by moving files to /dist
+  grunt.registerTask('build-terraformer', 'concat:browser concat:node');
 
   grunt.registerTask('build-wkt', 'Building WKT Parser', function() {
     grunt.log.write(grunt.helper('wkt-parser'));
