@@ -12,6 +12,7 @@ describe("ArcGIS Tools", function(){
     };
 
     var output = Terraformer.ArcGIS.convert(input);
+
     expect(output).toEqual({
       "x":-58.7109375,
       "y":47.4609375,

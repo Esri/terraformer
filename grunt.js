@@ -42,7 +42,7 @@ module.exports = function(grunt) {
     },
     watch: {
       files: '<config:lint.files>',
-      tasks: 'lint jasmine jasmine_node'
+      tasks: 'default'
     },
     jshint: {
       options: {
@@ -90,10 +90,8 @@ module.exports = function(grunt) {
     }
   });
 
-  grunt.registerTask('default', 'lint jasmine_node jasmine concat min concat:version min:version build-wkt build-rtree');
-  grunt.registerTask('version', 'lint jasmine_node jasmine concat:version min:version');
-  grunt.registerTask('node', 'lint build-wkt build-arcgis build-rtree concat:node');
-  grunt.registerTask('browser', 'lint jasmine');
+  grunt.registerTask('default', 'lint build-wkt build-arcgis build-rtree jasmine jasmine_node');
+  grunt.registerTask('build', 'default concat:dist min:dist concat:version min:version');
 
   grunt.registerTask('build-wkt', 'Building WKT Parser', function() {
     grunt.log.write(grunt.helper('wkt-parser'));
