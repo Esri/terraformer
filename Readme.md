@@ -1,66 +1,41 @@
 # Terraformer
+Terraformer is a small javascript library for working with GeoJSON. It is designed to be fast lightweight and usable in large numbers of environments including, browsers, AMD (require.js or Dojo), Node and inside Web Workers.
 
-#### Key Features
+* Convert to and from ArcGIS JSON Geometries, WKT and GeoJSON
+* Manipulate GeoJSON with methods like `addVertex`
+* Calculate bounding boxes for GeoJSON objects
+* Find out if GeoJSON shapes intersect or contain each other
+* Get properties like area, distance, and length of GeoJSON objects
+* Respresent circles as GeoJSON Features
+* Convert to and from (Geographic Coordinates)[http://spatialreference.org/ref/epsg/4326/] and (Esri Web Mercator)[http://spatialreference.org/ref/sr-org/6928/] spatial references
 
-* Conversion to and from ArcGIS Geometries to GeoJSON
-* Supports both (Geographic)[http://spatialreference.org/ref/epsg/4326/] and (Esri web mercator)[http://spatialreference.org/ref/sr-org/6928/] spatial references
+Gizipped and minified Terraformer comes to about 6kb.
 
-### Converting Between ArcGIS and GeoJSON
+## Testing
+Tests are written in Jasmine and can be run through `$ grunt` or `$ npm install` then `$ npm test`. To run the tests run the following commands to setup PhantomJS and Grunt...
 
-```javascript
-// ArcGIS To Geojson
-Terraformer.toGeoJSON(arcgisGeometry);
+* `$ npm install grunt -g`
+* `$ brew install phantomjs`
 
-// GeoJSON To ArcGIS
-Terraformer.toArcGIS(geoJSON);
+Then run the tests with `$ grunt` which will buld all the files and then run the tests. You can also run `$ grunt watch` which will run the tests when source files change.
 
-// GeoJSON to ArcGIS with Custom Spatial Reference
-Terraformer.toArcGIS(geoJSON, { wkid:102100 });
-```
+## Building
 
-### Converting Spatial References
-```javascript
-// Convert the GeoJSON object to Web Mercator
-Terraform.toMercator(geojson);
+Running the `$ grunt build` command will build the libraries to `dist/node` and `dist/browser`. If you want to build with a different version number run `$ grunt build-versioned`.
 
-// Convert the GeoJSON object to Geographic
-Terraform.toGeographic(geojson);
-```
-
-Currently you
-
-# Node Tests
-If you want to run the node tests just `npm test` or `npm install` then `grunt node`
-
-# Browser Tests
-
-Testing is done via [Grunt](http://gruntjs.com/) and [Phantom JS](http://phantomjs.org/). To install these just run...
-
-If you want to run the tests in a browser with `grunt` or `grunt jasmine` you will need to install Phantom JS and grunt.
-
-* `npm install grunt -g`
-* `brew install phantomjs`
-
-Once these are installed you can now run the tests with `grunt browser`.
-
-If you do not want to run tests from the command line just open up `spec/SpecRunner.html` in your browser.
-
-# Building
-
-Make sure you have all the development dependancies installed with `npm install` then run `grunt` from the command line. If the files lints and passes all the tests it will be concatinated and minified to the `dist` folder and a versioned filename to the `versions` folder.
-
-### Notes
-* need to parse arcgis objects to primative
-* need to be able to parse array of arcgis objects to GeometryCollection
-* need to be able to parse FeatureCollection and GeometryCollection to an array of arcgis objects
-
-### Todos
+## Future Features
+* `Terraformer.GeoStore`
+* * `new Terraformer.Stores.Memory`
+* * `new Terraformer.Stores.LocalStorage`
+* * `new Terraformer.Stores.WebSQL`
+* * `new Terraformer.Stores.PostGIS`
+* GeoJSON validation
 * Convert FeatureCollections and GeometryCollections to arrys of ArcGIS geometries
 * Convert an array of ArcGIS Geometries to a GeometryCollections
-* Make a `isMercator()` and `isGeographic()` function
-* TESTS!
+* `Terraformer.Tools.isMercator` and `Terraformer.Tools.isGeographic`
 
-# Interface
+## Interface
+```javascript
 new Terraformer.Position()
 new Terraformer.Point()
 new Terraformer.MultiPoint()
@@ -94,3 +69,4 @@ Terraformer.Tools.intersects(shape1, shape2);
 // Creates a 32 point polygon representing a circle
 
 Terraformer.Tools.createCircle([x,y], radius, steps=64);
+```
