@@ -17,7 +17,7 @@
   }
 
 }(this, function(){
-  return exports = {
+  var exports = {
     points : [
       {
         "type": "Point",
@@ -386,5 +386,7 @@
       }
     ]
   };
+
+  return exports;
 
 }));
