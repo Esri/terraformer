@@ -1,7 +1,7 @@
 {
-  "name": "terraformer-wkt-parser",
+  "name": "terraformer-arcgis-parser",
   "version": "0.1.0",
-  "description": "Well-Known Text parser",
+  "description": "ArcGIS parser",
   "main": "index.js",
   "directories": {
     "test": "test"
@@ -14,7 +14,7 @@
     "url": "git@github.com:Geoloqi/Terraformer.git"
   },
   "keywords": [
-    "WKT",
+    "ArcGIS",
     "GIS",
     "Geography"
   ],

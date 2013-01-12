@@ -92,11 +92,15 @@ module.exports = function(grunt) {
 
   grunt.registerTask('default', 'lint jasmine_node jasmine concat min concat:version min:version build-wkt build-rtree');
   grunt.registerTask('version', 'lint jasmine_node jasmine concat:version min:version');
-  grunt.registerTask('node', 'lint build-wkt build-rtree concat:node');
+  grunt.registerTask('node', 'lint build-wkt build-arcgis build-rtree concat:node');
   grunt.registerTask('browser', 'lint jasmine');
 
   grunt.registerTask('build-wkt', 'Building WKT Parser', function() {
     grunt.log.write(grunt.helper('wkt-parser'));
+  });
+
+  grunt.registerTask('build-arcgis', 'Building ArcGIS Parser', function() {
+    grunt.log.write(grunt.helper('arcgis-parser'));
   });
 
   grunt.registerTask('build-rtree', 'Building RTree node module', function () {
@@ -119,6 +123,19 @@ module.exports = function(grunt) {
 
     fs.writeFileSync("./src/Parsers/WKT/wkt.js", wrapper, "utf8");
     fs.writeFileSync("./dist/node/Parsers/WKT/parser.js", wrapper, "utf8");
+
+    return 'Files created.';
+  });
+
+  grunt.registerHelper('arcgis-parser', function() {
+    var src = fs.readFileSync('./src/Parsers/ArcGIS/arcgis.js', 'utf8');
+
+    var wrapper = fs.readFileSync('./src/Parsers/ArcGIS/partials/module-source.js', 'utf8');
+
+    wrapper = wrapper.replace('"SOURCE";', src);
+
+    fs.writeFileSync("./dist/arcgis.js", wrapper, "utf8");
+    fs.writeFileSync("./dist/node/Parsers/ArcGIS/index.js", wrapper, "utf8");
 
     return 'Files created.';
   });

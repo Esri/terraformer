@@ -342,7 +342,7 @@
           return new GeometryCollection(geojson);
 
         default:
-          throw new Error("Unknown type: " + res.type);
+          throw new Error("Unknown type: " + geojson.type);
       }
     }
   }
