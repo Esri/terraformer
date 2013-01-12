@@ -1,6 +1,15 @@
 if(typeof module === "object"){
-  var Terraformer = require("../../src/terraformer.js");
+  var Terraformer = require("../../dist/node/terraformer.js");
+  var GeoJSON = require("../..//spec/spec/GeoJSON.js");
 }
+
+beforeEach(function() {
+  this.addMatchers({
+    toBeInstanceOfClass: function(classRef){
+      return this.actual instanceof classRef;
+    }
+  });
+});
 
 describe("Primitives", function(){
 

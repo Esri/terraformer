@@ -9,10 +9,16 @@
     // AMD. Register as an anonymous module.
     define(factory);
   } else {
+    if (Terraformer === undefined){
+      root.Terraformer = { };
+    }
     root.Terraformer.ArcGIS = factory();
   }
 
   if(typeof jasmine === "object") {
+    if (root.Terraformer === undefined){
+      root.Terraformer = { };
+    }
     root.Terraformer.ArcGIS = factory();
   }
 
