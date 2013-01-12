@@ -117,6 +117,10 @@ module.exports = function(grunt) {
   grunt.registerTask('minify', 'min:terraformer min:rtree min:arcgis');
   grunt.registerTask('minify-versioned', 'min:terraformer_versioned min:rtree_versioned min:arcgis_versioned');
 
+  // run only the node tests
+  grunt.registerTask('node', 'lint build-terraformer build-wkt build-arcgis build-rtree jasmine_node');
+  grunt.registerTask('browser', 'lint build-terraformer build-wkt build-arcgis build-rtree jasmine');
+
   // build terraform by moving files to /dist
   grunt.registerTask('build-terraformer', 'concat:browser concat:node');
 
