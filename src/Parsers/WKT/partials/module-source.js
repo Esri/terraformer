@@ -12,11 +12,8 @@
     if (root.Terraformer === undefined) {
       root.Terraformer = { };
     }
-    if (root.Terraformer.Parsers === undefined) {
-      root.Terraformer.Parsers = { };
-    }
 
-    root.Terraformer.Parsers.WKT = factory();
+    root.Terraformer.WKT = factory();
   }
 }(this, function() {
   var exports = { };

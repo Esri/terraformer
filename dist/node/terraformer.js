@@ -18,6 +18,9 @@
   }
 
   if(typeof jasmine === "object") {
+    if (Terraformer === undefined){
+      root.Terraformer = { };
+    }
     root.Terraformer = factory();
   }
 
@@ -344,7 +347,7 @@
           return new GeometryCollection(geojson);
 
         default:
-          throw new Error("Unknown type: " + res.type);
+          throw new Error("Unknown type: " + geojson.type);
       }
     }
   }
