@@ -18,7 +18,7 @@
   }
 
   if(typeof jasmine === "object") {
-    if (typeof Terraformer === undefined){
+    if (Terraformer === undefined){
       root.Terraformer = { };
     }
     root.Terraformer = factory();

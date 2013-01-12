@@ -17,27 +17,27 @@ module.exports = function(grunt) {
       files: ['grunt.js', 'src/*.js']
     },
     concat: {
-      dist: {
+      browser: {
         src: ['<banner:meta.banner>', 'src/terraformer.js'],
-        dest: 'dist/terraformer.min.js'
+        dest: 'dist/browser/terraformer.js'
       },
       node: {
         src: ['<banner:meta.banner>', 'src/terraformer.js'],
         dest: 'dist/node/terraformer.js'
-      },
-      version: {
-        src: ['<banner:meta.banner>', 'src/terraformer.js'],
-        dest: 'versions/terraformer-<%= meta.version %>.min.js'
       }
     },
     min: {
-      dist: {
-        src: ['<banner:meta.banner>', 'src/terraformer.js'],
-        dest: 'dist/terraformer.min.js'
+      terraformer: {
+        src: ["dist/browser/terraformer.js"],
+        dest: 'dist/browser/terraformer.min.js'
       },
-      version: {
-        src: ['<banner:meta.banner>', 'src/terraformer.js'],
-        dest: 'versions/terraformer-<%= meta.version %>.min.js'
+      rtree: {
+        src: ["dist/browser/rtree.js"],
+        dest: 'dist/browser/rtree.min.js'
+      },
+      arcgis: {
+        src: ["dist/browser/arcgis.js"],
+        dest: 'dist/browser/arcgis.min.js'
       }
     },
     watch: {
@@ -90,8 +90,14 @@ module.exports = function(grunt) {
     }
   });
 
-  grunt.registerTask('default', 'lint build-wkt build-arcgis build-rtree jasmine jasmine_node');
-  grunt.registerTask('build', 'default concat:dist min:dist concat:version min:version');
+  // By default build everything and run the tests
+  grunt.registerTask('default', 'lint build-terraformer build-wkt build-arcgis build-rtree jasmine jasmine_node');
+
+  grunt.registerTask('build', 'default minify');
+
+  grunt.registerTask('minify', 'min:terraformer min:rtree min:arcgis');
+
+  grunt.registerTask('build-terraformer', 'concat:browser');
 
   grunt.registerTask('build-wkt', 'Building WKT Parser', function() {
     grunt.log.write(grunt.helper('wkt-parser'));
@@ -122,7 +128,7 @@ module.exports = function(grunt) {
     fs.writeFileSync("./src/Parsers/WKT/wkt.js", wrapper, "utf8");
     fs.writeFileSync("./dist/node/Parsers/WKT/parser.js", wrapper, "utf8");
 
-    return 'Files created.';
+    return 'Files created.\n';
   });
 
   grunt.registerHelper('arcgis-parser', function() {
@@ -132,10 +138,10 @@ module.exports = function(grunt) {
 
     wrapper = wrapper.replace('"SOURCE";', src);
 
-    fs.writeFileSync("./dist/arcgis.js", wrapper, "utf8");
+    fs.writeFileSync("./dist/browser/arcgis.js", wrapper, "utf8");
     fs.writeFileSync("./dist/node/Parsers/ArcGIS/index.js", wrapper, "utf8");
 
-    return 'Files created.';
+    return 'Files created.\n';
   });
 
   grunt.registerHelper('rtree-exports', function() {
@@ -145,10 +151,10 @@ module.exports = function(grunt) {
 
     wrapper = wrapper.replace('"SOURCE";', src);
 
-    fs.writeFileSync("./dist/rtree.js", wrapper, "utf8");
+    fs.writeFileSync("./dist/browser/rtree.js", wrapper, "utf8");
     fs.writeFileSync("./dist/node/RTree/index.js", wrapper, "utf8");
 
-    return 'Files created.';
+    return 'Files created.\n';
   });
 
   grunt.loadNpmTasks('grunt-jasmine-task');
