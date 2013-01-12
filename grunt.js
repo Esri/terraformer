@@ -10,7 +10,7 @@ module.exports = function(grunt) {
       version: '0.0.1',
       banner: '/*! Terraformer JS - <%= meta.version %> - <%= grunt.template.today("yyyy-mm-dd") %>\n' +
         '*   https://github.com/geoloqi/Terraformer\n' +
-        '*   Copyright (c) <%= grunt.template.today("yyyy") %> Environmental Systems Research Institute, Inc.\n' +
+        '*   Copyright (c) <%= grunt.template.today("yyyy") %> Environmental Systems Research Institue, Inc.\n' +
         '*   Licensed MIT */'
     },
     lint: {
@@ -77,7 +77,7 @@ module.exports = function(grunt) {
       }
     },
     jasmine_node: {
-      spec: ["./spec/spec/GeoJSON.js", "./spec/spec/SpecHelpers.js", "./spec/spec/TerraformerSpec.js", "./spec/spec/ArcGISSpec.js"],
+      spec: ["./spec/spec/GeoJSON.js", "./spec/spec/SpecHelpers.js", "./spec/spec/TerraformerSpec.js", "./spec/spec/ArcGISSpec.js", "./spec/spec/SpecHelpers.js"],
       projectRoot: ".",
       requirejs: false,
       forceExit: true,
@@ -127,9 +127,9 @@ module.exports = function(grunt) {
     var src = fs.readFileSync('./src/rtree.js', 'utf8');
 
     var wrapper = fs.readFileSync('./src/partials/module-rtree.js', 'utf8');
-    
+
     wrapper = wrapper.replace('"SOURCE";', src);
-    
+
     fs.writeFileSync("./dist/rtree.js", wrapper, "utf8");
     fs.writeFileSync("./dist/node/RTree/index.js", wrapper, "utf8");
 

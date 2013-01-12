@@ -9,9 +9,6 @@
     // AMD. Register as an anonymous module.
     define(factory);
   } else {
-    if (Terraformer === undefined){
-      root.GeoJSON = { };
-    }
     root.GeoJSON = factory();
   }
 
@@ -20,9 +17,7 @@
   }
 
 }(this, function(){
-
-
-  exports = {
+  return exports = {
     points : [
       {
         "type": "Point",

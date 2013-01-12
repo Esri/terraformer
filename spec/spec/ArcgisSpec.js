@@ -1,5 +1,6 @@
 if(typeof module === "object"){
- var Terraformer = require("../../src/terraformer.js");
+ var Terraformer = require("../../dist/node/terraformer.js");
+ Terraformer.ArcGIS = require("../../src/Parsers/ArcGIS/arcgis.js");
 }
 
 describe("ArcGIS Tools", function(){
