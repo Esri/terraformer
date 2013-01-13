@@ -9,15 +9,20 @@
     // AMD. Register as an anonymous module.
     define(factory);
   } else {
-    if (root.Terraformer === undefined) {
+    if (typeof root.Terraformer === "undefined") {
       root.Terraformer = { };
     }
-    if (root.Terraformer.Parsers === undefined) {
-      root.Terraformer.Parsers = { };
-    }
 
-    root.Terraformer.Parsers.WKT = factory();
+    root.Terraformer.WKT = factory();
   }
+
+  if(typeof jasmine === "object") {
+    if (Terraformer === undefined){
+      root.Terraformer = { };
+    }
+    root.Terraformer.WKT = factory();
+  }
+
 }(this, function() {
   var exports = { };
 
