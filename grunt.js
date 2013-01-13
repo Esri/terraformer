@@ -54,6 +54,14 @@ module.exports = function(grunt) {
       arcgis_versioned: {
         src: ["dist/browser/arcgis.js"],
         dest: 'dist/browser/versions/<%= meta.version %>/arcgis-<%= meta.version %>.min.js'
+      },
+      wkt: {
+        src: ["dist/browser/wkt.js"],
+        dest: 'dist/browser/wkt.min.js'
+      },
+      wkt_versioned: {
+        src: ["dist/browser/wkt.js"],
+        dest: 'dist/browser/versions/<%= meta.version %>/wkt-<%= meta.version %>.min.js'
       }
     },
     watch: {
@@ -114,8 +122,8 @@ module.exports = function(grunt) {
   grunt.registerTask('build-versioned', 'default minify-versioned');
 
   // minify all the browser files
-  grunt.registerTask('minify', 'min:terraformer min:rtree min:arcgis');
-  grunt.registerTask('minify-versioned', 'min:terraformer_versioned min:rtree_versioned min:arcgis_versioned');
+  grunt.registerTask('minify', 'min:terraformer min:rtree min:arcgis min:wkt');
+  grunt.registerTask('minify-versioned', 'min:terraformer_versioned min:rtree_versioned min:arcgis_versioned min:wkt_versioned');
 
   // run only the node tests
   grunt.registerTask('node', 'lint build-terraformer build-wkt build-arcgis build-rtree jasmine_node');
@@ -151,6 +159,7 @@ module.exports = function(grunt) {
     wrapper = wrapper.replace('"SOURCE";', parserSource);
 
     fs.writeFileSync("./src/Parsers/WKT/wkt.js", wrapper, "utf8");
+    fs.writeFileSync("./dist/browser/wkt.js", wrapper, "utf8");
     fs.writeFileSync("./dist/node/Parsers/WKT/parser.js", wrapper, "utf8");
 
     return 'Files created.\n';
