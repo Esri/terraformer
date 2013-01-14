@@ -81,7 +81,7 @@
     }
 
     if (data.length === 1) {
-      return data[0];
+      return data;
     } else {
       return data;
     }
@@ -103,11 +103,14 @@
     var data = [ ];
 
     for (var i = 0; i < this.data.length; i++) {
-      data.push(this.data[i].toJSON());
+      console.log("pushing: " + this.data[i].type);
+      console.dir(this.data[i].data);
+      console.dir(this.data[i].toJSON());
+      data = data.concat( [ this.data[i].toJSON() ] );
     }
 
     if (data.length === 1) {
-      return data[0];
+      return data;
     } else {
       return data;
     }
