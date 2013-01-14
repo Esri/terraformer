@@ -24,7 +24,7 @@ describe("WKT Parser", function() {
   it("should parse a POLYGON", function(){
     var input = "POLYGON ((30 10, 10 20, 20 40, 40 40, 30 10))";
     var output = new Terraformer.WKT.parse(input);
-    expect(output.coordinates).toEqual([ [ [100.0, 0.0],[101.0, 0.0],[101.0, 1.0],[100.0, 1.0],[100.0, 0.0] ] ]);
+    expect(output.coordinates).toEqual([ [ [30, 10], [10, 20], [20, 40], [40, 40], [30, 10] ] ]);
     expect(output).toBeInstanceOfClass(Terraformer.Polygon);
     expect(output.type).toEqual("Polygon");
   });
@@ -33,8 +33,8 @@ describe("WKT Parser", function() {
     var input = "POLYGON ((35 10, 10 20, 15 40, 45 45, 35 10),(20 30, 35 35, 30 20, 20 30))";
     var output = new Terraformer.WKT.parse(input);
     expect(output.coordinates).toEqual([
-      [ [100.0, 0.0],[101.0, 0.0],[101.0, 1.0],[100.0, 1.0],[100.0, 0.0] ],
-      [ [100.2, 0.2],[100.8, 0.2],[100.8, 0.8],[100.2, 0.8],[100.2, 0.2] ]
+      [ [35, 10],[10, 20],[15, 40],[45, 45],[35, 10] ],
+      [ [20, 30],[35, 35],[30, 20],[20, 30] ]
     ]);
     expect(output).toBeInstanceOfClass(Terraformer.Polygon);
     expect(output.type).toEqual("Polygon");
