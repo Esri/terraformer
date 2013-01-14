@@ -50,17 +50,17 @@ vows.describe('WKT Parsing').addBatch({
     },
     'the point should be correctly converted to Loqi-GeoJSON internally': function (topic) {
       assert.equal(topic.type, "Polygon");
-      assert.equal(topic.coordinates.length, 5);
-      assert.equal(topic.coordinates[0][0], 30);
-      assert.equal(topic.coordinates[0][1], 10);
-      assert.equal(topic.coordinates[1][0], 10);
-      assert.equal(topic.coordinates[1][1], 20);
-      assert.equal(topic.coordinates[2][0], 20);
-      assert.equal(topic.coordinates[2][1], 40);
-      assert.equal(topic.coordinates[3][0], 40);
-      assert.equal(topic.coordinates[3][1], 40);
-      assert.equal(topic.coordinates[4][0], 30);
-      assert.equal(topic.coordinates[4][1], 10);
+      assert.equal(topic.coordinates.length, 1);
+      assert.equal(topic.coordinates[0][0][0], 30);
+      assert.equal(topic.coordinates[0][0][1], 10);
+      assert.equal(topic.coordinates[0][1][0], 10);
+      assert.equal(topic.coordinates[0][1][1], 20);
+      assert.equal(topic.coordinates[0][2][0], 20);
+      assert.equal(topic.coordinates[0][2][1], 40);
+      assert.equal(topic.coordinates[0][3][0], 40);
+      assert.equal(topic.coordinates[0][3][1], 40);
+      assert.equal(topic.coordinates[0][4][0], 30);
+      assert.equal(topic.coordinates[0][4][1], 10);
     }
   },
   'Given a Polygon with a Hole': {
@@ -154,24 +154,24 @@ vows.describe('WKT Parsing').addBatch({
     'the point should be correctly converted to Loqi-GeoJSON internally': function (topic) {
       assert.equal(topic.type, "MultiPolygon");
       assert.equal(topic.coordinates.length, 2);
-      assert.equal(topic.coordinates[0][0][0], 30);
-      assert.equal(topic.coordinates[0][0][1], 20);
-      assert.equal(topic.coordinates[0][1][0], 10);
-      assert.equal(topic.coordinates[0][1][1], 40);
-      assert.equal(topic.coordinates[0][2][0], 45);
-      assert.equal(topic.coordinates[0][2][1], 40);
-      assert.equal(topic.coordinates[0][3][0], 30);
-      assert.equal(topic.coordinates[0][3][1], 20);
-      assert.equal(topic.coordinates[1][0][0], 15);
-      assert.equal(topic.coordinates[1][0][1], 5);
-      assert.equal(topic.coordinates[1][1][0], 40);
-      assert.equal(topic.coordinates[1][1][1], 10);
-      assert.equal(topic.coordinates[1][2][0], 10);
-      assert.equal(topic.coordinates[1][2][1], 20);
-      assert.equal(topic.coordinates[1][3][0], 5);
-      assert.equal(topic.coordinates[1][3][1], 10);
-      assert.equal(topic.coordinates[1][4][0], 15);
-      assert.equal(topic.coordinates[1][4][1], 5);
+      assert.equal(topic.coordinates[0][0][0][0], 30);
+      assert.equal(topic.coordinates[0][0][0][1], 20);
+      assert.equal(topic.coordinates[0][0][1][0], 10);
+      assert.equal(topic.coordinates[0][0][1][1], 40);
+      assert.equal(topic.coordinates[0][0][2][0], 45);
+      assert.equal(topic.coordinates[0][0][2][1], 40);
+      assert.equal(topic.coordinates[0][0][3][0], 30);
+      assert.equal(topic.coordinates[0][0][3][1], 20);
+      assert.equal(topic.coordinates[1][0][0][0], 15);
+      assert.equal(topic.coordinates[1][0][0][1], 5);
+      assert.equal(topic.coordinates[1][0][1][0], 40);
+      assert.equal(topic.coordinates[1][0][1][1], 10);
+      assert.equal(topic.coordinates[1][0][2][0], 10);
+      assert.equal(topic.coordinates[1][0][2][1], 20);
+      assert.equal(topic.coordinates[1][0][3][0], 5);
+      assert.equal(topic.coordinates[1][0][3][1], 10);
+      assert.equal(topic.coordinates[1][0][4][0], 15);
+      assert.equal(topic.coordinates[1][0][4][1], 5);
     }
   },
   'Given a MultiPolygon with a Hole': {
@@ -181,14 +181,14 @@ vows.describe('WKT Parsing').addBatch({
     'the point should be correctly converted to Loqi-GeoJSON internally': function (topic) {
       assert.equal(topic.type, "MultiPolygon");
       assert.equal(topic.coordinates.length, 2);
-      assert.equal(topic.coordinates[0][0][0], 40);
-      assert.equal(topic.coordinates[0][0][1], 40);
-      assert.equal(topic.coordinates[0][1][0], 20);
-      assert.equal(topic.coordinates[0][1][1], 45);
-      assert.equal(topic.coordinates[0][2][0], 45);
-      assert.equal(topic.coordinates[0][2][1], 30);
-      assert.equal(topic.coordinates[0][3][0], 40);
-      assert.equal(topic.coordinates[0][3][1], 40);
+      assert.equal(topic.coordinates[0][0][0][0], 40);
+      assert.equal(topic.coordinates[0][0][0][1], 40);
+      assert.equal(topic.coordinates[0][0][1][0], 20);
+      assert.equal(topic.coordinates[0][0][1][1], 45);
+      assert.equal(topic.coordinates[0][0][2][0], 45);
+      assert.equal(topic.coordinates[0][0][2][1], 30);
+      assert.equal(topic.coordinates[0][0][3][0], 40);
+      assert.equal(topic.coordinates[0][0][3][1], 40);
       assert.equal(topic.coordinates[1][0][0][0], 20);
       assert.equal(topic.coordinates[1][0][0][1], 35);
       assert.equal(topic.coordinates[1][0][1][0], 45);
