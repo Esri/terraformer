@@ -4,6 +4,7 @@
     // Node. Does not work with strict CommonJS, but
     // only CommonJS-like enviroments that support module.exports,
     // like Node.
+    Terraformer = require('terraformer');
     exports = module.exports = factory();
   }else if(typeof define === 'function' && define.amd) {
     // AMD. Register as an anonymous module.
@@ -496,11 +497,7 @@ return new Parser;
     }
     return data;
   };
-
-  if(typeof module === 'object' && typeof module.exports === 'object') {
-    var Terraformer = require('terraformer');
-  }
-
+  
   function _parse () {
     return parser.parse.apply(parser, arguments);
   }
