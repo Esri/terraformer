@@ -4,9 +4,12 @@
   "description": "Terraformer RTree",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "vows --spec"
   },
   "repository": "",
+  "devDependencies": {
+    "vows": "latest"
+  },
   "author": "",
   "license": "MIT"
 }
