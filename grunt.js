@@ -14,35 +14,59 @@ module.exports = function(grunt) {
         '*   Licensed MIT */'
     },
     lint: {
-      files: ['grunt.js', 'src/*.js']
+      files: ['grunt.js', 'src/*.js', 'src/Parsers/ArcGIS/*.js']
     },
     concat: {
-      dist: {
+      browser: {
         src: ['<banner:meta.banner>', 'src/terraformer.js'],
-        dest: 'dist/terraformer.min.js'
+        dest: 'dist/browser/terraformer.js'
+      },
+      versioned_browser: {
+        src: ['<banner:meta.banner>', 'src/terraformer.js'],
+        dest: 'dist/browser/versions/<%= meta.version %>/terraformer-<%= meta.version %>.min.js'
       },
       node: {
         src: ['<banner:meta.banner>', 'src/terraformer.js'],
         dest: 'dist/node/terraformer.js'
-      },
-      version: {
-        src: ['<banner:meta.banner>', 'src/terraformer.js'],
-        dest: 'versions/terraformer-<%= meta.version %>.min.js'
       }
     },
     min: {
-      dist: {
-        src: ['<banner:meta.banner>', 'src/terraformer.js'],
-        dest: 'dist/terraformer.min.js'
+      terraformer: {
+        src: ["dist/browser/terraformer.js"],
+        dest: 'dist/browser/terraformer.min.js'
       },
-      version: {
-        src: ['<banner:meta.banner>', 'src/terraformer.js'],
-        dest: 'versions/terraformer-<%= meta.version %>.min.js'
+      terraformer_versioned: {
+        src: ["dist/browser/terraformer.js"],
+        dest: 'dist/browser/versions/<%= meta.version %>/terraformer-<%= meta.version %>.min.js'
+      },
+      rtree: {
+        src: ["dist/browser/rtree.js"],
+        dest: 'dist/browser/rtree.min.js'
+      },
+      rtree_versioned: {
+        src: ["dist/browser/rtree.js"],
+        dest: 'dist/browser/versions/<%= meta.version %>/rtree-<%= meta.version %>.min.js'
+      },
+      arcgis: {
+        src: ["dist/browser/arcgis.js"],
+        dest: 'dist/browser/arcgis.min.js'
+      },
+      arcgis_versioned: {
+        src: ["dist/browser/arcgis.js"],
+        dest: 'dist/browser/versions/<%= meta.version %>/arcgis-<%= meta.version %>.min.js'
+      },
+      wkt: {
+        src: ["dist/browser/wkt.js"],
+        dest: 'dist/browser/wkt.min.js'
+      },
+      wkt_versioned: {
+        src: ["dist/browser/wkt.js"],
+        dest: 'dist/browser/versions/<%= meta.version %>/wkt-<%= meta.version %>.min.js'
       }
     },
     watch: {
       files: '<config:lint.files>',
-      tasks: 'lint jasmine jasmine_node'
+      tasks: 'default'
     },
     jshint: {
       options: {
@@ -90,13 +114,30 @@ module.exports = function(grunt) {
     }
   });
 
-  grunt.registerTask('default', 'lint jasmine_node jasmine concat min concat:version min:version build-wkt build-rtree');
-  grunt.registerTask('version', 'lint jasmine_node jasmine concat:version min:version');
-  grunt.registerTask('node', 'lint build-wkt build-rtree concat:node');
-  grunt.registerTask('browser', 'lint jasmine');
+  // By default build everything and run the tests
+  grunt.registerTask('default', 'lint build-terraformer build-wkt build-arcgis build-rtree jasmine_node jasmine');
+
+  // build and minify
+  grunt.registerTask('build', 'default minify');
+  grunt.registerTask('build-versioned', 'default minify-versioned');
+
+  // minify all the browser files
+  grunt.registerTask('minify', 'min:terraformer min:rtree min:arcgis min:wkt');
+  grunt.registerTask('minify-versioned', 'min:terraformer_versioned min:rtree_versioned min:arcgis_versioned min:wkt_versioned');
+
+  // run only the node tests
+  grunt.registerTask('node', 'lint build-terraformer build-wkt build-arcgis build-rtree jasmine_node');
+  grunt.registerTask('browser', 'lint build-terraformer build-wkt build-arcgis build-rtree jasmine');
+
+  // build terraform by moving files to /dist
+  grunt.registerTask('build-terraformer', 'concat:browser concat:node');
 
   grunt.registerTask('build-wkt', 'Building WKT Parser', function() {
     grunt.log.write(grunt.helper('wkt-parser'));
+  });
+
+  grunt.registerTask('build-arcgis', 'Building ArcGIS Parser', function() {
+    grunt.log.write(grunt.helper('arcgis-parser'));
   });
 
   grunt.registerTask('build-rtree', 'Building RTree node module', function () {
@@ -118,9 +159,23 @@ module.exports = function(grunt) {
     wrapper = wrapper.replace('"SOURCE";', parserSource);
 
     fs.writeFileSync("./src/Parsers/WKT/wkt.js", wrapper, "utf8");
+    fs.writeFileSync("./dist/browser/wkt.js", wrapper, "utf8");
     fs.writeFileSync("./dist/node/Parsers/WKT/parser.js", wrapper, "utf8");
 
-    return 'Files created.';
+    return 'Files created.\n';
+  });
+
+  grunt.registerHelper('arcgis-parser', function() {
+    var src = fs.readFileSync('./src/Parsers/ArcGIS/arcgis.js', 'utf8');
+
+    var wrapper = fs.readFileSync('./src/Parsers/ArcGIS/partials/module-source.js', 'utf8');
+
+    wrapper = wrapper.replace('"SOURCE";', src);
+
+    fs.writeFileSync("./dist/browser/arcgis.js", wrapper, "utf8");
+    fs.writeFileSync("./dist/node/Parsers/ArcGIS/index.js", wrapper, "utf8");
+
+    return 'Files created.\n';
   });
 
   grunt.registerHelper('rtree-exports', function() {
@@ -130,10 +185,10 @@ module.exports = function(grunt) {
 
     wrapper = wrapper.replace('"SOURCE";', src);
 
-    fs.writeFileSync("./dist/rtree.js", wrapper, "utf8");
+    fs.writeFileSync("./dist/browser/rtree.js", wrapper, "utf8");
     fs.writeFileSync("./dist/node/RTree/index.js", wrapper, "utf8");
 
-    return 'Files created.';
+    return 'Files created.\n';
   });
 
   grunt.loadNpmTasks('grunt-jasmine-task');

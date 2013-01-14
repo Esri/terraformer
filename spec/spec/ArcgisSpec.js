@@ -1,6 +1,6 @@
 if(typeof module === "object"){
  var Terraformer = require("../../dist/node/terraformer.js");
- Terraformer.ArcGIS = require("../../src/Parsers/ArcGIS/arcgis.js");
+ Terraformer.ArcGIS = require("../../dist/node/Parsers/ArcGIS/index.js");
 }
 
 describe("ArcGIS Tools", function(){
@@ -12,6 +12,7 @@ describe("ArcGIS Tools", function(){
     };
 
     var output = Terraformer.ArcGIS.convert(input);
+
     expect(output).toEqual({
       "x":-58.7109375,
       "y":47.4609375,

@@ -203,11 +203,7 @@ var RTree = function (width) {
               best_choice_index = -1;
               break;
             }
-/*else if(ltree.load) {
-          throw( "Can't insert into partially loaded tree ... yet!");
-          //jQuery.getJSON(ltree.load, load_callback(this, ltree));
-          //delete ltree.load;
-        }*/
+
             // Area of new enlarged rectangle
             var old_lratio = RTree.Rectangle.squarified_ratio(ltree.w, ltree.h, ltree.nodes.length + 1);
 
@@ -352,7 +348,7 @@ var RTree = function (width) {
         node.w = more_tree.w;
         node.h = more_tree.h;
         return (node);
-        };
+    };
 
 /* non-recursive internal search function 
    * [ nodes | objects ] = _search_subtree(rectangle, [return node data], [array to fill], root to begin search at)
@@ -482,7 +478,6 @@ var RTree = function (width) {
 /* quick 'n' dirty function for plugins or manually drawing the tree
    * [ tree ] = RTree.get_tree(): returns the raw tree data. useful for adding
    * @public
-   * !! DEPRECATED !!
    */
     this.get_tree = function() {
       return _T;
@@ -491,7 +486,6 @@ var RTree = function (width) {
 /* quick 'n' dirty function for plugins or manually loading the tree
    * [ tree ] = RTree.set_tree(sub-tree, where to attach): returns the raw tree data. useful for adding
    * @public
-   * !! DEPRECATED !!
    */
     this.set_tree = function(new_tree, where) {
       if (!where) {

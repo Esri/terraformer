@@ -9,15 +9,20 @@
     // AMD. Register as an anonymous module.
     define(factory);
   } else {
-    if (root.Terraformer === undefined) {
+    if (typeof root.Terraformer === "undefined") {
       root.Terraformer = { };
     }
-    if (root.Terraformer.Parsers === undefined) {
-      root.Terraformer.Parsers = { };
-    }
 
-    root.Terraformer.Parsers.WKT = factory();
+    root.Terraformer.WKT = factory();
   }
+
+  if(typeof jasmine === "object") {
+    if (typeof Terraformer === undefined){
+      root.Terraformer = { };
+    }
+    //root.Terraformer.WKT = factory();
+  }
+
 }(this, function() {
   var exports = { };
 
@@ -76,7 +81,7 @@
     }
 
     if (data.length === 1) {
-      return data[0];
+      return data;
     } else {
       return data;
     }
@@ -98,20 +103,40 @@
     var data = [ ];
 
     for (var i = 0; i < this.data.length; i++) {
-      data.push(this.data[i].toJSON());
+      data = data.concat( [ this.data[i].toJSON() ] );
     }
 
     if (data.length === 1) {
-      return data[0];
+      return data;
     } else {
       return data;
     }
     return data;
   };
+
+  if(typeof module === 'object' && typeof module.exports === 'object') {
+    var Terraformer = require('terraformer');
+  }
+
+  function _parse () {
+    return parser.parse.apply(parser, arguments);
+  }
   
+  function parse (element) {
+    var res, primitive;
+
+    try {
+      res = parser.parse(element);
+    } catch (err) {
+      throw Error("Unable to parse", err);
+    }
+
+    return Terraformer.Primitive(res);
+  }
+
   exports.parser = parser;
   exports.Parser = parser.Parser;
-  exports.parse = function () { return parser.parse.apply(parser, arguments); };
+  exports.parse = parse;
 
   return exports;
 }));
