@@ -82,7 +82,7 @@ point_untagged
 
 polygon_list
     : polygon_list COMMA polygon_untagged
-        { console.log("adding: " + $3.type + " to " + $1.type);$$ = $1.addPolygon($3); }
+        { $$ = $1.addPolygon($3); }
     | polygon_untagged
         { $$ = new PolygonList($1); }
     ;
