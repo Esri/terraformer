@@ -6,11 +6,11 @@ A simple RTree implementation based off of `rtree.js`.  Uses `envelopes` to sear
 
 ## Installing
 
-    $ npm install rtree 
+    $ npm install terraformer-rtree 
 
 ## Usage
 
-    var rtree = require('rtree');
+    var rtree = require('terraformer-rtree');
     
     var tree = new rtree.RTree();
     tree.insert({ x: 10, y: 10, w: 10, h: 10 }, 'good');
