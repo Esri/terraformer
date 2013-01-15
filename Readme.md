@@ -1,5 +1,5 @@
 # Terraformer
-Terraformer is a small javascript library for working with GeoJSON. It is designed to be fast lightweight and usable in large numbers of environments including, browsers, AMD (require.js or Dojo), Node and inside Web Workers.
+Terraformer is a small javascript library for working with GeoJSON. It is designed to be fast lightweight and usable in large numbers of environments including, browsers, AMD (require.js or Dojo), Node.js and inside Web Workers.
 
 * Convert to and from ArcGIS JSON Geometries, WKT and GeoJSON
 * Manipulate GeoJSON with methods like `addVertex`
@@ -10,6 +10,17 @@ Terraformer is a small javascript library for working with GeoJSON. It is design
 * Convert to and from (Geographic Coordinates)[http://spatialreference.org/ref/epsg/4326/] and (Esri Web Mercator)[http://spatialreference.org/ref/sr-org/6928/] spatial references
 
 Gizipped and minified Terraformer comes to about 6kb.
+
+## Using
+
+### Node.js
+Terraformer on Node.js is split into multiple small packages for easy consumption.
+
+    $ npm install terraformer
+    $ npm install terraformer-rtree
+    $ npm install terraformer-wkt-parser
+    $ npm install terraformer-arcgis-parser
+    
 
 ## Testing
 Tests are written in Jasmine and can be run through `$ grunt` or `$ npm install` then `$ npm test`. To run the tests run the following commands to setup PhantomJS and Grunt...
