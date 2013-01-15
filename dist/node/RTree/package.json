@@ -6,7 +6,7 @@
   "scripts": {
     "test": "vows --spec"
   },
-  "repository": "",
+  "repository": "git@github.com:Geoloqi/Terraformer.git",
   "devDependencies": {
     "vows": "latest"
   },
