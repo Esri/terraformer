@@ -75,11 +75,11 @@ point
     : POINT '(' ptarray ')'
         { $$ = { "type": "Point", "coordinates": $3.data[0] }; }
     | POINT Z '(' ptarray ')'
-        { $$ = { "type": "Point", "coordinates": $3.data[0], "ref": { z: true } }; }
+        { $$ = { "type": "Point", "coordinates": $3.data[0], "properties": { z: true } }; }
     | POINT Z M '(' ptarray ')'
-        { $$ = { "type": "Point", "coordinates": $3.data[0], "ref": { z: true, m: true } }; }
+        { $$ = { "type": "Point", "coordinates": $3.data[0], "properties": { z: true, m: true } }; }
     | POINT M '(' ptarray ')'
-        { $$ = { "type": "Point", "coordinates": $3.data[0], "ref": { m: true } }; }
+        { $$ = { "type": "Point", "coordinates": $3.data[0], "properties": { m: true } }; }
     | POINT EMPTY
         { $$ = { "type": "Point", "coordinates": [ ] }; }
     ;
@@ -115,11 +115,11 @@ linestring
     : LINESTRING '(' point_list ')'
         { $$ = { "type": "LineString", "coordinates": $3.data }; }
     | LINESTRING Z '(' point_list ')'
-        { $$ = { "type": "LineString", "coordinates": $3.data, "ref": { z: true } }; }
+        { $$ = { "type": "LineString", "coordinates": $3.data, "properties": { z: true } }; }
     | LINESTRING M '(' point_list ')'
-        { $$ = { "type": "LineString", "coordinates": $3.data, "ref": { m: true } }; }
+        { $$ = { "type": "LineString", "coordinates": $3.data, "properties": { m: true } }; }
     | LINESTRING Z M '(' point_list ')'
-        { $$ = { "type": "LineString", "coordinates": $3.data, "ref": { z: true, m: true } }; }
+        { $$ = { "type": "LineString", "coordinates": $3.data, "properties": { z: true, m: true } }; }
     | LINESTRING EMPTY
         { $$ = { "type": "LineString", "coordinates": [ ] }; }
     ;
@@ -128,11 +128,11 @@ polygon
     : POLYGON '(' ring_list ')'
         { $$ = { "type": "Polygon", "coordinates": $3.toJSON() }; }
     | POLYGON Z '(' ring_list ')'
-        { $$ = { "type": "Polygon", "coordinates": $3.toJSON(), "ref": { z: true } }; }
+        { $$ = { "type": "Polygon", "coordinates": $3.toJSON(), "properties": { z: true } }; }
     | POLYGON M '(' ring_list ')'
-        { $$ = { "type": "Polygon", "coordinates": $3.toJSON(), "ref": { m: true } }; }
+        { $$ = { "type": "Polygon", "coordinates": $3.toJSON(), "properties": { m: true } }; }
     | POLYGON Z M '(' ring_list ')'
-        { $$ = { "type": "Polygon", "coordinates": $3.toJSON(), "ref": { z: true, m: true } }; }
+        { $$ = { "type": "Polygon", "coordinates": $3.toJSON(), "properties": { z: true, m: true } }; }
     | POLYGON EMPTY
         { $$ = { "type": "Polygon", "coordinates": [ ] }; }
     ;
@@ -141,11 +141,11 @@ multipoint
     : MULTIPOINT '(' point_list ')'
         { $$ = { "type": "MultiPoint", "coordinates": $3.data }; }
     | MULTIPOINT Z '(' point_list ')'
-        { $$ = { "type": "MultiPoint", "coordinates": $3.data, "ref": { z: true } }; }
+        { $$ = { "type": "MultiPoint", "coordinates": $3.data, "properties": { z: true } }; }
     | MULTIPOINT M '(' point_list ')'
-        { $$ = { "type": "MultiPoint", "coordinates": $3.data, "ref": { m: true } }; }
+        { $$ = { "type": "MultiPoint", "coordinates": $3.data, "properties": { m: true } }; }
     | MULTIPOINT Z M '(' point_list ')'
-        { $$ = { "type": "MultiPoint", "coordinates": $3.data, "ref": { z: true, m: true } }; }
+        { $$ = { "type": "MultiPoint", "coordinates": $3.data, "properties": { z: true, m: true } }; }
     | MULTIPOINT EMPTY
         { $$ = { "type": "MultiPoint", "coordinates": [ ] } }
     ;
@@ -154,11 +154,11 @@ multilinestring
     : MULTILINESTRING '(' ring_list ')'
         { $$ = { "type": "MultiLineString", "coordinates": $3.toJSON() }; }
     | MULTILINESTRING Z '(' ring_list ')'
-        { $$ = { "type": "MultiLineString", "coordinates": $3.toJSON(), "ref": { z: true } }; }
+        { $$ = { "type": "MultiLineString", "coordinates": $3.toJSON(), "properties": { z: true } }; }
     | MULTILINESTRING M '(' ring_list ')'
-        { $$ = { "type": "MultiLineString", "coordinates": $3.toJSON(), "ref": { m: true } }; }
+        { $$ = { "type": "MultiLineString", "coordinates": $3.toJSON(), "properties": { m: true } }; }
     | MULTILINESTRING Z M '(' ring_list ')'
-        { $$ = { "type": "MultiLineString", "coordinates": $3.toJSON(), "ref": { z: true, m: true } }; }
+        { $$ = { "type": "MultiLineString", "coordinates": $3.toJSON(), "properties": { z: true, m: true } }; }
     | MULTILINESTRING EMPTY
         { $$ = { "type": "MultiLineString", "coordinates": [ ] }; }
     ;
@@ -167,11 +167,11 @@ multipolygon
     : MULTIPOLYGON '(' polygon_list ')'
         { $$ = { "type": "MultiPolygon", "coordinates": $3.toJSON() }; }
     | MULTIPOLYGON Z '(' polygon_list ')'
-        { $$ = { "type": "MultiPolygon", "coordinates": $3.toJSON(), "ref": { z: true } }; }
+        { $$ = { "type": "MultiPolygon", "coordinates": $3.toJSON(), "properties": { z: true } }; }
     | MULTIPOLYGON M '(' polygon_list ')'
-        { $$ = { "type": "MultiPolygon", "coordinates": $3.toJSON(), "ref": { m: true } }; }
+        { $$ = { "type": "MultiPolygon", "coordinates": $3.toJSON(), "properties": { m: true } }; }
     | MULTIPOLYGON Z M '(' polygon_list ')'
-        { $$ = { "type": "MultiPolygon", "coordinates": $3.toJSON(), "ref": { z: true, m: true } }; }
+        { $$ = { "type": "MultiPolygon", "coordinates": $3.toJSON(), "properties": { z: true, m: true } }; }
     | MULTIPOLYGON EMPTY
         { $$ = { "type": "MultiPolygon", "coordinates": [ ] }; }
     ;
