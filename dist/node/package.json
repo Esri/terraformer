@@ -1,5 +1,5 @@
 {
-  "name": "Terraformer",
+  "name": "terraformer",
   "version": "0.1.0",
   "description": "Terraformer GIS Tools",
   "main": "terraformer.js",
