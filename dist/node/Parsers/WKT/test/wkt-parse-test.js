@@ -29,6 +29,15 @@ vows.describe('WKT Parsing').addBatch({
       assert.equal(topic.coordinates[1], 10);
     }
   },
+  'Given an Empty Point': {
+    topic: function () {
+      return wkt.parse("POINT EMPTY");
+    },
+    'the point should be correctly converted to Loqi-GeoJSON internally': function (topic) {
+      assert.equal(topic.type, "Point");
+      assert.equal(topic.coordinates.length, 0);
+    }
+  },
   'Given a LineString': {
     topic: function () {
       return wkt.parse(linestring);
@@ -42,6 +51,15 @@ vows.describe('WKT Parsing').addBatch({
       assert.equal(topic.coordinates[1][1], 30);
       assert.equal(topic.coordinates[2][0], 40);
       assert.equal(topic.coordinates[2][1], 40);
+    }
+  },
+  'Given an Empty LineString': {
+    topic: function () {
+      return wkt.parse("LINESTRING EMPTY");
+    },
+    'the point should be correctly converted to Loqi-GeoJSON internally': function (topic) {
+      assert.equal(topic.type, "LineString");
+      assert.equal(topic.coordinates.length, 0);
     }
   },
   'Given a Polygon': {
@@ -61,6 +79,15 @@ vows.describe('WKT Parsing').addBatch({
       assert.equal(topic.coordinates[0][3][1], 40);
       assert.equal(topic.coordinates[0][4][0], 30);
       assert.equal(topic.coordinates[0][4][1], 10);
+    }
+  },
+  'Given an Empty Polygon': {
+    topic: function () {
+      return wkt.parse("POLYGON EMPTY");
+    },
+    'the point should be correctly converted to Loqi-GeoJSON internally': function (topic) {
+      assert.equal(topic.type, "Polygon");
+      assert.equal(topic.coordinates.length, 0);
     }
   },
   'Given a Polygon with a Hole': {
@@ -107,6 +134,15 @@ vows.describe('WKT Parsing').addBatch({
       assert.equal(topic.coordinates[3][1], 10);
     }
   },
+  'Given an Empty MultiPoint': {
+    topic: function () {
+      return wkt.parse("MULTIPOINT EMPTY");
+    },
+    'the point should be correctly converted to Loqi-GeoJSON internally': function (topic) {
+      assert.equal(topic.type, "MultiPoint");
+      assert.equal(topic.coordinates.length, 0);
+    }
+  },
   'Given a MultiPoint with Alternate Syntax': {
     topic: function () {
       return wkt.parse(multi_a);
@@ -145,6 +181,15 @@ vows.describe('WKT Parsing').addBatch({
       assert.equal(topic.coordinates[1][2][1], 20);
       assert.equal(topic.coordinates[1][3][0], 30);
       assert.equal(topic.coordinates[1][3][1], 10);
+    }
+  },
+  'Given an Empty MultiLineString': {
+    topic: function () {
+      return wkt.parse("MULTILINESTRING EMPTY");
+    },
+    'the point should be correctly converted to Loqi-GeoJSON internally': function (topic) {
+      assert.equal(topic.type, "MultiLineString");
+      assert.equal(topic.coordinates.length, 0);
     }
   },
   'Given a MultiPolygon': {
@@ -209,6 +254,15 @@ vows.describe('WKT Parsing').addBatch({
       assert.equal(topic.coordinates[1][1][2][1], 15);
       assert.equal(topic.coordinates[1][1][3][0], 30);
       assert.equal(topic.coordinates[1][1][3][1], 20);
+    }
+  },
+  'Given an Empty MultiPolygon': {
+    topic: function () {
+      return wkt.parse("MULTIPOLYGON EMPTY");
+    },
+    'the point should be correctly converted to Loqi-GeoJSON internally': function (topic) {
+      assert.equal(topic.type, "MultiPolygon");
+      assert.equal(topic.coordinates.length, 0);
     }
   },
 }).export(module);
