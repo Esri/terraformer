@@ -14,6 +14,4 @@ A bare-bones WKT parser.  Given a WKT primitive, it parses and returns a `Terraf
     
     var primitive = wkt.parse('LINESTRING (30 10, 10 30, 40 40)');
     
-    // should return LineString Terraformer Primitive
-    var ret = tree.search({ x: 15, y: 15, w: 0, h: 0 });
 
