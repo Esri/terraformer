@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset=utf-8 />
+    <title>Quick App</title>
+    <link rel="stylesheet" href="http://serverapi.arcgisonline.com/jsapi/arcgis/3.3/js/esri/css/esri.css" />
+    <script>
+      dojoConfig= {
+        async: true,
+        packages: [{
+          name: "terraformer",
+          location: "http://" + window.location.hostname + "/dist/browser"
+        }]
+      }
+    </script>
+    <script src="http://serverapi.arcgisonline.com/jsapi/arcgis/3.3/" type="text/javascript"></script>
+    <script src="viewer.js"></script>
+    <style>
+      #map {
+        height: 400px;
+      }
+      #input {
+        width: 400px;
+        height: 200px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="map"></div>
+    <textarea id="input" placeholder="GeoJSON Object"></textarea>
+    <button id="submit">Show On Map</button>
+  </body>
+</html>
