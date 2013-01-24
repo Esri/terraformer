@@ -7,7 +7,7 @@
 \s+                           // ignore
 "("                           return '('
 ")"                           return ')'
-"-"?(([0-9]+\.?)|([0-9]*\.?[0-9]+)([eE][-+]?[0-9]+)?)    return 'DOUBLE_TOK'
+"-"?[0-9]+("."[0-9]+)?        return 'DOUBLE_TOK'
 "POINT"                       return 'POINT'
 "LINESTRING"                  return 'LINESTRING'
 "POLYGON"                     return 'POLYGON'
