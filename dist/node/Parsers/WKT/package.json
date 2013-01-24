@@ -1,6 +1,6 @@
 {
   "name": "terraformer-wkt-parser",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Well-Known Text parser",
   "main": "index.js",
   "directories": {

@@ -14,7 +14,9 @@ var point      = fs.readFileSync('./examples/point.wkt', 'utf8'),
     multi_a    = fs.readFileSync('./examples/multipoint_alternate.wkt', 'utf8'),
     multi_ls   = fs.readFileSync('./examples/multi_linestring.wkt', 'utf8'),
     multi_p    = fs.readFileSync('./examples/multi_polygon.wkt', 'utf8'),
-    multi_p_h  = fs.readFileSync('./examples/multi_polygon_with_hole.wkt', 'utf8');
+    multi_p_h  = fs.readFileSync('./examples/multi_polygon_with_hole.wkt', 'utf8'),
+    poly_dots  = fs.readFileSync('./examples/polygon_with_dots.wkt', 'utf8');
+
 
 
 vows.describe('WKT Parsing').addBatch({
@@ -79,6 +81,26 @@ vows.describe('WKT Parsing').addBatch({
       assert.equal(topic.coordinates[0][3][1], 40);
       assert.equal(topic.coordinates[0][4][0], 30);
       assert.equal(topic.coordinates[0][4][1], 10);
+    }
+  },
+  'Given a Polygon with Dots': {
+    topic: function () {
+      return wkt.parse(poly_dots);
+    },
+    'the point should be correctly converted to Loqi-GeoJSON internally': function (topic) {
+    //-122.358 47.653,-122.348 47.649,-122.348 47.658,-122.358 47.658,-122.358 47.653
+      assert.equal(topic.type, "Polygon");
+      assert.equal(topic.coordinates.length, 1);
+      assert.equal(topic.coordinates[0][0][0], -122.358);
+      assert.equal(topic.coordinates[0][0][1], 47.653);
+      assert.equal(topic.coordinates[0][1][0], -122.348);
+      assert.equal(topic.coordinates[0][1][1], 47.649);
+      assert.equal(topic.coordinates[0][2][0], -122.348);
+      assert.equal(topic.coordinates[0][2][1], 47.658);
+      assert.equal(topic.coordinates[0][3][0], -122.358);
+      assert.equal(topic.coordinates[0][3][1], 47.658);
+      assert.equal(topic.coordinates[0][4][0], -122.358);
+      assert.equal(topic.coordinates[0][4][1], 47.653);
     }
   },
   'Given an Empty Polygon': {
@@ -197,6 +219,7 @@ vows.describe('WKT Parsing').addBatch({
       return wkt.parse(multi_p);
     },
     'the point should be correctly converted to Loqi-GeoJSON internally': function (topic) {
+    console.dir(topic);
       assert.equal(topic.type, "MultiPolygon");
       assert.equal(topic.coordinates.length, 2);
       assert.equal(topic.coordinates[0][0][0][0], 30);
