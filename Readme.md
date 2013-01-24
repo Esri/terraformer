@@ -9,7 +9,7 @@ Terraformer is a small javascript library for working with GeoJSON. It is design
 * Respresent circles as GeoJSON Features
 * Convert to and from (Geographic Coordinates)[http://spatialreference.org/ref/epsg/4326/] and (Esri Web Mercator)[http://spatialreference.org/ref/sr-org/6928/] spatial references
 
-Gizipped and minified Terraformer comes to about 6kb.
+Gizipped and minified all Terraformer modules comes to about 9.6kb. The core library is 2.8kb and includes GeoJSON parsing, helper methods, bounding boxes and spatial reference conversions. Other features are available as add-in modules as needed.
 
 ## Using
 
