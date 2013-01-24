@@ -1,12 +1,12 @@
 {
-  "name": "RTree",
+  "name": "terraformer-rtree",
   "version": "0.1.0",
   "description": "Terraformer RTree",
   "main": "index.js",
   "scripts": {
     "test": "vows --spec"
   },
-  "repository": "",
+  "repository": "git@github.com:Geoloqi/Terraformer.git",
   "devDependencies": {
     "vows": "latest"
   },

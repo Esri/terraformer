@@ -31,24 +31,24 @@
 var parser = (function(){
 var parser = {trace: function trace() { },
 yy: {},
-symbols_: {"error":2,"expressions":3,"point":4,"EOF":5,"linestring":6,"polygon":7,"multipoint":8,"multilinestring":9,"multipolygon":10,"coordinate":11,"DOUBLE_TOK":12,"ptarray":13,"COMMA":14,"ring_list":15,"ring":16,"(":17,")":18,"POINT":19,"point_untagged":20,"polygon_list":21,"polygon_untagged":22,"point_list":23,"LINESTRING":24,"POLYGON":25,"MULTIPOINT":26,"MULTILINESTRING":27,"MULTIPOLYGON":28,"$accept":0,"$end":1},
-terminals_: {2:"error",5:"EOF",12:"DOUBLE_TOK",14:"COMMA",17:"(",18:")",19:"POINT",24:"LINESTRING",25:"POLYGON",26:"MULTIPOINT",27:"MULTILINESTRING",28:"MULTIPOLYGON"},
-productions_: [0,[3,2],[3,2],[3,2],[3,2],[3,2],[3,2],[11,2],[11,3],[11,4],[13,3],[13,1],[15,3],[15,1],[16,3],[4,4],[20,1],[20,3],[21,3],[21,1],[22,3],[23,3],[23,1],[6,4],[7,4],[8,4],[9,4],[10,4]],
+symbols_: {"error":2,"expressions":3,"point":4,"EOF":5,"linestring":6,"polygon":7,"multipoint":8,"multilinestring":9,"multipolygon":10,"coordinate":11,"DOUBLE_TOK":12,"ptarray":13,"COMMA":14,"ring_list":15,"ring":16,"(":17,")":18,"POINT":19,"Z":20,"M":21,"EMPTY":22,"point_untagged":23,"polygon_list":24,"polygon_untagged":25,"point_list":26,"LINESTRING":27,"POLYGON":28,"MULTIPOINT":29,"MULTILINESTRING":30,"MULTIPOLYGON":31,"$accept":0,"$end":1},
+terminals_: {2:"error",5:"EOF",12:"DOUBLE_TOK",14:"COMMA",17:"(",18:")",19:"POINT",20:"Z",21:"M",22:"EMPTY",27:"LINESTRING",28:"POLYGON",29:"MULTIPOINT",30:"MULTILINESTRING",31:"MULTIPOLYGON"},
+productions_: [0,[3,2],[3,2],[3,2],[3,2],[3,2],[3,2],[11,2],[11,3],[11,4],[13,3],[13,1],[15,3],[15,1],[16,3],[4,4],[4,5],[4,6],[4,5],[4,2],[23,1],[23,3],[24,3],[24,1],[25,3],[26,3],[26,1],[6,4],[6,5],[6,5],[6,6],[6,2],[7,4],[7,5],[7,5],[7,6],[7,2],[8,4],[8,5],[8,5],[8,6],[8,2],[9,4],[9,5],[9,5],[9,6],[9,2],[10,4],[10,5],[10,5],[10,6],[10,2]],
 performAction: function anonymous(yytext,yyleng,yylineno,yy,yystate,$,_$) {
 
 var $0 = $.length - 1;
 switch (yystate) {
-case 1: return { "type": "Point", "coordinates": $[$0-1].data[0] }; 
+case 1: return $[$0-1]; 
 break;
-case 2: return { "type": "LineString", "coordinates": $[$0-1].data }; 
+case 2: return $[$0-1]; 
 break;
-case 3: return { "type": "Polygon", "coordinates": $[$0-1].toJSON() }; 
+case 3: return $[$0-1]; 
 break;
-case 4: return { "type": "MultiPoint", "coordinates": $[$0-1].data }; 
+case 4: return $[$0-1]; 
 break;
-case 5: return { "type": "MultiLineString", "coordinates": $[$0-1].toJSON() }; 
+case 5: return $[$0-1]; 
 break;
-case 6: return { "type": "MultiPolygon", "coordinates": $[$0-1].toJSON() }; 
+case 6: return $[$0-1]; 
 break;
 case 7: this.$ = new PointArray([ Number($[$0-1]), Number($[$0]) ]); 
 break;
@@ -66,36 +66,84 @@ case 13: this.$ = new RingList($[$0]);
 break;
 case 14: this.$ = new Ring($[$0-1]); 
 break;
-case 15: this.$ = $[$0-1]; 
+case 15: this.$ = { "type": "Point", "coordinates": $[$0-1].data[0] }; 
 break;
-case 16: this.$ = $[$0]; 
+case 16: this.$ = { "type": "Point", "coordinates": $[$0-2].data[0], "properties": { z: true } }; 
 break;
-case 17: this.$ = $[$0-1]; 
+case 17: this.$ = { "type": "Point", "coordinates": $[$0-3].data[0], "properties": { z: true, m: true } }; 
 break;
-case 18: this.$ = $[$0-2].addPolygon($[$0]); 
+case 18: this.$ = { "type": "Point", "coordinates": $[$0-2].data[0], "properties": { m: true } }; 
 break;
-case 19: this.$ = new PolygonList($[$0]); 
+case 19: this.$ = { "type": "Point", "coordinates": [ ] }; 
 break;
-case 20: this.$ = $[$0-1]; 
+case 20: this.$ = $[$0]; 
 break;
-case 21: this.$ = $[$0-2].addPoint($[$0]); 
+case 21: this.$ = $[$0-1]; 
 break;
-case 22: this.$ = $[$0]; 
+case 22: this.$ = $[$0-2].addPolygon($[$0]); 
 break;
-case 23: this.$ = $[$0-1]; 
+case 23: this.$ = new PolygonList($[$0]); 
 break;
 case 24: this.$ = $[$0-1]; 
 break;
-case 25: this.$ = $[$0-1]; 
+case 25: this.$ = $[$0-2].addPoint($[$0]); 
 break;
-case 26: this.$ = $[$0-1]; 
+case 26: this.$ = $[$0]; 
 break;
-case 27: this.$ = $[$0-1]; 
+case 27: this.$ = { "type": "LineString", "coordinates": $[$0-1].data }; 
+break;
+case 28: this.$ = { "type": "LineString", "coordinates": $[$0-2].data, "properties": { z: true } }; 
+break;
+case 29: this.$ = { "type": "LineString", "coordinates": $[$0-2].data, "properties": { m: true } }; 
+break;
+case 30: this.$ = { "type": "LineString", "coordinates": $[$0-3].data, "properties": { z: true, m: true } }; 
+break;
+case 31: this.$ = { "type": "LineString", "coordinates": [ ] }; 
+break;
+case 32: this.$ = { "type": "Polygon", "coordinates": $[$0-1].toJSON() }; 
+break;
+case 33: this.$ = { "type": "Polygon", "coordinates": $[$0-2].toJSON(), "properties": { z: true } }; 
+break;
+case 34: this.$ = { "type": "Polygon", "coordinates": $[$0-2].toJSON(), "properties": { m: true } }; 
+break;
+case 35: this.$ = { "type": "Polygon", "coordinates": $[$0-3].toJSON(), "properties": { z: true, m: true } }; 
+break;
+case 36: this.$ = { "type": "Polygon", "coordinates": [ ] }; 
+break;
+case 37: this.$ = { "type": "MultiPoint", "coordinates": $[$0-1].data }; 
+break;
+case 38: this.$ = { "type": "MultiPoint", "coordinates": $[$0-2].data, "properties": { z: true } }; 
+break;
+case 39: this.$ = { "type": "MultiPoint", "coordinates": $[$0-2].data, "properties": { m: true } }; 
+break;
+case 40: this.$ = { "type": "MultiPoint", "coordinates": $[$0-3].data, "properties": { z: true, m: true } }; 
+break;
+case 41: this.$ = { "type": "MultiPoint", "coordinates": [ ] } 
+break;
+case 42: this.$ = { "type": "MultiLineString", "coordinates": $[$0-1].toJSON() }; 
+break;
+case 43: this.$ = { "type": "MultiLineString", "coordinates": $[$0-2].toJSON(), "properties": { z: true } }; 
+break;
+case 44: this.$ = { "type": "MultiLineString", "coordinates": $[$0-2].toJSON(), "properties": { m: true } }; 
+break;
+case 45: this.$ = { "type": "MultiLineString", "coordinates": $[$0-3].toJSON(), "properties": { z: true, m: true } }; 
+break;
+case 46: this.$ = { "type": "MultiLineString", "coordinates": [ ] }; 
+break;
+case 47: this.$ = { "type": "MultiPolygon", "coordinates": $[$0-1].toJSON() }; 
+break;
+case 48: this.$ = { "type": "MultiPolygon", "coordinates": $[$0-2].toJSON(), "properties": { z: true } }; 
+break;
+case 49: this.$ = { "type": "MultiPolygon", "coordinates": $[$0-2].toJSON(), "properties": { m: true } }; 
+break;
+case 50: this.$ = { "type": "MultiPolygon", "coordinates": $[$0-3].toJSON(), "properties": { z: true, m: true } }; 
+break;
+case 51: this.$ = { "type": "MultiPolygon", "coordinates": [ ] }; 
 break;
 }
 },
-table: [{3:1,4:2,6:3,7:4,8:5,9:6,10:7,19:[1,8],24:[1,9],25:[1,10],26:[1,11],27:[1,12],28:[1,13]},{1:[3]},{5:[1,14]},{5:[1,15]},{5:[1,16]},{5:[1,17]},{5:[1,18]},{5:[1,19]},{17:[1,20]},{17:[1,21]},{17:[1,22]},{17:[1,23]},{17:[1,24]},{17:[1,25]},{1:[2,1]},{1:[2,2]},{1:[2,3]},{1:[2,4]},{1:[2,5]},{1:[2,6]},{11:27,12:[1,28],13:26},{11:31,12:[1,28],17:[1,32],20:30,23:29},{15:33,16:34,17:[1,35]},{11:31,12:[1,28],17:[1,32],20:30,23:36},{15:37,16:34,17:[1,35]},{17:[1,40],21:38,22:39},{14:[1,42],18:[1,41]},{14:[2,11],18:[2,11]},{12:[1,43]},{14:[1,45],18:[1,44]},{14:[2,22],18:[2,22]},{14:[2,16],18:[2,16]},{11:46,12:[1,28]},{14:[1,48],18:[1,47]},{14:[2,13],18:[2,13]},{11:27,12:[1,28],13:49},{14:[1,45],18:[1,50]},{14:[1,48],18:[1,51]},{14:[1,53],18:[1,52]},{14:[2,19],18:[2,19]},{15:54,16:34,17:[1,35]},{5:[2,15]},{11:55,12:[1,28]},{12:[1,56],14:[2,7],18:[2,7]},{5:[2,23]},{11:31,12:[1,28],17:[1,32],20:57},{18:[1,58]},{5:[2,24]},{16:59,17:[1,35]},{14:[1,42],18:[1,60]},{5:[2,25]},{5:[2,26]},{5:[2,27]},{17:[1,40],22:61},{14:[1,48],18:[1,62]},{14:[2,10],18:[2,10]},{12:[1,63],14:[2,8],18:[2,8]},{14:[2,21],18:[2,21]},{14:[2,17],18:[2,17]},{14:[2,12],18:[2,12]},{14:[2,14],18:[2,14]},{14:[2,18],18:[2,18]},{14:[2,20],18:[2,20]},{14:[2,9],18:[2,9]}],
-defaultActions: {14:[2,1],15:[2,2],16:[2,3],17:[2,4],18:[2,5],19:[2,6],41:[2,15],44:[2,23],47:[2,24],50:[2,25],51:[2,26],52:[2,27]},
+table: [{3:1,4:2,6:3,7:4,8:5,9:6,10:7,19:[1,8],27:[1,9],28:[1,10],29:[1,11],30:[1,12],31:[1,13]},{1:[3]},{5:[1,14]},{5:[1,15]},{5:[1,16]},{5:[1,17]},{5:[1,18]},{5:[1,19]},{17:[1,20],20:[1,21],21:[1,22],22:[1,23]},{17:[1,24],20:[1,25],21:[1,26],22:[1,27]},{17:[1,28],20:[1,29],21:[1,30],22:[1,31]},{17:[1,32],20:[1,33],21:[1,34],22:[1,35]},{17:[1,36],20:[1,37],21:[1,38],22:[1,39]},{17:[1,40],20:[1,41],21:[1,42],22:[1,43]},{1:[2,1]},{1:[2,2]},{1:[2,3]},{1:[2,4]},{1:[2,5]},{1:[2,6]},{11:45,12:[1,46],13:44},{17:[1,47],21:[1,48]},{17:[1,49]},{5:[2,19]},{11:52,12:[1,46],17:[1,53],23:51,26:50},{17:[1,54],21:[1,55]},{17:[1,56]},{5:[2,31]},{15:57,16:58,17:[1,59]},{17:[1,60],21:[1,61]},{17:[1,62]},{5:[2,36]},{11:52,12:[1,46],17:[1,53],23:51,26:63},{17:[1,64],21:[1,65]},{17:[1,66]},{5:[2,41]},{15:67,16:58,17:[1,59]},{17:[1,68],21:[1,69]},{17:[1,70]},{5:[2,46]},{17:[1,73],24:71,25:72},{17:[1,74],21:[1,75]},{17:[1,76]},{5:[2,51]},{14:[1,78],18:[1,77]},{14:[2,11],18:[2,11]},{12:[1,79]},{11:45,12:[1,46],13:80},{17:[1,81]},{11:45,12:[1,46],13:82},{14:[1,84],18:[1,83]},{14:[2,26],18:[2,26]},{14:[2,20],18:[2,20]},{11:85,12:[1,46]},{11:52,12:[1,46],17:[1,53],23:51,26:86},{17:[1,87]},{11:52,12:[1,46],17:[1,53],23:51,26:88},{14:[1,90],18:[1,89]},{14:[2,13],18:[2,13]},{11:45,12:[1,46],13:91},{15:92,16:58,17:[1,59]},{17:[1,93]},{15:94,16:58,17:[1,59]},{14:[1,84],18:[1,95]},{11:52,12:[1,46],17:[1,53],23:51,26:96},{17:[1,97]},{11:52,12:[1,46],17:[1,53],23:51,26:98},{14:[1,90],18:[1,99]},{15:100,16:58,17:[1,59]},{17:[1,101]},{15:102,16:58,17:[1,59]},{14:[1,104],18:[1,103]},{14:[2,23],18:[2,23]},{15:105,16:58,17:[1,59]},{17:[1,73],24:106,25:72},{17:[1,107]},{17:[1,73],24:108,25:72},{5:[2,15]},{11:109,12:[1,46]},{12:[1,110],14:[2,7],18:[2,7]},{14:[1,78],18:[1,111]},{11:45,12:[1,46],13:112},{14:[1,78],18:[1,113]},{5:[2,27]},{11:52,12:[1,46],17:[1,53],23:114},{18:[1,115]},{14:[1,84],18:[1,116]},{11:52,12:[1,46],17:[1,53],23:51,26:117},{14:[1,84],18:[1,118]},{5:[2,32]},{16:119,17:[1,59]},{14:[1,78],18:[1,120]},{14:[1,90],18:[1,121]},{15:122,16:58,17:[1,59]},{14:[1,90],18:[1,123]},{5:[2,37]},{14:[1,84],18:[1,124]},{11:52,12:[1,46],17:[1,53],23:51,26:125},{14:[1,84],18:[1,126]},{5:[2,42]},{14:[1,90],18:[1,127]},{15:128,16:58,17:[1,59]},{14:[1,90],18:[1,129]},{5:[2,47]},{17:[1,73],25:130},{14:[1,90],18:[1,131]},{14:[1,104],18:[1,132]},{17:[1,73],24:133,25:72},{14:[1,104],18:[1,134]},{14:[2,10],18:[2,10]},{12:[1,135],14:[2,8],18:[2,8]},{5:[2,16]},{14:[1,78],18:[1,136]},{5:[2,18]},{14:[2,25],18:[2,25]},{14:[2,21],18:[2,21]},{5:[2,28]},{14:[1,84],18:[1,137]},{5:[2,29]},{14:[2,12],18:[2,12]},{14:[2,14],18:[2,14]},{5:[2,33]},{14:[1,90],18:[1,138]},{5:[2,34]},{5:[2,38]},{14:[1,84],18:[1,139]},{5:[2,39]},{5:[2,43]},{14:[1,90],18:[1,140]},{5:[2,44]},{14:[2,22],18:[2,22]},{14:[2,24],18:[2,24]},{5:[2,48]},{14:[1,104],18:[1,141]},{5:[2,49]},{14:[2,9],18:[2,9]},{5:[2,17]},{5:[2,30]},{5:[2,35]},{5:[2,40]},{5:[2,45]},{5:[2,50]}],
+defaultActions: {14:[2,1],15:[2,2],16:[2,3],17:[2,4],18:[2,5],19:[2,6],23:[2,19],27:[2,31],31:[2,36],35:[2,41],39:[2,46],43:[2,51],77:[2,15],83:[2,27],89:[2,32],95:[2,37],99:[2,42],103:[2,47],111:[2,16],113:[2,18],116:[2,28],118:[2,29],121:[2,33],123:[2,34],124:[2,38],126:[2,39],127:[2,43],129:[2,44],132:[2,48],134:[2,49],136:[2,17],137:[2,30],138:[2,35],139:[2,40],140:[2,45],141:[2,50]},
 parseError: function parseError(str, hash) {
     throw new Error(str);
 },
@@ -386,26 +434,32 @@ case 3:return 12
 break;
 case 4:return 19
 break;
-case 5:return 24
+case 5:return 27
 break;
-case 6:return 25
+case 6:return 28
 break;
-case 7:return 26
+case 7:return 29
 break;
-case 8:return 27
+case 8:return 30
 break;
-case 9:return 28
+case 9:return 31
 break;
 case 10:return 14
 break;
-case 11:return 5
+case 11:return 22
 break;
-case 12:return "INVALID"
+case 12:return 21
+break;
+case 13:return 20
+break;
+case 14:return 5
+break;
+case 15:return "INVALID"
 break;
 }
 };
-lexer.rules = [/^(?:\s+)/,/^(?:\()/,/^(?:\))/,/^(?:-?(([0-9]+\.?)|([0-9]*\.?[0-9]+)([eE][-+]?[0-9]+)?))/,/^(?:POINT\b)/,/^(?:LINESTRING\b)/,/^(?:POLYGON\b)/,/^(?:MULTIPOINT\b)/,/^(?:MULTILINESTRING\b)/,/^(?:MULTIPOLYGON\b)/,/^(?:,)/,/^(?:$)/,/^(?:.)/];
-lexer.conditions = {"INITIAL":{"rules":[0,1,2,3,4,5,6,7,8,9,10,11,12],"inclusive":true}};
+lexer.rules = [/^(?:\s+)/,/^(?:\()/,/^(?:\))/,/^(?:-?(([0-9]+\.?)|([0-9]*\.?[0-9]+)([eE][-+]?[0-9]+)?))/,/^(?:POINT\b)/,/^(?:LINESTRING\b)/,/^(?:POLYGON\b)/,/^(?:MULTIPOINT\b)/,/^(?:MULTILINESTRING\b)/,/^(?:MULTIPOLYGON\b)/,/^(?:,)/,/^(?:EMPTY\b)/,/^(?:M\b)/,/^(?:Z\b)/,/^(?:$)/,/^(?:.)/];
+lexer.conditions = {"INITIAL":{"rules":[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15],"inclusive":true}};
 return lexer;})()
 parser.lexer = lexer;
 function Parser () { this.yy = {}; }Parser.prototype = parser;parser.Parser = Parser;
