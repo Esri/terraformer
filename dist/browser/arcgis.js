@@ -22,7 +22,6 @@
   if(arguments[0] && typeof define === 'function' && define.amd) {
     this.Terraformer = arguments[0];
   }
-  console.log("PRE SOURCE", Terraformer);
   
   // This function flattens holes in multipolygons to one array of polygons
   function flattenHoles(array){
@@ -147,6 +146,5 @@
 
   exports.parse   = parse;
   exports.convert = convert;
-  console.log("POST SOURCE",Terraformer);
   return exports;
 }));
