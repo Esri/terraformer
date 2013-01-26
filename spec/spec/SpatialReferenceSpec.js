@@ -1,4 +1,4 @@
-xdescribe("Spatial Reference Converters", function(){
+describe("Spatial Reference Converters", function(){
   it("should convert a GeoJSON Point to Web Mercator", function(){
     var input = {
       "type": "Point",
