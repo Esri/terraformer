@@ -219,7 +219,6 @@ vows.describe('WKT Parsing').addBatch({
       return wkt.parse(multi_p);
     },
     'the point should be correctly converted to Loqi-GeoJSON internally': function (topic) {
-    console.dir(topic);
       assert.equal(topic.type, "MultiPolygon");
       assert.equal(topic.coordinates.length, 2);
       assert.equal(topic.coordinates[0][0][0][0], 30);
