@@ -1,10 +1,9 @@
 require([
   "dojo/query",
-  "terraformer/terraformer",
   "terraformer/arcgis",
   "terraformer/wkt",
   "esri/map"
-], function ($, Terraformer, TerraformerArcGIS, TerraformerWKT) {
+], function ($, TerraformerArcGIS, TerraformerWKT) {
   var map = new esri.Map("map", {
     basemap: "gray",
     center: [-122, 45],
@@ -14,9 +13,9 @@ require([
   function showOnMap(){
     // parse the input as json
     var input = $("#input").attr("value")[0];
-    
+
     // convert the wkt to internal representation
-    var primitive = TerraformerWKT.parser.parse(input);
+    var primitive = TerraformerWKT.parse(input);
 
     // convert the geojson object to a arcgis json representation
     var arcgis = TerraformerArcGIS.convert(primitive);

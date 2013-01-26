@@ -174,7 +174,38 @@ describe("ArcGIS Tools", function(){
     });
   });
 
-  it("should parse an ArcGIS Point in a Terraform GeoJSON Point", function() {
+  it("should convert a GeoJSON Feature into an ArcGIS Graphic JSON", function(){
+    var input = {
+      "type":"Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [ [41.8359375,71.015625],[56.953125,33.75],[21.796875,36.5625],[41.8359375,71.015625] ]
+        ]
+      },
+      "properties": {
+        "foo":"bar"
+      }
+    };
+
+    var output = Terraformer.ArcGIS.convert(input);
+
+    expect(output).toEqual({
+      "geometry":{
+        "rings":[
+          [ [41.8359375,71.015625],[56.953125,33.75],[21.796875,36.5625],[41.8359375,71.015625] ]
+        ],
+        "spatialReference":{
+          "wkid":4326
+        }
+      },
+      "attributes": {
+        "foo":"bar"
+      }
+    });
+  });
+
+  it("should parse an ArcGIS Point in a Terraformer GeoJSON Point", function() {
     var input = {
       "x": -66.796875,
       "y": 20.0390625,
@@ -189,7 +220,7 @@ describe("ArcGIS Tools", function(){
     expect(output).toBeInstanceOfClass(Terraformer.Point);
   });
 
-  it("should parse an ArcGIS Polyline in a Terraform GeoJSON LineString", function() {
+  it("should parse an ArcGIS Polyline in a Terraformer GeoJSON LineString", function() {
     var input = {
       "paths": [
         [ [6.6796875,47.8125],[-65.390625,52.3828125],[-52.3828125,42.5390625] ]
@@ -205,7 +236,7 @@ describe("ArcGIS Tools", function(){
     expect(output).toBeInstanceOfClass(Terraformer.LineString);
   });
 
-  it("should parse an ArcGIS Polygon in a Terraform GeoJSON Polygon", function() {
+  it("should parse an ArcGIS Polygon in a Terraformer GeoJSON Polygon", function() {
     var input = {
       "rings": [
         [ [41.8359375,71.015625],[56.953125,33.75],[21.796875,36.5625],[41.8359375,71.015625] ]
@@ -215,13 +246,13 @@ describe("ArcGIS Tools", function(){
       }
     };
 
-    output = Terraformer.ArcGIS.parse(input);
+    var output = Terraformer.ArcGIS.parse(input);
 
     expect(output.coordinates).toEqual([[ [41.8359375,71.015625],[56.953125,33.75],[21.796875,36.5625],[41.8359375,71.015625] ]]);
     expect(output).toBeInstanceOfClass(Terraformer.Polygon);
   });
 
-  it("should parse an ArcGIS Multipoint in a Terraform GeoJSON MultiPoint", function() {
+  it("should parse an ArcGIS Multipoint in a Terraformer GeoJSON MultiPoint", function() {
     var input = {
       "points":[ [41.8359375,71.015625],[56.953125,33.75],[21.796875,36.5625] ],
       "spatialReference":{
@@ -235,7 +266,7 @@ describe("ArcGIS Tools", function(){
     expect(output).toBeInstanceOfClass(Terraformer.MultiPoint);
   });
 
-  it("should parse an ArcGIS Polyline in a Terraform GeoJSON MultiLineString", function() {
+  it("should parse an ArcGIS Polyline in a Terraformer GeoJSON MultiLineString", function() {
     var input = {
       "paths":[
         [ [41.8359375,71.015625],[56.953125,33.75] ],
@@ -252,7 +283,7 @@ describe("ArcGIS Tools", function(){
     expect(output).toBeInstanceOfClass(Terraformer.MultiLineString);
   });
 
-  it("should parse an ArcGIS Polygon in a Terraform GeoJSON MultiPolygon", function() {
+  it("should parse an ArcGIS Polygon in a Terraformer GeoJSON MultiPolygon", function() {
     var input = {
       "rings":[
         [[-122.63,45.52],[-122.57,45.53],[-122.52,45.50],[-122.49,45.48],[-122.64,45.49],[-122.63,45.52],[-122.63,45.52]],
@@ -267,6 +298,44 @@ describe("ArcGIS Tools", function(){
 
     expect(output.coordinates).toEqual([[ [-122.63,45.52],[-122.57,45.53],[-122.52,45.50],[-122.49,45.48],[-122.64,45.49],[-122.63,45.52],[-122.63,45.52] ],[ [-83,35],[-74,35],[-74,41],[-83,41],[-83,35] ]]);
     expect(output).toBeInstanceOfClass(Terraformer.MultiPolygon);
+  });
+
+  it("should parse an ArcGIS Graphic into a Terraformer Feature", function(){
+    var input = {
+      "geometry": {
+        "rings": [
+          [ [41.8359375,71.015625],[56.953125,33.75],[21.796875,36.5625],[41.8359375,71.015625] ]
+        ],
+        "spatialReference": {
+          "wkid": 4326
+        }
+      },
+      "attributes": {
+        "foo": "bar"
+      }
+    };
+
+    output = Terraformer.ArcGIS.parse(input);
+
+    expect(output.geometry.coordinates).toEqual([[ [41.8359375,71.015625],[56.953125,33.75],[21.796875,36.5625],[41.8359375,71.015625] ]]);
+    expect(output.geometry.type).toEqual("Polygon");
+    expect(output).toBeInstanceOfClass(Terraformer.Feature);
+  });
+
+  it("should convert to WGS84/4326 while parsing", function(){
+    var input = {
+      "x": -13580977.876779145,
+      "y": 5621521.486191948,
+      "spatialReference": {
+        "wkid": 102100
+      }
+    };
+    var expectedOutput = {
+      "type": "Point",
+      "coordinates": [-122, 45]
+    };
+    var output = Terraformer.ArcGIS.parse(input);
+    expect(output.coordinates).toEqual([-121.99999999999794, 44.99999999999924]);
   });
 
 });
