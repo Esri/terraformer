@@ -165,6 +165,7 @@ module.exports = function(grunt) {
   // Register helpers
   grunt.registerHelper('wkt-parser', function() {
     var grammar = fs.readFileSync('./src/Parsers/WKT/partials/wkt.yy', 'utf8');
+    var convert = fs.readFileSync('./src/Parsers/WKT/partials/convert.js', 'utf8');
 
     var wrapper = fs.readFileSync('./src/Parsers/WKT/partials/module-source.js', 'utf8');
 
@@ -174,7 +175,7 @@ module.exports = function(grunt) {
     // generate source, ready to be written to disk
     var parserSource = parser.generate({ moduleType: "js" });
 
-    wrapper = wrapper.replace('"SOURCE";', parserSource);
+    wrapper = wrapper.replace('"SOURCE";', parserSource + convert);
 
     fs.writeFileSync("./src/Parsers/WKT/wkt.js", wrapper, "utf8");
     fs.writeFileSync("./dist/browser/wkt.js", wrapper, "utf8");
