@@ -6,8 +6,8 @@
     Terraformer = require('terraformer');
     exports = module.exports = factory();
   }else if(typeof define === 'function' && define.amd) {
-    // AMD. Register as an anonymous module.
-    define(factory);
+    // AMD. Register as an anonymous module and pass in Terraformer core as a requirement...
+    define(["terraformer/terraformer"],factory);
   } else {
     if (typeof root.Terraformer === "undefined") {
       root.Terraformer = {};
@@ -17,6 +17,12 @@
   }
 }(this, function() {
   var exports = { };
+
+  // if we are in AMD terraformer core got passed in as our first requirement so we should set it.
+  if(arguments[0] && typeof define === 'function' && define.amd) {
+    this.Terraformer = arguments[0];
+  }
+  console.log("PRE SOURCE", Terraformer);
   
   // This function flattens holes in multipolygons to one array of polygons
   function flattenHoles(array){
@@ -141,5 +147,6 @@
 
   exports.parse   = parse;
   exports.convert = convert;
+  console.log("POST SOURCE",Terraformer);
   return exports;
 }));
