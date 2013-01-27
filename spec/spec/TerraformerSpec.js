@@ -315,6 +315,39 @@ describe("Primitives", function(){
     it("should calculate convex hull", function(){
       expect(polygon.convexHull()).toEqual([ [ 100, 1 ], [ 100, 0 ], [ 101, 0 ], [ 101, 1 ] ]);
     });
+
+    it("should contain a point", function(){
+      expect(polygon.contains({type:"Point", coordinates: [ 100.5, 0.5 ]})).toEqual(true);
+    });
+  });
+
+  describe("Polygon with a Hole", function(){
+    beforeEach(function(){
+      polygon = new Terraformer.Polygon([
+        [
+          [100.0, 0.0],
+          [101.0, 0.0],
+          [101.0, 1.0],
+          [100.0, 1.0],
+          [100.0, 0.0]
+        ],
+        [
+          [100.2, 0.2],
+          [100.8, 0.2],
+          [100.8, 0.8],
+          [100.2, 0.8],
+          [100.2, 0.2]
+        ]
+      ]);
+    });
+
+    it("should contain a point when not in hole", function() {
+      expect(polygon.contains({type:"Point", coordinates: [100.1, 0.1]}));
+    });
+
+    it("should not contain a point when in hole", function() {
+      expect(polygon.contains({type:"Point", coordinates: [100.3, 0.3]}));
+    });
   });
 
   describe("MultiPolygon", function(){

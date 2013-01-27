@@ -354,8 +354,6 @@
     return q;
   }
 
-
-
   function convexHull(points) {
     // implementation of the Jarvis March algorithm
     // adapted from http://tixxit.wordpress.com/2009/12/09/jarvis-march/
@@ -388,6 +386,18 @@
     }
 
     return hull;
+  }
+
+  function coordinatesContainPoint(coordinates, point) {
+    var contains = false;
+    for(var i = -1, l = coordinates.length, j = l - 1; ++i < l; j = i) {
+      if (((coordinates[i][1] <= point[1] && point[1] < coordinates[j][1]) ||
+           (coordinates[j][1] <= point[1] && point[1] < coordinates[i][1])) &&
+          (point[0] < (coordinates[j][0] - coordinates[i][0]) * (point[1] - coordinates[i][1]) / (coordinates[j][1] - coordinates[i][1]) + coordinates[i][0])) {
+        contains = true;
+      }
+    }
+    return contains;
   }
 
   /*
@@ -699,6 +709,29 @@
   Polygon.prototype.removeVertex = function(remove){
     this.coordinates[0].splice(remove, 1);
     return this;
+  };
+  Polygon.prototype.contains = function(primitive) {
+    if (primitive.type !== "Point") {
+      throw new Error("Only points are supported");
+    }
+
+    if (primitive.coordinates && primitive.coordinates.length) {
+      if (this.coordinates && this.coordinates.length === 1) { // polygon with no holes
+        return coordinatesContainPoint(this.coordinates[0], primitive.coordinates);
+     } else { // polygon with holes
+      if (coordinatesContainPoint(this.coordinates[0], primitive.coordinates)) {
+        for (var i = 1; i < this.coordinates.length; i++) {
+          if (coordinatesContainPoint(this.coordinates[i], primitive.coordinates)) {
+            return false; // found in hole
+          }
+        }
+
+        return true;
+      } else {
+        return false;
+      }
+     }
+   }
   };
 
   /*
