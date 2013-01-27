@@ -139,6 +139,10 @@ describe("Primitives", function(){
     it("should calculate bounds", function(){
       expect(point.bbox).toEqual([45, 60, 45, 60]);
     });
+
+    it("should calculate convex hull", function(){
+      expect(point.convexHull()).toEqual([[45, 60]]);
+    });
   });
 
   describe("MultiPoint", function(){
@@ -192,6 +196,10 @@ describe("Primitives", function(){
     it("should calculate bounds", function(){
       expect(multiPoint.bbox).toEqual([-45, 0, 100, 122]);
     });
+
+    it("should calculate convex hull", function(){
+      expect(multiPoint.convexHull()).toEqual([[-45, 122], [100, 0]]);
+    });
   });
 
   describe("LineString", function(){
@@ -228,6 +236,10 @@ describe("Primitives", function(){
     it("should calculate bounds", function(){
       expect(lineString.bbox).toEqual([-45, 0, 100, 122]);
     });
+
+    it("should calculate convex hull", function(){
+      expect(lineString.convexHull()).toEqual([ [-45, 122], [100, 0]]);
+    });
   });
 
   describe("MultiLineString", function(){
@@ -258,6 +270,10 @@ describe("Primitives", function(){
 
     it("should calculate bounds", function(){
       expect(multiLineString.bbox).toEqual([-115, 40, -100, 55]);
+    });
+
+    it("should calculate convex hull", function(){
+      expect(multiLineString.convexHull()).toEqual([ [ -115, 55 ], [ -110, 45 ], [ -105, 40 ], [ -100, 40 ], [ -110, 55 ] ]);
     });
   });
 
@@ -295,6 +311,10 @@ describe("Primitives", function(){
     it("should calculate bounds", function(){
       expect(polygon.bbox).toEqual([100, 0, 101, 1]);
     });
+
+    it("should calculate convex hull", function(){
+      expect(polygon.convexHull()).toEqual([ [ 100, 1 ], [ 100, 0 ], [ 101, 0 ], [ 101, 1 ] ]);
+    });
   });
 
   describe("MultiPolygon", function(){
@@ -319,6 +339,10 @@ describe("Primitives", function(){
 
     it("should calculate bounds", function(){
       expect(multiPolygon.bbox).toEqual([100, 0, 103, 3]);
+    });
+
+    it("should calculate convex hull", function (){
+      expect(multiPolygon.convexHull()).toEqual([ [ 102, 3 ], [ 100, 1 ], [ 100, 0 ], [ 101, 0 ], [ 103, 2 ], [ 103, 3 ] ]);
     });
   });
 
