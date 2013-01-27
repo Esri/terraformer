@@ -50,24 +50,37 @@
   }
   */
   function GeoStore(options){
+    this.data = {};
     this.index = options.index || new Terraformer.RTree();
     this.backend = options.backend || new Terraformer.Stores.Memory();
     this.backend = options.deferred || Terraformer.Deferred;
-    options.data = options.data || [];
+    var data = options.data || [];
     while(data.length){
       this.add(options.data.shift());
     }
   }
 
+  // add the geojson object to the backend
+  // calculate the envelope and add it to the rtree
+  // should return a deferred
   GeoStore.prototype.add = function(geojson){
-    // add the geojson object to the backend
-    // calculate the envelope and add it to the rtree
-    // should return a deferred
+
+    // set a id or generate one
     var id = (geojson.id) ? geojson.id : guid();
+
+    // set a bounding box
     var bbox = (geojson.bbox) ? geojson.bbox() : Terraformer.Tools.calculateBounds(geojson);
+
+    // turn bounding box into a envelope
     var envelope = bboxToEnvelope(bbox);
-    this.backend.store(geojson, id);
+
+    // store the data (use the backends store method to decide how to do this.)
+    this.backend.store.call(this, geojson, id);
+
+    // index the data
     this.index.inset(envelope, id);
+
+    return this;
   };
 
   GeoStore.prototype.remove = function(query){

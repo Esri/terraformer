@@ -24,12 +24,11 @@
   }
 
   function MemoryStore(){
-    this.data = {};
   }
 
   MemoryStore.prototype.store = function(geojson, id){
     // store the data at id
-    this.data[id] = data;
+    this.data[id] = geojson;
   };
 
   return exports;
