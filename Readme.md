@@ -1,4 +1,4 @@
-# Terraformer
+# Terraformer [![](https://secure.travis-ci.org/geoloqi/Terraformer.png)](http://travis-ci.org/geoloqi/Terraformer)
 Terraformer is a small javascript library for working with GeoJSON. It is designed to be fast lightweight and usable in large numbers of environments including, browsers, AMD (require.js or Dojo), Node.js and inside Web Workers.
 
 * Convert to and from ArcGIS JSON Geometries, WKT and GeoJSON
