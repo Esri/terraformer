@@ -20,7 +20,7 @@ Terraformer on Node.js is split into multiple small packages for easy consumptio
     $ npm install terraformer-rtree
     $ npm install terraformer-wkt-parser
     $ npm install terraformer-arcgis-parser
-    
+
 ### Browsers
 
 Sample code and examples coming soon...
