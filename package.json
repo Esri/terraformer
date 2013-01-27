@@ -23,8 +23,5 @@
   ],
   "license": "MIT",
   "dependencies": {
-  },
-  "scripts": {
-    "test": "grunt jasmine"
   }
 }
