@@ -57,7 +57,7 @@
   }
 
   /*
-  Internal: Merge two objects togather.
+  Internal: Merge two objects together.
   */
   function mergeObjects (base, add) {
     add = add || {};
@@ -308,6 +308,98 @@
     return applyConverter(geojson, positionToGeographic);
   }
 
+
+  /*
+  Internal: -1,0,1 comparison function
+  */
+  function cmp(a, b) {
+    if(a < b) {
+      return -1;
+    } else if(a > b) {
+      return 1;
+    } else {
+      return 0;
+    }
+  }
+
+
+  /*
+  Internal: used to determine turn
+  */
+  function turn(p, q, r) {
+    // Returns -1, 0, 1 if p,q,r forms a right, straight, or left turn.
+    return cmp((q[0] - p[0]) * (r[1] - p[1]) - (r[0] - p[0]) * (q[1] - p[1]), 0);
+  }
+
+  /*
+  Internal: used to determine euclidean distance between two points
+  */
+  function euclideanDistance(p, q) {
+    // Returns the squared Euclidean distance between p and q.
+    var dx = q[0] - p[0];
+    var dy = q[1] - p[1];
+
+    return dx * dx + dy * dy;
+  }
+
+  function nextHullPoint(points, p) {
+    // Returns the next point on the convex hull in CCW from p.
+    var q = p;
+    for(var r in points) {
+      var t = turn(p, q, points[r]);
+      if(t === -1 || t === 0 && euclideanDistance(p, points[r]) > euclideanDistance(p, q)) {
+        q = points[r];
+      }
+    }
+    return q;
+  }
+
+  function convexHull(points) {
+    // implementation of the Jarvis March algorithm
+    // adapted from http://tixxit.wordpress.com/2009/12/09/jarvis-march/
+
+    if(points.length === 0) {
+      return [];
+    } else if(points.length === 1) {
+      return points;
+    }
+
+    function comp(p1, p2) {
+      if(p1[0] - p2[0] > p1[1] - p2[1]) {
+        return 1;
+      } else if(p1[0] - p2[0] < p1[1] - p2[1]) {
+        return -1;
+      } else {
+        return 0;
+      }
+    }
+
+    // Returns the points on the convex hull of points in CCW order.
+    var hull = [points.sort(comp)[0]];
+
+    for(var p = 0; p < hull.length; p++) {
+      var q = nextHullPoint(points, hull[p]);
+
+      if(q !== hull[0]) {
+        hull.push(q);
+      }
+    }
+
+    return hull;
+  }
+
+  function coordinatesContainPoint(coordinates, point) {
+    var contains = false;
+    for(var i = -1, l = coordinates.length, j = l - 1; ++i < l; j = i) {
+      if (((coordinates[i][1] <= point[1] && point[1] < coordinates[j][1]) ||
+           (coordinates[j][1] <= point[1] && point[1] < coordinates[i][1])) &&
+          (point[0] < (coordinates[j][0] - coordinates[i][0]) * (point[1] - coordinates[i][1]) / (coordinates[j][1] - coordinates[i][1]) + coordinates[i][0])) {
+        contains = true;
+      }
+    }
+    return contains;
+  }
+
   /*
   Internal: An array of variables that will be excluded form JSON objects.
   */
@@ -358,6 +450,44 @@
     },
     toGeographic: function(){
       return toGeographic(this);
+    },
+    convexHull: function(){
+      var coordinates = [ ], i, j;
+      if (this.type === 'Point') {
+        if (this.coordinates && this.coordinates.length > 0) {
+          return [ this.coordinates ];
+        } else {
+          return [ ];
+        }
+      } else if (this.type === 'LineString' || this.type === 'MultiPoint') {
+        if (this.coordinates && this.coordinates.length > 0) {
+          coordinates = this.coordinates;
+        } else {
+          return [ ];
+        }
+      } else if (this.type === 'Polygon' || this.type === 'MultiLineString') {
+        if (this.coordinates && this.coordinates.length > 0) {
+          for (i = 0; i < this.coordinates.length; i++) {
+            coordinates = coordinates.concat(this.coordinates[i]);
+          }
+        } else {
+          return [ ];
+        }
+      } else if (this.type === 'MultiPolygon') {
+        if (this.coordinates && this.coordinates.length > 0) {
+          for (i = 0; i < this.coordinates.length; i++) {
+            for (j = 0; j < this.coordinates[i].length; j++) {
+              coordinates = coordinates.concat(this.coordinates[i][j]);
+            }
+          }
+        } else {
+          return [ ];
+        }
+      } else {
+        throw new Error("Unable to get convex hull of " + this.type);
+      }
+
+      return convexHull(coordinates);
     },
     toJSON: function(){
       var obj = {};
@@ -579,6 +709,29 @@
   Polygon.prototype.removeVertex = function(remove){
     this.coordinates[0].splice(remove, 1);
     return this;
+  };
+  Polygon.prototype.contains = function(primitive) {
+    if (primitive.type !== "Point") {
+      throw new Error("Only points are supported");
+    }
+
+    if (primitive.coordinates && primitive.coordinates.length) {
+      if (this.coordinates && this.coordinates.length === 1) { // polygon with no holes
+        return coordinatesContainPoint(this.coordinates[0], primitive.coordinates);
+     } else { // polygon with holes
+      if (coordinatesContainPoint(this.coordinates[0], primitive.coordinates)) {
+        for (var i = 1; i < this.coordinates.length; i++) {
+          if (coordinatesContainPoint(this.coordinates[i], primitive.coordinates)) {
+            return false; // found in hole
+          }
+        }
+
+        return true;
+      } else {
+        return false;
+      }
+     }
+   }
   };
 
   /*
@@ -838,6 +991,8 @@
   exports.Tools.createCircle = createCircle;
 
   exports.Tools.calculateBounds = calculateBounds;
+  exports.Tools.coordinatesContainPoint = coordinatesContainPoint;
+  exports.Tools.convexHull = convexHull;
 
   exports.MercatorCRS = MercatorCRS;
   exports.GeographicCRS = GeographicCRS;
