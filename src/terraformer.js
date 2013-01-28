@@ -52,7 +52,7 @@
   }
 
   /*
-  Internal: Merge two objects togather.
+  Internal: Merge two objects together.
   */
   function mergeObjects (base, add) {
     add = add || {};
@@ -303,6 +303,98 @@
     return applyConverter(geojson, positionToGeographic);
   }
 
+
+  /*
+  Internal: -1,0,1 comparison function
+  */
+  function cmp(a, b) {
+    if(a < b) {
+      return -1;
+    } else if(a > b) {
+      return 1;
+    } else {
+      return 0;
+    }
+  }
+
+
+  /*
+  Internal: used to determine turn
+  */
+  function turn(p, q, r) {
+    // Returns -1, 0, 1 if p,q,r forms a right, straight, or left turn.
+    return cmp((q[0] - p[0]) * (r[1] - p[1]) - (r[0] - p[0]) * (q[1] - p[1]), 0);
+  }
+
+  /*
+  Internal: used to determine euclidean distance between two points
+  */
+  function euclideanDistance(p, q) {
+    // Returns the squared Euclidean distance between p and q.
+    var dx = q[0] - p[0];
+    var dy = q[1] - p[1];
+
+    return dx * dx + dy * dy;
+  }
+
+  function nextHullPoint(points, p) {
+    // Returns the next point on the convex hull in CCW from p.
+    var q = p;
+    for(var r in points) {
+      var t = turn(p, q, points[r]);
+      if(t === -1 || t === 0 && euclideanDistance(p, points[r]) > euclideanDistance(p, q)) {
+        q = points[r];
+      }
+    }
+    return q;
+  }
+
+  function convexHull(points) {
+    // implementation of the Jarvis March algorithm
+    // adapted from http://tixxit.wordpress.com/2009/12/09/jarvis-march/
+
+    if(points.length === 0) {
+      return [];
+    } else if(points.length === 1) {
+      return points;
+    }
+
+    function comp(p1, p2) {
+      if(p1[0] - p2[0] > p1[1] - p2[1]) {
+        return 1;
+      } else if(p1[0] - p2[0] < p1[1] - p2[1]) {
+        return -1;
+      } else {
+        return 0;
+      }
+    }
+
+    // Returns the points on the convex hull of points in CCW order.
+    var hull = [points.sort(comp)[0]];
+
+    for(var p = 0; p < hull.length; p++) {
+      var q = nextHullPoint(points, hull[p]);
+
+      if(q !== hull[0]) {
+        hull.push(q);
+      }
+    }
+
+    return hull;
+  }
+
+  function coordinatesContainPoint(coordinates, point) {
+    var contains = false;
+    for(var i = -1, l = coordinates.length, j = l - 1; ++i < l; j = i) {
+      if (((coordinates[i][1] <= point[1] && point[1] < coordinates[j][1]) ||
+           (coordinates[j][1] <= point[1] && point[1] < coordinates[i][1])) &&
+          (point[0] < (coordinates[j][0] - coordinates[i][0]) * (point[1] - coordinates[i][1]) / (coordinates[j][1] - coordinates[i][1]) + coordinates[i][0])) {
+        contains = true;
+      }
+    }
+    return contains;
+  }
+
   /*
   Internal: An array of variables that will be excluded form JSON objects.
   */
@@ -354,6 +446,44 @@
     toGeographic: function(){
       return toGeographic(this);
     },
+    convexHull: function(){
+      var coordinates = [ ], i, j;
+      if (this.type === 'Point') {
+        if (this.coordinates && this.coordinates.length > 0) {
+          return [ this.coordinates ];
+        } else {
+          return [ ];
+        }
+      } else if (this.type === 'LineString' || this.type === 'MultiPoint') {
+        if (this.coordinates && this.coordinates.length > 0) {
+          coordinates = this.coordinates;
+        } else {
+          return [ ];
+        }
+      } else if (this.type === 'Polygon' || this.type === 'MultiLineString') {
+        if (this.coordinates && this.coordinates.length > 0) {
+          for (i = 0; i < this.coordinates.length; i++) {
+            coordinates = coordinates.concat(this.coordinates[i]);
+          }
+        } else {
+          return [ ];
+        }
+      } else if (this.type === 'MultiPolygon') {
+        if (this.coordinates && this.coordinates.length > 0) {
+          for (i = 0; i < this.coordinates.length; i++) {
+            for (j = 0; j < this.coordinates[i].length; j++) {
+              coordinates = coordinates.concat(this.coordinates[i][j]);
+            }
+          }
+        } else {
+          return [ ];
+        }
+      } else {
+        throw new Error("Unable to get convex hull of " + this.type);
+      }
+
+      return convexHull(coordinates);
+    },
     toJSON: function(){
       var obj = {};
       for (var key in this) {
@@ -385,16 +515,14 @@
     if(input && input.type === "Point" && input.coordinates){
       extend(this, input);
     } else if(input && Array.isArray(input)) {
-      this.type = "Point";
       this.coordinates = input;
     } else if(args.length >= 2) {
-      this.type = "Point";
       this.coordinates = args;
-    } else if(!args.length) {
-      this.type = "Point";
     } else {
       throw "Terraformer: invalid input for Terraformer.Point";
     }
+
+    this.type = "Point";
 
     this.__defineGetter__("bbox", function(){
       return calculateBounds(this);
@@ -418,13 +546,12 @@
     if(input && input.type === "MultiPoint" && input.coordinates){
       extend(this, input);
     } else if(Array.isArray(input)) {
-      this.type = "MultiPoint";
       this.coordinates = input;
-    } else if(!input) {
-      this.type = "MultiPoint";
     } else {
       throw "Terraformer: invalid input for Terraformer.MultiPoint";
     }
+
+    this.type = "MultiPoint";
 
     this.__defineGetter__("bbox", function(){
       return calculateBounds(this);
@@ -474,13 +601,12 @@
     if(input && input.type === "LineString" && input.coordinates){
       extend(this, input);
     } else if(Array.isArray(input)) {
-      this.type = "LineString";
       this.coordinates = input;
-    } else if(!input) {
-      this.type = "LineString";
     } else {
       throw "Terraformer: invalid input for Terraformer.LineString";
     }
+
+    this.type = "LineString";
 
     this.__defineGetter__("bbox", function(){
       return calculateBounds(this);
@@ -515,13 +641,12 @@
     if(input && input.type === "MultiLineString" && input.coordinates){
       extend(this, input);
     } else if(Array.isArray(input)) {
-      this.type = "MultiLineString";
       this.coordinates = input;
-    } else if(!input) {
-      this.type = "MultiLineString";
     } else {
       throw "Terraformer: invalid input for Terraformer.MultiLineString";
     }
+
+    this.type = "MultiLineString";
 
     this.__defineGetter__("bbox", function(){
       return calculateBounds(this);
@@ -554,13 +679,12 @@
     if(input && input.type === "Polygon" && input.coordinates){
       extend(this, input);
     } else if(Array.isArray(input)) {
-      this.type = "Polygon";
       this.coordinates = input;
-    } else if(!input) {
-      this.type = "Polygon";
     } else {
       throw "Terraformer: invalid input for Terraformer.Polygon";
     }
+
+    this.type = "Polygon";
 
     this.__defineGetter__("bbox", function(){
       return calculateBounds(this);
@@ -581,6 +705,29 @@
     this.coordinates[0].splice(remove, 1);
     return this;
   };
+  Polygon.prototype.contains = function(primitive) {
+    if (primitive.type !== "Point") {
+      throw new Error("Only points are supported");
+    }
+
+    if (primitive.coordinates && primitive.coordinates.length) {
+      if (this.coordinates && this.coordinates.length === 1) { // polygon with no holes
+        return coordinatesContainPoint(this.coordinates[0], primitive.coordinates);
+     } else { // polygon with holes
+      if (coordinatesContainPoint(this.coordinates[0], primitive.coordinates)) {
+        for (var i = 1; i < this.coordinates.length; i++) {
+          if (coordinatesContainPoint(this.coordinates[i], primitive.coordinates)) {
+            return false; // found in hole
+          }
+        }
+
+        return true;
+      } else {
+        return false;
+      }
+     }
+   }
+  };
 
   /*
   GeoJSON MultiPolygon Class
@@ -595,13 +742,12 @@
     if(input && input.type === "MultiPolygon" && input.coordinates){
       extend(this, input);
     } else if(Array.isArray(input)) {
-      this.type = "MultiPolygon";
       this.coordinates = input;
-    } else if(!input) {
-      this.type = "MultiPolygon";
     } else {
       throw "Terraformer: invalid input for Terraformer.MultiPolygon";
     }
+
+    this.type = "MultiPolygon";
 
     this.__defineGetter__("bbox", function(){
       return calculateBounds(this);
@@ -639,13 +785,12 @@
     if(input && input.type === "Feature" && input.geometry){
       extend(this, input);
     } else if(input && input.type && input.coordinates) {
-      this.type = "Feature";
       this.geometry = input;
-    } else if(!input) {
-      this.type = "Feature";
     } else {
       throw "Terraformer: invalid input for Terraformer.Feature";
     }
+
+    this.type = "Feature";
 
     this.__defineGetter__("bbox", function(){
       return calculateBounds(this);
@@ -669,13 +814,12 @@
     if(input && input.type === "FeatureCollection" && input.features){
       extend(this, input);
     } else if(Array.isArray(input)) {
-      this.type = "FeatureCollection";
       this.features = input;
-    } else if(!input) {
-      this.type = "FeatureCollection";
     } else {
       throw "Terraformer: invalid input for Terraformer.FeatureCollection";
     }
+
+    this.type = "FeatureCollection";
 
     this.__defineGetter__('length', function () {
       return this.features ? this.features.length : 0;
@@ -718,16 +862,15 @@
     if(input && input.type === "GeometryCollection" && input.geometries){
       extend(this, input);
     } else if(Array.isArray(input)) {
-      this.type = "GeometryCollection";
       this.geometries = input;
     } else if(input.coordinates && input.type){
       this.type = "GeometryCollection";
       this.geometries = [input];
-    } else if(!input) {
-      this.type = "GeometryCollection";
     } else {
       throw "Terraformer: invalid input for Terraformer.GeometryCollection";
     }
+
+    this.type = "GeometryCollection";
 
     this.__defineGetter__('length', function () {
       return this.geometries ? this.geometries.length : 0;
@@ -843,6 +986,8 @@
   exports.Tools.createCircle = createCircle;
 
   exports.Tools.calculateBounds = calculateBounds;
+  exports.Tools.coordinatesContainPoint = coordinatesContainPoint;
+  exports.Tools.convexHull = convexHull;
 
   exports.MercatorCRS = MercatorCRS;
   exports.GeographicCRS = GeographicCRS;

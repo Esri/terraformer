@@ -1,9 +1,8 @@
 require([
   "dojo/query",
-  "terraformer/terraformer",
   "terraformer/arcgis",
   "esri/map"
-], function ($, Terraformer, TerraformerArcGIS) {
+], function ($, TerraformerArcGIS) {
   var map = new esri.Map("map", {
     basemap: "gray",
     center: [-122, 45],
