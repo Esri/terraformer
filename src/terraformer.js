@@ -986,6 +986,8 @@
   exports.Tools.createCircle = createCircle;
 
   exports.Tools.calculateBounds = calculateBounds;
+  exports.Tools.coordinatesContainPoint = coordinatesContainPoint;
+  exports.Tools.convexHull = convexHull;
 
   exports.MercatorCRS = MercatorCRS;
   exports.GeographicCRS = GeographicCRS;
