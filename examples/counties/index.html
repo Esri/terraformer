@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset=utf-8 />
+    <title>US Counties</title>
+    <script>
+      dojoConfig= {
+        async: true,
+        packages: [{
+          name: "terraformer",
+          location: "https://raw.github.com/geoloqi/Terraformer/master/dist/browser/"
+        }]
+      }
+    </script>
+    <link rel="stylesheet" href="http://serverapi.arcgisonline.com/jsapi/arcgis/3.3/js/esri/css/esri.css" />
+    <script src="http://serverapi.arcgisonline.com/jsapi/arcgis/3.3/" type="text/javascript"></script>
+    <script src="viewer.js"></script>
+    <style>
+      #map {
+        height: 400px;
+      }
+    </style>
+  </head>
+  <body>
+    <p>
+      This example uses an R-Tree index to attempt to determine the county you are in according to the HTML5 Geolocation API.  This will only find you if you are in the United States.
+    </p>
+    <div id="map"></div>
+    <button id="submit">Find my County</button>
+    <div>
+      <span id="whereami"></span>
+    </div>
+  </body>
+</html>
