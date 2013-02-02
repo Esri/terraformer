@@ -27,6 +27,6 @@ new RTree()
 insert(envelope, obj) // insert an envelope and an object
 remove(envelope, obj) // remove an envelope and an object
 search(envelope) // find all envelopes that could contain this envelope, returns an array
-get_tree() // returns a JSON representation of the tree
-set_tree(json) // sets the tree from a JSON representation
+serialize() // returns a JSON representation of the tree
+deserialize(json) // sets the tree from a JSON representation
 ```
