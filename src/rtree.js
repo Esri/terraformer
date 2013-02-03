@@ -357,7 +357,11 @@ var RTree = function (width) {
     var _search_subtree = function(rect, return_node, return_array, root, callback) {
       var hit_stack = []; // Contains the elements that overlap
       if (!RTree.Rectangle.overlap_rectangle(rect, root)) {
-        return (return_array);
+        if (callback) {
+          callback(null, return_array);
+        } else {
+          return return_array;
+        }
       }
 
       var load_callback = function(local_tree, local_node) {
