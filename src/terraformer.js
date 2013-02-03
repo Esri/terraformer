@@ -84,10 +84,10 @@
         return calculateBoundsFromNestedArrays(geojson.coordinates);
 
       case 'Polygon':
-        return calculateBoundsFromArray(geojson.coordinates[0]);
+        return calculateBoundsFromNestedArrays(geojson.coordinates);
 
       case 'MultiPolygon':
-        return calculateBoundsFromNestedArrays(geojson.coordinates);
+        return calculateBoundsFromNestedArrayOfArrays(geojson.coordinates);
 
       case 'Feature':
         return calculateBounds(geojson.geometry);
@@ -107,54 +107,124 @@
   Internal: Calculate an bounding box from an nested array of positions
   */
   function calculateBoundsFromNestedArrays (array) {
-    var extents = [], extent;
+    var x1 = null, x2 = null, y1 = null, y2 = null;
+    
+    for (var i = 0; i < array.length; i++) {
+      var inner = array[i];
+      
+      for (var j = 0; j < inner.length; j++) {
+        var lonlat = inner[j];
+      
+        var lon = lonlat[0];
+        var lat = lonlat[1];
+      
+        if (x1 === null) {
+          x1 = lon;
+        } else if (lon < x1) {
+          x1 = lon;
+        }
+      
+        if (x2 === null) {
+          x2 = lon;
+        } else if (lon > x2) {
+          x2 = lon;
+        }
 
-    for (var i = array.length - 1; i >= 0; i--) {
-      if(typeof array[i][0] === "number"){
-        extent = calculateBoundsFromArray(array);
-        extents.push([extent[0],extent[1]]);
-        extents.push([extent[2],extent[3]]);
-      } else if(typeof array[i][0] === "object"){
-        extent = calculateBoundsFromNestedArrays(array[i]);
-        extents.push([extent[0],extent[1]]);
-        extents.push([extent[2],extent[3]]);
+        if (y1 === null) {
+          y1 = lat;
+        } else if (lat < y1) {
+          y1 = lat;
+        }
+      
+        if (y2 === null) {
+          y2 = lat;
+        } else if (lat > y2) {
+          y2 = lat;
+        }
       }
     }
-    return calculateBoundsFromArray(extents);
+
+    return [x1, y1, x2, y2 ];
   }
 
   /*
-  Internal: Calculate an bounding box from an array of positions
+  Internal: Calculate a bounding box from an array of arrays of arrays
+  */
+  function calculateBoundsFromNestedArrayOfArrays (array) {
+    var x1 = null, x2 = null, y1 = null, y2 = null;
+  
+    for (var i = 0; i < array.length; i++) {
+      var inner = array[i];
+      
+      for (var j = 0; j < inner.length; j++) {
+        var innerinner = inner[j];
+        for (var k = 0; k < innerinner.length; k++) {
+          var lonlat = innerinner[k];
+        
+          var lon = lonlat[0];
+          var lat = lonlat[1];
+        
+          if (x1 === null) {
+            x1 = lon;
+          } else if (lon < x1) {
+            x1 = lon;
+          }
+        
+          if (x2 === null) {
+            x2 = lon;
+          } else if (lon > x2) {
+            x2 = lon;
+          }
+
+          if (y1 === null) {
+            y1 = lat;
+          } else if (lat < y1) {
+            y1 = lat;
+          }
+        
+          if (y2 === null) {
+            y2 = lat;
+          } else if (lat > y2) {
+            y2 = lat;
+          }
+        }
+      }
+    }
+
+    return [x1, y1, x2, y2];
+  }
+  
+  /*
+  Internal: Calculate a bounding box from an array of positions
   */
   function calculateBoundsFromArray (array) {
-    var x1, x2, y1, y2;
+    var x1 = null, x2 = null, y1 = null, y2 = null;
 
-    for (var i = array.length - 1; i >= 0; i--) {
+    for (var i = 0; i < array.length; i++) {
       var lonlat = array[i];
+      
       var lon = lonlat[0];
-
       var lat = lonlat[1];
-      if (x1 === undefined) {
+      
+      if (x1 === null) {
         x1 = lon;
       } else if (lon < x1) {
         x1 = lon;
       }
-
-      if (y1 === undefined) {
-        y1 = lat;
-      } else if (lat < y1) {
-        y1 = lat;
-      }
-
-      // define or smaller num
-      if (x2 === undefined) {
+      
+      if (x2 === null) {
         x2 = lon;
       } else if (lon > x2) {
         x2 = lon;
       }
 
-      // define or smaller num
-      if (y2 === undefined) {
+      if (y1 === null) {
+        y1 = lat;
+      } else if (lat < y1) {
+        y1 = lat;
+      }
+      
+      if (y2 === null) {
         y2 = lat;
       } else if (lat > y2) {
         y2 = lat;
@@ -841,7 +911,6 @@
   FeatureCollection.prototype.get = function(id){
     var found;
     this.forEach(function(feature){
-      console.log(feature.id, id);
       if(feature.id === id){
         found = feature;
       }
