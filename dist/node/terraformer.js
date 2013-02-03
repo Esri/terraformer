@@ -1,4 +1,4 @@
-/*! Terraformer JS - 0.0.1 - 2013-02-01
+/*! Terraformer JS - 0.0.1 - 2013-02-02
 *   https://github.com/geoloqi/Terraformer
 *   Copyright (c) 2013 Environmental Systems Research Institute, Inc.
 *   Licensed MIT */
