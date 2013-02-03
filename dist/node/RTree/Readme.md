@@ -16,7 +16,9 @@ A simple RTree implementation based off of `rtree.js`.  Uses `envelopes` to sear
     tree.insert({ x: 10, y: 10, w: 10, h: 10 }, 'good');
     
     // should return [ 'good' ]
-    var ret = tree.search({ x: 15, y: 15, w: 0, h: 0 });
+    tree.search({ x: 15, y: 15, w: 0, h: 0 }, function (results) {
+      // should return [ 'good' ]
+    });
 
 ## API Reference
 
@@ -26,7 +28,7 @@ new RTree()
 // instance methods
 insert(envelope, obj) // insert an envelope and an object
 remove(envelope, obj) // remove an envelope and an object
-search(envelope) // find all envelopes that could contain this envelope, returns an array
-get_tree() // returns a JSON representation of the tree
-set_tree(json) // sets the tree from a JSON representation
+search(envelope, callback) // find all envelopes that could contain this envelope, returns an array
+serialize() // returns a JSON representation of the tree
+deserialize(json) // sets the tree from a JSON representation
 ```
