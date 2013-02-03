@@ -354,126 +354,127 @@ var RTree = function (width) {
    * [ nodes | objects ] = _search_subtree(rectangle, [return node data], [array to fill], root to begin search at)
    * @private
    */
-    var _search_subtree = function(rect, return_node, return_array, root) {
-        var hit_stack = []; // Contains the elements that overlap
-        if (!RTree.Rectangle.overlap_rectangle(rect, root)) {
-          return (return_array);
-        }
+    var _search_subtree = function(rect, return_node, return_array, root, callback) {
+      var hit_stack = []; // Contains the elements that overlap
+      if (!RTree.Rectangle.overlap_rectangle(rect, root)) {
+        return (return_array);
+      }
 
-        var load_callback = function(local_tree, local_node) {
-            return function(data) {
-              local_tree._attach_data(local_node, data);
-            };
-        };
+      var load_callback = function(local_tree, local_node) {
+          return function(data) {
+            local_tree._attach_data(local_node, data);
+          };
+      };
 
-        hit_stack.push(root.nodes);
+      hit_stack.push(root.nodes);
 
-        do {
-          var nodes = hit_stack.pop();
+      do {
+        var nodes = hit_stack.pop();
 
-          for (var i = nodes.length - 1; i >= 0; i--) {
-            var ltree = nodes[i];
-            if (RTree.Rectangle.overlap_rectangle(rect, ltree)) {
-              if ("nodes" in ltree) { // Not a Leaf
-                hit_stack.push(ltree.nodes);
-              } else if ("leaf" in ltree) { // A Leaf !!
-                if (!return_node) {
-                  return_array.push(ltree.leaf);
-                } else {
-                  return_array.push(ltree);
-                }
+        for (var i = nodes.length - 1; i >= 0; i--) {
+          var ltree = nodes[i];
+          if (RTree.Rectangle.overlap_rectangle(rect, ltree)) {
+            if ("nodes" in ltree) { // Not a Leaf
+              hit_stack.push(ltree.nodes);
+            } else if ("leaf" in ltree) { // A Leaf !!
+              if (!return_node) {
+                return_array.push(ltree.leaf);
+              } else {
+                return_array.push(ltree);
               }
             }
           }
-        } while (hit_stack.length > 0);
+        }
+      } while (hit_stack.length > 0);
 
-        return (return_array);
-        };
+      if (callback) {
+        callback(null, return_array);
+      } else {
+        return return_array;
+      }
+    };
 
 /* non-recursive internal insert function
    * [] = _insert_subtree(rectangle, object to insert, root to begin insertion at)
    * @private
    */
     var _insert_subtree = function(node, root) {
-        var bc; // Best Current node
-        // Initial insertion is special because we resize the Tree and we don't
-        // care about any overflow (seriously, how can the first object overflow?)
-        if (root.nodes.length === 0) {
-          root.x = node.x;
-          root.y = node.y;
-          root.w = node.w;
-          root.h = node.h;
-          root.nodes.push(node);
-          return;
+      var bc; // Best Current node
+      // Initial insertion is special because we resize the Tree and we don't
+      // care about any overflow (seriously, how can the first object overflow?)
+      if (root.nodes.length === 0) {
+        root.x = node.x;
+        root.y = node.y;
+        root.w = node.w;
+        root.h = node.h;
+        root.nodes.push(node);
+        return;
+      }
+
+      // Find the best fitting leaf node
+      // choose_leaf returns an array of all tree levels (including root)
+      // that were traversed while trying to find the leaf
+      var tree_stack = _choose_leaf_subtree(node, root);
+      var ret_obj = node; //{x:rect.x,y:rect.y,w:rect.w,h:rect.h, leaf:obj};
+      // Walk back up the tree resizing and inserting as needed
+      do {
+        //handle the case of an empty node (from a split)
+        if (bc && "nodes" in bc && bc.nodes.length === 0) {
+          var pbc = bc; // Past bc
+          bc = tree_stack.pop();
+          for (var t = 0; t < bc.nodes.length; t++) {
+            if (bc.nodes[t] === pbc || bc.nodes[t].nodes.length === 0) {
+              bc.nodes.splice(t, 1);
+              break;
+            }
+          }
+        } else {
+          bc = tree_stack.pop();
         }
 
-        // Find the best fitting leaf node
-        // choose_leaf returns an array of all tree levels (including root)
-        // that were traversed while trying to find the leaf
-        var tree_stack = _choose_leaf_subtree(node, root);
-        var ret_obj = node; //{x:rect.x,y:rect.y,w:rect.w,h:rect.h, leaf:obj};
-        // Walk back up the tree resizing and inserting as needed
-        do {
-          //handle the case of an empty node (from a split)
-          if (bc && "nodes" in bc && bc.nodes.length === 0) {
-            var pbc = bc; // Past bc
-            bc = tree_stack.pop();
-            for (var t = 0; t < bc.nodes.length; t++) {
-              if (bc.nodes[t] === pbc || bc.nodes[t].nodes.length === 0) {
-                bc.nodes.splice(t, 1);
-                break;
-              }
+        // If there is data attached to this ret_obj
+        if ("leaf" in ret_obj || "nodes" in ret_obj || Array.isArray(ret_obj)) {
+          // Do Insert
+          if (Array.isArray(ret_obj)) {
+            for (var ai = 0; ai < ret_obj.length; ai++) {
+              RTree.Rectangle.expand_rectangle(bc, ret_obj[ai]);
             }
+            bc.nodes = bc.nodes.concat(ret_obj);
           } else {
-            bc = tree_stack.pop();
+            RTree.Rectangle.expand_rectangle(bc, ret_obj);
+            bc.nodes.push(ret_obj); // Do Insert
           }
 
-          // If there is data attached to this ret_obj
-          if ("leaf" in ret_obj || "nodes" in ret_obj || Array.isArray(ret_obj)) {
-            // Do Insert
-            if (Array.isArray(ret_obj)) {
-              for (var ai = 0; ai < ret_obj.length; ai++) {
-                RTree.Rectangle.expand_rectangle(bc, ret_obj[ai]);
-              }
-              bc.nodes = bc.nodes.concat(ret_obj);
-            } else {
-              RTree.Rectangle.expand_rectangle(bc, ret_obj);
-              bc.nodes.push(ret_obj); // Do Insert
-            }
-
-            if (bc.nodes.length <= _Max_Width) { // Start Resizeing Up the Tree
-              ret_obj = {
-                x: bc.x,
-                y: bc.y,
-                w: bc.w,
-                h: bc.h
-              };
-            } else { // Otherwise Split this Node
-              // linear_split() returns an array containing two new nodes
-              // formed from the split of the previous node's overflow
-              var a = _linear_split(bc.nodes);
-              ret_obj = a; //[1];
-              if (tree_stack.length < 1) { // If are splitting the root..
-                bc.nodes.push(a[0]);
-                tree_stack.push(bc); // Reconsider the root element
-                ret_obj = a[1];
-              }
-/*else {
-            delete bc;
-          }*/
-            }
-          } else { // Otherwise Do Resize
-            //Just keep applying the new bounding rectangle to the parents..
-            RTree.Rectangle.expand_rectangle(bc, ret_obj);
+          if (bc.nodes.length <= _Max_Width) { // Start Resizeing Up the Tree
             ret_obj = {
               x: bc.x,
               y: bc.y,
               w: bc.w,
               h: bc.h
             };
+          } else { // Otherwise Split this Node
+            // linear_split() returns an array containing two new nodes
+            // formed from the split of the previous node's overflow
+            var a = _linear_split(bc.nodes);
+            ret_obj = a; //[1];
+            if (tree_stack.length < 1) { // If are splitting the root..
+              bc.nodes.push(a[0]);
+              tree_stack.push(bc); // Reconsider the root element
+              ret_obj = a[1];
+            }
           }
-        } while (tree_stack.length > 0);
-        };
+        } else { // Otherwise Do Resize
+          //Just keep applying the new bounding rectangle to the parents..
+          RTree.Rectangle.expand_rectangle(bc, ret_obj);
+          ret_obj = {
+            x: bc.x,
+            y: bc.y,
+            w: bc.w,
+            h: bc.h
+          };
+        }
+      } while (tree_stack.length > 0);
+    };
 
 /* returns a JSON representation of the tree
    * @public
@@ -497,32 +498,18 @@ var RTree = function (width) {
    * [ nodes | objects ] = RTree.search(rectangle, [return node data], [array to fill])
    * @public
    */
-    this.search = function(rect, return_node, return_array) {
-      var args = Array.prototype.slice.call(arguments);
+    this.search = function(rect, callback) {
+      var args = [ rect, false, [ ], _T, callback ];
 
-      if (args.length < 1) {
+      if (rect === undefined) {
         throw "Wrong number of arguments. RT.Search requires at least a bounding rectangle.";
       }
 
-      switch (args.length) {
-      case 1:
-        args[1] = false; // Add an "return node" flag - may be removed in future
-        args[2] = []; // Add an empty array to contain results
-        args[3] = _T; // Add root node to end of argument list
-        break;
-
-      case 2:
-        args[2] = []; // Add an empty array to contain results
-        args[3] = _T; // Add root node to end of argument list
-        break;
-
-      case 3:
-        args[3] = _T; // Add root node to end of argument list
-        break;
+      if (callback) {
+        _search_subtree.apply(this, args);
+      } else {
+        return _search_subtree.apply(this, args);
       }
-      args.length = 4;
-
-      return (_search_subtree.apply(this, args));
     };
 
 /* partially-recursive toJSON function
