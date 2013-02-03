@@ -1074,6 +1074,7 @@
 
   exports.Tools.calculateBounds = calculateBounds;
   exports.Tools.coordinatesContainPoint = coordinatesContainPoint;
+  exports.Tools.polygonContainsPoint = polygonContainsPoint;
   exports.Tools.convexHull = convexHull;
 
   exports.MercatorCRS = MercatorCRS;
