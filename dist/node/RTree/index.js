@@ -495,19 +495,17 @@ var RTree = function (width) {
         } while (tree_stack.length > 0);
         };
 
-/* quick 'n' dirty function for plugins or manually drawing the tree
-   * [ tree ] = RTree.get_tree(): returns the raw tree data. useful for adding
+/* returns a JSON representation of the tree
    * @public
    */
-    this.get_tree = function() {
+    this.serialize = function() {
       return _T;
     };
 
-/* quick 'n' dirty function for plugins or manually loading the tree
-   * [ tree ] = RTree.set_tree(sub-tree, where to attach): returns the raw tree data. useful for adding
+/* accepts a JSON representation of the tree and inserts it
    * @public
    */
-    this.set_tree = function(new_tree, where) {
+    this.deserialize = function(new_tree, where) {
       if (!where) {
         where = _T;
       }
