@@ -1,4 +1,4 @@
-/*! Terraformer JS - 0.0.1 - 2013-02-02
+/*! Terraformer JS - 0.0.1 - 2013-02-03
 *   https://github.com/geoloqi/Terraformer
 *   Copyright (c) 2013 Environmental Systems Research Institute, Inc.
 *   Licensed MIT */
@@ -470,6 +470,27 @@
     return contains;
   }
 
+  function polygonContainsPoint(polygon, point) {
+    if (polygon && polygon.length) {
+      if (polygon.length === 1) { // polygon with no holes
+        return coordinatesContainPoint(polygon[0], point);
+      } else { // polygon with holes
+        if (coordinatesContainPoint(polygon[0], point)) {
+          for (var i = 1; i < polygon.length; i++) {
+            if (coordinatesContainPoint(polygon[i], point)) {
+              return false; // found in hole
+            }
+          }
+
+          return true;
+        } else {
+          return false;
+        }
+      }
+    } else {
+      return false;
+    }
+  }
   /*
   Internal: An array of variables that will be excluded form JSON objects.
   */
@@ -785,23 +806,7 @@
       throw new Error("Only points are supported");
     }
 
-    if (primitive.coordinates && primitive.coordinates.length) {
-      if (this.coordinates && this.coordinates.length === 1) { // polygon with no holes
-        return coordinatesContainPoint(this.coordinates[0], primitive.coordinates);
-     } else { // polygon with holes
-      if (coordinatesContainPoint(this.coordinates[0], primitive.coordinates)) {
-        for (var i = 1; i < this.coordinates.length; i++) {
-          if (coordinatesContainPoint(this.coordinates[i], primitive.coordinates)) {
-            return false; // found in hole
-          }
-        }
-
-        return true;
-      } else {
-        return false;
-      }
-     }
-   }
+    return polygonContainsPoint(this.coordinates, primitive.coordinates);
   };
 
   /*
@@ -839,6 +844,19 @@
     for (var i = 0; i < this.coordinates.length; i++) {
       func.apply(this, [this.coordinates[i], i, this.coordinates ]);
     }
+  };
+  MultiPolygon.prototype.contains = function(primitive) {
+    if (primitive.type !== "Point") {
+      throw new Error("Only points are supported");
+    }
+
+    for (var i = 0; i < this.coordinates.length; i++) {
+      if (polygonContainsPoint(this.coordinates[i], primitive.coordinates)) {
+        return true;
+      }
+    }
+
+    return false;
   };
 
   /*
@@ -1061,6 +1079,7 @@
 
   exports.Tools.calculateBounds = calculateBounds;
   exports.Tools.coordinatesContainPoint = coordinatesContainPoint;
+  exports.Tools.polygonContainsPoint = polygonContainsPoint;
   exports.Tools.convexHull = convexHull;
 
   exports.MercatorCRS = MercatorCRS;

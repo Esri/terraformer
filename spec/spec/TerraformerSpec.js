@@ -377,6 +377,10 @@ describe("Primitives", function(){
     it("should calculate convex hull", function (){
       expect(multiPolygon.convexHull()).toEqual([ [ 102, 3 ], [ 100, 1 ], [ 100, 0 ], [ 101, 0 ], [ 103, 2 ], [ 103, 3 ] ]);
     });
+
+    it("should contain a point", function() {
+      expect(multiPolygon.contains(new Terraformer.Point([102.5, 2.5]))).toEqual(true);
+    });
   });
 
   describe("Circle", function(){
