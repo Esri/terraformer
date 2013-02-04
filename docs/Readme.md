@@ -31,18 +31,18 @@ Writing code is easy too:
 
 ### Basics
 
-* (Primitives)[Primitives.md]
+* [Primitives](Primitives.md)
 
 ### Parsers
 
-* (ArcGIS)[ArcGIS.md]
-* (Well Known Text)[WKT.md]
-* (GeoJSON)[GeoJSON.md]
+* [ArcGIS](ArcGIS.md)
+* [Well Known Text](WKT.md)
+* [GeoJSON](GeoJSON.md)
 
 ### Indexes
 
-* (Indexes)[Indexes.md]
+* [Indexes](Indexes.md)
 
 ### Tools
 
-* (Tools)[Tools.md]
+* [Tools](Tools.md)
