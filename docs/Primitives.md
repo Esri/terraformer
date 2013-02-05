@@ -142,9 +142,78 @@ A `MultiPoint` is a collection of multiple `Points`.
 
 ### Instantiation
 
+    // create an empty MultiLineString
+    var mls = new Terraformer.MultiLineString();
+    
+    // create a MultiLineString from an Array
+    var mls = new Terraformer.MultiLineString([ [ [ 100, 1 ], [ 200, 10 ] ], [ [ 30, 10 ], [ 10, 18 ] ] ]);
+    
+    // create a MultiLineString from GeoJSON
+    var mls = new Terraformer.MultiLineString({
+        "type": "MultiLineString",
+        "coordinates": [
+            [ [100.0, 0.0], [101.0, 1.0] ],
+            [ [102.0, 2.0], [103.0, 3.0] ]
+        ]
+    });
+
+
+### Iterating
+
+    // iterate through all segments
+    mls.forEach(function (segment, index, coordinates) {
+      // do something cool
+    });
+
+
 ## Polygon
 
 ### Instantiation
+
+    // create an empty Polygon
+    var poly = new Terraformer.Polygon();
+    
+    // create a Polygon from an Array (no holes)
+    var poly = new Terraformer.Polygon([
+        [ [100.0, 0.0], [101.0, 0.0], [101.0, 1.0], [100.0, 1.0], [100.0, 0.0] ]
+    ]);
+    
+    // create a Polygon from GeoJSON (with holes)
+    var poly = new Terraformer.Polygon({
+        "type": "Polygon",
+        "coordinates": [
+            [ [100.0, 0.0], [101.0, 0.0], [101.0, 1.0], [100.0, 1.0], [100.0, 0.0] ],
+            [ [100.2, 0.2], [100.8, 0.2], [100.8, 0.8], [100.2, 0.8], [100.2, 0.2] ]
+        ]
+    });
+
+### Add Vertex
+
+    // add a vertex at the end
+    poly.addVertex([ 10, 10 ]);
+
+### Insert Vertex
+
+    // insert a vertex before a specified index
+    poly.insertVertex([ 10, 10 ], 1);
+
+### Remove Vertex
+
+    // remove a vertex at a specified index
+    poly.removeVertex(1);
+
+### Contains
+
+`contains` checks to see if a Primitive is contained within the Primitive.  Currently, it will only operate on a `Point`, but does check to make sure that the `Point` is contained only in the Polygon area, and not within a hole.
+
+    // create a point
+    var point = new Terraformer.Point([ 10, 10 ]);
+    
+    // create a polygon
+    var poly = new Terraformer.Polygon([ [ [ 0, 0 ], [ 0, 20 ], [ 20, 20 ], [  20, 0 ] ] ]);
+    
+    // check the results
+    poly.contains(point); // should be true
 
 ## MultiPolygon
 
