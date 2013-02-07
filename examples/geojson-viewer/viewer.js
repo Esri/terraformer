@@ -2,7 +2,7 @@ require([
   "dojo/query",
   "terraformer/arcgis",
   "esri/map"
-], function (query, TerraformerArcGIS) {
+], function ($, TerraformerArcGIS) {
   var map = new esri.Map("map", {
     basemap: "gray",
     center: [-122, 45],
@@ -11,7 +11,7 @@ require([
 
   function showOnMap(){
     // parse the input as json
-    var input = JSON.parse(query("#input").attr("value")[0]);
+    var input = JSON.parse($("#input").attr("value")[0]);
 
     // convert teh geojson object to a arcgis json representation
     var arcgis = TerraformerArcGIS.convert(input);
