@@ -204,7 +204,7 @@ A `MultiPoint` is a collection of multiple `Points`.
 
 ### Contains
 
-`contains` checks to see if a Primitive is contained within the Primitive.  Currently, it will only operate on a `Point`, but does check to make sure that the `Point` is contained only in the Polygon area, and not within a hole.
+`contains` checks to see if a Primitive is contained within the Polygon  Currently, it will only operate on a `Point`, but does check to make sure that the `Point` is contained only in the Polygon area, and not within a hole.
 
     // create a point
     var point = new Terraformer.Point([ 10, 10 ]);
@@ -218,6 +218,47 @@ A `MultiPoint` is a collection of multiple `Points`.
 ## MultiPolygon
 
 ### Instantiation
+
+    // create an empty MultiPolygon
+    var mp = new Terraformer.MultiPolygon();
+    
+    // create a MultiPolygon from an Array
+    var mp = new Terraformer.MultiPolygon([
+      [
+        [ [100.0, 0.0], [101.0, 0.0], [101.0, 1.0], [100.0, 1.0], [100.0, 0.0] ]
+      ]
+    ]);
+    
+    // create a MultiPolygon from GeoJSON 
+    var mp = new Terraformer.MultiPolygon({
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [ [100.0, 0.0], [101.0, 0.0], [101.0, 1.0], [100.0, 1.0], [100.0, 0.0] ],
+            [ [100.2, 0.2], [100.8, 0.2], [100.8, 0.8], [100.2, 0.8], [100.2, 0.2] ]
+          ]
+        ]
+    });
+
+### Iterating
+
+    // iterate through all polygons
+    mp.forEach(function (polygon, index, coordinates) {
+      // do something cool
+    });
+
+### Contains
+
+`contains` checks to see if a Primitive is contained within the MultiPolygon  Currently, it will only operate on a `Point`, but does check to make sure that the `Point` is contained only in a Polygon area of the MultiPolygon, and not within a hole.
+
+    // create a point
+    var point = new Terraformer.Point([ 10, 10 ]);
+    
+    // create a multipolygon
+    var mp = new Terraformer.MultiPolygon([ [ [ [ 0, 0 ], [ 0, 20 ], [ 20, 20 ], [  20, 0 ] ] ] ]);
+    
+    // check the results
+    mp.contains(point); // should be true
 
 ## Feature
 
