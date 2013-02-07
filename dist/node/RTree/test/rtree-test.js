@@ -45,6 +45,21 @@ vows.describe('RTree').addBatch({
       assert.equal(topic[0], 'good', 'data is good');
     }
   },
+  'When search is called with a callback': {
+    topic: function () {
+      var tree = new rtree.RTree();
+
+      tree.insert({ x: 10, y: 10, w: 10, h: 10 }, 'good');
+      tree.insert({ x: 100, y: 100, w: 10, h: 10 }, 'bad');
+
+      tree.search({ x: 15, y: 15, w: 0, h: 0 }, this.callback);
+    },
+    'the correct Entry is returned': function (err, topic) {
+      assert.notEqual(topic, undefined, 'topic is not undefined');
+      assert.equal(topic.length, 1, 'topic is an array of 1');
+      assert.equal(topic[0], 'good', 'data is good');
+    }
+  },
   'Given an RTree with Multiple Entries and a Point that is not Within Those Entries': {
     topic: function () {
       var tree = new rtree.RTree();
@@ -75,14 +90,14 @@ vows.describe('RTree').addBatch({
       assert.equal(topic.length, 0, 'topic is an array of 0');
     }
   },
-  'When Calling get_tree()': {
+  'When Calling serialize()': {
     topic: function () {
       var tree = new rtree.RTree();
 
       tree.insert({ x: 10, y: 10, w: 10, h: 10 }, 'foo');
       tree.insert({ x: 100, y: 100, w: 10, h: 10 }, 'bar');
 
-      return tree.get_tree();
+      return tree.serialize();
     },
     'a Tree is returned': function (topic) {
       var inner = {
@@ -112,7 +127,7 @@ vows.describe('RTree').addBatch({
       assert.deepEqual(topic, inner, 'the correct JSON is generated');
     }
   },
-  'When a Tree is Set via set_tree() and a searc() Occurs': {
+  'When a Tree is Set via deserialize() and a searc() Occurs': {
     topic: function () {
       var inner = {
         x: 10,
@@ -140,7 +155,7 @@ vows.describe('RTree').addBatch({
 
       var tree = new rtree.RTree();
 
-      tree.set_tree(inner);
+      tree.deserialize(inner);
 
       return tree.search({ x: 15, y: 15, w: 0, h: 0 });
     },

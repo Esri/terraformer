@@ -84,10 +84,10 @@
         return calculateBoundsFromNestedArrays(geojson.coordinates);
 
       case 'Polygon':
-        return calculateBoundsFromArray(geojson.coordinates[0]);
+        return calculateBoundsFromNestedArrays(geojson.coordinates);
 
       case 'MultiPolygon':
-        return calculateBoundsFromNestedArrays(geojson.coordinates);
+        return calculateBoundsFromNestedArrayOfArrays(geojson.coordinates);
 
       case 'Feature':
         return calculateBounds(geojson.geometry);
@@ -107,54 +107,124 @@
   Internal: Calculate an bounding box from an nested array of positions
   */
   function calculateBoundsFromNestedArrays (array) {
-    var extents = [], extent;
+    var x1 = null, x2 = null, y1 = null, y2 = null;
+    
+    for (var i = 0; i < array.length; i++) {
+      var inner = array[i];
+      
+      for (var j = 0; j < inner.length; j++) {
+        var lonlat = inner[j];
+      
+        var lon = lonlat[0];
+        var lat = lonlat[1];
+      
+        if (x1 === null) {
+          x1 = lon;
+        } else if (lon < x1) {
+          x1 = lon;
+        }
+      
+        if (x2 === null) {
+          x2 = lon;
+        } else if (lon > x2) {
+          x2 = lon;
+        }
 
-    for (var i = array.length - 1; i >= 0; i--) {
-      if(typeof array[i][0] === "number"){
-        extent = calculateBoundsFromArray(array);
-        extents.push([extent[0],extent[1]]);
-        extents.push([extent[2],extent[3]]);
-      } else if(typeof array[i][0] === "object"){
-        extent = calculateBoundsFromNestedArrays(array[i]);
-        extents.push([extent[0],extent[1]]);
-        extents.push([extent[2],extent[3]]);
+        if (y1 === null) {
+          y1 = lat;
+        } else if (lat < y1) {
+          y1 = lat;
+        }
+      
+        if (y2 === null) {
+          y2 = lat;
+        } else if (lat > y2) {
+          y2 = lat;
+        }
       }
     }
-    return calculateBoundsFromArray(extents);
+
+    return [x1, y1, x2, y2 ];
   }
 
   /*
-  Internal: Calculate an bounding box from an array of positions
+  Internal: Calculate a bounding box from an array of arrays of arrays
+  */
+  function calculateBoundsFromNestedArrayOfArrays (array) {
+    var x1 = null, x2 = null, y1 = null, y2 = null;
+  
+    for (var i = 0; i < array.length; i++) {
+      var inner = array[i];
+      
+      for (var j = 0; j < inner.length; j++) {
+        var innerinner = inner[j];
+        for (var k = 0; k < innerinner.length; k++) {
+          var lonlat = innerinner[k];
+        
+          var lon = lonlat[0];
+          var lat = lonlat[1];
+        
+          if (x1 === null) {
+            x1 = lon;
+          } else if (lon < x1) {
+            x1 = lon;
+          }
+        
+          if (x2 === null) {
+            x2 = lon;
+          } else if (lon > x2) {
+            x2 = lon;
+          }
+
+          if (y1 === null) {
+            y1 = lat;
+          } else if (lat < y1) {
+            y1 = lat;
+          }
+        
+          if (y2 === null) {
+            y2 = lat;
+          } else if (lat > y2) {
+            y2 = lat;
+          }
+        }
+      }
+    }
+
+    return [x1, y1, x2, y2];
+  }
+  
+  /*
+  Internal: Calculate a bounding box from an array of positions
   */
   function calculateBoundsFromArray (array) {
-    var x1, x2, y1, y2;
+    var x1 = null, x2 = null, y1 = null, y2 = null;
 
-    for (var i = array.length - 1; i >= 0; i--) {
+    for (var i = 0; i < array.length; i++) {
       var lonlat = array[i];
+      
       var lon = lonlat[0];
-
       var lat = lonlat[1];
-      if (x1 === undefined) {
+      
+      if (x1 === null) {
         x1 = lon;
       } else if (lon < x1) {
         x1 = lon;
       }
-
-      if (y1 === undefined) {
-        y1 = lat;
-      } else if (lat < y1) {
-        y1 = lat;
-      }
-
-      // define or smaller num
-      if (x2 === undefined) {
+      
+      if (x2 === null) {
         x2 = lon;
       } else if (lon > x2) {
         x2 = lon;
       }
 
-      // define or smaller num
-      if (y2 === undefined) {
+      if (y1 === null) {
+        y1 = lat;
+      } else if (lat < y1) {
+        y1 = lat;
+      }
+      
+      if (y2 === null) {
         y2 = lat;
       } else if (lat > y2) {
         y2 = lat;
@@ -395,6 +465,27 @@
     return contains;
   }
 
+  function polygonContainsPoint(polygon, point) {
+    if (polygon && polygon.length) {
+      if (polygon.length === 1) { // polygon with no holes
+        return coordinatesContainPoint(polygon[0], point);
+      } else { // polygon with holes
+        if (coordinatesContainPoint(polygon[0], point)) {
+          for (var i = 1; i < polygon.length; i++) {
+            if (coordinatesContainPoint(polygon[i], point)) {
+              return false; // found in hole
+            }
+          }
+
+          return true;
+        } else {
+          return false;
+        }
+      }
+    } else {
+      return false;
+    }
+  }
   /*
   Internal: An array of variables that will be excluded form JSON objects.
   */
@@ -710,23 +801,7 @@
       throw new Error("Only points are supported");
     }
 
-    if (primitive.coordinates && primitive.coordinates.length) {
-      if (this.coordinates && this.coordinates.length === 1) { // polygon with no holes
-        return coordinatesContainPoint(this.coordinates[0], primitive.coordinates);
-     } else { // polygon with holes
-      if (coordinatesContainPoint(this.coordinates[0], primitive.coordinates)) {
-        for (var i = 1; i < this.coordinates.length; i++) {
-          if (coordinatesContainPoint(this.coordinates[i], primitive.coordinates)) {
-            return false; // found in hole
-          }
-        }
-
-        return true;
-      } else {
-        return false;
-      }
-     }
-   }
+    return polygonContainsPoint(this.coordinates, primitive.coordinates);
   };
 
   /*
@@ -764,6 +839,19 @@
     for (var i = 0; i < this.coordinates.length; i++) {
       func.apply(this, [this.coordinates[i], i, this.coordinates ]);
     }
+  };
+  MultiPolygon.prototype.contains = function(primitive) {
+    if (primitive.type !== "Point") {
+      throw new Error("Only points are supported");
+    }
+
+    for (var i = 0; i < this.coordinates.length; i++) {
+      if (polygonContainsPoint(this.coordinates[i], primitive.coordinates)) {
+        return true;
+      }
+    }
+
+    return false;
   };
 
   /*
@@ -841,7 +929,6 @@
   FeatureCollection.prototype.get = function(id){
     var found;
     this.forEach(function(feature){
-      console.log(feature.id, id);
       if(feature.id === id){
         found = feature;
       }
@@ -987,6 +1074,7 @@
 
   exports.Tools.calculateBounds = calculateBounds;
   exports.Tools.coordinatesContainPoint = coordinatesContainPoint;
+  exports.Tools.polygonContainsPoint = polygonContainsPoint;
   exports.Tools.convexHull = convexHull;
 
   exports.MercatorCRS = MercatorCRS;
