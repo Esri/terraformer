@@ -8,10 +8,7 @@
         "type": "git",
         "url": "git://github.com/geoloqi/terraformer.git"
     },
-    "dependencies": {"fs": "*",
-                     "http": "*",
-                     "url": "*",
-                     "terraformer": "*",
+    "dependencies": {"terraformer": "*",
                      "terraformer-rtree": "*"
                      },
     "engines": {
