@@ -676,6 +676,9 @@
     }
     return this;
   };
+  MultiPoint.prototype.get = function(i){
+    return new Primitive(this.coordinates[i]);
+  };
 
   /*
   GeoJSON LineString Class
@@ -716,6 +719,7 @@
     this.coordinates.splice(remove, 1);
     return this;
   };
+
   /*
   GeoJSON MultiLineString Class
       new MultiLineString();
@@ -751,6 +755,9 @@
     for (var i = 0; i < this.coordinates.length; i++) {
       func.apply(this, [this.coordinates[i], i, this.coordinates ]);
     }
+  };
+  MultiLineString.prototype.get = function(i){
+    return new Primitive(this.coordinates[i]);
   };
 
   /*
@@ -848,6 +855,9 @@
     }
 
     return false;
+  };
+  MultiPolygon.prototype.get = function(i){
+    return new Primitive(this.coordinates[i]);
   };
 
   /*
@@ -990,14 +1000,8 @@
       func.apply(this, [this.geometries[i], i, this.geometries]);
     }
   };
-  GeometryCollection.prototype.get = function(id){
-    var found;
-    this.forEach(function(geometry){
-      if(feature.id === id){
-        found = geometry;
-      }
-    });
-    return new Primitive(found);
+  GeometryCollection.prototype.get = function(i){
+    return new Primitive(this.geometries[i]);
   };
 
   function createCircle(center, rad, interpolate){
