@@ -26,10 +26,8 @@ for(var i = 0; i < timezones.features.length; i++) {
   var zone = timezones.features[i];
 
   var primitive;
-  if(zone.geometry.type == "Polygon") {
-    primitive = new Terraformer.Polygon(zone.geometry);
-  } else if(zone.geometry.type == "MultiPolygon") {
-    primitive = new Terraformer.MultiPolygon(zone.geometry);
+  if(zone.geometry.type == "Polygon" || zone.geometry.type == "MultiPolygon") {
+    primitive = new Terraformer.Primitive(zone.geometry);
   } else {
     continue;
   }
