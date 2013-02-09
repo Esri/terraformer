@@ -1,21 +1,17 @@
 (function (root, factory) {
 
+  // Node.
   if(typeof module === 'object' && typeof module.exports === 'object') {
-    // Node. Does not work with strict CommonJS, but
-    // only CommonJS-like enviroments that support module.exports,
-    // like Node.
     exports = module.exports = factory();
-  }else if(typeof define === 'function' && define.amd) {
-    // AMD. Register as an anonymous module.
-    define(factory);
-  } else {
-    root.Terraformer = factory();
   }
 
-  if(typeof jasmine === "object") {
-    if (typeof Terraformer === undefined){
-      root.Terraformer = { };
-    }
+  // AMD.
+  if(typeof define === 'function' && define.amd) {
+    define(factory);
+  }
+
+  // Browser Global.
+  if(typeof window === "object") {
     root.Terraformer = factory();
   }
 
