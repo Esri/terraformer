@@ -1,4 +1,4 @@
-/*! Terraformer JS - 0.0.1 - 2013-02-06
+/*! Terraformer JS - 0.0.1 - 2013-02-08
 *   https://github.com/geoloqi/Terraformer
 *   Copyright (c) 2013 Environmental Systems Research Institute, Inc.
 *   Licensed MIT */
@@ -624,6 +624,11 @@
       return calculateBounds(this);
     });
 
+    this.__defineGetter__("envelope", function(){
+      var bounds = calculateBounds(this);
+      return { x: bounds[0], y: bounds[1], w: Math.abs(bounds[0] - bounds[1]), h: Math.abs(bounds[1] - bounds[3]) };
+    });
+
   }
 
   Point.prototype = new Primitive();
@@ -655,6 +660,11 @@
 
     this.__defineGetter__('length', function () {
       return this.coordinates ? this.coordinates.length : 0;
+    });
+
+    this.__defineGetter__("envelope", function(){
+      var bounds = calculateBounds(this);
+      return { x: bounds[0], y: bounds[1], w: Math.abs(bounds[0] - bounds[1]), h: Math.abs(bounds[1] - bounds[3]) };
     });
 
   }
@@ -708,6 +718,11 @@
       return calculateBounds(this);
     });
 
+    this.__defineGetter__("envelope", function(){
+      var bounds = calculateBounds(this);
+      return { x: bounds[0], y: bounds[1], w: Math.abs(bounds[0] - bounds[1]), h: Math.abs(bounds[1] - bounds[3]) };
+    });
+
   }
 
   LineString.prototype = new Primitive();
@@ -752,6 +767,11 @@
       return this.coordinates ? this.coordinates.length : 0;
     });
 
+    this.__defineGetter__("envelope", function(){
+      var bounds = calculateBounds(this);
+      return { x: bounds[0], y: bounds[1], w: Math.abs(bounds[0] - bounds[1]), h: Math.abs(bounds[1] - bounds[3]) };
+    });
+
   }
 
   MultiLineString.prototype = new Primitive();
@@ -784,6 +804,11 @@
 
     this.__defineGetter__("bbox", function(){
       return calculateBounds(this);
+    });
+
+    this.__defineGetter__("envelope", function(){
+      var bounds = calculateBounds(this);
+      return { x: bounds[0], y: bounds[1], w: Math.abs(bounds[0] - bounds[1]), h: Math.abs(bounds[1] - bounds[3]) };
     });
   }
 
@@ -835,6 +860,11 @@
 
     this.__defineGetter__('length', function () {
       return this.coordinates ? this.coordinates.length : 0;
+    });
+
+    this.__defineGetter__("envelope", function(){
+      var bounds = calculateBounds(this);
+      return { x: bounds[0], y: bounds[1], w: Math.abs(bounds[0] - bounds[1]), h: Math.abs(bounds[1] - bounds[3]) };
     });
   }
 
@@ -889,10 +919,35 @@
       return calculateBounds(this);
     });
 
+    this.__defineGetter__("envelope", function(){
+      var bounds = calculateBounds(this);
+      return { x: bounds[0], y: bounds[1], w: Math.abs(bounds[0] - bounds[1]), h: Math.abs(bounds[1] - bounds[3]) };
+    });
+
   }
 
   Feature.prototype = new Primitive();
   Feature.prototype.constructor = Feature;
+  Feature.prototype.contains = function(primitive) {
+    if (primitive.type !== "Point") {
+      throw new Error("Only points are supported");
+    }
+    if (this.geometry.type !== "Polygon" || this.geometry.type !== "MultiPolygon") {
+      throw new Error("Only features contianing Polygons and MultiPolygons are supported");
+    }
+    if(this.type === "MultiPolygon"){
+      for (var i = 0; i < this.geometry.coordinates.length; i++) {
+        if (polygonContainsPoint(this.geometry.coordinates[i], primitive.coordinates)) {
+          return true;
+        }
+      }
+    }
+    if(this.type === "Polygon"){
+      return polygonContainsPoint(this.geometry.coordinates, primitive.coordinates);
+    }
+    return false;
+  };
+
 
   /*
   GeoJSON FeatureCollection Class
@@ -920,6 +975,11 @@
 
     this.__defineGetter__("bbox", function(){
       return calculateBounds(this);
+    });
+
+    this.__defineGetter__("envelope", function(){
+      var bounds = calculateBounds(this);
+      return { x: bounds[0], y: bounds[1], w: Math.abs(bounds[0] - bounds[1]), h: Math.abs(bounds[1] - bounds[3]) };
     });
 
   }
@@ -970,6 +1030,11 @@
 
     this.__defineGetter__("bbox", function(){
       return calculateBounds(this);
+    });
+
+    this.__defineGetter__("envelope", function(){
+      var bounds = calculateBounds(this);
+      return { x: bounds[0], y: bounds[1], w: Math.abs(bounds[0] - bounds[1]), h: Math.abs(bounds[1] - bounds[3]) };
     });
 
   }
@@ -1044,6 +1109,11 @@
     this.__defineSetter__("center", function(val){
       this.properties.center = val;
       this.recalculate();
+    });
+
+    this.__defineGetter__("envelope", function(){
+      var bounds = calculateBounds(this);
+      return { x: bounds[0], y: bounds[1], w: Math.abs(bounds[0] - bounds[1]), h: Math.abs(bounds[1] - bounds[3]) };
     });
   }
 

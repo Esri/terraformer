@@ -25,17 +25,8 @@ var timezones = JSON.parse(fs.readFileSync('./tz_world/tz_world_mp.json', 'utf8'
 for(var i = 0; i < timezones.features.length; i++) {
   var zone = timezones.features[i];
 
-  var primitive;
-  if(zone.geometry.type == "Polygon") {
-    primitive = new Terraformer.Polygon(zone.geometry);
-  } else if(zone.geometry.type == "MultiPolygon") {
-    primitive = new Terraformer.MultiPolygon(zone.geometry);
-  } else {
-    continue;
-  }
-
-  // set the NAME property
-  primitive.properties = { name: zone.properties.TZID };
+  // create a new primitive we can manipulate.
+  var primitive =new Terraformer.Primitive(zone);
 
   // find the envelope
   var bounds = primitive.bbox;
