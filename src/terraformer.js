@@ -535,7 +535,12 @@
     },
     envelope: function(){
       var bounds = calculateBounds(this);
-      return { x: bounds[0], y: bounds[1], w: Math.abs(bounds[0] - bounds[1]), h: Math.abs(bounds[1] - bounds[3]) };
+      return {
+        x: bounds[0],
+        y: bounds[1],
+        w: Math.abs(bounds[0] - bounds[2]),
+        h: Math.abs(bounds[1] - bounds[3])
+      };
     },
     convexHull: function(){
       var coordinates = [ ], i, j;
@@ -677,7 +682,7 @@
     return this;
   };
   MultiPoint.prototype.get = function(i){
-    return new Primitive(this.coordinates[i]);
+    return new Point(this.coordinates[i]);
   };
 
   /*
@@ -757,7 +762,7 @@
     }
   };
   MultiLineString.prototype.get = function(i){
-    return new Primitive(this.coordinates[i]);
+    return new LineString(this.coordinates[i]);
   };
 
   /*
@@ -857,7 +862,7 @@
     return false;
   };
   MultiPolygon.prototype.get = function(i){
-    return new Primitive(this.coordinates[i]);
+    return new Polygon(this.coordinates[i]);
   };
 
   /*
@@ -897,17 +902,18 @@
     if (primitive.type !== "Point") {
       throw new Error("Only points are supported");
     }
-    if (this.geometry.type !== "Polygon" || this.geometry.type !== "MultiPolygon") {
+
+    if (!this.geometry.type.match(/Polygon/)) {
       throw new Error("Only features contianing Polygons and MultiPolygons are supported");
     }
-    if(this.type === "MultiPolygon"){
+    if(this.geometry.type === "MultiPolygon"){
       for (var i = 0; i < this.geometry.coordinates.length; i++) {
         if (polygonContainsPoint(this.geometry.coordinates[i], primitive.coordinates)) {
           return true;
         }
       }
     }
-    if(this.type === "Polygon"){
+    if(this.geometry.type === "Polygon"){
       return polygonContainsPoint(this.geometry.coordinates, primitive.coordinates);
     }
     return false;
@@ -957,7 +963,7 @@
         found = feature;
       }
     });
-    return new Primitive(found);
+    return new Feature(found);
   };
 
   /*
@@ -1075,6 +1081,13 @@
   Circle.prototype.recalculate = function(){
     this.geometry = createCircle(this.center, this.radius, this.steps);
     return this;
+  };
+  Circle.prototype.contains = function(primitive) {
+    if (primitive.type !== "Point") {
+      throw new Error("Only points are supported");
+    }
+
+    return polygonContainsPoint(this.geometry.coordinates, primitive.coordinates);
   };
 
   exports.Primitive = Primitive;
