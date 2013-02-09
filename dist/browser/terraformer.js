@@ -1,26 +1,22 @@
-/*! Terraformer JS - 0.0.1 - 2013-02-08
+/*! Terraformer JS - 0.0.1 - 2013-02-09
 *   https://github.com/geoloqi/Terraformer
 *   Copyright (c) 2013 Environmental Systems Research Institute, Inc.
 *   Licensed MIT */
 
 (function (root, factory) {
 
+  // Node.
   if(typeof module === 'object' && typeof module.exports === 'object') {
-    // Node. Does not work with strict CommonJS, but
-    // only CommonJS-like enviroments that support module.exports,
-    // like Node.
     exports = module.exports = factory();
-  }else if(typeof define === 'function' && define.amd) {
-    // AMD. Register as an anonymous module.
-    define(factory);
-  } else {
-    root.Terraformer = factory();
   }
 
-  if(typeof jasmine === "object") {
-    if (typeof Terraformer === undefined){
-      root.Terraformer = { };
-    }
+  // AMD.
+  if(typeof define === 'function' && define.amd) {
+    define(factory);
+  }
+
+  // Browser Global.
+  if(typeof window === "object") {
     root.Terraformer = factory();
   }
 
@@ -113,22 +109,22 @@
   */
   function calculateBoundsFromNestedArrays (array) {
     var x1 = null, x2 = null, y1 = null, y2 = null;
-    
+
     for (var i = 0; i < array.length; i++) {
       var inner = array[i];
-      
+
       for (var j = 0; j < inner.length; j++) {
         var lonlat = inner[j];
-      
+
         var lon = lonlat[0];
         var lat = lonlat[1];
-      
+
         if (x1 === null) {
           x1 = lon;
         } else if (lon < x1) {
           x1 = lon;
         }
-      
+
         if (x2 === null) {
           x2 = lon;
         } else if (lon > x2) {
@@ -140,7 +136,7 @@
         } else if (lat < y1) {
           y1 = lat;
         }
-      
+
         if (y2 === null) {
           y2 = lat;
         } else if (lat > y2) {
@@ -157,24 +153,24 @@
   */
   function calculateBoundsFromNestedArrayOfArrays (array) {
     var x1 = null, x2 = null, y1 = null, y2 = null;
-  
+
     for (var i = 0; i < array.length; i++) {
       var inner = array[i];
-      
+
       for (var j = 0; j < inner.length; j++) {
         var innerinner = inner[j];
         for (var k = 0; k < innerinner.length; k++) {
           var lonlat = innerinner[k];
-        
+
           var lon = lonlat[0];
           var lat = lonlat[1];
-        
+
           if (x1 === null) {
             x1 = lon;
           } else if (lon < x1) {
             x1 = lon;
           }
-        
+
           if (x2 === null) {
             x2 = lon;
           } else if (lon > x2) {
@@ -186,7 +182,7 @@
           } else if (lat < y1) {
             y1 = lat;
           }
-        
+
           if (y2 === null) {
             y2 = lat;
           } else if (lat > y2) {
@@ -198,7 +194,7 @@
 
     return [x1, y1, x2, y2];
   }
-  
+
   /*
   Internal: Calculate a bounding box from an array of positions
   */
@@ -207,16 +203,16 @@
 
     for (var i = 0; i < array.length; i++) {
       var lonlat = array[i];
-      
+
       var lon = lonlat[0];
       var lat = lonlat[1];
-      
+
       if (x1 === null) {
         x1 = lon;
       } else if (lon < x1) {
         x1 = lon;
       }
-      
+
       if (x2 === null) {
         x2 = lon;
       } else if (lon > x2) {
@@ -228,7 +224,7 @@
       } else if (lat < y1) {
         y1 = lat;
       }
-      
+
       if (y2 === null) {
         y2 = lat;
       } else if (lat > y2) {
@@ -542,6 +538,10 @@
     toGeographic: function(){
       return toGeographic(this);
     },
+    envelope: function(){
+      var bounds = calculateBounds(this);
+      return { x: bounds[0], y: bounds[1], w: Math.abs(bounds[0] - bounds[1]), h: Math.abs(bounds[1] - bounds[3]) };
+    },
     convexHull: function(){
       var coordinates = [ ], i, j;
       if (this.type === 'Point') {
@@ -623,12 +623,6 @@
     this.__defineGetter__("bbox", function(){
       return calculateBounds(this);
     });
-
-    this.__defineGetter__("envelope", function(){
-      var bounds = calculateBounds(this);
-      return { x: bounds[0], y: bounds[1], w: Math.abs(bounds[0] - bounds[1]), h: Math.abs(bounds[1] - bounds[3]) };
-    });
-
   }
 
   Point.prototype = new Primitive();
@@ -661,12 +655,6 @@
     this.__defineGetter__('length', function () {
       return this.coordinates ? this.coordinates.length : 0;
     });
-
-    this.__defineGetter__("envelope", function(){
-      var bounds = calculateBounds(this);
-      return { x: bounds[0], y: bounds[1], w: Math.abs(bounds[0] - bounds[1]), h: Math.abs(bounds[1] - bounds[3]) };
-    });
-
   }
 
   MultiPoint.prototype = new Primitive();
@@ -693,6 +681,9 @@
     }
     return this;
   };
+  MultiPoint.prototype.get = function(i){
+    return new Primitive(this.coordinates[i]);
+  };
 
   /*
   GeoJSON LineString Class
@@ -717,12 +708,6 @@
     this.__defineGetter__("bbox", function(){
       return calculateBounds(this);
     });
-
-    this.__defineGetter__("envelope", function(){
-      var bounds = calculateBounds(this);
-      return { x: bounds[0], y: bounds[1], w: Math.abs(bounds[0] - bounds[1]), h: Math.abs(bounds[1] - bounds[3]) };
-    });
-
   }
 
   LineString.prototype = new Primitive();
@@ -739,6 +724,7 @@
     this.coordinates.splice(remove, 1);
     return this;
   };
+
   /*
   GeoJSON MultiLineString Class
       new MultiLineString();
@@ -766,12 +752,6 @@
     this.__defineGetter__('length', function () {
       return this.coordinates ? this.coordinates.length : 0;
     });
-
-    this.__defineGetter__("envelope", function(){
-      var bounds = calculateBounds(this);
-      return { x: bounds[0], y: bounds[1], w: Math.abs(bounds[0] - bounds[1]), h: Math.abs(bounds[1] - bounds[3]) };
-    });
-
   }
 
   MultiLineString.prototype = new Primitive();
@@ -780,6 +760,9 @@
     for (var i = 0; i < this.coordinates.length; i++) {
       func.apply(this, [this.coordinates[i], i, this.coordinates ]);
     }
+  };
+  MultiLineString.prototype.get = function(i){
+    return new Primitive(this.coordinates[i]);
   };
 
   /*
@@ -804,11 +787,6 @@
 
     this.__defineGetter__("bbox", function(){
       return calculateBounds(this);
-    });
-
-    this.__defineGetter__("envelope", function(){
-      var bounds = calculateBounds(this);
-      return { x: bounds[0], y: bounds[1], w: Math.abs(bounds[0] - bounds[1]), h: Math.abs(bounds[1] - bounds[3]) };
     });
   }
 
@@ -861,11 +839,6 @@
     this.__defineGetter__('length', function () {
       return this.coordinates ? this.coordinates.length : 0;
     });
-
-    this.__defineGetter__("envelope", function(){
-      var bounds = calculateBounds(this);
-      return { x: bounds[0], y: bounds[1], w: Math.abs(bounds[0] - bounds[1]), h: Math.abs(bounds[1] - bounds[3]) };
-    });
   }
 
   MultiPolygon.prototype = new Primitive();
@@ -887,6 +860,9 @@
     }
 
     return false;
+  };
+  MultiPolygon.prototype.get = function(i){
+    return new Primitive(this.coordinates[i]);
   };
 
   /*
@@ -918,12 +894,6 @@
     this.__defineGetter__("bbox", function(){
       return calculateBounds(this);
     });
-
-    this.__defineGetter__("envelope", function(){
-      var bounds = calculateBounds(this);
-      return { x: bounds[0], y: bounds[1], w: Math.abs(bounds[0] - bounds[1]), h: Math.abs(bounds[1] - bounds[3]) };
-    });
-
   }
 
   Feature.prototype = new Primitive();
@@ -976,12 +946,6 @@
     this.__defineGetter__("bbox", function(){
       return calculateBounds(this);
     });
-
-    this.__defineGetter__("envelope", function(){
-      var bounds = calculateBounds(this);
-      return { x: bounds[0], y: bounds[1], w: Math.abs(bounds[0] - bounds[1]), h: Math.abs(bounds[1] - bounds[3]) };
-    });
-
   }
 
   FeatureCollection.prototype = new Primitive();
@@ -998,7 +962,7 @@
         found = feature;
       }
     });
-    return found;
+    return new Primitive(found);
   };
 
   /*
@@ -1032,11 +996,6 @@
       return calculateBounds(this);
     });
 
-    this.__defineGetter__("envelope", function(){
-      var bounds = calculateBounds(this);
-      return { x: bounds[0], y: bounds[1], w: Math.abs(bounds[0] - bounds[1]), h: Math.abs(bounds[1] - bounds[3]) };
-    });
-
   }
 
   GeometryCollection.prototype = new Primitive();
@@ -1045,6 +1004,9 @@
     for (var i = 0; i < this.geometries.length; i++) {
       func.apply(this, [this.geometries[i], i, this.geometries]);
     }
+  };
+  GeometryCollection.prototype.get = function(i){
+    return new Primitive(this.geometries[i]);
   };
 
   function createCircle(center, rad, interpolate){
@@ -1111,10 +1073,6 @@
       this.recalculate();
     });
 
-    this.__defineGetter__("envelope", function(){
-      var bounds = calculateBounds(this);
-      return { x: bounds[0], y: bounds[1], w: Math.abs(bounds[0] - bounds[1]), h: Math.abs(bounds[1] - bounds[3]) };
-    });
   }
 
   Circle.prototype = new Primitive();
