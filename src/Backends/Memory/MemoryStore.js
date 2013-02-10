@@ -26,7 +26,7 @@
   function MemoryStore(){
   }
 
-  MemoryStore.prototype.store = function(geojson, id){
+  MemoryStore.prototype.add = function(geojson, id){
     // store the data at id
     this.data[id] = geojson;
   };

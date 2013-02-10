@@ -23,15 +23,6 @@
     this.Terraformer = arguments[0];
   }
 
-  function bboxToEnvelope(bbox){
-    return {
-      x: bbox[0],
-      y: bbox[1],
-      width: Math.abs(bbox[2]-bbox[0]),
-      height: Math.abs(bbox[3]-bbox[1])
-    };
-  }
-
   function s4(){
     return Math.floor(Math.random() * 0x10000).toString(16);
   }
@@ -53,7 +44,6 @@
     this.data = {};
     this.index = options.index || new Terraformer.RTree();
     this.backend = options.backend || new Terraformer.Stores.Memory();
-    this.backend = options.deferred || Terraformer.Deferred;
     var data = options.data || [];
     while(data.length){
       this.add(options.data.shift());
@@ -69,16 +59,18 @@
     var id = (geojson.id) ? geojson.id : guid();
 
     // set a bounding box
-    var bbox = (geojson.bbox) ? geojson.bbox() : Terraformer.Tools.calculateBounds(geojson);
-
-    // turn bounding box into a envelope
-    var envelope = bboxToEnvelope(bbox);
+    var bbox = (geojson.bbox) ? geojson.bbox : Terraformer.Tools.calculateBounds(geojson);
 
     // store the data (use the backends store method to decide how to do this.)
-    this.backend.store.call(this, geojson, id);
+    this.backend.add.call(this, geojson, id);
 
     // index the data
-    this.index.inset(envelope, id);
+    this.index.inset({
+      x: bbox[0],
+      y: bbox[1],
+      w: Math.abs(bbox[0] - bbox[2]),
+      h: Math.abs(bbox[1] - bbox[3])
+    }, id);
 
     return this;
   };
@@ -111,7 +103,7 @@
     // should return a deferred
   };
 
-  exports.GeoStore = GeoStore;
+  exports = GeoStore;
 
   return exports;
 }));
