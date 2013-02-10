@@ -11,8 +11,8 @@
   }
 
   // Browser Global.
-  if(typeof window === "object" || typeof jasmine === "object") {
-    if (typeof root.Terraformer === undefined){
+  if(typeof window === "object") {
+    if (typeof root.Terraformer === "undefined"){
       root.Terraformer = {};
     }
     root.Terraformer.RTree = factory();

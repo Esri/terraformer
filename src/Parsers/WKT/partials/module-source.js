@@ -12,7 +12,7 @@
 
   // Browser Global.
   if(typeof navigator === "object") {
-    if (typeof root.Terraformer === undefined){
+    if (typeof root.Terraformer === "undefined"){
       root.Terraformer = {};
     }
     root.Terraformer.WKT = factory();
