@@ -6,7 +6,7 @@ A selection of examples showing some of the uses of Terraformer.
 
 * [arcgis-viewer](examples/arcgis-viewer/) - display GeoJSON polygons on an ArcGIS map with Dojo
 * [googlemaps-wkt](examples/googlemaps-wkt/) - display Well Known Text on a Google map
-* [require-js-leaflet](examples/require-js-leaflet/) - displays the Waldo Canyon Fire on a map using leaflet and require.js
+* [require-js-leaflet](examples/require-js-leaflet/) - displays the Waldo Canyon Fire on a map using Leaflet and require.js
 * [wkt-viewer](examples/wkt-viewer/) - display Well Known Text polygons on an ArcGIS map with Dojo
 
 ## Example Polygons
