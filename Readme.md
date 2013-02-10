@@ -3,9 +3,8 @@ Terraformer is a small javascript library for working with GeoJSON. It is design
 
 * Convert to and from ArcGIS JSON Geometries, WKT and GeoJSON
 * Manipulate GeoJSON with methods like `addVertex`
-* Calculate bounding boxes for GeoJSON objects
 * Find out if GeoJSON shapes intersect or contain each other
-* Get properties like area, distance, and length of GeoJSON objects
+* Get properties like bounding boxes, envelopes, and convex hull of GeoJSON objects
 * Respresent circles as GeoJSON Features
 * Convert to and from [Geographic Coordinates](http://spatialreference.org/ref/epsg/4326/) and [Esri Web Mercator](http://spatialreference.org/ref/sr-org/6928/) spatial references
 
@@ -20,7 +19,7 @@ Terraformer on Node.js is split into multiple small packages for easy consumptio
     $ npm install terraformer-rtree
     $ npm install terraformer-wkt-parser
     $ npm install terraformer-arcgis-parser
-    
+
 ### Browser
 
 Terraformer can be used in the browser with a simple browser include.
