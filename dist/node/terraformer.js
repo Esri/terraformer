@@ -487,6 +487,77 @@
       return false;
     }
   }
+
+  function vertexIntersectsVertex(a1, a2, b1, b2) {
+    var ua_t = (b2[0] - b1[0]) * (a1[1] - b1[1]) - (b2[1] - b1[1]) * (a1[0] - b1[0]);
+    var ub_t = (a2[0] - a1[0]) * (a1[1] - b1[1]) - (a2[1] - a1[1]) * (a1[0] - b1[0]);
+    var u_b  = (b2[1] - b1[1]) * (a2[0] - a1[0]) - (b2[0] - b1[0]) * (a2[1] - a1[1]);
+
+    if ( u_b !== 0 ) {
+      var ua = ua_t / u_b;
+      var ub = ub_t / u_b;
+
+      if ( 0 <= ua && ua <= 1 && 0 <= ub && ub <= 1 ) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  function lineStringIntersectsLineString(a, b) {
+    for (var i = 0; i < a.coordinates.length - 1; i++) {
+      for (var j = 0; j < b.coordinates.length - 1; j++) {
+        if (vertexIntersectsVertex(a.coordinates[i], a.coordinates[i + 1], b.coordinates[j], b.coordinates[j + 1])) {
+          return true;
+        }
+      }
+    }
+
+    return false;
+  }
+
+  function lineStringIntersectsPolygon(a, b) {
+    for (var i = 0; i < b.coordinates.length; i++) {
+      var inner = b.coordinates[i];
+
+      for (var j = 0; j < inner.length - 1; j++) {
+        for (var k = 0; k < a.coordinates.length - 1; k++) {
+          if (vertexIntersectsVertex(inner[j], inner[j + 1], a.coordinates[k], a.coordinates[k + 1])) {
+            return true;
+          }
+        }
+      }
+    }
+
+    return false;
+  }
+
+  function lineStringIntersectsMultiLineString(a, b) {
+    for (var i = 0; i < b.coordinates.length; i++) {
+      var inner = b.coordinates[i];
+
+      for (var j = 0; j < inner.length - 1; j++) {
+        for (var k = 0; k < a.coordinates.length - 1; k++) {
+          if (vertexIntersectsVertex(inner[j], inner[j + 1], a.coordinates[k], a.coordinates[k + 1])) {
+            return true;
+          }
+        }
+      }
+    }
+
+    return false;
+  }
+
+  function lineStringIntersectsMultiPolygon(a, b) {
+    for (var i = 0; i < b.coordinates.length; i++) {
+      if (lineStringIntersectsPolygon(a, { coordinates: b.coordinates[i] })) {
+        return true;
+      }
+
+      return false;
+    }
+  }
   /*
   Internal: An array of variables that will be excluded form JSON objects.
   */
@@ -728,6 +799,19 @@
   LineString.prototype.removeVertex = function(remove){
     this.coordinates.splice(remove, 1);
     return this;
+  };
+  LineString.prototype.intersects = function(primitive) {
+    if (primitive.type === 'LineString') {
+      return lineStringIntersectsLineString(this, primitive);
+    } else if (primitive.type === 'Polygon') {
+      return lineStringIntersectsPolygon(this, primitive);
+    } else if (primitive.type === 'MultiLineString') {
+      return lineStringIntersectsMultiLineString(this, primitive);
+    } else if (primitive.type === 'MultiPolygon') {
+      return lineStringIntersectsMultiPolygon(this, primitive);
+    } else {
+      throw new Error(primitive.type + " is not supported currently");
+    }
   };
 
   /*
