@@ -153,6 +153,12 @@ This will return a specicic point (by index) as a new instance of `Terraformer.P
     // remove a vertex at a specified index
     ls.removeVertex(1);
 
+### Intersects
+It is possible to check for the intersection of `LineString`, `MultiLineString`, `Polygon`, `Circle`, and `MultiPolygon`.  Any other type of intersection will result in an `Error` being thrown.
+
+    // check for intersection
+    ls.intersects(new Terraformer.LineString([ [ 20, 10 ], [ 10, 20 ] ]));
+
 ## MultiLineString
 
 ### Instantiation
@@ -186,6 +192,13 @@ This will return a specicic line (by index) as a new instance of `Terraformer.Li
 
     // Create a new Terraformer.Point object form the point at index
     var line = mls.get(1);
+
+### Intersects
+
+It is possible to check for the intersection of `LineString`, `MultiLineString`, `Polygon`, `Circle`, and `MultiPolygon`.  Any other type of intersection will result in an `Error` being thrown.
+
+    // check for intersection
+    mls.intersects(new Terraformer.LineString([ [ 20, 10 ], [ 10, 20 ] ]));
 
 ## Polygon
 
@@ -236,6 +249,12 @@ This will return a specicic line (by index) as a new instance of `Terraformer.Li
     // check the results
     poly.contains(point); // should be true
 
+### Intersects
+It is possible to check for the intersection of `LineString`, `MultiLineString`, `Polygon`, `Circle`, and `MultiPolygon`.  Any other type of intersection will result in an `Error` being thrown.
+
+    // check for intersection
+    poly.intersects(new Terraformer.LineString([ [ 20, 10 ], [ 10, 20 ] ]));
+
 ## MultiPolygon
 
 ### Instantiation
@@ -280,6 +299,12 @@ This will return a specicic line (by index) as a new instance of `Terraformer.Li
 
     // check the results
     mp.contains(point); // should be true
+
+### Intersects
+It is possible to check for the intersection of `LineString`, `MultiLineString`, `Polygon`, `Circle`, and `MultiPolygon`.  Any other type of intersection will result in an `Error` being thrown.
+
+    // check for intersection
+    mp.intersects(new Terraformer.LineString([ [ 20, 10 ], [ 10, 20 ] ]));
 
 ### Getting a LineString
 
