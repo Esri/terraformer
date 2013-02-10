@@ -381,3 +381,10 @@ As you change and alter your circle you may need to change the detail level. Cha
 
     // make the circle more detailed
     circle.steps = 128;
+
+### Contains
+
+Since circles are polygons you can see if they contain points.
+
+    // does this circle contain a point
+    circle.contains(point); // true or false
