@@ -25,25 +25,8 @@ var timezones = JSON.parse(fs.readFileSync('./tz_world/tz_world_mp.json', 'utf8'
 for(var i = 0; i < timezones.features.length; i++) {
   var zone = timezones.features[i];
 
-  var primitive;
-  if(zone.geometry.type == "Polygon" || zone.geometry.type == "MultiPolygon") {
-    primitive = new Terraformer.Primitive(zone.geometry);
-  } else {
-    continue;
-  }
-
-  // set the NAME property
-  primitive.properties = { name: zone.properties.TZID };
-
-  // find the envelope
-  var bounds = primitive.bbox;
-
-  var envelope = {
-    x: bounds[0],
-    y: bounds[1],
-    w: Math.abs(bounds[0] - bounds[2]),
-    h: Math.abs(bounds[1] - bounds[3])
-  };
+  // create a new primitive we can manipulate.
+  var primitive = new Terraformer.Primitive(zone);
 
   // set the rowId
   rowId++;
@@ -52,7 +35,7 @@ for(var i = 0; i < timezones.features.length; i++) {
   places[rowId] = primitive;
 
   // and insert the envelope into the index
-  tree.insert(envelope, { rowId: rowId });
+  tree.insert(primitive.envelope(), { rowId: rowId });
 }
 
 console.log("time spent indexing: " + ((new Date() - start) / 1000) + "s, " + rowId + " rows");
@@ -92,11 +75,11 @@ var server = http.createServer(function (request, response) {
       } else {
         // otherwise, find the polygon that contain the latitude and longitude
         var found = false;
-
         for (var i = 0; i < results.length; i++) {
           // since we are using Terraformer, we can check containsPoint()
-          if (places[results[i].rowId].contains({ type: "Point", coordinates: [ parsed.query.longitude, parsed.query.latitude ] })) {
-            found = places[results[i].rowId].properties.name;
+          var rowId = results[i].rowId;
+          if (places[rowId].contains({ type: "Point", coordinates: [ parsed.query.longitude, parsed.query.latitude ] })) {
+            found = places[results[i].rowId].properties.TZID;
           }
         }
 
