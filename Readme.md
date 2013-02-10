@@ -21,13 +21,68 @@ Terraformer on Node.js is split into multiple small packages for easy consumptio
     $ npm install terraformer-wkt-parser
     $ npm install terraformer-arcgis-parser
     
-### Browsers
+### Browser
 
-Sample code and examples coming soon...
+Terraformer can be used in the browser with a simple browser include.
 
-### AMD
+    <!-- Load the main terraformer library -->
+    <script src="terraformer.min.js" type="text/javascript"></script>
 
-Sample code and examples coming soon...
+    <!-- Load the wkt parser -->
+    <script src="wkt.min.js" type="text/javascript"></script>
+
+    <!-- Load the arcgis parser -->
+    <script src="arcgis.min.js" type="text/javascript"></script>
+
+    <!-- Load the rtree index -->
+    <script src="rtree.min.js" type="text/javascript"></script>
+
+### AMD (Require.js and Dojo)
+
+Terraformer also works with AMD loaders like [RequireJS](http://requirejs.org/) and [Dojo](http://dojotoolkit.org/).
+
+##### RequireJS
+
+First you should register the Terraformer modules with RequireJS
+
+    requirejs.config({
+      //In order for proper loading of depenencies in Terraformer modules set the path up in requirejs.config
+      paths: {
+        terraformer: "/the/path/to/terraformer"
+      }
+    });
+
+Then you can load Terraformer modules in your `require` statements.
+
+    requirejs([
+      "terraformer/terraformer",
+      "terraformer/wkt",
+      "terraformer/rtree",
+    ], function (Terraformer, TerraformerWKT, RTree) {
+      // Do stuff with terraformer core, wkt parser, and rtree
+    };
+
+##### Dojo
+
+Dojo includes a built in AMD loader. To use Terraformer with Dojo setup the path to Terraformer in your `dojoConfig`.
+
+    dojoConfig= {
+      async: true,
+      packages: [{
+        name: "terraformer",
+        location: "/the/path/to/terraformer"
+      }]
+    }
+
+You can then include Terraformer in your Dojo code
+
+    require([
+      "terraformer/terraformer",
+      "terraformer/arcgis",
+      "terraformer/rtree",
+    ], function (Terraformer, TerraformerArcGIS, RTree) {
+      // Do stuff with terraformer core, arcgis parser, and rtree
+    });
 
 ### WebWorkers
 
