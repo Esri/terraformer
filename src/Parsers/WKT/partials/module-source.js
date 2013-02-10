@@ -1,35 +1,40 @@
 (function (root, factory) {
 
+  // Node.
   if(typeof module === 'object' && typeof module.exports === 'object') {
-    // Node. Does not work with strict CommonJS, but
-    // only CommonJS-like enviroments that support module.exports,
-    // like Node.
-    Terraformer = require('terraformer');
     exports = module.exports = factory();
-  }else if(typeof define === 'function' && define.amd) {
-    // AMD. Register as an anonymous module and pass in Terraformer core as a requirement...
-    define(["terraformer/terraformer"],factory);
-  } else {
-    if (typeof root.Terraformer === "undefined") {
-      root.Terraformer = { };
-    }
-
-    root.Terraformer.WKT = factory();
   }
 
-  if(typeof jasmine === "object") {
-    if (typeof Terraformer === undefined){
-      root.Terraformer = { };
+  // AMD.
+  if(typeof define === 'function' && define.amd) {
+    define(["terraformer/terraformer"],factory);
+  }
+
+  // Browser Global.
+  if(typeof navigator === "object") {
+    if (typeof root.Terraformer === undefined){
+      root.Terraformer = {};
     }
-    //root.Terraformer.WKT = factory();
+    root.Terraformer.WKT = factory();
   }
 
 }(this, function() {
   var exports = { };
+  var Terraformer;
 
-  // if we are in AMD terraformer core got passed in as our first requirement so we should set it.
+  // Local Reference To Browser Global
+  if(typeof this.navigator === "object") {
+    Terraformer = this.Terraformer;
+  }
+
+  // Setup Node Dependencies
+  if(typeof module === 'object' && typeof module.exports === 'object') {
+    Terraformer = require('terraformer');
+  }
+
+  // Setup AMD Dependencies
   if(arguments[0] && typeof define === 'function' && define.amd) {
-    this.Terraformer = arguments[0];
+    Terraformer = arguments[0];
   }
 
   "SOURCE";
@@ -119,11 +124,11 @@
     }
     return data;
   };
-  
+
   function _parse () {
     return parser.parse.apply(parser, arguments);
   }
-  
+
   function parse (element) {
     var res, primitive;
 

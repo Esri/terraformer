@@ -1,3 +1,7 @@
+if(typeof module === "object"){
+ var Terraformer = require("../../dist/node/terraformer.js");
+}
+
 describe("Spatial Reference Converters", function(){
   it("should convert a GeoJSON Point to Web Mercator", function(){
     var input = {

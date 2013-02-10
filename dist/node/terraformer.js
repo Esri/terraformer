@@ -1,26 +1,22 @@
-/*! Terraformer JS - 0.0.1 - 2013-01-27
+/*! Terraformer JS - 0.0.1 - 2013-02-09
 *   https://github.com/geoloqi/Terraformer
 *   Copyright (c) 2013 Environmental Systems Research Institute, Inc.
 *   Licensed MIT */
 
 (function (root, factory) {
 
+  // Node.
   if(typeof module === 'object' && typeof module.exports === 'object') {
-    // Node. Does not work with strict CommonJS, but
-    // only CommonJS-like enviroments that support module.exports,
-    // like Node.
     exports = module.exports = factory();
-  }else if(typeof define === 'function' && define.amd) {
-    // AMD. Register as an anonymous module.
-    define(factory);
-  } else {
-    root.Terraformer = factory();
   }
 
-  if(typeof jasmine === "object") {
-    if (typeof Terraformer === undefined){
-      root.Terraformer = { };
-    }
+  // AMD.
+  if(typeof define === 'function' && define.amd) {
+    define(factory);
+  }
+
+  // Browser Global.
+  if(typeof window === "object") {
     root.Terraformer = factory();
   }
 
@@ -57,7 +53,7 @@
   }
 
   /*
-  Internal: Merge two objects togather.
+  Internal: Merge two objects together.
   */
   function mergeObjects (base, add) {
     add = add || {};
@@ -89,10 +85,10 @@
         return calculateBoundsFromNestedArrays(geojson.coordinates);
 
       case 'Polygon':
-        return calculateBoundsFromArray(geojson.coordinates[0]);
+        return calculateBoundsFromNestedArrays(geojson.coordinates);
 
       case 'MultiPolygon':
-        return calculateBoundsFromNestedArrays(geojson.coordinates);
+        return calculateBoundsFromNestedArrayOfArrays(geojson.coordinates);
 
       case 'Feature':
         return calculateBounds(geojson.geometry);
@@ -112,54 +108,124 @@
   Internal: Calculate an bounding box from an nested array of positions
   */
   function calculateBoundsFromNestedArrays (array) {
-    var extents = [], extent;
+    var x1 = null, x2 = null, y1 = null, y2 = null;
 
-    for (var i = array.length - 1; i >= 0; i--) {
-      if(typeof array[i][0] === "number"){
-        extent = calculateBoundsFromArray(array);
-        extents.push([extent[0],extent[1]]);
-        extents.push([extent[2],extent[3]]);
-      } else if(typeof array[i][0] === "object"){
-        extent = calculateBoundsFromNestedArrays(array[i]);
-        extents.push([extent[0],extent[1]]);
-        extents.push([extent[2],extent[3]]);
+    for (var i = 0; i < array.length; i++) {
+      var inner = array[i];
+
+      for (var j = 0; j < inner.length; j++) {
+        var lonlat = inner[j];
+
+        var lon = lonlat[0];
+        var lat = lonlat[1];
+
+        if (x1 === null) {
+          x1 = lon;
+        } else if (lon < x1) {
+          x1 = lon;
+        }
+
+        if (x2 === null) {
+          x2 = lon;
+        } else if (lon > x2) {
+          x2 = lon;
+        }
+
+        if (y1 === null) {
+          y1 = lat;
+        } else if (lat < y1) {
+          y1 = lat;
+        }
+
+        if (y2 === null) {
+          y2 = lat;
+        } else if (lat > y2) {
+          y2 = lat;
+        }
       }
     }
-    return calculateBoundsFromArray(extents);
+
+    return [x1, y1, x2, y2 ];
   }
 
   /*
-  Internal: Calculate an bounding box from an array of positions
+  Internal: Calculate a bounding box from an array of arrays of arrays
+  */
+  function calculateBoundsFromNestedArrayOfArrays (array) {
+    var x1 = null, x2 = null, y1 = null, y2 = null;
+
+    for (var i = 0; i < array.length; i++) {
+      var inner = array[i];
+
+      for (var j = 0; j < inner.length; j++) {
+        var innerinner = inner[j];
+        for (var k = 0; k < innerinner.length; k++) {
+          var lonlat = innerinner[k];
+
+          var lon = lonlat[0];
+          var lat = lonlat[1];
+
+          if (x1 === null) {
+            x1 = lon;
+          } else if (lon < x1) {
+            x1 = lon;
+          }
+
+          if (x2 === null) {
+            x2 = lon;
+          } else if (lon > x2) {
+            x2 = lon;
+          }
+
+          if (y1 === null) {
+            y1 = lat;
+          } else if (lat < y1) {
+            y1 = lat;
+          }
+
+          if (y2 === null) {
+            y2 = lat;
+          } else if (lat > y2) {
+            y2 = lat;
+          }
+        }
+      }
+    }
+
+    return [x1, y1, x2, y2];
+  }
+
+  /*
+  Internal: Calculate a bounding box from an array of positions
   */
   function calculateBoundsFromArray (array) {
-    var x1, x2, y1, y2;
+    var x1 = null, x2 = null, y1 = null, y2 = null;
 
-    for (var i = array.length - 1; i >= 0; i--) {
+    for (var i = 0; i < array.length; i++) {
       var lonlat = array[i];
-      var lon = lonlat[0];
 
+      var lon = lonlat[0];
       var lat = lonlat[1];
-      if (x1 === undefined) {
+
+      if (x1 === null) {
         x1 = lon;
       } else if (lon < x1) {
         x1 = lon;
       }
 
-      if (y1 === undefined) {
-        y1 = lat;
-      } else if (lat < y1) {
-        y1 = lat;
-      }
-
-      // define or smaller num
-      if (x2 === undefined) {
+      if (x2 === null) {
         x2 = lon;
       } else if (lon > x2) {
         x2 = lon;
       }
 
-      // define or smaller num
-      if (y2 === undefined) {
+      if (y1 === null) {
+        y1 = lat;
+      } else if (lat < y1) {
+        y1 = lat;
+      }
+
+      if (y2 === null) {
         y2 = lat;
       } else if (lat > y2) {
         y2 = lat;
@@ -308,6 +374,119 @@
     return applyConverter(geojson, positionToGeographic);
   }
 
+
+  /*
+  Internal: -1,0,1 comparison function
+  */
+  function cmp(a, b) {
+    if(a < b) {
+      return -1;
+    } else if(a > b) {
+      return 1;
+    } else {
+      return 0;
+    }
+  }
+
+
+  /*
+  Internal: used to determine turn
+  */
+  function turn(p, q, r) {
+    // Returns -1, 0, 1 if p,q,r forms a right, straight, or left turn.
+    return cmp((q[0] - p[0]) * (r[1] - p[1]) - (r[0] - p[0]) * (q[1] - p[1]), 0);
+  }
+
+  /*
+  Internal: used to determine euclidean distance between two points
+  */
+  function euclideanDistance(p, q) {
+    // Returns the squared Euclidean distance between p and q.
+    var dx = q[0] - p[0];
+    var dy = q[1] - p[1];
+
+    return dx * dx + dy * dy;
+  }
+
+  function nextHullPoint(points, p) {
+    // Returns the next point on the convex hull in CCW from p.
+    var q = p;
+    for(var r in points) {
+      var t = turn(p, q, points[r]);
+      if(t === -1 || t === 0 && euclideanDistance(p, points[r]) > euclideanDistance(p, q)) {
+        q = points[r];
+      }
+    }
+    return q;
+  }
+
+  function convexHull(points) {
+    // implementation of the Jarvis March algorithm
+    // adapted from http://tixxit.wordpress.com/2009/12/09/jarvis-march/
+
+    if(points.length === 0) {
+      return [];
+    } else if(points.length === 1) {
+      return points;
+    }
+
+    function comp(p1, p2) {
+      if(p1[0] - p2[0] > p1[1] - p2[1]) {
+        return 1;
+      } else if(p1[0] - p2[0] < p1[1] - p2[1]) {
+        return -1;
+      } else {
+        return 0;
+      }
+    }
+
+    // Returns the points on the convex hull of points in CCW order.
+    var hull = [points.sort(comp)[0]];
+
+    for(var p = 0; p < hull.length; p++) {
+      var q = nextHullPoint(points, hull[p]);
+
+      if(q !== hull[0]) {
+        hull.push(q);
+      }
+    }
+
+    return hull;
+  }
+
+  function coordinatesContainPoint(coordinates, point) {
+    var contains = false;
+    for(var i = -1, l = coordinates.length, j = l - 1; ++i < l; j = i) {
+      if (((coordinates[i][1] <= point[1] && point[1] < coordinates[j][1]) ||
+           (coordinates[j][1] <= point[1] && point[1] < coordinates[i][1])) &&
+          (point[0] < (coordinates[j][0] - coordinates[i][0]) * (point[1] - coordinates[i][1]) / (coordinates[j][1] - coordinates[i][1]) + coordinates[i][0])) {
+        contains = true;
+      }
+    }
+    return contains;
+  }
+
+  function polygonContainsPoint(polygon, point) {
+    if (polygon && polygon.length) {
+      if (polygon.length === 1) { // polygon with no holes
+        return coordinatesContainPoint(polygon[0], point);
+      } else { // polygon with holes
+        if (coordinatesContainPoint(polygon[0], point)) {
+          for (var i = 1; i < polygon.length; i++) {
+            if (coordinatesContainPoint(polygon[i], point)) {
+              return false; // found in hole
+            }
+          }
+
+          return true;
+        } else {
+          return false;
+        }
+      }
+    } else {
+      return false;
+    }
+  }
   /*
   Internal: An array of variables that will be excluded form JSON objects.
   */
@@ -359,6 +538,53 @@
     toGeographic: function(){
       return toGeographic(this);
     },
+    envelope: function(){
+      var bounds = calculateBounds(this);
+      return {
+        x: bounds[0],
+        y: bounds[1],
+        w: Math.abs(bounds[0] - bounds[2]),
+        h: Math.abs(bounds[1] - bounds[3])
+      };
+    },
+    convexHull: function(){
+      var coordinates = [ ], i, j;
+      if (this.type === 'Point') {
+        if (this.coordinates && this.coordinates.length > 0) {
+          return [ this.coordinates ];
+        } else {
+          return [ ];
+        }
+      } else if (this.type === 'LineString' || this.type === 'MultiPoint') {
+        if (this.coordinates && this.coordinates.length > 0) {
+          coordinates = this.coordinates;
+        } else {
+          return [ ];
+        }
+      } else if (this.type === 'Polygon' || this.type === 'MultiLineString') {
+        if (this.coordinates && this.coordinates.length > 0) {
+          for (i = 0; i < this.coordinates.length; i++) {
+            coordinates = coordinates.concat(this.coordinates[i]);
+          }
+        } else {
+          return [ ];
+        }
+      } else if (this.type === 'MultiPolygon') {
+        if (this.coordinates && this.coordinates.length > 0) {
+          for (i = 0; i < this.coordinates.length; i++) {
+            for (j = 0; j < this.coordinates[i].length; j++) {
+              coordinates = coordinates.concat(this.coordinates[i][j]);
+            }
+          }
+        } else {
+          return [ ];
+        }
+      } else {
+        throw new Error("Unable to get convex hull of " + this.type);
+      }
+
+      return convexHull(coordinates);
+    },
     toJSON: function(){
       var obj = {};
       for (var key in this) {
@@ -402,7 +628,6 @@
     this.__defineGetter__("bbox", function(){
       return calculateBounds(this);
     });
-
   }
 
   Point.prototype = new Primitive();
@@ -435,7 +660,6 @@
     this.__defineGetter__('length', function () {
       return this.coordinates ? this.coordinates.length : 0;
     });
-
   }
 
   MultiPoint.prototype = new Primitive();
@@ -462,6 +686,9 @@
     }
     return this;
   };
+  MultiPoint.prototype.get = function(i){
+    return new Point(this.coordinates[i]);
+  };
 
   /*
   GeoJSON LineString Class
@@ -486,7 +713,6 @@
     this.__defineGetter__("bbox", function(){
       return calculateBounds(this);
     });
-
   }
 
   LineString.prototype = new Primitive();
@@ -503,6 +729,7 @@
     this.coordinates.splice(remove, 1);
     return this;
   };
+
   /*
   GeoJSON MultiLineString Class
       new MultiLineString();
@@ -530,7 +757,6 @@
     this.__defineGetter__('length', function () {
       return this.coordinates ? this.coordinates.length : 0;
     });
-
   }
 
   MultiLineString.prototype = new Primitive();
@@ -539,6 +765,9 @@
     for (var i = 0; i < this.coordinates.length; i++) {
       func.apply(this, [this.coordinates[i], i, this.coordinates ]);
     }
+  };
+  MultiLineString.prototype.get = function(i){
+    return new LineString(this.coordinates[i]);
   };
 
   /*
@@ -580,6 +809,13 @@
     this.coordinates[0].splice(remove, 1);
     return this;
   };
+  Polygon.prototype.contains = function(primitive) {
+    if (primitive.type !== "Point") {
+      throw new Error("Only points are supported");
+    }
+
+    return polygonContainsPoint(this.coordinates, primitive.coordinates);
+  };
 
   /*
   GeoJSON MultiPolygon Class
@@ -617,6 +853,22 @@
       func.apply(this, [this.coordinates[i], i, this.coordinates ]);
     }
   };
+  MultiPolygon.prototype.contains = function(primitive) {
+    if (primitive.type !== "Point") {
+      throw new Error("Only points are supported");
+    }
+
+    for (var i = 0; i < this.coordinates.length; i++) {
+      if (polygonContainsPoint(this.coordinates[i], primitive.coordinates)) {
+        return true;
+      }
+    }
+
+    return false;
+  };
+  MultiPolygon.prototype.get = function(i){
+    return new Polygon(this.coordinates[i]);
+  };
 
   /*
   GeoJSON Feature Class
@@ -647,11 +899,31 @@
     this.__defineGetter__("bbox", function(){
       return calculateBounds(this);
     });
-
   }
 
   Feature.prototype = new Primitive();
   Feature.prototype.constructor = Feature;
+  Feature.prototype.contains = function(primitive) {
+    if (primitive.type !== "Point") {
+      throw new Error("Only points are supported");
+    }
+
+    if (!this.geometry.type.match(/Polygon/)) {
+      throw new Error("Only features contianing Polygons and MultiPolygons are supported");
+    }
+    if(this.geometry.type === "MultiPolygon"){
+      for (var i = 0; i < this.geometry.coordinates.length; i++) {
+        if (polygonContainsPoint(this.geometry.coordinates[i], primitive.coordinates)) {
+          return true;
+        }
+      }
+    }
+    if(this.geometry.type === "Polygon"){
+      return polygonContainsPoint(this.geometry.coordinates, primitive.coordinates);
+    }
+    return false;
+  };
+
 
   /*
   GeoJSON FeatureCollection Class
@@ -680,7 +952,6 @@
     this.__defineGetter__("bbox", function(){
       return calculateBounds(this);
     });
-
   }
 
   FeatureCollection.prototype = new Primitive();
@@ -693,12 +964,11 @@
   FeatureCollection.prototype.get = function(id){
     var found;
     this.forEach(function(feature){
-      console.log(feature.id, id);
       if(feature.id === id){
         found = feature;
       }
     });
-    return found;
+    return new Feature(found);
   };
 
   /*
@@ -740,6 +1010,9 @@
     for (var i = 0; i < this.geometries.length; i++) {
       func.apply(this, [this.geometries[i], i, this.geometries]);
     }
+  };
+  GeometryCollection.prototype.get = function(i){
+    return new Primitive(this.geometries[i]);
   };
 
   function createCircle(center, rad, interpolate){
@@ -805,6 +1078,7 @@
       this.properties.center = val;
       this.recalculate();
     });
+
   }
 
   Circle.prototype = new Primitive();
@@ -812,6 +1086,13 @@
   Circle.prototype.recalculate = function(){
     this.geometry = createCircle(this.center, this.radius, this.steps);
     return this;
+  };
+  Circle.prototype.contains = function(primitive) {
+    if (primitive.type !== "Point") {
+      throw new Error("Only points are supported");
+    }
+
+    return polygonContainsPoint(this.geometry.coordinates, primitive.coordinates);
   };
 
   exports.Primitive = Primitive;
@@ -838,6 +1119,9 @@
   exports.Tools.createCircle = createCircle;
 
   exports.Tools.calculateBounds = calculateBounds;
+  exports.Tools.coordinatesContainPoint = coordinatesContainPoint;
+  exports.Tools.polygonContainsPoint = polygonContainsPoint;
+  exports.Tools.convexHull = convexHull;
 
   exports.MercatorCRS = MercatorCRS;
   exports.GeographicCRS = GeographicCRS;

@@ -3,11 +3,10 @@ Terraformer is a small javascript library for working with GeoJSON. It is design
 
 * Convert to and from ArcGIS JSON Geometries, WKT and GeoJSON
 * Manipulate GeoJSON with methods like `addVertex`
-* Calculate bounding boxes for GeoJSON objects
 * Find out if GeoJSON shapes intersect or contain each other
-* Get properties like area, distance, and length of GeoJSON objects
+* Get properties like bounding boxes, envelopes, and convex hull of GeoJSON objects
 * Respresent circles as GeoJSON Features
-* Convert to and from (Geographic Coordinates)[http://spatialreference.org/ref/epsg/4326/] and (Esri Web Mercator)[http://spatialreference.org/ref/sr-org/6928/] spatial references
+* Convert to and from [Geographic Coordinates](http://spatialreference.org/ref/epsg/4326/) and [Esri Web Mercator](http://spatialreference.org/ref/sr-org/6928/) spatial references
 
 Gizipped and minified all Terraformer modules comes to about 9.6kb. The core library is 2.8kb and includes GeoJSON parsing, helper methods, bounding boxes and spatial reference conversions. Other features are available as add-in modules as needed.
 
@@ -21,13 +20,68 @@ Terraformer on Node.js is split into multiple small packages for easy consumptio
     $ npm install terraformer-wkt-parser
     $ npm install terraformer-arcgis-parser
 
-### Browsers
+### Browser
 
-Sample code and examples coming soon...
+Terraformer can be used in the browser with a simple browser include.
 
-### AMD
+    <!-- Load the main terraformer library -->
+    <script src="terraformer.min.js" type="text/javascript"></script>
 
-Sample code and examples coming soon...
+    <!-- Load the wkt parser -->
+    <script src="wkt.min.js" type="text/javascript"></script>
+
+    <!-- Load the arcgis parser -->
+    <script src="arcgis.min.js" type="text/javascript"></script>
+
+    <!-- Load the rtree index -->
+    <script src="rtree.min.js" type="text/javascript"></script>
+
+### AMD (Require.js and Dojo)
+
+Terraformer also works with AMD loaders like [RequireJS](http://requirejs.org/) and [Dojo](http://dojotoolkit.org/).
+
+##### RequireJS
+
+First you should register the Terraformer modules with RequireJS
+
+    requirejs.config({
+      //In order for proper loading of depenencies in Terraformer modules set the path up in requirejs.config
+      paths: {
+        terraformer: "/the/path/to/terraformer"
+      }
+    });
+
+Then you can load Terraformer modules in your `require` statements.
+
+    requirejs([
+      "terraformer/terraformer",
+      "terraformer/wkt",
+      "terraformer/rtree",
+    ], function (Terraformer, TerraformerWKT, RTree) {
+      // Do stuff with terraformer core, wkt parser, and rtree
+    };
+
+##### Dojo
+
+Dojo includes a built in AMD loader. To use Terraformer with Dojo setup the path to Terraformer in your `dojoConfig`.
+
+    dojoConfig= {
+      async: true,
+      packages: [{
+        name: "terraformer",
+        location: "/the/path/to/terraformer"
+      }]
+    }
+
+You can then include Terraformer in your Dojo code
+
+    require([
+      "terraformer/terraformer",
+      "terraformer/arcgis",
+      "terraformer/rtree",
+    ], function (Terraformer, TerraformerArcGIS, RTree) {
+      // Do stuff with terraformer core, arcgis parser, and rtree
+    });
 
 ### WebWorkers
 
