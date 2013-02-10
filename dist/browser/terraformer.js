@@ -965,7 +965,7 @@
     } else if (primitive.type === 'Polygon' || primitive.type === 'Circle') {
       return multiArrayIntersectsMultiArray(closedPolygon(this.coordinates), closedPolygon(primitive.coordinates));
     } else if (primitive.type === 'MultiPolygon') {
-      return multiArrayIntersectsMultiMultiArray(this.coordinates, primitive.coordinates);
+      return multiArrayIntersectsMultiMultiArray(closedPolygon(this.coordinates), primitive.coordinates);
     } else {
       throw new Error(primitive.type + " is not supported currently");
     }
@@ -1027,7 +1027,7 @@
     if (primitive.type === 'LineString') {
       return arrayIntersectsMultiMultiArray(primitive.coordinates, this.coordinates);
     } else if (primitive.type === 'Polygon' || primitive.type === 'Circle' || primitive.type === 'MultiLineString') {
-      return multiArrayIntersectsMultiMultiArray(primitive.coordinates, this.coordinates);
+      return multiArrayIntersectsMultiMultiArray(closedPolygon(primitive.coordinates), this.coordinates);
     } else if (primitive.type === 'MultiPolygon') {
       return multiMultiArrayIntersectsMultiMultiArray(this.coordinates, primitive.coordinates);
     } else {
@@ -1258,6 +1258,19 @@
     }
 
     return polygonContainsPoint(this.geometry.coordinates, primitive.coordinates);
+  };
+  Circle.prototype.intersects = function(primitive) {
+    if (primitive.type === 'LineString') {
+      return arrayIntersectsMultiArray(primitive.coordinates, closedPolygon(this.coordinates));
+    } else if (primitive.type === 'MultiLineString') {
+      return multiArrayIntersectsMultiArray(closedPolygon(this.coordinates), primitive.coordinates);
+    } else if (primitive.type === 'Polygon' || primitive.type === 'Circle') {
+      return multiArrayIntersectsMultiArray(closedPolygon(this.coordinates), closedPolygon(primitive.coordinates));
+    } else if (primitive.type === 'MultiPolygon') {
+      return multiArrayIntersectsMultiMultiArray(closedPolygon(this.coordinates), primitive.coordinates);
+    } else {
+      throw new Error(primitive.type + " is not supported currently");
+    }
   };
 
   exports.Primitive = Primitive;
