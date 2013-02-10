@@ -143,6 +143,10 @@ describe("Primitives", function(){
     it("should calculate convex hull", function(){
       expect(point.convexHull()).toEqual([[45, 60]]);
     });
+
+    it("should calculate envelope", function(){
+      expect(point.envelope()).toEqual({ x: 45, y: 60, w: 0, h: 0 });
+    });
   });
 
   describe("MultiPoint", function(){
@@ -200,6 +204,15 @@ describe("Primitives", function(){
     it("should calculate convex hull", function(){
       expect(multiPoint.convexHull()).toEqual([[-45, 122], [100, 0]]);
     });
+
+    it("should calculate envelope", function(){
+      expect(multiPoint.envelope()).toEqual({ x : -45, y : 0, w : 145, h : 122 });
+    });
+
+    it("should get a point as a Primitive", function(){
+      expect(multiPoint.get(0)).toBeInstanceOfClass(Terraformer.Point);
+      expect(multiPoint.get(0).coordinates).toEqual([100,0]);
+    });
   });
 
   describe("LineString", function(){
@@ -240,6 +253,10 @@ describe("Primitives", function(){
     it("should calculate convex hull", function(){
       expect(lineString.convexHull()).toEqual([ [-45, 122], [100, 0]]);
     });
+
+    it("should calculate envelope", function(){
+      expect(lineString.envelope()).toEqual({ x : -45, y : 0, w : 145, h : 122 });
+    });
   });
 
   describe("MultiLineString", function(){
@@ -274,6 +291,15 @@ describe("Primitives", function(){
 
     it("should calculate convex hull", function(){
       expect(multiLineString.convexHull()).toEqual([ [ -115, 55 ], [ -110, 45 ], [ -105, 40 ], [ -100, 40 ], [ -110, 55 ] ]);
+    });
+
+    it("should calculate envelope", function(){
+      expect(multiLineString.envelope()).toEqual({ x : -115, y : 40, w : 15, h : 15 });
+    });
+
+    it("should get a line as a Primitive", function(){
+      expect(multiLineString.get(0)).toBeInstanceOfClass(Terraformer.LineString);
+      expect(multiLineString.get(0).coordinates).toEqual([ [-105, 40], [-110, 45], [-115, 55] ]);
     });
   });
 
@@ -318,6 +344,10 @@ describe("Primitives", function(){
 
     it("should contain a point", function(){
       expect(polygon.contains({type:"Point", coordinates: [ 100.5, 0.5 ]})).toEqual(true);
+    });
+
+    it("should calculate envelope", function(){
+      expect(multiPoint.envelope()).toEqual({ x : -45, y : 0, w : 145, h : 122 });
     });
   });
 
@@ -381,6 +411,15 @@ describe("Primitives", function(){
     it("should contain a point", function() {
       expect(multiPolygon.contains(new Terraformer.Point([102.5, 2.5]))).toEqual(true);
     });
+
+    it("should calculate envelope", function(){
+      expect(multiPolygon.envelope()).toEqual({ x : 100, y : 0, w : 3, h : 3 });
+    });
+
+    it("should get a polygon as a Primitive", function(){
+      expect(multiPolygon.get(0)).toBeInstanceOfClass(Terraformer.Polygon);
+      expect(multiPolygon.get(0).coordinates).toEqual(GeoJSON.multiPolygons[0].coordinates[0]);
+    });
   });
 
   describe("Circle", function(){
@@ -430,6 +469,14 @@ describe("Primitives", function(){
     it("should calculate bounds", function(){
       expect(circle.bbox).toEqual([ -122.00898315283914, 44.99364759960156, -121.99101684715673, 45.00635169618245 ]);
     });
+
+    it("should calculate envelope", function(){
+      expect(circle.envelope()).toEqual({ x : -122.00898315283914, y : 44.99364759960156, w : 0.01796630568240687, h : 0.012704096580890223 });
+    });
+
+    it("should contain a point", function() {
+      expect(circle.contains(new Terraformer.Point([-122, 45]))).toEqual(true);
+    });
   });
 
   describe("Feature", function(){
@@ -453,6 +500,14 @@ describe("Primitives", function(){
 
     it("should calculate bounds", function(){
       expect(feature.bbox).toEqual([21.79, 33.75, 56.95, 71.01]);
+    });
+
+    it("should calculate envelope", function(){
+      expect(feature.envelope()).toEqual({ x : 21.79, y : 33.75, w : 35.160000000000004, h : 37.260000000000005 });
+    });
+
+    it("should contain a point", function() {
+      expect(feature.contains(new Terraformer.Point([41.83,51.01]))).toEqual(true);
     });
   });
 
@@ -480,6 +535,15 @@ describe("Primitives", function(){
     it("should calculate bounds", function(){
       expect(featureCollection.bbox).toEqual([ -104.99404, 33.75, 56.95, 71.01 ] );
     });
+
+    it("should calculate envelope", function(){
+      expect(featureCollection.envelope()).toEqual({ x : -104.99404, y : 33.75, w : 161.94404, h : 37.260000000000005 });
+    });
+
+    it("should get a Feature as a Primitive", function(){
+      expect(featureCollection.get("foo")).toBeInstanceOfClass(Terraformer.Feature);
+      expect(featureCollection.get("foo").geometry.coordinates).toEqual(GeoJSON.features[0].geometry.coordinates);
+    });
   });
 
   describe("GeometryCollection", function(){
@@ -504,5 +568,15 @@ describe("Primitives", function(){
     it("should calculate bounds", function(){
       expect(geometryCollection.bbox).toEqual([ -84.32281494140625, 33.73804486328907, 56.95, 71.01 ]);
     });
+
+    it("should calculate envelope", function(){
+      expect(geometryCollection.envelope()).toEqual({ x : -84.32281494140625, y : 33.73804486328907, w : 141.27281494140624, h : 37.271955136710936 });
+    });
+
+    it("should get a Geometry as a Primitive", function(){
+      expect(geometryCollection.get(0)).toBeInstanceOfClass(Terraformer.Polygon);
+      expect(geometryCollection.get(0).coordinates).toEqual(GeoJSON.polygons[0].coordinates);
+    });
+
   });
 });
