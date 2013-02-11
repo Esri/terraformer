@@ -1,4 +1,4 @@
-/*! Terraformer JS - 0.0.1 - 2013-02-09
+/*! Terraformer JS - 0.0.1 - 2013-02-10
 *   https://github.com/geoloqi/Terraformer
 *   Copyright (c) 2013 Environmental Systems Research Institute, Inc.
 *   Licensed MIT */
@@ -262,6 +262,16 @@
     }
 
     return calculateBoundsFromArray(extents);
+  }
+
+  function calculateEnvelope(geojson){
+    var bounds = calculateBounds(geojson);
+    return {
+      x: bounds[0],
+      y: bounds[1],
+      w: Math.abs(bounds[0] - bounds[2]),
+      h: Math.abs(bounds[1] - bounds[3])
+    };
   }
 
   /*
@@ -1119,6 +1129,7 @@
   exports.Tools.createCircle = createCircle;
 
   exports.Tools.calculateBounds = calculateBounds;
+  exports.Tools.calculateEnvelope = calculateEnvelope;
   exports.Tools.coordinatesContainPoint = coordinatesContainPoint;
   exports.Tools.polygonContainsPoint = polygonContainsPoint;
   exports.Tools.convexHull = convexHull;
