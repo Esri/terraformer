@@ -79,8 +79,12 @@
       this.resolve = this.reject =
         function () { throw new Error('Promise already completed.'); };
       // complete all waiting (async) then()s
-      var aThen, i = 0;
-      while (aThen = this._thens[i++]) { aThen[which] && aThen[which](arg); }
+      for (var i = 0; i < this._thens.length; i++) {
+        var aThen = this._thens[i];
+        if(aThen[which]) {
+          aThen[which](arg);
+        }
+      }
       delete this._thens;
     }
 
@@ -210,7 +214,7 @@
     return dfd;
   };
 
-  GeoStore.prototype.update = function(geojson){
+  GeoStore.prototype.update = function(geojson, callback){
     // updates an existing object in the store and the index
     // accepts a geojson object and uses its id to find and update the item
     // should return a deferred
