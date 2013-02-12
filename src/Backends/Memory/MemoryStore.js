@@ -32,10 +32,15 @@
     this.data = {};
   }
 
-
   // store the data at id returns true if stored successfully
   MemoryStore.prototype.add = function(geojson, dfd){
-    this.data[geojson.id] = geojson;
+    if(geojson.type === "FeatureCollection"){
+      for (var i = 0; i < geojson.features.length; i++) {
+        this.data[geojson.features[i].id] = geojson.features[i];
+      }
+    } else {
+      this.data[geojson.id] = geojson;
+    }
     dfd.resolve(geojson);
     return dfd;
   };

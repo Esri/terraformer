@@ -3205,9 +3205,7 @@
       var start = new Date();
 
       for (var i = 0; i < counties.length; i++) {
-        gs.add(counties[i]).then(function(){
-          console.log(i);
-        });
+        gs.add(counties[i]);
       };
 
       console.log("time spent indexing: " + ((new Date() - start) / 1000) + "s, " + counties.length + " counties");

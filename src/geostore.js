@@ -23,11 +23,11 @@
     this.Terraformer = arguments[0];
   }
 
-  function Promise () {
+  function Deferred () {
     this._thens = [];
   }
 
-  Promise.prototype = {
+  Deferred.prototype = {
 
     /* This is the "front end" API. */
 
@@ -77,7 +77,7 @@
         function (resolve, reject) { reject(arg); };
       // disallow multiple calls to resolve or reject
       this.resolve = this.reject =
-        function () { throw new Error('Promise already completed.'); };
+        function () { throw new Error('Deferred already completed.'); };
       // complete all waiting (async) then()s
       for (var i = 0; i < this._thens.length; i++) {
         var aThen = this._thens[i];
@@ -87,7 +87,6 @@
       }
       delete this._thens;
     }
-
   };
 
   // The store object that ties everything together...
@@ -105,7 +104,7 @@
     this.ids = {};
     this.index = (config.index) ? new config.index() : new Terraformer.RTree.RTree();
     this.store = (config.store) ? new config.store() : new Terraformer.Stores.Memory();
-    this.deferred = (config.deferred) ? config.deferred : Promise;
+    this.deferred = (config.deferred) ? config.deferred : Deferred;
     var data = config.data || [];
     while(data.length){
       this.add(data.shift());
@@ -116,13 +115,17 @@
   // calculate the envelope and add it to the rtree
   // should return a deferred
   GeoStore.prototype.add = function(geojson, callback){
-    var dfd = new this.deferred();
+    var dfd = new this.deferred(), bbox;
 
     if(callback){
-      dfd.then(callback);
+      dfd.then(function(result){
+        callback(null, result);
+      }, function(error){
+        callback(error, null);
+      });
     }
 
-    if (geojson.type !== "Feature") {
+    if (!geojson.type.match(/Feature/)) {
       throw new Error("Terraform.GeoStore : only Features are supported");
     }
 
@@ -131,15 +134,25 @@
     }
 
     // set a bounding box
-    var bbox = (geojson.bbox) ? geojson.bbox : Terraformer.Tools.calculateBounds(geojson);
-
-    // index the data
-    this.index.insert({
-      x: bbox[0],
-      y: bbox[1],
-      w: Math.abs(bbox[0] - bbox[2]),
-      h: Math.abs(bbox[1] - bbox[3])
-    }, geojson.id);
+    if(geojson.type ==="FeatureCollection"){
+      for (var i = 0; i < geojson.features.length; i++) {
+        bbox = (geojson.features[i]) ? geojson.features[i] : Terraformer.Tools.calculateBounds(geojson.features[i]);
+        this.index.insert({
+          x: bbox[0],
+          y: bbox[1],
+          w: Math.abs(bbox[0] - bbox[2]),
+          h: Math.abs(bbox[1] - bbox[3])
+        }, geojson.features[i].id);
+      }
+    } else {
+      bbox = (geojson.bbox) ? geojson.bbox : Terraformer.Tools.calculateBounds(geojson);
+      this.index.insert({
+        x: bbox[0],
+        y: bbox[1],
+        w: Math.abs(bbox[0] - bbox[2]),
+        h: Math.abs(bbox[1] - bbox[3])
+      }, geojson.id);
+    }
 
     // store the data (use the stores store method to decide how to do this.)
     this.store.add(geojson, dfd);
@@ -155,7 +168,11 @@
     var dfd = new this.deferred();
 
     if(callback){
-      dfd.then(callback);
+      dfd.then(function(result){
+        callback(null, result);
+      }, function(error){
+        callback(error, null);
+      });
     }
 
     // remove from index
@@ -165,16 +182,6 @@
     return dfd;
   };
 
-  GeoStore.prototype.query = function(query){
-    // query the store should take options like...
-    // properties - this will have to just loop over every item should occur after a geographic query
-    // ids
-    // center/distance
-    // point
-    // polygon
-    // should return a deferred
-  };
-
   GeoStore.prototype.contains = function(point, callback){
     // query the store for all polygons that contain point.
 
@@ -182,7 +189,11 @@
     var dfd = new this.deferred();
 
     if(callback){
-      dfd.then(callback);
+      dfd.then(function(result){
+        callback(null, result);
+      }, function(error){
+        callback(error, null);
+      });
     }
 
     // create our envelope
@@ -222,7 +233,11 @@
     var dfd = new this.deferred();
 
     if(callback){
-      dfd.then(callback);
+      dfd.then(function(result){
+        callback(null, result);
+      }, function(error){
+        callback(error, null);
+      });
     }
 
     if (geojson.type !== "Feature") {
@@ -260,7 +275,11 @@
     var dfd = new this.deferred();
 
     if(callback){
-      dfd.then(callback);
+      dfd.then(function(result){
+        callback(null, result);
+      }, function(error){
+        callback(error, null);
+      });
     }
 
     this.store.get(id, dfd);
