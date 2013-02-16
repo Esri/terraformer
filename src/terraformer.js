@@ -34,6 +34,16 @@
           "type": "ogcwkt"
         }
       };
+  /*
+  Internal: safe warning
+  */
+  function warn() {
+    var args = Array.prototype.slice.apply(arguments);
+
+    if (typeof console !== undefined && console.warn) {
+      console.warn.apply(console, args);
+    }
+  }
 
   /*
   Internal: Extend one object with another.
@@ -710,6 +720,58 @@
       return JSON.stringify(this);
     }
   };
+  Primitive.prototype.intersects = function(primitive) {
+    // if we are passed a feature, use the polygon inside instead
+    if (primitive.type === 'Feature') {
+      primitive = primitive.geometry;
+    }
+
+    if (this.type === 'LineString') {
+      if (primitive.type === 'LineString') {
+        return arrayIntersectsArray(this.coordinates, primitive.coordinates);
+      } else if (primitive.type === 'MultiLineString') {
+        return arrayIntersectsMultiArray(this.coordinates, primitive.coordinates);
+      } else if (primitive.type === 'Polygon') {
+        return arrayIntersectsMultiArray(this.coordinates, closedPolygon(primitive.coordinates));
+      } else if (primitive.type === 'MultiPolygon') {
+        return arrayIntersectsMultiMultiArray(this.coordinates, primitive.coordinates);
+      }
+    } else if (this.type === 'MultiLineString') {
+      if (primitive.type === 'LineString') {
+        return arrayIntersectsMultiArray(primitive.coordinates, this.coordinates);
+      } else if (primitive.type === 'Polygon' || primitive.type === 'MultiLineString') {
+        return multiArrayIntersectsMultiArray(this.coordinates, primitive.coordinates);
+      } else if (primitive.type === 'MultiPolygon') {
+        return multiArrayIntersectsMultiMultiArray(this.coordinates, primitive.coordinates);
+      }
+    } else if (this.type === 'Polygon') {
+      if (primitive.type === 'LineString') {
+        return arrayIntersectsMultiArray(primitive.coordinates, closedPolygon(this.coordinates));
+      } else if (primitive.type === 'MultiLineString') {
+        return multiArrayIntersectsMultiArray(closedPolygon(this.coordinates), primitive.coordinates);
+      } else if (primitive.type === 'Polygon') {
+        return multiArrayIntersectsMultiArray(closedPolygon(this.coordinates), closedPolygon(primitive.coordinates));
+      } else if (primitive.type === 'MultiPolygon') {
+        return multiArrayIntersectsMultiMultiArray(closedPolygon(this.coordinates), primitive.coordinates);
+      }
+    } else if (this.type === 'MultiPolygon') {
+      if (primitive.type === 'LineString') {
+        return arrayIntersectsMultiMultiArray(primitive.coordinates, this.coordinates);
+      } else if (primitive.type === 'Polygon' || primitive.type === 'MultiLineString') {
+        return multiArrayIntersectsMultiMultiArray(closedPolygon(primitive.coordinates), this.coordinates);
+      } else if (primitive.type === 'MultiPolygon') {
+        return multiMultiArrayIntersectsMultiMultiArray(this.coordinates, primitive.coordinates);
+      }
+    } else if (this.type === 'Feature') {
+      // in the case of a Feature, use the internal primitive for intersection
+      var inner = new Primitive(this.geometry);
+      return inner.intersects(primitive);
+    }
+
+    warn("Type " + this.type + " to " + primitive.type + " intersection is not supported by intersects");
+    return false;
+  };
+
 
   /*
   GeoJSON Point Class
@@ -841,19 +903,6 @@
     this.coordinates.splice(remove, 1);
     return this;
   };
-  LineString.prototype.intersects = function(primitive) {
-    if (primitive.type === 'LineString') {
-      return arrayIntersectsArray(this.coordinates, primitive.coordinates);
-    } else if (primitive.type === 'MultiLineString') {
-      return arrayIntersectsMultiArray(this.coordinates, primitive.coordinates);
-    } else if (primitive.type === 'Polygon' || primitive.type === 'Circle') {
-      return arrayIntersectsMultiArray(this.coordinates, closedPolygon(primitive.coordinates));
-    } else if (primitive.type === 'MultiPolygon') {
-      return arrayIntersectsMultiMultiArray(this.coordinates, primitive.coordinates);
-    } else {
-      throw new Error(primitive.type + " is not supported currently");
-    }
-  };
 
   /*
   GeoJSON MultiLineString Class
@@ -893,17 +942,6 @@
   };
   MultiLineString.prototype.get = function(i){
     return new LineString(this.coordinates[i]);
-  };
-  MultiLineString.prototype.intersects = function(primitive) {
-    if (primitive.type === 'LineString') {
-      return arrayIntersectsMultiArray(primitive.coordinates, this.coordinates);
-    } else if (primitive.type === 'Polygon' || primitive.type === 'Circle' || primitive.type === 'MultiLineString') {
-      return multiArrayIntersectsMultiArray(this.coordinates, primitive.coordinates);
-    } else if (primitive.type === 'MultiPolygon') {
-      return multiArrayIntersectsMultiMultiArray(this.coordinates, primitive.coordinates);
-    } else {
-      throw new Error(primitive.type + " is not supported currently");
-    }
   };
 
   /*
@@ -951,19 +989,6 @@
     }
 
     return polygonContainsPoint(this.coordinates, primitive.coordinates);
-  };
-  Polygon.prototype.intersects = function(primitive) {
-    if (primitive.type === 'LineString') {
-      return arrayIntersectsMultiArray(primitive.coordinates, closedPolygon(this.coordinates));
-    } else if (primitive.type === 'MultiLineString') {
-      return multiArrayIntersectsMultiArray(closedPolygon(this.coordinates), primitive.coordinates);
-    } else if (primitive.type === 'Polygon' || primitive.type === 'Circle') {
-      return multiArrayIntersectsMultiArray(closedPolygon(this.coordinates), closedPolygon(primitive.coordinates));
-    } else if (primitive.type === 'MultiPolygon') {
-      return multiArrayIntersectsMultiMultiArray(closedPolygon(this.coordinates), primitive.coordinates);
-    } else {
-      throw new Error(primitive.type + " is not supported currently");
-    }
   };
 
   /*
@@ -1018,17 +1043,6 @@
   MultiPolygon.prototype.get = function(i){
     return new Polygon(this.coordinates[i]);
   };
-  MultiPolygon.prototype.intersects = function(primitive) {
-    if (primitive.type === 'LineString') {
-      return arrayIntersectsMultiMultiArray(primitive.coordinates, this.coordinates);
-    } else if (primitive.type === 'Polygon' || primitive.type === 'Circle' || primitive.type === 'MultiLineString') {
-      return multiArrayIntersectsMultiMultiArray(closedPolygon(primitive.coordinates), this.coordinates);
-    } else if (primitive.type === 'MultiPolygon') {
-      return multiMultiArrayIntersectsMultiMultiArray(this.coordinates, primitive.coordinates);
-    } else {
-      throw new Error(primitive.type + " is not supported currently");
-    }
-  };
 
   /*
   GeoJSON Feature Class
@@ -1069,7 +1083,7 @@
     }
 
     if (!this.geometry.type.match(/Polygon/)) {
-      throw new Error("Only features contianing Polygons and MultiPolygons are supported");
+      throw new Error("Only features containing Polygons and MultiPolygons are supported");
     }
     if(this.geometry.type === "MultiPolygon"){
       for (var i = 0; i < this.geometry.coordinates.length; i++) {
@@ -1253,19 +1267,6 @@
     }
 
     return polygonContainsPoint(this.geometry.coordinates, primitive.coordinates);
-  };
-  Circle.prototype.intersects = function(primitive) {
-    if (primitive.type === 'LineString') {
-      return arrayIntersectsMultiArray(primitive.coordinates, closedPolygon(this.coordinates));
-    } else if (primitive.type === 'MultiLineString') {
-      return multiArrayIntersectsMultiArray(closedPolygon(this.coordinates), primitive.coordinates);
-    } else if (primitive.type === 'Polygon' || primitive.type === 'Circle') {
-      return multiArrayIntersectsMultiArray(closedPolygon(this.coordinates), closedPolygon(primitive.coordinates));
-    } else if (primitive.type === 'MultiPolygon') {
-      return multiArrayIntersectsMultiMultiArray(closedPolygon(this.coordinates), primitive.coordinates);
-    } else {
-      throw new Error(primitive.type + " is not supported currently");
-    }
   };
 
   exports.Primitive = Primitive;
