@@ -154,7 +154,7 @@ This will return a specicic point (by index) as a new instance of `Terraformer.P
     ls.removeVertex(1);
 
 ### Intersects
-It is possible to check for the intersection of `LineString`, `MultiLineString`, `Polygon`, `Circle`, and `MultiPolygon`.  Any other type of intersection will result in an `Error` being thrown.
+It is possible to check for the intersection of `LineString`, `MultiLineString`, `Polygon`, `Circle`, and `MultiPolygon` and `Feature`.  Any other type of intersection will result in `false` being returned.
 
     // check for intersection
     ls.intersects(new Terraformer.LineString([ [ 20, 10 ], [ 10, 20 ] ]));
@@ -194,8 +194,7 @@ This will return a specicic line (by index) as a new instance of `Terraformer.Li
     var line = mls.get(1);
 
 ### Intersects
-
-It is possible to check for the intersection of `LineString`, `MultiLineString`, `Polygon`, `Circle`, and `MultiPolygon`.  Any other type of intersection will result in an `Error` being thrown.
+It is possible to check for the intersection of `LineString`, `MultiLineString`, `Polygon`, `Circle`, and `MultiPolygon` and `Feature`.  Any other type of intersection will result in `false` being returned.
 
     // check for intersection
     mls.intersects(new Terraformer.LineString([ [ 20, 10 ], [ 10, 20 ] ]));
@@ -250,7 +249,7 @@ It is possible to check for the intersection of `LineString`, `MultiLineString`,
     poly.contains(point); // should be true
 
 ### Intersects
-It is possible to check for the intersection of `LineString`, `MultiLineString`, `Polygon`, `Circle`, and `MultiPolygon`.  Any other type of intersection will result in an `Error` being thrown.
+It is possible to check for the intersection of `LineString`, `MultiLineString`, `Polygon`, `Circle`, and `MultiPolygon` and `Feature`.  Any other type of intersection will result in `false` being returned.
 
     // check for intersection
     poly.intersects(new Terraformer.LineString([ [ 20, 10 ], [ 10, 20 ] ]));
@@ -301,7 +300,7 @@ It is possible to check for the intersection of `LineString`, `MultiLineString`,
     mp.contains(point); // should be true
 
 ### Intersects
-It is possible to check for the intersection of `LineString`, `MultiLineString`, `Polygon`, `Circle`, and `MultiPolygon`.  Any other type of intersection will result in an `Error` being thrown.
+It is possible to check for the intersection of `LineString`, `MultiLineString`, `Polygon`, `Circle`, and `MultiPolygon` and `Feature`.  Any other type of intersection will result in `false` being returned.
 
     // check for intersection
     mp.intersects(new Terraformer.LineString([ [ 20, 10 ], [ 10, 20 ] ]));
@@ -337,6 +336,12 @@ If your features geometry type is `Polygon` or `MultiPolygon` you can check to s
 
     // check the results
     feature.contains(point); // should be true
+
+### Intersects
+It is possible to check for the intersection of `LineString`, `MultiLineString`, `Polygon`, `Circle`, and `MultiPolygon` and `Feature`.  Any other type of intersection will result in `false` being returned.
+
+    // check for intersection
+    feature.intersects(new Terraformer.LineString([ [ 20, 10 ], [ 10, 20 ] ]));
 
 ## FeatureCollection
 
@@ -413,3 +418,9 @@ Since circles are polygons you can see if they contain points.
 
     // does this circle contain a point
     circle.contains(point); // true or false
+
+### Intersects
+It is possible to check for the intersection of `LineString`, `MultiLineString`, `Polygon`, `Circle`, and `MultiPolygon` and `Feature`.  Any other type of intersection will result in `false` being returned.
+
+    // check for intersection
+    circle.intersects(new Terraformer.LineString([ [ 20, 10 ], [ 10, 20 ] ]));
