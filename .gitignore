@@ -16,6 +16,9 @@ Icon
 #Node
 /node_modules
 
+#anvil
+/index.html
+
 # Ruby
 *.gem
 *.rbc
