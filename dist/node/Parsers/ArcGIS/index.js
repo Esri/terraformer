@@ -12,7 +12,7 @@
 
   // Browser Global.
   if(typeof root.navigator === "object") {
-    if (typeof root.Terraformer === undefined){
+    if (typeof root.Terraformer === "undefined"){
       root.Terraformer = {};
     }
     root.Terraformer.ArcGIS = factory();

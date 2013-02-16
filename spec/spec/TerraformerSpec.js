@@ -580,3 +580,83 @@ describe("Primitives", function(){
 
   });
 });
+
+describe("Intersection", function(){
+  describe("MultiLineString", function(){
+    beforeEach(function() {
+      multiLineString = new Terraformer.MultiLineString([ [ [ 0, 0 ], [ 10, 10 ] ], [ [ 5, 5 ], [ 15, 15 ] ] ]);
+    });
+
+    it("should correctly figure out intersection with a LineString", function() {
+      expect(multiLineString.intersects(new Terraformer.LineString([ [ 0, 10 ], [ 15, 5 ] ]))).toEqual(true);
+    });
+
+    it("should correctly figure out intersection with a MultiLineString", function (){
+      expect(multiLineString.intersects(new Terraformer.MultiLineString([ [ [ 0, 10 ], [ 15, 5 ] ] ]))).toEqual(true);
+    });
+
+    it("should correctly figure out intersection with a Polygon", function (){
+      expect(multiLineString.intersects(new Terraformer.Polygon([ [ [ 0, 5 ], [ 10, 5 ], [ 10, 0 ], [ 0, 0 ] ] ]))).toEqual(true);
+    });
+
+    it("should correctly figure out intersection with a MultiPolygon", function (){
+      expect(multiLineString.intersects(new Terraformer.MultiPolygon([ [ [ [ 0, 5 ], [ 10, 5 ], [ 10, 0 ], [ 0, 0 ] ] ] ]))).toEqual(true);
+    });
+  });
+
+  describe("Polygon", function(){
+    beforeEach(function() {
+      polygon = new Terraformer.Polygon([ [ [ 0, 0 ], [ 10, 0 ], [ 10, 5 ], [ 0, 5 ] ] ]);
+    });
+
+    it("should correctly figure out intersection with a Polygon", function(){
+      expect(polygon.intersects(new Terraformer.Polygon([ [ [ 1, 1 ], [ 11, 1 ], [ 11, 6 ], [ 1, 6 ] ] ]))).toEqual(true);
+    });
+
+    it("should correctly figure out intersection with a MultiPolygon", function(){
+      expect(polygon.intersects(new Terraformer.MultiPolygon([ [ [ [ 1, 1 ], [ 11, 1 ], [ 11, 6 ], [ 1, 6 ] ] ] ]))).toEqual(true);
+    });
+  });
+
+  describe("LineString", function(){
+    beforeEach(function() {
+      lineString = new Terraformer.LineString([ [ 45, -122 ], [ 46, -123 ] ]);
+    });
+
+    it("should correctly figure out intersection with a LineString", function(){
+      expect(lineString.intersects(new Terraformer.LineString([ [46, -121], [44, -124] ]))).toEqual(true);
+    });
+
+    it("should correctly figure out that parallel lines are not intersections", function(){
+      expect(lineString.intersects(new Terraformer.LineString([ [44,-121], [45, -122] ]))).toEqual(false);
+    });
+
+    it("should correctly figure out that the same lines are not intersections", function(){
+      expect(lineString.intersects(new Terraformer.LineString([ [45,-122], [46, -123] ]))).toEqual(false);
+    });
+
+    it("should correctly figure out intersection with Polygon", function(){
+      expect(lineString.intersects(new Terraformer.Polygon([ [ [ 45.5, -122.5 ], [ 47, -123 ], [ 45.5, -122.5 ] ] ]))).toEqual(true);
+    });
+
+    it("should correctly figure out lack of intersection with Polygon", function(){
+      expect(lineString.intersects(new Terraformer.Polygon([ [ [ 48.5, -122.5 ], [ 50, -123 ], [ 48.5, -122.5 ] ] ]))).toEqual(false);
+    });
+
+    it("should correctly figure out intersection with MultiLineString", function(){
+      expect(lineString.intersects(new Terraformer.MultiLineString([ [ [ 45.5, -122.5 ], [ 47, -123 ], [ 45.5, -122.5 ] ] ]))).toEqual(true);
+    });
+
+    it("should correctly figure out lack of intersection with MultiLineString", function(){
+      expect(lineString.intersects(new Terraformer.MultiLineString([ [ [ 48.5, -122.5 ], [ 50, -123 ], [ 48.5, -122.5 ] ] ]))).toEqual(false);
+    });
+
+    it("should correctly figure out intersection with MultiPolygon", function(){
+      expect(lineString.intersects(new Terraformer.MultiPolygon([ [ [ [ 45.5, -122.5 ], [ 47, -123 ], [ 45.5, -122.5 ] ] ] ]))).toEqual(true);
+    });
+
+    it("should correctly figure out lack of intersection with MultiPolygon", function(){
+      expect(lineString.intersects(new Terraformer.MultiPolygon([ [ [ [ 48.5, -122.5 ], [ 50, -123 ], [ 48.5, -122.5 ] ] ] ]))).toEqual(false);
+    });
+  });
+});
