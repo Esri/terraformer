@@ -618,6 +618,26 @@ describe("Intersection", function(){
     });
   });
 
+  describe("Feature", function(){
+    beforeEach(function() {
+      feature = new Terraformer.Feature(      {
+        "type": "Feature",
+        "geometry":  {
+          "type": "Polygon",
+          "coordinates": [ [ [ 0, 0 ], [ 10, 0 ], [ 10, 5 ], [ 0, 5 ] ] ]
+        }
+      });
+    });
+
+    it("should correctly figure out intersection with a Polygon", function(){
+      expect(polygon.intersects(new Terraformer.Polygon([ [ [ 1, 1 ], [ 11, 1 ], [ 11, 6 ], [ 1, 6 ] ] ]))).toEqual(true);
+    });
+
+    it("should correctly figure out intersection with a MultiPolygon", function(){
+      expect(polygon.intersects(new Terraformer.MultiPolygon([ [ [ [ 1, 1 ], [ 11, 1 ], [ 11, 6 ], [ 1, 6 ] ] ] ]))).toEqual(true);
+    });
+  });
+
   describe("LineString", function(){
     beforeEach(function() {
       lineString = new Terraformer.LineString([ [ 45, -122 ], [ 46, -123 ] ]);

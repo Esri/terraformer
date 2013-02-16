@@ -721,6 +721,11 @@
     }
   };
   Primitive.prototype.intersects = function(primitive) {
+    // if we are passed a feature, use the polygon inside instead
+    if (primitive.type === 'Feature') {
+      primitive = primitive.geometry;
+    }
+
     if (this.type === 'LineString') {
       if (primitive.type === 'LineString') {
         return arrayIntersectsArray(this.coordinates, primitive.coordinates);
@@ -757,9 +762,13 @@
       } else if (primitive.type === 'MultiPolygon') {
         return multiMultiArrayIntersectsMultiMultiArray(this.coordinates, primitive.coordinates);
       }
+    } else if (this.type === 'Feature') {
+      // in the case of a Feature, use the internal primitive for intersection
+      var inner = new Primitive(this.geometry);
+      return inner.intersects(primitive);
     }
 
-    warn("Type " + primitive.type + " is not supported by intersects");
+    warn("Type " + this.type + " to " + primitive.type + " intersection is not supported by intersects");
     return false;
   };
 
