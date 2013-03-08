@@ -3,10 +3,10 @@
     "name": "terraformer-timezone-api",
     "description": "Timezone API built using Terraformer",
     "version": "0.0.1",
-    "homepage": "https://github.com/geoloqi/Terraformer/tree/master/examples/timezone",
+    "homepage": "https://github.com/esri/Terraformer/tree/master/examples/timezone",
     "repository": {
         "type": "git",
-        "url": "git://github.com/geoloqi/terraformer.git"
+        "url": "git://github.com/esri/terraformer.git"
     },
     "dependencies": {"terraformer": "*",
                      "terraformer-rtree": "*"

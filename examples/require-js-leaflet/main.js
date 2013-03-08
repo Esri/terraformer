@@ -1,7 +1,7 @@
 requirejs.config({
   //In order for proper loading of depenencies in Terraformer modules set the path up in requirejs.config
   paths: {
-    terraformer: "https://raw.github.com/geoloqi/Terraformer/master/dist/browser/",
+    terraformer: "https://raw.github.com/esri/Terraformer/master/dist/browser/",
     Leaflet: "leaflet/leaflet"
   },
    shim: {

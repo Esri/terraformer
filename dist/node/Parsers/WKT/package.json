@@ -1,6 +1,6 @@
 {
   "name": "terraformer-wkt-parser",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "Well-Known Text parser",
   "main": "index.js",
   "directories": {
@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git@github.com:Geoloqi/Terraformer.git"
+    "url": "git@github.com:esri/Terraformer.git"
   },
   "keywords": [
     "WKT",
