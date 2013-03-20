@@ -1,4 +1,4 @@
-/*! Terraformer JS - 0.0.1 - 2013-02-09
+/*! Terraformer JS - 0.0.1 - 2013-02-16
 *   https://github.com/geoloqi/Terraformer
 *   Copyright (c) 2013 Environmental Systems Research Institute, Inc.
 *   Licensed MIT */
@@ -39,6 +39,16 @@
           "type": "ogcwkt"
         }
       };
+  /*
+  Internal: safe warning
+  */
+  function warn() {
+    var args = Array.prototype.slice.apply(arguments);
+
+    if (typeof console !== undefined && console.warn) {
+      console.warn.apply(console, args);
+    }
+  }
 
   /*
   Internal: Extend one object with another.
@@ -487,6 +497,123 @@
       return false;
     }
   }
+
+  function vertexIntersectsVertex(a1, a2, b1, b2) {
+    var ua_t = (b2[0] - b1[0]) * (a1[1] - b1[1]) - (b2[1] - b1[1]) * (a1[0] - b1[0]);
+    var ub_t = (a2[0] - a1[0]) * (a1[1] - b1[1]) - (a2[1] - a1[1]) * (a1[0] - b1[0]);
+    var u_b  = (b2[1] - b1[1]) * (a2[0] - a1[0]) - (b2[0] - b1[0]) * (a2[1] - a1[1]);
+
+    if ( u_b !== 0 ) {
+      var ua = ua_t / u_b;
+      var ub = ub_t / u_b;
+
+      if ( 0 <= ua && ua <= 1 && 0 <= ub && ub <= 1 ) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  function arrayIntersectsArray(a, b) {
+    for (var i = 0; i < a.length - 1; i++) {
+      for (var j = 0; j < b.length - 1; j++) {
+        if (vertexIntersectsVertex(a[i], a[i + 1], b[j], b[j + 1])) {
+          return true;
+        }
+      }
+    }
+
+    return false;
+  }
+
+  function arrayIntersectsMultiArray(a, b) {
+    for (var i = 0; i < b.length; i++) {
+      var inner = b[i];
+
+      for (var j = 0; j < inner.length - 1; j++) {
+        for (var k = 0; k < a.length - 1; k++) {
+          if (vertexIntersectsVertex(inner[j], inner[j + 1], a[k], a[k + 1])) {
+            return true;
+          }
+        }
+      }
+    }
+
+    return false;
+  }
+
+  function multiArrayIntersectsMultiArray(a, b) {
+    for (var i = 0; i < a.length; i++) {
+      if (arrayIntersectsMultiArray(a[i], b)) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  function arrayIntersectsMultiMultiArray(a, b) {
+    for (var i = 0; i < b.length; i++) {
+      if (arrayIntersectsMultiArray(a, b[i])) {
+        return true;
+      }
+
+      return false;
+    }
+  }
+
+  function multiArrayIntersectsMultiMultiArray(a, b) {
+    for (var i = 0; i < a.length; i++) {
+      if (arrayIntersectsMultiMultiArray(a[i], b)) {
+        return true;
+      }
+
+      return false;
+    }
+  }
+
+  function multiMultiArrayIntersectsMultiMultiArray(a, b) {
+    for (var i = 0; i < a.length; i++) {
+      if (multiArrayIntersectsMultiMultiArray(a[i], b)) {
+        return true;
+      }
+
+      return false;
+    }
+  }
+
+  /*
+  Internal: Returns a copy of coordinates for s closed polygon
+  */
+  function closedPolygon(coordinates) {
+    var outer = [ ];
+
+    for (var i = 0; i < coordinates.length; i++) {
+      var inner = coordinates[i].slice();
+
+      if (pointsEqual(inner[0], inner[inner.length - 1]) === false) {
+        inner.push(inner[0]);
+      }
+
+      outer.push(inner);
+    }
+
+    return outer;
+  }
+
+  function pointsEqual(a, b) {
+    for (var i = 0; i < a.length; i++) {
+      for (var j = 0; j < b.length; j++) {
+        if (a[i] !== b[j]) {
+          return false;
+        }
+      }
+    }
+
+    return true;
+  }
+
   /*
   Internal: An array of variables that will be excluded form JSON objects.
   */
@@ -598,6 +725,58 @@
       return JSON.stringify(this);
     }
   };
+  Primitive.prototype.intersects = function(primitive) {
+    // if we are passed a feature, use the polygon inside instead
+    if (primitive.type === 'Feature') {
+      primitive = primitive.geometry;
+    }
+
+    if (this.type === 'LineString') {
+      if (primitive.type === 'LineString') {
+        return arrayIntersectsArray(this.coordinates, primitive.coordinates);
+      } else if (primitive.type === 'MultiLineString') {
+        return arrayIntersectsMultiArray(this.coordinates, primitive.coordinates);
+      } else if (primitive.type === 'Polygon') {
+        return arrayIntersectsMultiArray(this.coordinates, closedPolygon(primitive.coordinates));
+      } else if (primitive.type === 'MultiPolygon') {
+        return arrayIntersectsMultiMultiArray(this.coordinates, primitive.coordinates);
+      }
+    } else if (this.type === 'MultiLineString') {
+      if (primitive.type === 'LineString') {
+        return arrayIntersectsMultiArray(primitive.coordinates, this.coordinates);
+      } else if (primitive.type === 'Polygon' || primitive.type === 'MultiLineString') {
+        return multiArrayIntersectsMultiArray(this.coordinates, primitive.coordinates);
+      } else if (primitive.type === 'MultiPolygon') {
+        return multiArrayIntersectsMultiMultiArray(this.coordinates, primitive.coordinates);
+      }
+    } else if (this.type === 'Polygon') {
+      if (primitive.type === 'LineString') {
+        return arrayIntersectsMultiArray(primitive.coordinates, closedPolygon(this.coordinates));
+      } else if (primitive.type === 'MultiLineString') {
+        return multiArrayIntersectsMultiArray(closedPolygon(this.coordinates), primitive.coordinates);
+      } else if (primitive.type === 'Polygon') {
+        return multiArrayIntersectsMultiArray(closedPolygon(this.coordinates), closedPolygon(primitive.coordinates));
+      } else if (primitive.type === 'MultiPolygon') {
+        return multiArrayIntersectsMultiMultiArray(closedPolygon(this.coordinates), primitive.coordinates);
+      }
+    } else if (this.type === 'MultiPolygon') {
+      if (primitive.type === 'LineString') {
+        return arrayIntersectsMultiMultiArray(primitive.coordinates, this.coordinates);
+      } else if (primitive.type === 'Polygon' || primitive.type === 'MultiLineString') {
+        return multiArrayIntersectsMultiMultiArray(closedPolygon(primitive.coordinates), this.coordinates);
+      } else if (primitive.type === 'MultiPolygon') {
+        return multiMultiArrayIntersectsMultiMultiArray(this.coordinates, primitive.coordinates);
+      }
+    } else if (this.type === 'Feature') {
+      // in the case of a Feature, use the internal primitive for intersection
+      var inner = new Primitive(this.geometry);
+      return inner.intersects(primitive);
+    }
+
+    warn("Type " + this.type + " to " + primitive.type + " intersection is not supported by intersects");
+    return false;
+  };
+
 
   /*
   GeoJSON Point Class
@@ -909,7 +1088,7 @@
     }
 
     if (!this.geometry.type.match(/Polygon/)) {
-      throw new Error("Only features contianing Polygons and MultiPolygons are supported");
+      throw new Error("Only features containing Polygons and MultiPolygons are supported");
     }
     if(this.geometry.type === "MultiPolygon"){
       for (var i = 0; i < this.geometry.coordinates.length; i++) {

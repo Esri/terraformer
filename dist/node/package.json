@@ -1,12 +1,12 @@
 {
   "name": "terraformer",
-  "version": "0.1.5",
+  "version": "0.1.7",
   "description": "Terraformer GIS Tools",
   "main": "terraformer.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "repository": "git@github.com:geoloqi/Terraformer.git",
+  "repository": "git@github.com:esri/Terraformer.git",
   "author": "",
   "license": "MIT",
   "keywords": [
