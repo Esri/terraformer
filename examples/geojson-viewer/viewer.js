@@ -16,8 +16,16 @@ require([
     // convert teh geojson object to a arcgis json representation
     var arcgis = TerraformerArcGIS.convert(input);
 
-    // Make a graphic to put on the map.
-    var gfx = new esri.Graphic(arcgis).setSymbol(new esri.symbol.SimpleFillSymbol());
+    var gfx;
+    // if arcgis.geometry is set we have a graphic json
+    // else we can create our own json and set the symbol on it.
+    if(arcgis.geometry){
+      gfx = new esri.Graphic(arcgis).setSymbol(new esri.symbol.SimpleFillSymbol());
+    } else {
+      gfx = new esri.Graphic({
+        geometry: arcgis
+      }).setSymbol(new esri.symbol.SimpleFillSymbol());
+    }
 
     // add the graphic to the map
     map.graphics.add(gfx);
