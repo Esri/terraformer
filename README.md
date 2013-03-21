@@ -106,3 +106,6 @@ Running the `$ grunt build` command will build the libraries to `dist/node` and 
 * Convert an array of ArcGIS Geometries/Graphics to a GeometryCollection/FeatureCollection
 * Convert Features to ArcGIS Graphics. [Issue](https://github.com/geoloqi/Terraformer/issues/29)
 * Proper handling of holes in polygons/multipolygons when making ArcGIS <-> GeoJSON conversions. [Issue](https://github.com/geoloqi/Terraformer/issues/30)
+
+[](Esri Tags: Terraformer GeoJSON WKT Well-Known-Text) 
+[](Esri Language: JavaScript)
