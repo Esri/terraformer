@@ -64,7 +64,7 @@
       geojson.coordinates = arcgis.rings;
       break;
     case "MultiPolygon":
-      geojson.coordinates = arcgis.rings;
+      geojson.coordinates = [arcgis.rings];
       break;
     case "Feature":
       geojson.geometry = parse(arcgis.geometry);
