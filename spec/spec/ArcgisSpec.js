@@ -296,7 +296,7 @@ describe("ArcGIS Tools", function(){
 
     var output = Terraformer.ArcGIS.parse(input);
 
-    expect(output.coordinates).toEqual([[ [-122.63,45.52],[-122.57,45.53],[-122.52,45.50],[-122.49,45.48],[-122.64,45.49],[-122.63,45.52],[-122.63,45.52] ],[ [-83,35],[-74,35],[-74,41],[-83,41],[-83,35] ]]);
+    expect(output.coordinates).toEqual([ [ [ [-122.63,45.52],[-122.57,45.53],[-122.52,45.50],[-122.49,45.48],[-122.64,45.49],[-122.63,45.52],[-122.63,45.52] ],[ [-83,35],[-74,35],[-74,41],[-83,41],[-83,35] ] ] ]);
     expect(output).toBeInstanceOfClass(Terraformer.MultiPolygon);
   });
 
