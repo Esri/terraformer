@@ -984,11 +984,23 @@
     return this;
   };
   Polygon.prototype.contains = function(primitive) {
-    if (primitive.type !== "Point") {
-      throw new Error("Only points are supported");
+    if (primitive.type === "Point") {
+      return polygonContainsPoint(this.coordinates, primitive.coordinates);
+    } else if (primitive.type === "Polygon") {
+      if (primitive.coordinates.length === 0) {
+        return false;
+      } else if (primitive.coordinates.length === 1 && primitive.coordinates[0].length > 0) {
+        // naive assertion - contains a point and does not intersect
+        if (polygonContainsPoint(this.coordinates, primitive.coordinates[0][0]) === true &&
+            this.intersects(primitive) === false) {
+          return true;
+        }
+      }
+       
+      //return (polygonContainsPoint(this.coordinates, primitive.c))
     }
 
-    return polygonContainsPoint(this.coordinates, primitive.coordinates);
+    return false;
   };
 
   /*
