@@ -992,17 +992,25 @@
     if (primitive.type === "Point") {
       return polygonContainsPoint(this.coordinates, primitive.coordinates);
     } else if (primitive.type === "Polygon") {
-      if (primitive.coordinates.length === 0) {
-        return false;
-      } else if (primitive.coordinates.length > 0 && primitive.coordinates[0].length > 0) {
+      if (primitive.coordinates.length > 0 && primitive.coordinates[0].length > 0) {
         // naive assertion - contains a point and does not intersect
         if (polygonContainsPoint(this.coordinates, primitive.coordinates[0][0]) === true &&
             this.intersects(primitive) === false) {
           return true;
         }
       }
-       
-      //return (polygonContainsPoint(this.coordinates, primitive.c))
+    } else if (primitive.type === "MultiPolygon") {
+      if (primitive.coordinates.length > 0) {
+        // same naive assertion, but loop through all of the inner polygons
+        for (var i = 0; i < primitive.coordinates.length; i++) {
+          if (primitive.coordinates[i][0].length > 0) {
+            if (polygonContainsPoint(this.coordinates, primitive.coordinates[i][0][0]) === true &&
+                this.intersects({ type: "Polygon", coordinates: primitive.coordinates[i] }) === false) {
+              return true;
+            }
+          }
+        }
+      }
     }
 
     return false;
