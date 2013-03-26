@@ -994,7 +994,7 @@
     } else if (primitive.type === "Polygon") {
       if (primitive.coordinates.length === 0) {
         return false;
-      } else if (primitive.coordinates.length === 1 && primitive.coordinates[0].length > 0) {
+      } else if (primitive.coordinates.length > 0 && primitive.coordinates[0].length > 0) {
         // naive assertion - contains a point and does not intersect
         if (polygonContainsPoint(this.coordinates, primitive.coordinates[0][0]) === true &&
             this.intersects(primitive) === false) {
