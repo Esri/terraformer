@@ -1,5 +1,5 @@
-# Terraformer
-Terraformer is a small javascript library for working with GeoJSON. It is designed to be fast lightweight and usable in large numbers of environments including, browsers, AMD (require.js or Dojo), Node.js and inside Web Workers.
+Terraformer
+===========
 
 * Convert to and from ArcGIS JSON Geometries, WKT and GeoJSON
 * Manipulate GeoJSON with methods like `addVertex`
@@ -107,5 +107,5 @@ Running the `$ grunt build` command will build the libraries to `dist/node` and 
 * Convert Features to ArcGIS Graphics. [Issue](https://github.com/geoloqi/Terraformer/issues/29)
 * Proper handling of holes in polygons/multipolygons when making ArcGIS <-> GeoJSON conversions. [Issue](https://github.com/geoloqi/Terraformer/issues/30)
 
-[](Esri Tags: Terraformer GeoJSON WKT Well-Known-Text) 
+[](Esri Tags: Terraformer GeoJSON WKT Well-Known-Text)
 [](Esri Language: JavaScript)
