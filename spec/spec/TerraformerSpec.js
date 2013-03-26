@@ -349,6 +349,22 @@ describe("Primitives", function(){
     it("should calculate envelope", function(){
       expect(multiPoint.envelope()).toEqual({ x : -45, y : 0, w : 145, h : 122 });
     });
+
+    it("should contain a polygon", function(){
+      expect(polygon.contains({type:"Polygon", coordinates: [ [ [100.5, 0.5],[100.7, 0.5],[100.7, 0.7],[100.5, 0.7],[100.5, 0.5] ] ] })).toEqual(true);
+    });
+
+    it("should fail when does not contain a polygon", function(){
+      expect(polygon.contains({type:"Polygon", coordinates: [ [ [101.5, 1.5],[101.7, 1.5],[101.7, 1.7],[101.5, 1.7],[101.5, 1.5] ] ] })).toEqual(false);
+    });
+
+    it("should fail when does not contain a multipolygon", function(){
+      expect(polygon.contains({type:"MultiPolygon", coordinates: [ [ [ [101.5, 1.5],[101.7, 1.5],[101.7, 1.7],[101.5, 1.7],[101.5, 1.5] ] ] ] })).toEqual(false);
+    });
+
+    it("should contain a multipolygon", function(){
+      expect(polygon.contains({type:"MultiPolygon", coordinates: [ [ [ [100.5, 0.5],[100.7, 0.5],[100.7, 0.7],[100.5, 0.7],[100.5, 0.5] ] ] ] })).toEqual(true);
+    });
   });
 
   describe("Polygon with a Hole", function(){
