@@ -484,7 +484,16 @@ var RTree = function (width) {
    * @public
    */
     this.serialize = function() {
-      return _T;
+      var dfd = new Deferred();
+      if(callback){
+        dfd.then(function(result){
+          callback(null, result);
+        }, function(error){
+          callback(error, null);
+        });
+      }
+      dfd.resolve(_T);
+      return dfd;
     };
 
 /* accepts a JSON representation of the tree and inserts it
