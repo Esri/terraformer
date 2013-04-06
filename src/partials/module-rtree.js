@@ -15,7 +15,7 @@
     if (typeof root.Terraformer === "undefined"){
       root.Terraformer = {};
     }
-    root.Terraformer.RTree = factory();
+    root.Terraformer.RTree = factory().RTree;
   }
 
 }(this, function() {
