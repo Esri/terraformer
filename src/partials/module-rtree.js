@@ -12,6 +12,8 @@
 
   // Browser Global.
   if(typeof window === "object") {
+    console.log("Browser");
+    console.log(factory());
     if (typeof root.Terraformer === "undefined"){
       root.Terraformer = {};
     }

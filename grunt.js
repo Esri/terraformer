@@ -117,7 +117,6 @@ module.exports = function(grunt) {
       }
     },
     jasmine_node: {
-      //: ["./spec/spec/GeoJSON.js", "./spec/spec/TerraformerSpec.js", "./spec/spec/RTree.js", "./spec/spec/ArcGISSpec.js","./spec/spec/WKTSpec.js"],
       specNameMatcher: "-spec",
       specFolders: ["./spec/specs"],
       requirejs: false,
