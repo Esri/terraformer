@@ -12,10 +12,12 @@
 
   // Browser Global.
   if(typeof window === "object") {
+    console.log("Browser");
+    console.log(factory());
     if (typeof root.Terraformer === "undefined"){
       root.Terraformer = {};
     }
-    root.Terraformer.RTree = factory();
+    root.Terraformer.RTree = factory().RTree;
   }
 
 }(this, function() {
