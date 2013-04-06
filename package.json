@@ -5,7 +5,7 @@
   "main": "src/terraformer.js",
   "devDependencies": {
     "grunt": "0.3.17",
-    "grunt-jasmine-node": "0.0.5",
+    "grunt-jasmine-node": "git+ssh://git@github.com:patrickarlt/grunt-jasmine-node.git",
     "grunt-jasmine-task": "0.2.3",
     "jison": "~0.3.12"
   },
