@@ -4,7 +4,7 @@ if(typeof module === "object"){
 }
 
 describe("RTree", function(){
-  it("Given an RTree with 1 Entry and a Point that is Within that Entry", function(){
+  it("should find 1 result within an rtree with 1 entry that contains the request", function(){
     var tree = new Terraformer.RTree();
     var spy = jasmine.createSpy();
     tree.insert({ x: 10, y: 10, w: 10, h: 10 }, 'good');
@@ -14,7 +14,7 @@ describe("RTree", function(){
     expect(spy).toHaveBeenCalledWith(null, ["good"]);
   });
 
-  it("Given an RTree with 1 Entry and a Point that is not Within That Entry", function(){
+  it("should find no result within an rtree with 1 entry that doesn not contain the request", function(){
     var tree = new Terraformer.RTree();
     var spy = jasmine.createSpy();
 
@@ -25,7 +25,7 @@ describe("RTree", function(){
     expect(spy).toHaveBeenCalledWith(null, [ ]);
   });
 
-  it("Given an RTree with Multiple Entries and a Point that is Within One Entry", function(){
+  it("should find 1 result within an rtree with multiple entries where 1f entry contains the request", function(){
     var tree = new Terraformer.RTree();
     var spy = jasmine.createSpy();
 
@@ -37,7 +37,7 @@ describe("RTree", function(){
     expect(spy).toHaveBeenCalledWith(null, ["good"]);
   });
 
-  it("Given an RTree with Multiple Entries and a Point that is not Within Those Entries", function(){
+  it("should find no result within an rtree with multiple entries where no entry contains the request", function(){
     var tree = new Terraformer.RTree();
     var spy = jasmine.createSpy();
 
@@ -49,7 +49,7 @@ describe("RTree", function(){
     expect(spy).toHaveBeenCalledWith(null, []);
   });
 
-  it("Given an RTree with Multiple Entries and a Point that is not Within Those Entries", function(){
+  it("should not find a result if the containing entry was removed", function(){
     var tree = new Terraformer.RTree();
     var spy = jasmine.createSpy();
 
@@ -63,7 +63,7 @@ describe("RTree", function(){
     expect(spy).toHaveBeenCalledWith(null, []);
   });
 
-  it("When Calling serialize()", function(){
+  it("should properly serialize the rtree", function(){
     var tree = new Terraformer.RTree();
     var spy = jasmine.createSpy();
 
@@ -97,7 +97,7 @@ describe("RTree", function(){
     });
   });
 
-  it("When a Tree is Set via deserialize() and a searc() Occurs", function(){
+  it("shoud find one entry when restoring from a serialized rtree", function(){
     var spy = jasmine.createSpy();
     var serializedTree = {
       x: 10,
