@@ -269,6 +269,16 @@
     return calculateBoundsFromArray(extents);
   }
 
+  function calculateEnvelope(geojson){
+    var bounds = calculateBounds(geojson);
+    return {
+      x: bounds[0],
+      y: bounds[1],
+      w: Math.abs(bounds[0] - bounds[2]),
+      h: Math.abs(bounds[1] - bounds[3])
+    };
+  }
+
   /*
   Internal: Convert radians to degrees. Used by spatial reference converters.
   */
@@ -1313,6 +1323,7 @@
   exports.Tools.createCircle = createCircle;
 
   exports.Tools.calculateBounds = calculateBounds;
+  exports.Tools.calculateEnvelope = calculateEnvelope;
   exports.Tools.coordinatesContainPoint = coordinatesContainPoint;
   exports.Tools.polygonContainsPoint = polygonContainsPoint;
   exports.Tools.convexHull = convexHull;
