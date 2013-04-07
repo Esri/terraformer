@@ -1,21 +1,32 @@
 (function (root, factory) {
+
+  // Node.
   if(typeof module === 'object' && typeof module.exports === 'object') {
-    // Node. Does not work with strict CommonJS, but
-    // only CommonJS-like enviroments that support module.exports,
-    // like Node.
-    Terraformer = require('terraformer');
     exports = module.exports = factory();
-  }else if(typeof define === 'function' && define.amd) {
-    // AMD. Register as an anonymous module and pass in Terraformer core as a requirement...
-    define(["terraformer/terraformer"],factory);
-  } else {
-    if (typeof root.Terraformer === "undefined") {
+  }
+
+  // AMD.
+  if(typeof define === 'function' && define.amd) {
+    define(factory);
+  }
+
+  // Browser Global.
+  if(typeof window === "object") {
+    if (typeof root.Terraformer === "undefined"){
       root.Terraformer = {};
     }
-
-    root.Terraformer.GeoStore = factory();
+    root.Terraformer.GeoStore = factory().GeoStore;
   }
+
 }(this, function() {
+
+  function bind(obj, fn) {
+    var args = arguments.length > 2 ? Array.prototype.slice.call(arguments, 2) : null;
+    return function () {
+      return fn.apply(obj, args || arguments);
+    };
+  }
+
   var exports = { };
 
   // if we are in AMD terraformer core got passed in as our first requirement so we should set it.
@@ -102,7 +113,7 @@
     var config = options || {};
     this.data = {};
     this.ids = {};
-    this.index = (config.index) ? new config.index() : new Terraformer.RTree.RTree();
+    this.index = (config.index) ? new config.index() : new Terraformer.RTree();
     this.store = (config.store) ? new config.store() : new Terraformer.Stores.Memory();
     this.deferred = (config.deferred) ? config.deferred : Deferred;
     var data = config.data || [];
@@ -182,9 +193,7 @@
     return dfd;
   };
 
-  GeoStore.prototype.contains = function(point, callback){
-    // query the store for all polygons that contain point.
-
+  GeoStore.prototype.contains = function(shape, callback){
     // make a new deferred
     var dfd = new this.deferred();
 
@@ -197,29 +206,34 @@
     }
 
     // create our envelope
-    var envelope = Terraformer.Tools.calculateEnvelope(point);
+    var envelope = Terraformer.Tools.calculateEnvelope(shape);
 
     // search the index
-    var found = this.index.search(envelope);
+    this.index.search(envelope).then(bind(this, function(found){
+      var results = [];
+      var completed = 0;
 
-    // empty wrapper for results
-    var results = [];
-    var completed = 0;
-    var evaluate = function(geojson){
-      completed++;
-      var poly = new Terraformer.Primitive(geojson);
-      if(poly.contains(point)){
-        results.push(poly);
-      }
-      if(completed >= found.length){
-        dfd.resolve(results);
-      }
-    };
+      // the function to evalute results from the index
+      var evaluate = function(primitive){
+        completed++;
 
-    // for each result see if the polygon contains the point
-    for (var i = 0; i < found.length; i++) {
-      this.get(found[i]).then(evaluate);
-    }
+        var geojson = new Terraformer.Primitive(primitive);
+
+        if(geojson.contains(shape)){
+          results.push(geojson);
+        }
+
+        if(completed >= found.length){
+          dfd.resolve(results);
+        }
+      };
+
+      // for each result see if the polygon contains the point
+      for (var i = 0; i < found.length; i++) {
+        this.get(found[i]).then(evaluate);
+      }
+
+    }));
 
     // return the deferred
     return dfd;
@@ -287,7 +301,7 @@
     return dfd;
   };
 
-  exports = GeoStore;
+  exports.GeoStore = GeoStore;
 
   return exports;
 }));

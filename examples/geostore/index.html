@@ -6,7 +6,6 @@
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
     <script src="../../dist/browser/terraformer.js"></script>
     <script src="../../src/Backends/Memory/MemoryStore.js"></script>
-    <script src="../../src/helpers/Deferred.js"></script>
     <script src="../../dist/browser/rtree.js"></script>
     <script src="../../src/geostore.js"></script>
   </head>
@@ -3200,7 +3199,7 @@
         {"type":"Feature","id":"72149","properties":{"name":"Villalba"},"geometry":{"type":"Polygon","coordinates":[[[-66.453815,18.176019],[-66.442861,18.176019],[-66.431907,18.082911],[-66.519538,18.154111],[-66.453815,18.176019]]]}},
         {"type":"Feature","id":"72151","properties":{"name":"Yabucoa"},"geometry":{"type":"Polygon","coordinates":[[[-65.906121,18.126726],[-65.878736,18.115772],[-65.796582,18.071957],[-65.851352,18.011711],[-65.988275,18.061003],[-66.010183,18.077434],[-65.928029,18.121249],[-65.906121,18.126726]]]}},
         {"type":"Feature","id":"72153","properties":{"name":"Yauco"},"geometry":{"type":"Polygon","coordinates":[[[-66.826247,18.170542],[-66.798862,18.132203],[-66.853632,17.956941],[-66.859109,17.956941],[-66.886493,18.022664],[-66.924832,18.148634],[-66.837201,18.170542],[-66.826247,18.170542]]]}}
-      ]
+      ];
 
       var start = new Date();
 
@@ -3210,12 +3209,14 @@
 
       console.log("time spent indexing: " + ((new Date() - start) / 1000) + "s, " + counties.length + " counties");
 
-      var point = {type: "Point", coordinates:[-122.61923540493, 45.533841334631]};
+      var point = { type: "Point", coordinates:[-122.61923540493, 45.533841334631] };
 
       var start = new Date();
 
       gs.contains(point).then(function(results){
-        console.log(results);
+        for (var i = 0; i < results.length; i++) {
+          console.log(results[i].properties.name, results[i]);
+        };
       });
 
       console.log("time spent searching: " + ((new Date() - start) / 1000) + "s, ");
