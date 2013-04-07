@@ -20,14 +20,14 @@
 
 }(this, function() {
 
+  var exports = {};
+
   function bind(obj, fn) {
     var args = arguments.length > 2 ? Array.prototype.slice.call(arguments, 2) : null;
     return function () {
       return fn.apply(obj, args || arguments);
     };
   }
-
-  var exports = { };
 
   // if we are in AMD terraformer core got passed in as our first requirement so we should set it.
   if(arguments[0] && typeof define === 'function' && define.amd) {
@@ -137,7 +137,7 @@
     }
 
     if (!geojson.type.match(/Feature/)) {
-      throw new Error("Terraform.GeoStore : only Features are supported");
+      throw new Error("Terraform.GeoStore : only Features and FeatureCollections are supported");
     }
 
     if(!geojson.id) {
@@ -145,7 +145,7 @@
     }
 
     // set a bounding box
-    if(geojson.type ==="FeatureCollection"){
+    if(geojson.type === "FeatureCollection"){
       for (var i = 0; i < geojson.features.length; i++) {
         bbox = (geojson.features[i]) ? geojson.features[i] : Terraformer.Tools.calculateBounds(geojson.features[i]);
         this.index.insert({

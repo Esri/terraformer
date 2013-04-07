@@ -47,8 +47,8 @@
 
   // remove the data from the index and data with id returns true if removed successfully.
   MemoryStore.prototype.remove = function(id, dfd){
-    dfd.resolve(this.data[id]);
     delete this.data[id];
+    dfd.resolve(this.data[id]);
     return dfd;
   };
 
