@@ -711,17 +711,15 @@ var RTree = function (width) {
     * [ number ] = RTree.remove(rectangle, obj)
     */
     this.remove = function(shape, obj, callback) {
-      var rect;
-      if(shape.type){
+      var args = Array.prototype.slice.call(arguments);
+      if(args[0].type){
         var b = Terraformer.Tools.calculateBounds(shape);
-        rect = {
+        args[0] = {
           x: b[0],
           y: b[1],
           w: Math.abs(b[0] - b[2]),
           h: Math.abs(b[1] - b[3])
         };
-      } else {
-        rect = shape;
       }
 
       var dfd = new Deferred();
@@ -734,7 +732,6 @@ var RTree = function (width) {
         });
       }
 
-      var args = Array.prototype.slice.call(arguments);
       if (args.length < 1) {
         throw "Wrong number of arguments. RT.remove requires at least a bounding rectangle or GeoJSON.";
       }

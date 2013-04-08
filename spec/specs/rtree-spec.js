@@ -146,4 +146,22 @@ describe("RTree", function(){
 
     expect(spy).toHaveBeenCalledWith(null, ["good"]);
   });
+
+  it("should be able to add GeoJSON and find 1 result", function(){
+    var tree = new Terraformer.RTree();
+    var spy = jasmine.createSpy();
+    var polygon = {
+      type: "Polygon",
+      coordinates: [
+        [ [10,10], [10, 20], [20, 20], [20, 10] ]
+      ]
+    };
+
+    tree.insert(polygon, 'good');
+    tree.remove(polygon);
+
+    var dfd = tree.search({ x: 15, y: 15, w: 0, h: 0 }, spy);
+
+    expect(spy).toHaveBeenCalledWith(null, [ ]);
+  });
 });

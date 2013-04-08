@@ -12,8 +12,6 @@
 
   // Browser Global.
   if(typeof window === "object") {
-    console.log("Browser");
-    console.log(factory());
     if (typeof root.Terraformer === "undefined"){
       root.Terraformer = {};
     }
@@ -27,6 +25,11 @@
   // Local Reference To Browser Global
   if(typeof this.navigator === "object") {
     Terraformer = this.Terraformer;
+  }
+
+  // Setup Node Dependencies
+  if(typeof module === 'object' && typeof module.exports === 'object') {
+    Terraformer = require('terraformer');
   }
 
   "SOURCE";
