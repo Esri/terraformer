@@ -22,6 +22,12 @@
 
 }(this, function() {
   var exports = { };
+  var Terraformer;
+
+  // Local Reference To Browser Global
+  if(typeof this.navigator === "object") {
+    Terraformer = this.Terraformer;
+  }
 
   "SOURCE";
 

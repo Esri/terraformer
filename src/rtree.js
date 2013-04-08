@@ -108,6 +108,7 @@ var RTree = function (width) {
       id: "root",
       nodes: []
     };
+
    /* @function
     * @description Function to generate unique strings for element IDs
     * @param {String} n      The prefix to use for the IDs generated.
@@ -587,7 +588,20 @@ var RTree = function (width) {
     * [ nodes | objects ] = RTree.search(rectangle, [return node data], [array to fill])
     * @public
     */
-    this.search = function(rect, callback) {
+    this.search = function(shape, callback) {
+      var rect;
+      if(shape.type){
+        var b = Terraformer.Tools.calculateBounds(shape);
+        rect = {
+          x: b[0],
+          y: b[1],
+          w: Math.abs(b[0] - b[2]),
+          h: Math.abs(b[1] - b[3])
+        };
+      } else {
+        rect = shape;
+      }
+
       var dfd = new Deferred();
 
       var args = [ rect, false, [ ], _T, callback ];
@@ -609,10 +623,10 @@ var RTree = function (width) {
       return dfd;
     };
 
-/* partially-recursive toJSON function
-   * [ string ] = RTree.toJSON([rectangle], [tree])
-   * @public
-   */
+   /* partially-recursive toJSON function
+    * [ string ] = RTree.toJSON([rectangle], [tree])
+    * @public
+    */
     this.toJSON = function(rect, tree) {
       var hit_stack = []; // Contains the elements that overlap
       var count_stack = []; // Contains the elements that overlap
@@ -693,10 +707,23 @@ var RTree = function (width) {
       return (return_string);
     };
 
-/* non-recursive function that deletes a specific
-   * [ number ] = RTree.remove(rectangle, obj)
-   */
-    this.remove = function(rect, obj, callback) {
+   /* non-recursive function that deletes a specific
+    * [ number ] = RTree.remove(rectangle, obj)
+    */
+    this.remove = function(shape, obj, callback) {
+      var rect;
+      if(shape.type){
+        var b = Terraformer.Tools.calculateBounds(shape);
+        rect = {
+          x: b[0],
+          y: b[1],
+          w: Math.abs(b[0] - b[2]),
+          h: Math.abs(b[1] - b[3])
+        };
+      } else {
+        rect = shape;
+      }
+
       var dfd = new Deferred();
 
       if(callback){
@@ -709,7 +736,7 @@ var RTree = function (width) {
 
       var args = Array.prototype.slice.call(arguments);
       if (args.length < 1) {
-        throw "Wrong number of arguments. RT.remove requires at least a bounding rectangle.";
+        throw "Wrong number of arguments. RT.remove requires at least a bounding rectangle or GeoJSON.";
       }
 
       switch (args.length) {
@@ -742,11 +769,24 @@ var RTree = function (width) {
    /* non-recursive insert function
     * [] = RTree.insert(rectangle, object to insert)
     */
-    this.insert = function(rect, obj, callback) {
+    this.insert = function(shape, obj, callback) {
+      var rect;
+      if(shape.type){
+        var b = Terraformer.Tools.calculateBounds(shape);
+        rect = {
+          x: b[0],
+          y: b[1],
+          w: Math.abs(b[0] - b[2]),
+          h: Math.abs(b[1] - b[3])
+        };
+      } else {
+        rect = shape;
+      }
+
       var dfd = new Deferred();
 
       if (arguments.length < 2) {
-        throw "Wrong number of arguments. RT.Insert requires at least a bounding rectangle and an object.";
+        throw "Wrong number of arguments. RT.Insert requires at least a bounding rectangle or GeoJSON and an object.";
       }
 
       if(callback){
@@ -768,15 +808,14 @@ var RTree = function (width) {
       return dfd;
     };
 
-/* non-recursive delete function
-   * [deleted object] = RTree.remove(rectangle, [object to delete])
-   */
+   /* non-recursive delete function
+    * [deleted object] = RTree.remove(rectangle, [object to delete])
+    */
 
     //End of RTree
     };
 
 /* Rectangle - Generic rectangle object - Not yet used */
-
 RTree.Rectangle = function(ix, iy, iw, ih) { // new Rectangle(bounds) or new Rectangle(x, y, w, h)
   var x, x2, y, y2, w, h;
 
@@ -863,7 +902,6 @@ RTree.Rectangle = function(ix, iy, iw, ih) { // new Rectangle(bounds) or new Rec
   };
   //End of RTree.Rectangle
 };
-
 
 /* returns true if rectangle 1 overlaps rectangle 2
  * [ boolean ] = overlap_rectangle(rectangle a, rectangle b)
