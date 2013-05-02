@@ -56,7 +56,7 @@ require([
         geometry: arcgis
       });
     }
-
+    //set appropriate symbol for type of geometry
     gfx.setSymbol(getSymbolForGraphic(gfx.geometry));
     return gfx;
   }
