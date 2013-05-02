@@ -15,11 +15,22 @@
     if (typeof root.Terraformer === "undefined"){
       root.Terraformer = {};
     }
-    root.Terraformer.RTree = factory();
+    root.Terraformer.RTree = factory().RTree;
   }
 
 }(this, function() {
   var exports = { };
+  var Terraformer;
+
+  // Local Reference To Browser Global
+  if(typeof this.navigator === "object") {
+    Terraformer = this.Terraformer;
+  }
+
+  // Setup Node Dependencies
+  if(typeof module === 'object' && typeof module.exports === 'object') {
+    Terraformer = require('terraformer');
+  }
 
   "SOURCE";
 

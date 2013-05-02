@@ -10,6 +10,9 @@
   "devDependencies": {
     "vows": "latest"
   },
+  "dependencies": {
+    "terraformer": "latest"
+  },
   "author": "",
   "license": "MIT"
 }
