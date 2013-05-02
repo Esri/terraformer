@@ -68,7 +68,6 @@
       break;
     case "Feature":
       geojson.geometry = parse(arcgis.geometry);
-
       break;
     }
 
@@ -83,7 +82,7 @@
   // this takes a point line or polygon geojson object and converts it to the appropriate
   function convert(geojson, sr){
     var spatialReference = (sr) ? sr : { wkid: 4326 };
-    var result = {};
+    var result = {}, i;
 
     switch(geojson.type){
     case "Point":
@@ -114,6 +113,18 @@
     case "Feature":
       result.geometry = convert(geojson.geometry);
       result.attributes = geojson.properties;
+      break;
+    case "FeatureCollection":
+      result = [];
+      for (i = 0; i < geojson.features.length; i++){
+        result.push(convert(geojson.features[i]));
+      }
+      break;
+    case "GeometryCollection":
+      result = [];
+      for (i = 0; i < geojson.geometries.length; i++){
+        result.push(convert(geojson.geometries[i]));
+      }
       break;
     }
 
