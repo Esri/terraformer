@@ -205,6 +205,122 @@ describe("ArcGIS Tools", function(){
     });
   });
 
+  it("should convert a GeoJSON FeatureCollection into an array of ArcGIS Feature JSON", function(){
+    var input = {
+      "type": "FeatureCollection",
+      "features": [{
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [102.0, 0.5]
+        },
+        "properties": {
+          "prop0": "value0"
+        }
+      }, {
+        "type": "Feature",
+        "geometry": {
+          "type": "LineString",
+          "coordinates": [
+            [102.0, 0.0],[103.0, 1.0],[104.0, 0.0],[105.0, 1.0]
+          ]
+        },
+        "properties": {
+          "prop0": "value0"
+        }
+      }, {
+        "type": "Feature",
+        "geometry": {
+          "type": "Polygon",
+          "coordinates": [
+            [[100.0, 0.0],[101.0, 0.0],[101.0, 1.0],[100.0, 1.0],[100.0, 0.0]]
+          ]
+        },
+        "properties": {
+          "prop0": "value0"
+        }
+      }]
+    };
+
+    var output = Terraformer.ArcGIS.convert(input);
+
+    expect(output).toEqual([{
+      "geometry": {
+        "x": 102,
+        "y": 0.5,
+        "spatialReference": {
+          "wkid": 4326
+        }
+      },
+      "attributes": {
+        "prop0": "value0"
+      }
+    }, {
+      "geometry": {
+        "paths": [
+          [[102, 0],[103, 1],[104, 0],[105, 1]]
+        ],
+        "spatialReference": {
+          "wkid": 4326
+        }
+      },
+      "attributes": {
+        "prop0": "value0"
+      }
+    }, {
+      "geometry": {
+        "rings": [
+          [[100, 0],[101, 0],[101, 1],[100, 1],[100, 0]]
+        ],
+        "spatialReference": {
+          "wkid": 4326
+        }
+      },
+      "attributes": {
+        "prop0": "value0"
+      }
+    }]);
+  });
+
+  it("should convert a GeoJSON GeometryCollection into an array of ArcGIS Geometries", function(){
+    var input = {
+      "type" : "GeometryCollection",
+      "geometries" : [{
+        "type" : "Polygon",
+        "coordinates" : [[[-95, 43], [-95, 50], [-90, 50], [-91, 42], [-95, 43]]]
+      }, {
+        "type" : "LineString",
+        "coordinates" : [[-89, 42], [-89, 50], [-80, 50], [-80, 42]]
+      }, {
+        "type" : "Point",
+        "coordinates" : [-94, 46]
+      }]
+    };
+
+    var output = Terraformer.ArcGIS.convert(input);
+
+    expect(output).toEqual([{
+      "rings": [
+        [[-95, 43],[-95, 50],[-90, 50],[-91, 42],[-95, 43]]
+      ],
+      "spatialReference": {
+        "wkid": 4326
+      }
+    }, {
+      "paths": [
+        [[-89, 42],[-89, 50],[-80, 50],[-80, 42]]
+      ],
+      "spatialReference": {
+        "wkid": 4326
+      }
+    }, {
+      "x": -94,"y": 46,
+      "spatialReference": {
+        "wkid": 4326
+      }
+    }]);
+  });
+
   it("should parse an ArcGIS Point in a Terraformer GeoJSON Point", function() {
     var input = {
       "x": -66.796875,
