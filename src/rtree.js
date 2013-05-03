@@ -1,4 +1,70 @@
-/****************************************************************************** 
+function Deferred () {
+  this._thens = [];
+}
+
+Deferred.prototype = {
+
+  /* This is the "front end" API. */
+
+  // then(onResolve, onReject): Code waiting for this promise uses the
+  // then() method to be notified when the promise is complete. There
+  // are two completion callbacks: onReject and onResolve. A more
+  // robust promise implementation will also have an onProgress handler.
+  then: function (onResolve, onReject) {
+    // capture calls to then()
+    this._thens.push({ resolve: onResolve, reject: onReject });
+  },
+
+  // Some promise implementations also have a cancel() front end API that
+  // calls all of the onReject() callbacks (aka a "cancelable promise").
+  // cancel: function (reason) {},
+
+  /* This is the "back end" API. */
+
+  // resolve(resolvedValue): The resolve() method is called when a promise
+  // is resolved (duh). The resolved value (if any) is passed by the resolver
+  // to this method. All waiting onResolve callbacks are called
+  // and any future ones are, too, each being passed the resolved value.
+  resolve: function (val) {
+    this._complete('resolve', val);
+  },
+
+  // reject(exception): The reject() method is called when a promise cannot
+  // be resolved. Typically, you'd pass an exception as the single parameter,
+  // but any other argument, including none at all, is acceptable.
+  // All waiting and all future onReject callbacks are called when reject()
+  // is called and are passed the exception parameter.
+  reject: function (ex) {
+    this._complete('reject', ex);
+  },
+
+  // Some promises may have a progress handler. The back end API to signal a
+  // progress "event" has a single parameter. The contents of this parameter
+  // could be just about anything and is specific to your implementation.
+  // progress: function (data) {},
+
+  /* "Private" methods. */
+
+  _complete: function (which, arg) {
+    // switch over to sync then()
+    this.then = (which === 'resolve') ?
+      function (resolve, reject) { resolve(arg); } :
+      function (resolve, reject) { reject(arg); };
+    // disallow multiple calls to resolve or reject
+    this.resolve = this.reject =
+      function () { throw new Error('Deferred already completed.'); };
+    // complete all waiting (async) then()s
+    for (var i = 0; i < this._thens.length; i++) {
+      var aThen = this._thens[i];
+      if(aThen[which]) {
+        aThen[which](arg);
+      }
+    }
+    delete this._thens;
+  }
+};
+
+/******************************************************************************
  rtree.js - General-Purpose Non-Recursive Javascript R-Tree Library
  Version 0.6.2, December 5st 2009
  Copyright (c) 2009 Jon-Carlos Rivera
@@ -21,7 +87,7 @@
  Jon-Carlos Rivera - imbcmdth@hotmail.com
  ******************************************************************************/
 
-/**
+/*
  * RTree - A simple r-tree structure for great results.
  * @constructor
  */
@@ -43,12 +109,11 @@ var RTree = function (width) {
       nodes: []
     };
 
-
-/* @function
-   * @description Function to generate unique strings for element IDs
-   * @param {String} n      The prefix to use for the IDs generated.
-   * @return {String}        A guarenteed unique ID.
-   */
+   /* @function
+    * @description Function to generate unique strings for element IDs
+    * @param {String} n      The prefix to use for the IDs generated.
+    * @return {String}        A guarenteed unique ID.
+    */
     var _name_to_id = (function() {
       // hide our idCache inside this closure
       var idCache = {};
@@ -72,17 +137,17 @@ var RTree = function (width) {
       // Area of new enlarged rectangle
       var lperi = (l + w) / 2.0; // Average size of a side of the new rectangle
       var larea = l * w; // Area of new rectangle
-      // return the ratio of the perimeter to the area - the closer to 1 we are, 
-      // the more "square" a rectangle is. conversly, when approaching zero the 
+      // return the ratio of the perimeter to the area - the closer to 1 we are,
+      // the more "square" a rectangle is. conversly, when approaching zero the
       // more elongated a rectangle is
       var lgeo = larea / (lperi * lperi);
       return (larea * fill / lgeo);
     };
 
-/* find the best specific node(s) for object to be deleted from
-   * [ leaf node parent ] = _remove_subtree(rectangle, object, root)
-   * @private
-   */
+   /* find the best specific node(s) for object to be deleted from
+    * [ leaf node parent ] = _remove_subtree(rectangle, object, root)
+    * @private
+    */
     var _remove_subtree = function(rect, obj, root) {
         var hit_stack = []; // Contains the elements that overlap
         var count_stack = []; // Contains the elements that overlap
@@ -129,8 +194,8 @@ var RTree = function (width) {
                   }
                   break;
                 }
-/*  else if("load" in ltree) { // A load
-            }*/
+                /*  else if("load" in ltree) { // A load
+                }*/
                 else if ("nodes" in ltree) { // Not a Leaf
                   current_depth += 1;
                   count_stack.push(i);
@@ -171,10 +236,10 @@ var RTree = function (width) {
         return (ret_array);
         };
 
-/* choose the best damn node for rectangle to be inserted into
-   * [ leaf node parent ] = _choose_leaf_subtree(rectangle, root to start search at)
-   * @private
-   */
+   /* choose the best damn node for rectangle to be inserted into
+    * [ leaf node parent ] = _choose_leaf_subtree(rectangle, root to start search at)
+    * @private
+    */
     var _choose_leaf_subtree = function(rect, root) {
         var best_choice_index = -1;
         var best_choice_stack = [];
@@ -224,10 +289,10 @@ var RTree = function (width) {
         return (best_choice_stack);
         };
 
-/* split a set of nodes into two roughly equally-filled nodes
-   * [ an array of two new arrays of nodes ] = linear_split(array of nodes)
-   * @private
-   */
+   /* split a set of nodes into two roughly equally-filled nodes
+    * [ an array of two new arrays of nodes ] = linear_split(array of nodes)
+    * @private
+    */
     var _linear_split = function(nodes) {
         var n = _pick_linear(nodes);
         while (nodes.length > 0) {
@@ -236,10 +301,10 @@ var RTree = function (width) {
         return (n);
         };
 
-/* insert the best source rectangle into the best fitting parent node: a or b
-   * [] = pick_next(array of source nodes, target node array a, target node array b)
-   * @private
-   */
+   /* insert the best source rectangle into the best fitting parent node: a or b
+    * [] = pick_next(array of source nodes, target node array a, target node array b)
+    * @private
+    */
     var _pick_next = function(nodes, a, b) {
         // Area of new enlarged rectangle
         var area_a = RTree.Rectangle.squarified_ratio(a.w, a.h, a.nodes.length + 1);
@@ -283,10 +348,10 @@ var RTree = function (width) {
         }
         };
 
-/* pick the "best" two starter nodes to use as seeds using the "linear" criteria
-   * [ an array of two new arrays of nodes ] = pick_linear(array of source nodes)
-   * @private
-   */
+   /* pick the "best" two starter nodes to use as seeds using the "linear" criteria
+    * [ an array of two new arrays of nodes ] = pick_linear(array of source nodes)
+    * @private
+    */
     var _pick_linear = function(nodes) {
         var lowest_high_x = nodes.length - 1;
         var highest_low_x = 0;
@@ -300,7 +365,7 @@ var RTree = function (width) {
             highest_low_x = i;
           } else if (l.x + l.w < nodes[lowest_high_x].x + nodes[lowest_high_x].w) {
             lowest_high_x = i;
-          } 
+          }
           if (l.y > nodes[highest_low_y].y) {
             highest_low_y = i;
           } else if (l.y + l.h < nodes[lowest_high_y].y + nodes[lowest_high_y].h) {
@@ -350,18 +415,14 @@ var RTree = function (width) {
         return (node);
     };
 
-/* non-recursive internal search function 
-   * [ nodes | objects ] = _search_subtree(rectangle, [return node data], [array to fill], root to begin search at)
-   * @private
-   */
-    var _search_subtree = function(rect, return_node, return_array, root, callback) {
+   /* non-recursive internal search function
+    * [ nodes | objects ] = _search_subtree(rectangle, [return node data], [array to fill], root to begin search at)
+    * @private
+    */
+    var _search_subtree = function(rect, return_node, return_array, root) {
       var hit_stack = []; // Contains the elements that overlap
       if (!RTree.Rectangle.overlap_rectangle(rect, root)) {
-        if (callback) {
-          callback(null, return_array);
-        } else {
-          return return_array;
-        }
+        return return_array;
       }
 
       var load_callback = function(local_tree, local_node) {
@@ -391,17 +452,13 @@ var RTree = function (width) {
         }
       } while (hit_stack.length > 0);
 
-      if (callback) {
-        callback(null, return_array);
-      } else {
-        return return_array;
-      }
+      return return_array;
     };
 
-/* non-recursive internal insert function
-   * [] = _insert_subtree(rectangle, object to insert, root to begin insertion at)
-   * @private
-   */
+   /* non-recursive internal insert function
+    * [] = _insert_subtree(rectangle, object to insert, root to begin insertion at)
+    * @private
+    */
     var _insert_subtree = function(node, root) {
       var bc; // Best Current node
       // Initial insertion is special because we resize the Tree and we don't
@@ -480,46 +537,97 @@ var RTree = function (width) {
       } while (tree_stack.length > 0);
     };
 
-/* returns a JSON representation of the tree
-   * @public
-   */
-    this.serialize = function() {
-      return _T;
+   /* returns a JSON representation of the tree
+    * @public
+    */
+    this.serialize = function(callback) {
+      var dfd = new Deferred();
+      if(callback){
+        dfd.then(function(result){
+          callback(null, result);
+        }, function(error){
+          callback(error, null);
+        });
+      }
+      dfd.resolve(_T);
+      return dfd;
     };
 
-/* accepts a JSON representation of the tree and inserts it
-   * @public
-   */
-    this.deserialize = function(new_tree, where) {
-      if (!where) {
+   /* accepts a JSON representation of the tree and inserts it
+    * @public
+    */
+    this.deserialize = function(new_tree, where, callback) {
+      var args = Array.prototype.slice.call(arguments);
+      var dfd = new Deferred();
+
+      switch (args.length) {
+      case 1:
         where = _T;
+        break;
+      case 2:
+        if(typeof args[1] === "function"){
+          where = _T;
+          callback = args[1];
+        }
+        break;
       }
 
-      return (_attach_data(where, new_tree));
+      if(callback){
+        dfd.then(function(result){
+          callback(null, result);
+        }, function(error){
+          callback(error, null);
+        });
+      }
+
+      dfd.resolve(_attach_data(where, new_tree));
+
+      return dfd;
     };
 
-/* non-recursive search function 
-   * [ nodes | objects ] = RTree.search(rectangle, [return node data], [array to fill])
-   * @public
-   */
-    this.search = function(rect, callback) {
-      var args = [ rect, false, [ ], _T, callback ];
+   /* non-recursive search function
+    * [ nodes | objects ] = RTree.search(rectangle, [return node data], [array to fill])
+    * @public
+    */
+    this.search = function(shape, callback) {
+      var rect;
+      if(shape.type){
+        var b = Terraformer.Tools.calculateBounds(shape);
+        rect = {
+          x: b[0],
+          y: b[1],
+          w: Math.abs(b[0] - b[2]),
+          h: Math.abs(b[1] - b[3])
+        };
+      } else {
+        rect = shape;
+      }
+
+      var dfd = new Deferred();
+
+      var args = [ rect, false, [ ], _T ];
 
       if (rect === undefined) {
         throw "Wrong number of arguments. RT.Search requires at least a bounding rectangle.";
       }
 
-      if (callback) {
-        _search_subtree.apply(this, args);
-      } else {
-        return _search_subtree.apply(this, args);
+      if(callback){
+        dfd.then(function(result){
+          callback(null, result);
+        }, function(error){
+          callback(error, null);
+        });
       }
+
+      dfd.resolve(_search_subtree.apply(this, args));
+
+      return dfd;
     };
 
-/* partially-recursive toJSON function
-   * [ string ] = RTree.toJSON([rectangle], [tree])
-   * @public
-   */
+   /* partially-recursive toJSON function
+    * [ string ] = RTree.toJSON([rectangle], [tree])
+    * @public
+    */
     this.toJSON = function(rect, tree) {
       var hit_stack = []; // Contains the elements that overlap
       var count_stack = []; // Contains the elements that overlap
@@ -600,26 +708,51 @@ var RTree = function (width) {
       return (return_string);
     };
 
-/* non-recursive function that deletes a specific
-   * [ number ] = RTree.remove(rectangle, obj)
-   */
-    this.remove = function(rect, obj) {
+   /* non-recursive function that deletes a specific
+    * [ number ] = RTree.remove(rectangle, obj)
+    */
+    this.remove = function(shape, obj, callback) {
       var args = Array.prototype.slice.call(arguments);
+      var conditional;
+      if(args[0].type){
+        var b = Terraformer.Tools.calculateBounds(shape);
+        args[0] = {
+          x: b[0],
+          y: b[1],
+          w: Math.abs(b[0] - b[2]),
+          h: Math.abs(b[1] - b[3])
+        };
+      }
+
+      var dfd = new Deferred();
+
       if (args.length < 1) {
-        throw "Wrong number of arguments. RT.remove requires at least a bounding rectangle.";
+        throw "Wrong number of arguments. RT.remove requires at least a bounding rectangle or GeoJSON.";
       }
 
       switch (args.length) {
       case 1:
-        args[1] = false; // obj == false for conditionals
-        args[2] = _T; // Add root node to end of argument list
+        conditional = false;
         break;
       case 2:
-        args[2] = _T; // Add root node to end of argument list
+        if(typeof args[1] === "function"){
+          conditional = false;
+          callback = args[1];
+        } else {
+          conditional = args[1];
+        }
         break;
       }
-      
-      args.length = 3;
+
+      if(callback){
+        dfd.then(function(result){
+          callback(null, result);
+        }, function(error){
+          callback(error, null);
+        });
+      }
+
+      args = [args[0], conditional, _T];
 
       if (args[1] === false) { // Do area-wide delete
         var numberdeleted = 0;
@@ -628,38 +761,64 @@ var RTree = function (width) {
           numberdeleted = ret_array.length;
           ret_array = ret_array.concat(_remove_subtree.apply(this, args));
         } while (numberdeleted !== ret_array.length);
-        return ret_array;
+        dfd.resolve(ret_array);
       } else { // Delete a specific item
-        return (_remove_subtree.apply(this, args));
+        dfd.resolve(_remove_subtree.apply(this, args));
       }
+
+      return dfd;
     };
 
-/* non-recursive insert function
-   * [] = RTree.insert(rectangle, object to insert)
-   */
-    this.insert = function(rect, obj) {
-      if (arguments.length < 2) {
-        throw "Wrong number of arguments. RT.Insert requires at least a bounding rectangle and an object.";
+   /* non-recursive insert function
+    * [] = RTree.insert(rectangle, object to insert)
+    */
+    this.insert = function(shape, obj, callback) {
+      var rect;
+      if(shape.type){
+        var b = Terraformer.Tools.calculateBounds(shape);
+        rect = {
+          x: b[0],
+          y: b[1],
+          w: Math.abs(b[0] - b[2]),
+          h: Math.abs(b[1] - b[3])
+        };
+      } else {
+        rect = shape;
       }
-      
-      return (_insert_subtree({
+
+      var dfd = new Deferred();
+
+      if (arguments.length < 2) {
+        throw "Wrong number of arguments. RT.Insert requires at least a bounding rectangle or GeoJSON and an object.";
+      }
+
+      if(callback){
+        dfd.then(function(result){
+          callback(null, result);
+        }, function(error){
+          callback(error, null);
+        });
+      }
+
+      dfd.resolve(_insert_subtree({
         x: rect.x,
         y: rect.y,
         w: rect.w,
         h: rect.h,
         leaf: obj
       }, _T));
+
+      return dfd;
     };
 
-/* non-recursive delete function
-   * [deleted object] = RTree.remove(rectangle, [object to delete])
-   */
+   /* non-recursive delete function
+    * [deleted object] = RTree.remove(rectangle, [object to delete])
+    */
 
     //End of RTree
     };
 
 /* Rectangle - Generic rectangle object - Not yet used */
-
 RTree.Rectangle = function(ix, iy, iw, ih) { // new Rectangle(bounds) or new Rectangle(x, y, w, h)
   var x, x2, y, y2, w, h;
 
@@ -747,7 +906,6 @@ RTree.Rectangle = function(ix, iy, iw, ih) { // new Rectangle(bounds) or new Rec
   //End of RTree.Rectangle
 };
 
-
 /* returns true if rectangle 1 overlaps rectangle 2
  * [ boolean ] = overlap_rectangle(rectangle a, rectangle b)
  * @static function
@@ -770,7 +928,7 @@ RTree.Rectangle.contains_rectangle = function(a, b) {
  */
 RTree.Rectangle.expand_rectangle = function(a, b) {
   var nx, ny;
-  
+
   // unintuitively, this is way way faster than max/min
   if (a.x < b.x) {
     nx = a.x;
@@ -783,7 +941,7 @@ RTree.Rectangle.expand_rectangle = function(a, b) {
   } else {
     ny = b.y;
   }
-  
+
   if (a.x + a.w > b.x + b.w) {
     a.w = (a.x + a.w) - nx;
   } else {
