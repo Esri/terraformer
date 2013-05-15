@@ -4,5 +4,5 @@ if(typeof module === "object"){
  Terraformer.Stores = {};
  Terraformer.Stores.Memory = require("../../src/Stores/Memory.js");
  Terraformer.Stores.LocalStorage = require("../../src/Stores/LocalStorage.js");
- Terraformer.Geostore = require("../../src/geostore.js");
+ Terraformer.Geostore = require("../../dist/node/GeoStore/index.js").GeoStore;
 }

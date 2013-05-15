@@ -11,5 +11,8 @@
     "vows": "latest"
   },
   "author": "",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "terraformer": "latest"
+  }
 }

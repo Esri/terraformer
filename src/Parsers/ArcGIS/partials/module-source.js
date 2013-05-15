@@ -19,7 +19,7 @@
   }
 
 }(this, function() {
-  var exports = { };
+  var exports = {};
   var Terraformer;
 
   // Local Reference To Browser Global
@@ -38,5 +38,6 @@
   }
 
   "SOURCE";
+
   return exports;
 }));

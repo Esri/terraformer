@@ -21,29 +21,17 @@ module.exports = function(grunt) {
         src: ['<banner:meta.banner>', 'src/terraformer.js'],
         dest: 'dist/browser/terraformer.js'
       },
-      versioned_browser: {
-        src: ['<banner:meta.banner>', 'src/terraformer.js'],
-        dest: 'dist/browser/versions/<%= meta.version %>/terraformer-<%= meta.version %>.min.js'
-      },
       node: {
         src: ['<banner:meta.banner>', 'src/terraformer.js'],
         dest: 'dist/node/terraformer.js'
       },
-      terraformer_versioned: {
-        src: ["dist/browser/terraformer.js"],
-        dest: 'dist/browser/versions/<%= meta.version %>/terraformer-<%= meta.version %>.js'
+      memory_store: {
+        src: ["source/stores/Memory.js"],
+        dest: 'dist/browser/stores/Memory.js'
       },
-      rtree_versioned: {
-        src: ["dist/browser/rtree.js"],
-        dest: 'dist/browser/versions/<%= meta.version %>/rtree-<%= meta.version %>.js'
-      },
-      arcgis_versioned: {
-        src: ["dist/browser/arcgis.js"],
-        dest: 'dist/browser/versions/<%= meta.version %>/arcgis-<%= meta.version %>.js'
-      },
-      wkt_versioned: {
-        src: ["dist/browser/wkt.js"],
-        dest: 'dist/browser/versions/<%= meta.version %>/wkt-<%= meta.version %>.js'
+      local_store: {
+        src: ["source/stores/LocalStorage.js"],
+        dest: 'dist/browser/stores/LocalStorage.js'
       }
     },
     min: {
@@ -51,33 +39,29 @@ module.exports = function(grunt) {
         src: ["dist/browser/terraformer.js"],
         dest: 'dist/browser/terraformer.min.js'
       },
-      terraformer_versioned: {
-        src: ["dist/browser/terraformer.js"],
-        dest: 'dist/browser/versions/<%= meta.version %>/terraformer-<%= meta.version %>.min.js'
-      },
       rtree: {
         src: ["dist/browser/rtree.js"],
         dest: 'dist/browser/rtree.min.js'
-      },
-      rtree_versioned: {
-        src: ["dist/browser/rtree.js"],
-        dest: 'dist/browser/versions/<%= meta.version %>/rtree-<%= meta.version %>.min.js'
       },
       arcgis: {
         src: ["dist/browser/arcgis.js"],
         dest: 'dist/browser/arcgis.min.js'
       },
-      arcgis_versioned: {
-        src: ["dist/browser/arcgis.js"],
-        dest: 'dist/browser/versions/<%= meta.version %>/arcgis-<%= meta.version %>.min.js'
-      },
       wkt: {
         src: ["dist/browser/wkt.js"],
         dest: 'dist/browser/wkt.min.js'
       },
-      wkt_versioned: {
-        src: ["dist/browser/wkt.js"],
-        dest: 'dist/browser/versions/<%= meta.version %>/wkt-<%= meta.version %>.min.js'
+      geostore: {
+        src: ["dist/browser/geostore.js"],
+        dest: 'dist/browser/geostore.min.js'
+      },
+      memory_store: {
+        src: ["dist/stores/Memory.js"],
+        dest: 'dist/browser/stores/Memory.js'
+      },
+      local_store: {
+        src: ["dist/stores/LocalStorage.js"],
+        dest: 'dist/browser/stores/LocalStorage.js'
       }
     },
     watch: {
@@ -135,13 +119,10 @@ module.exports = function(grunt) {
 
   // builds
   grunt.registerTask('build', 'default minify');
-  grunt.registerTask('build-source', 'build-terraformer build-wkt build-arcgis build-rtree');
-  grunt.registerTask('build-versioned', 'default concat-versioned minify-versioned');
+  grunt.registerTask('build-source', 'build-terraformer build-wkt build-arcgis build-rtree build-geostore build-stores');
 
-  // minify all the browser files and version
-  grunt.registerTask('minify', 'min:terraformer min:rtree min:arcgis min:wkt');
-  grunt.registerTask('minify-versioned', 'min:terraformer_versioned min:rtree_versioned min:arcgis_versioned min:wkt_versioned');
-  grunt.registerTask('concat-versioned', 'concat:terraformer_versioned concat:rtree_versioned concat:arcgis_versioned concat:wkt_versioned');
+  // minify all the browser files
+  grunt.registerTask('minify', 'min:terraformer min:rtree min:arcgis min:wkt min:geostore min:memory_store min:local_store');
 
   // lint, build and run environment specific tests
   grunt.registerTask('node', 'lint build-source jasmine_node');
@@ -161,6 +142,12 @@ module.exports = function(grunt) {
   grunt.registerTask('build-rtree', 'Building RTree node module', function () {
     grunt.log.write(grunt.helper('rtree-exports'));
   });
+
+  grunt.registerTask('build-geostore', 'Building GeoStore node module', function () {
+    grunt.log.write(grunt.helper('geostore-exports'));
+  });
+
+  grunt.registerTask('build-stores', 'concat:memory_store concat:local_store');
 
   // Register helpers
   grunt.registerHelper('wkt-parser', function() {
@@ -206,6 +193,19 @@ module.exports = function(grunt) {
 
     fs.writeFileSync("./dist/browser/rtree.js", wrapper, "utf8");
     fs.writeFileSync("./dist/node/RTree/index.js", wrapper, "utf8");
+
+    return 'Files created.\n';
+  });
+
+  grunt.registerHelper('geostore-exports', function() {
+    var src = fs.readFileSync('./src/geostore.js', 'utf8');
+
+    var wrapper = fs.readFileSync('./src/partials/module-geostore.js', 'utf8');
+
+    wrapper = wrapper.replace('"SOURCE";', src);
+
+    fs.writeFileSync("./dist/browser/geostore.js", wrapper, "utf8");
+    fs.writeFileSync("./dist/node/GeoStore/index.js", wrapper, "utf8");
 
     return 'Files created.\n';
   });
