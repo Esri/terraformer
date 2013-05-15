@@ -72,7 +72,7 @@
     }
 
     //convert spatial ref if needed
-    if(inputSpatialReference.wkid === 102100){
+    if(inputSpatialReference && inputSpatialReference.wkid === 102100){
       geojson = Terraformer.toGeographic(geojson);
     }
 
