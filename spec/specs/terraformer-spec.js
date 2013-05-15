@@ -99,7 +99,6 @@ describe("Primitives", function(){
 
     it("should convert a Primitive to JSON", function(){
       var geometryCollection = new Terraformer.Primitive(GeoJSON.geometryCollections[0]);
-
       var json = geometryCollection.toJSON();
       expect(json.bbox).toBeTruthy();
       expect(json.type).toBeTruthy();
