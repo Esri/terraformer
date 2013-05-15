@@ -284,26 +284,6 @@
   }
 
   /*
-  Internal: Loop over each geometry in a geojson object and apply a function to it. Used by spatial reference converters.
-  */
-  function eachGeometry(geojson, func){
-    for (var i = 0; i < geojson.geometries.length; i++) {
-      geojson.geometries[i].geometry = eachPosition(geojson.features[i].geometry, func);
-    }
-    return geojson;
-  }
-
-  /*
-  Internal: Loop over each feature in a geojson object and apply a function to it. Used by spatial reference converters.
-  */
-  function eachFeature(geojson, func){
-    for (var i = 0; i < geojson.features.length; i++) {
-      geojson.features[i] = applyConverter(geojson.features[i], func, true);
-    }
-    return geojson;
-  }
-
-  /*
   Internal: Loop over each array in a geojson object and apply a function to it. Used by spatial reference converters.
   */
   function eachPosition(coordinates, func) {
@@ -352,7 +332,7 @@
       }
     } else if(geojson.type === "GeometryCollection") {
       for (var g = 0; g < geojson.geometries.length; g++) {
-        geojson.geometries[g].geometry = eachPosition(geojson.features[g].geometry, converter, true);
+        geojson.geometries[g] = applyConverter(geojson.geometries[g], converter, true);
       }
     } else {
       geojson.coordinates = eachPosition(geojson.coordinates, converter);
