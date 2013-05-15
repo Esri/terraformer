@@ -15,7 +15,7 @@
     if (typeof root.Terraformer === "undefined"){
       root.Terraformer = {};
     }
-    root.Terraformer.GeoStore = factory().GeoStore;
+    root.Terraformer.Geostore = factory().Geostore;
   }
 
 }(this, function() {
@@ -109,10 +109,8 @@
     data: [Geojson to be added into the store]
   }
   */
-  function GeoStore(options){
+  function Geostore(options){
     var config = options || {};
-    this.data = {};
-    this.ids = {};
     this.index = (config.index) ? new config.index() : new Terraformer.RTree();
     this.store = (config.store) ? new config.store() : new Terraformer.Stores.Memory();
     this.deferred = (config.deferred) ? config.deferred : Deferred;
@@ -125,7 +123,7 @@
   // add the geojson object to the store
   // calculate the envelope and add it to the rtree
   // should return a deferred
-  GeoStore.prototype.add = function(geojson, callback){
+  Geostore.prototype.add = function(geojson, callback){
     var dfd = new this.deferred(), bbox;
 
     if(callback){
@@ -137,11 +135,11 @@
     }
 
     if (!geojson.type.match(/Feature/)) {
-      throw new Error("Terraform.GeoStore : only Features and FeatureCollections are supported");
+      throw new Error("Terraform.Geostore : only Features and FeatureCollections are supported");
     }
 
     if(!geojson.id) {
-      throw new Error("Terraform.GeoStore : Feature does not have an id property");
+      throw new Error("Terraform.Geostore : Feature does not have an id property");
     }
 
     // set a bounding box
@@ -172,7 +170,7 @@
     return dfd;
   };
 
-  GeoStore.prototype.remove = function(id, callback){
+  Geostore.prototype.remove = function(id, callback){
     // removes a geojson object from the store by id.
 
     // make a new deferred
@@ -193,7 +191,7 @@
     return dfd;
   };
 
-  GeoStore.prototype.contains = function(shape, callback){
+  Geostore.prototype._test = function(test, shape, callback){
     // make a new deferred
     var dfd = new this.deferred();
 
@@ -219,7 +217,7 @@
 
         var geojson = new Terraformer.Primitive(primitive);
 
-        if(geojson.contains(shape)){
+        if(geojson[test](shape)){
           results.push(geojson);
         }
 
@@ -239,7 +237,22 @@
     return dfd;
   };
 
-  GeoStore.prototype.update = function(geojson, callback){
+  Geostore.prototype.within = function(shape, callback){
+    console.error("`within` is not implemented");
+    //return this._test("within", shape, callback);
+  };
+
+  Geostore.prototype.intersects = function(shape, callback){
+    console.error("`intersects` is not implemented");
+    //return this._test("intersects", shape, callback);
+  };
+
+  Geostore.prototype.contains = function(shape, callback){
+    console.warn("contains will be depricated soon when `within` and `intersects` are complete");
+    return this._test("contains", shape, callback);
+  };
+
+  Geostore.prototype.update = function(geojson, callback){
     // updates an existing object in the store and the index
     // accepts a geojson object and uses its id to find and update the item
     // should return a deferred
@@ -255,11 +268,11 @@
     }
 
     if (geojson.type !== "Feature") {
-      throw new Error("Terraform.GeoStore : only Features and FeatureCollections are supported");
+      throw new Error("Terraform.Geostore : only Features and FeatureCollections are supported");
     }
 
     if(!geojson.id) {
-      throw new Error("Terraform.GeoStore : Feature does not have an id property");
+      throw new Error("Terraform.Geostore : Feature does not have an id property");
     }
 
     //remove the index
@@ -283,7 +296,7 @@
   };
 
   // gets an item by id
-  GeoStore.prototype.get = function(id, callback){
+  Geostore.prototype.get = function(id, callback){
 
     // make a new deferred
     var dfd = new this.deferred();
@@ -301,7 +314,7 @@
     return dfd;
   };
 
-  exports.GeoStore = GeoStore;
+  exports.Geostore = Geostore;
 
   return exports;
 }));

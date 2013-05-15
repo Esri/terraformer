@@ -28,12 +28,12 @@
   }
 
   // These methods get called in context of the geostore
-  function MemoryStore(){
+  function Memory(){
     this.data = {};
   }
 
   // store the data at id returns true if stored successfully
-  MemoryStore.prototype.add = function(geojson, dfd){
+  Memory.prototype.add = function(geojson, dfd){
     if(geojson.type === "FeatureCollection"){
       for (var i = 0; i < geojson.features.length; i++) {
         this.data[geojson.features[i].id] = geojson.features[i];
@@ -46,25 +46,34 @@
   };
 
   // remove the data from the index and data with id returns true if removed successfully.
-  MemoryStore.prototype.remove = function(id, dfd){
+  Memory.prototype.remove = function(id, dfd){
     delete this.data[id];
     dfd.resolve(this.data[id]);
     return dfd;
   };
 
   // return the data stored at id
-  MemoryStore.prototype.get = function(id, dfd){
+  Memory.prototype.get = function(id, dfd){
     dfd.resolve(this.data[id]);
     return dfd;
   };
 
-  MemoryStore.prototype.update = function(geojson, dfd){
+  Memory.prototype.update = function(geojson, dfd){
     this.data[geojson.id] = geojson;
     dfd.resolve();
     return dfd;
   };
 
-  exports = MemoryStore;
+  Memory.prototype.serialize = function(){
+    return JSON.stringify(this);
+  };
+
+  Memory.prototype.deserialize = function(serializedStore){
+    this.data = JSON.parse(serializedStore).data;
+    return this;
+  };
+
+  exports = Memory;
 
   return exports;
 }));
