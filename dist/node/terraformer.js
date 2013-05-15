@@ -1,4 +1,4 @@
-/*! Terraformer JS - 0.0.1 - 2013-05-02
+/*! Terraformer JS - 0.0.1 - 2013-05-15
 *   https://github.com/geoloqi/Terraformer
 *   Copyright (c) 2013 Environmental Systems Research Institute, Inc.
 *   Licensed MIT */
@@ -303,7 +303,7 @@
   */
   function eachFeature(geojson, func){
     for (var i = 0; i < geojson.features.length; i++) {
-      geojson.features[i].geometry = eachPosition(geojson.features[i].geometry, func);
+      geojson.features[i] = applyConverter(geojson.features[i], func, true);
     }
     return geojson;
   }
@@ -346,21 +346,27 @@
   /*
   Public: Apply a function agaist all positions in a geojson object. Used by spatial reference converters.
   */
-  function applyConverter(geojson, converter){
+  function applyConverter(geojson, converter, noCrs){
     if(geojson.type === "Point") {
       geojson.coordinates = converter(geojson.coordinates);
     } else if(geojson.type === "Feature") {
-      geojson.geometry = applyConverter(geojson, converter);
+      geojson.geometry = applyConverter(geojson.geometry, converter, true);
     } else if(geojson.type === "FeatureCollection") {
-      geojson.features = eachFeature(geojson, converter);
+      for (var f = 0; f < geojson.features.length; f++) {
+        geojson.features[f] = applyConverter(geojson.features[f], converter, true);
+      }
     } else if(geojson.type === "GeometryCollection") {
-      geojson.geometries = eachGeometry(geojson, converter);
+      for (var g = 0; g < geojson.geometries.length; g++) {
+        geojson.geometries[g].geometry = eachPosition(geojson.features[g].geometry, converter, true);
+      }
     } else {
       geojson.coordinates = eachPosition(geojson.coordinates, converter);
     }
 
-    if(converter === positionToMercator){
-      geojson.crs = MercatorCRS;
+    if(!noCrs){
+      if(converter === positionToMercator){
+        geojson.crs = MercatorCRS;
+      }
     }
 
     if(converter === positionToGeographic){
