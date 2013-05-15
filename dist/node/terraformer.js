@@ -603,7 +603,7 @@
   /*
   Internal: An array of variables that will be excluded form JSON objects.
   */
-  var excludeFromJSON = ["length"];
+  var excludeFromJSON = ["length", "bbox"];
 
   /*
   Internal: Base GeoJSON Primitive
@@ -705,6 +705,7 @@
           obj[key] = this[key];
         }
       }
+      obj.bbox = calculateBounds(this);
       return obj;
     },
     toJson: function () {
@@ -1272,12 +1273,24 @@
     this.geometry = createCircle(this.center, this.radius, this.steps);
     return this;
   };
+
   Circle.prototype.contains = function(primitive) {
     if (primitive.type !== "Point") {
       throw new Error("Only points are supported");
     }
 
     return polygonContainsPoint(this.geometry.coordinates, primitive.coordinates);
+  };
+
+  Circle.prototype.toJSON = function() {
+    var output = Primitive.prototype.toJSON.call(this);
+    output.properties.center = output.center;
+    output.properties.steps = output.steps;
+    output.properties.radius = output.radius;
+    delete output.center;
+    delete output.steps;
+    delete output.radius;
+    return output;
   };
 
   exports.Primitive = Primitive;

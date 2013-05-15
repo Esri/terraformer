@@ -107,6 +107,22 @@ describe("Primitives", function(){
       expect(json.length).toBeFalsy();
     });
 
+    it("should convert a Circle Primitive to JSON", function(){
+      var circle = new Terraformer.Circle([45.5165, -1226764], 100);
+      var json = circle.toJSON();
+      expect(json.bbox).toBeTruthy();
+      expect(json.type).toEqual("Feature");
+      expect(json.geometry).toBeTruthy();
+      expect(json.geometry.coordinates).toBeTruthy();
+      expect(json.geometry.bbox).toBeFalsy();
+      expect(json.center).toBeFalsy();
+      expect(json.steps).toBeFalsy();
+      expect(json.radius).toBeFalsy();
+      expect(json.properties.center).toBeTruthy();
+      expect(json.properties.steps).toBeTruthy();
+      expect(json.properties.radius).toBeTruthy();
+    });
+
     it("should convert a Primitive to stringified JSON", function(){
       var point = new Terraformer.Primitive(GeoJSON.points[0]);
 
