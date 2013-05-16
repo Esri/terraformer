@@ -6,7 +6,7 @@
 
   // AMD.
   if(typeof define === 'function' && define.amd) {
-    define(["terraformer/terraformer"], factory);
+    define([], factory);
   }
 
   // Browser Global.
@@ -15,9 +15,9 @@
       root.Terraformer = { };
     }
     if (typeof root.Terraformer.Stores === "undefined"){
-      root.Terraformer.Stores = { };
+      root.Terraformer.Stores = {};
     }
-    root.Terraformer.Stores.Memory = factory();
+    root.Terraformer.Stores.Memory = factory().Memory;
   }
 }(this, function() {
   var exports = { };
@@ -48,7 +48,7 @@
   // remove the data from the index and data with id returns true if removed successfully.
   Memory.prototype.remove = function(id, dfd){
     delete this.data[id];
-    dfd.resolve(this.data[id]);
+    dfd.resolve(id);
     return dfd;
   };
 
@@ -73,7 +73,7 @@
     return this;
   };
 
-  exports = Memory;
+  exports.Memory = Memory;
 
   return exports;
 }));

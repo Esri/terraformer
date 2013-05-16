@@ -6,18 +6,18 @@
 
   // AMD.
   if(typeof define === 'function' && define.amd) {
-    define(["terraformer/terraformer"], factory);
+    define([], factory);
   }
 
   // Browser Global.
   if(typeof root.navigator === "object") {
-    if (typeof root.Terraformer === "undefined"){
-      root.Terraformer = { };
+    if(typeof root.Terraformer === "undefined"){
+      root.Terraformer = {};
     }
-    if (typeof root.Terraformer.Stores === "undefined"){
-      root.Terraformer.Stores = { };
+    if(typeof root.Terraformer.Stores === "undefined"){
+      root.Terraformer.Stores = {};
     }
-    root.Terraformer.Stores.LocalStorage = factory();
+    root.Terraformer.Stores.LocalStorage = factory().LocalStorage;
   }
 }(this, function() {
   var exports = { };
@@ -95,7 +95,7 @@
     }
   };
 
-  exports = LocalStorage;
+  exports.LocalStorage = LocalStorage;
 
   return exports;
 }));

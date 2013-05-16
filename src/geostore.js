@@ -23,11 +23,14 @@ if(typeof module === 'object' && typeof module.exports === 'object'){
   data: [Geojson to be added into the store]
 }
 */
-function GeoStore(options){
-  var config = options || {};
-  this.index = (config.index) ? new config.index() : new Terraformer.RTree();
-  this.store = (config.store) ? new config.store() : new Terraformer.Stores.Memory();
+function GeoStore(config){
+
+  if(!config.store || !config.index){
+    throw new Error("Terraformer.GeoStore requires an instace of a Terraformer.Store and a instance of Terraformer.RTree");
+  }
   this.deferred = (config.deferred) ? config.deferred : Terraformer.Deferred;
+  this.index = config.index;
+  this.store = config.store;
   var data = config.data || [];
   while(data.length){
     this.add(data.shift());
@@ -99,7 +102,8 @@ GeoStore.prototype.remove = function(id, callback){
   }
 
   // remove from index
-  this.index.remove(id);
+  this.index.remove(id, dfd);
+  this.store.remove(id, dfd);
 
   // remove from the store
   return dfd;
