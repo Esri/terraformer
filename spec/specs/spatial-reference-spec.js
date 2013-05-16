@@ -148,6 +148,140 @@ describe("Spatial Reference Converters", function(){
     expect(output).toEqual(expectedOutput);
   });
 
+  it("should convert a GeoJSON Feature to Web Mercator", function(){
+    var input = {
+      "type": "Feature",
+      "id": "foo",
+      "geometry":{
+        "type": "Point",
+        "coordinates": [-122, 45]
+      },
+      "properties": {
+        "bar": "baz"
+      }
+    };
+    var expectedOutput = {
+      "type": "Feature",
+      "id": "foo",
+      "geometry":{
+        "type": "Point",
+        "coordinates": [-13580977.876779145, 5621521.486191948]
+      },
+      "properties": {
+        "bar": "baz"
+      },
+      "crs": {
+        "type": "link",
+        "properties": {
+          "href": "http://spatialreference.org/ref/sr-org/6928/ogcwkt/",
+          "type": "ogcwkt"
+        }
+      }
+    };
+    var output = Terraformer.toMercator(input);
+    expect(output).toEqual(expectedOutput);
+  });
+
+  it("should convert a GeoJSON Feature Collection to Web Mercator", function(){
+    var input = {
+      "type": "FeatureCollection",
+      "features": [
+        {
+          "type": "Feature",
+          "id": "foo",
+          "geometry":{
+            "type": "Point",
+            "coordinates": [-122, 45]
+          },
+          "properties": {
+            "bar": "baz"
+          }
+        },{
+          "type": "Feature",
+          "id": "bar",
+          "geometry":{
+            "type": "Point",
+            "coordinates": [-122, 45]
+          },
+          "properties": {
+            "bar": "baz"
+          }
+        }
+      ]
+    };
+    var expectedOutput = {
+      "type": "FeatureCollection",
+      "features": [
+        {
+          "type": "Feature",
+          "id": "foo",
+          "geometry":{
+            "type": "Point",
+            "coordinates": [-13580977.876779145, 5621521.486191948]
+          },
+          "properties": {
+            "bar": "baz"
+          }
+        },{
+          "type": "Feature",
+          "id": "bar",
+          "geometry":{
+            "type": "Point",
+            "coordinates": [-13580977.876779145, 5621521.486191948]
+          },
+          "properties": {
+            "bar": "baz"
+          }
+        }
+      ],
+      "crs": {
+        "type": "link",
+        "properties": {
+          "href": "http://spatialreference.org/ref/sr-org/6928/ogcwkt/",
+          "type": "ogcwkt"
+        }
+      }
+    };
+    var output = Terraformer.toMercator(input);
+    expect(output).toEqual(expectedOutput);
+  });
+
+  it("should convert a GeoJSON Geometry Collection to Web Mercator", function(){
+    var input = {
+      "type": "GeometryCollection",
+      "geometries": [
+        {
+          "type": "Point",
+          "coordinates": [-122, 45]
+        },{
+          "type": "Point",
+          "coordinates": [-122, 45]
+        }
+      ]
+    };
+    var expectedOutput = {
+      "type": "GeometryCollection",
+      "geometries": [
+        {
+          "type": "Point",
+          "coordinates": [-13580977.876779145, 5621521.486191948]
+        },{
+          "type": "Point",
+          "coordinates": [-13580977.876779145, 5621521.486191948]
+        }
+      ],
+      "crs": {
+        "type": "link",
+        "properties": {
+          "href": "http://spatialreference.org/ref/sr-org/6928/ogcwkt/",
+          "type": "ogcwkt"
+        }
+      }
+    };
+    var output = Terraformer.toMercator(input);
+    expect(output).toEqual(expectedOutput);
+  });
+
   it("should convert a GeoJSON Point to Geographic coordinates", function(){
     var input = {
       "type": "Point",
@@ -244,6 +378,119 @@ describe("Spatial Reference Converters", function(){
         [
           [ [0.0008983152841195215,0],[0.0009072984369607167,0],[0.0009072984369607167,0.000008983152840993819],[0.0008983152841195215,0.000008983152840993819],[0.0008983152841195215,0] ]
         ]
+      ]
+    };
+    var output = Terraformer.toGeographic(input);
+    expect(output).toEqual(expectedOutput);
+  });
+
+  it("should convert a GeoJSON Feature to Geographic coordinates", function(){
+    var input = {
+      "type": "Feature",
+      "id": "foo",
+      "geometry":{
+        "type": "Point",
+        "coordinates": [-13656274.380351715, 5703203.671949966]
+      },
+      "properties": {
+        "bar": "baz"
+      }
+    };
+    var expectedOutput = {
+      "type": "Feature",
+      "id": "foo",
+      "geometry":{
+        "type": "Point",
+        "coordinates": [-122.67639999999793, 45.516499999999226]
+      },
+      "properties": {
+        "bar": "baz"
+      }
+    };
+    var output = Terraformer.toGeographic(input);
+    expect(output).toEqual(expectedOutput);
+  });
+
+  it("should convert a GeoJSON Feature Collection to Geographic coordinates", function(){
+    var input = {
+      "type": "FeatureCollection",
+      "features": [
+        {
+          "type": "Feature",
+          "id": "foo",
+          "geometry":{
+            "type": "Point",
+            "coordinates": [-13656274.380351715, 5703203.671949966]
+          },
+          "properties": {
+            "bar": "baz"
+          }
+        },{
+          "type": "Feature",
+          "id": "bar",
+          "geometry":{
+            "type": "Point",
+            "coordinates": [-13656274.380351715, 5703203.671949966]
+          },
+          "properties": {
+            "bar": "baz"
+          }
+        }
+      ]
+    };
+    var expectedOutput = {
+      "type": "FeatureCollection",
+      "features": [
+        {
+          "type": "Feature",
+          "id": "foo",
+          "geometry":{
+            "type": "Point",
+            "coordinates": [-122.67639999999793, 45.516499999999226]
+          },
+          "properties": {
+            "bar": "baz"
+          }
+        },{
+          "type": "Feature",
+          "id": "bar",
+          "geometry":{
+            "type": "Point",
+            "coordinates": [-122.67639999999793, 45.516499999999226]
+          },
+          "properties": {
+            "bar": "baz"
+          }
+        }
+      ]
+    };
+    var output = Terraformer.toGeographic(input);
+    expect(output).toEqual(expectedOutput);
+  });
+
+  it("should convert a GeoJSON Geometry Collection to Geographic coordinates", function(){
+    var input = {
+      "type": "GeometryCollection",
+      "geometries": [
+        {
+          "type": "Point",
+          "coordinates": [-13656274.380351715, 5703203.671949966]
+        },{
+          "type": "Point",
+          "coordinates": [-13656274.380351715, 5703203.671949966]
+        }
+      ]
+    };
+    var expectedOutput = {
+      "type": "GeometryCollection",
+      "geometries": [
+        {
+          "type": "Point",
+          "coordinates": [-122.67639999999793, 45.516499999999226]
+        },{
+          "type": "Point",
+          "coordinates": [-122.67639999999793, 45.516499999999226]
+        }
       ]
     };
     var output = Terraformer.toGeographic(input);

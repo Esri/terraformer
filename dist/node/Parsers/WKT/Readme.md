@@ -6,14 +6,16 @@ A bare-bones WKT parser.  Given a WKT primitive, it parses and returns a `Terraf
 
 ## Installing
 
-    $ npm install terraformer-wkt 
+    $ npm install terraformer-wkt-parser
 
 ## Usage
 
-    var wkt = require('terraformer-wkt');
+    var wkt = require('terraformer-wkt-parser');
     
+    // parse a WKT file, convert it into a primitive
     var primitive = wkt.parse('LINESTRING (30 10, 10 30, 40 40)');
     
+    // take a primitive and convert it into a WKT representation
     var polygon = wkt.convert(
       {
         "type": "Polygon",

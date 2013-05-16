@@ -57,12 +57,10 @@ describe("geostore", function() {
 
   it("shouldn't find any results", function(){
     var result;
-    console.log(gs);
     gs.contains({
       type:"Point",
       coordinates: [-122.676048, 45.516544]
     }).then(function(found){
-      console.log(found);
       expect(found.length).toEqual(0);
     });
   });

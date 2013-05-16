@@ -42,6 +42,7 @@ var RTree = function (width) {
       id: "root",
       nodes: []
     };
+
    /* @function
     * @description Function to generate unique strings for element IDs
     * @param {String} n      The prefix to use for the IDs generated.
@@ -352,14 +353,10 @@ var RTree = function (width) {
     * [ nodes | objects ] = _search_subtree(rectangle, [return node data], [array to fill], root to begin search at)
     * @private
     */
-    var _search_subtree = function(rect, return_node, return_array, root, callback) {
+    var _search_subtree = function(rect, return_node, return_array, root) {
       var hit_stack = []; // Contains the elements that overlap
       if (!RTree.Rectangle.overlap_rectangle(rect, root)) {
-        if (callback) {
-          callback(null, return_array);
-        } else {
-          return return_array;
-        }
+        return return_array;
       }
 
       var load_callback = function(local_tree, local_node) {
@@ -389,11 +386,7 @@ var RTree = function (width) {
         }
       } while (hit_stack.length > 0);
 
-      if (callback) {
-        callback(null, return_array);
-      } else {
-        return return_array;
-      }
+      return return_array;
     };
 
    /* non-recursive internal insert function
@@ -498,10 +491,20 @@ var RTree = function (width) {
     * @public
     */
     this.deserialize = function(new_tree, where, callback) {
+
+      var args = Array.prototype.slice.call(arguments);
       var dfd = new Terraformer.Deferred();
 
-      if (!where) {
+      switch (args.length) {
+      case 1:
         where = _T;
+        break;
+      case 2:
+        if(typeof args[1] === "function"){
+          where = _T;
+          callback = args[1];
+        }
+        break;
       }
 
       if(callback){
@@ -521,10 +524,24 @@ var RTree = function (width) {
     * [ nodes | objects ] = RTree.search(rectangle, [return node data], [array to fill])
     * @public
     */
-    this.search = function(rect, callback) {
+
+    this.search = function(shape, callback) {
+      var rect;
+      if(shape.type){
+        var b = Terraformer.Tools.calculateBounds(shape);
+        rect = {
+          x: b[0],
+          y: b[1],
+          w: Math.abs(b[0] - b[2]),
+          h: Math.abs(b[1] - b[3])
+        };
+      } else {
+        rect = shape;
+      }
+
       var dfd = new Terraformer.Deferred();
 
-      var args = [ rect, false, [ ], _T, callback ];
+      var args = [ rect, false, [ ], _T ];
 
       if (rect === undefined) {
         throw "Wrong number of arguments. RT.Search requires at least a bounding rectangle.";
@@ -543,10 +560,10 @@ var RTree = function (width) {
       return dfd;
     };
 
-/* partially-recursive toJSON function
-   * [ string ] = RTree.toJSON([rectangle], [tree])
-   * @public
-   */
+   /* partially-recursive toJSON function
+    * [ string ] = RTree.toJSON([rectangle], [tree])
+    * @public
+    */
     this.toJSON = function(rect, tree) {
       var hit_stack = []; // Contains the elements that overlap
       var count_stack = []; // Contains the elements that overlap
@@ -627,11 +644,41 @@ var RTree = function (width) {
       return (return_string);
     };
 
-/* non-recursive function that deletes a specific
-   * [ number ] = RTree.remove(rectangle, obj)
-   */
-    this.remove = function(rect, obj, callback) {
+   /* non-recursive function that deletes a specific
+    * [ number ] = RTree.remove(rectangle, obj)
+    */
+    this.remove = function(shape, obj, callback) {
+      var args = Array.prototype.slice.call(arguments);
+      var conditional;
+      if(args[0].type){
+        var b = Terraformer.Tools.calculateBounds(shape);
+        args[0] = {
+          x: b[0],
+          y: b[1],
+          w: Math.abs(b[0] - b[2]),
+          h: Math.abs(b[1] - b[3])
+        };
+      }
+
       var dfd = new Terraformer.Deferred();
+
+      if (args.length < 1) {
+        throw "Wrong number of arguments. RT.remove requires at least a bounding rectangle or GeoJSON.";
+      }
+
+      switch (args.length) {
+      case 1:
+        conditional = false;
+        break;
+      case 2:
+        if(typeof args[1] === "function"){
+          conditional = false;
+          callback = args[1];
+        } else {
+          conditional = args[1];
+        }
+        break;
+      }
 
       if(callback){
         dfd.then(function(result){
@@ -641,22 +688,7 @@ var RTree = function (width) {
         });
       }
 
-      var args = Array.prototype.slice.call(arguments);
-      if (args.length < 1) {
-        throw "Wrong number of arguments. RT.remove requires at least a bounding rectangle.";
-      }
-
-      switch (args.length) {
-      case 1:
-        args[1] = false; // obj == false for conditionals
-        args[2] = _T; // Add root node to end of argument list
-        break;
-      case 2:
-        args[2] = _T; // Add root node to end of argument list
-        break;
-      }
-
-      args.length = 3;
+      args = [args[0], conditional, _T];
 
       if (args[1] === false) { // Do area-wide delete
         var numberdeleted = 0;
@@ -676,11 +708,24 @@ var RTree = function (width) {
    /* non-recursive insert function
     * [] = RTree.insert(rectangle, object to insert)
     */
-    this.insert = function(rect, obj, callback) {
+    this.insert = function(shape, obj, callback) {
+      var rect;
+      if(shape.type){
+        var b = Terraformer.Tools.calculateBounds(shape);
+        rect = {
+          x: b[0],
+          y: b[1],
+          w: Math.abs(b[0] - b[2]),
+          h: Math.abs(b[1] - b[3])
+        };
+      } else {
+        rect = shape;
+      }
+
       var dfd = new Terraformer.Deferred();
 
       if (arguments.length < 2) {
-        throw "Wrong number of arguments. RT.Insert requires at least a bounding rectangle and an object.";
+        throw "Wrong number of arguments. RT.Insert requires at least a bounding rectangle or GeoJSON and an object.";
       }
 
       if(callback){
@@ -702,15 +747,14 @@ var RTree = function (width) {
       return dfd;
     };
 
-/* non-recursive delete function
-   * [deleted object] = RTree.remove(rectangle, [object to delete])
-   */
+   /* non-recursive delete function
+    * [deleted object] = RTree.remove(rectangle, [object to delete])
+    */
 
     //End of RTree
     };
 
 /* Rectangle - Generic rectangle object - Not yet used */
-
 RTree.Rectangle = function(ix, iy, iw, ih) { // new Rectangle(bounds) or new Rectangle(x, y, w, h)
   var x, x2, y, y2, w, h;
 
@@ -797,7 +841,6 @@ RTree.Rectangle = function(ix, iy, iw, ih) { // new Rectangle(bounds) or new Rec
   };
   //End of RTree.Rectangle
 };
-
 
 /* returns true if rectangle 1 overlaps rectangle 2
  * [ boolean ] = overlap_rectangle(rectangle a, rectangle b)

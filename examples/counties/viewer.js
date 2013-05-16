@@ -3205,16 +3205,10 @@ require([
   map.on('load', function () {
     for (var i = 0; i < counties.features.length; i++) {
       // create a new geometry object
-      var county = counties.features[i].geometry;
-
-      // find the bounding box from the coordinates
-      var bounds = Terraformer.Tools.calculateBounds(county);
-
-      // calculate the envelope
-      var envelope = { x: bounds[0], y: bounds[1], w: Math.abs(bounds[0] - bounds[1]), h: Math.abs(bounds[1] - bounds[3]) };
+      var county = counties.features[i];
 
       // insert into the index
-      tree.insert(envelope, { id: i });
+      tree.insert(county, { id: i });
 
       // convert for display to an arcgis object
       var arcgis = TerraformerArcGIS.convert(county);
@@ -3233,14 +3227,15 @@ require([
     // One-shot position request.
     navigator.geolocation.getCurrentPosition(function (position) {
       if (position) {
-        tree.search({ x: position.coords.longitude, y: position.coords.latitude, w: 0, h: 0}).then(function(me){
+        var lat = position.coords.latitude;
+        var lng = position.coords.longitude;
+        tree.search({ x: lng, y: lat, w: 0, h: 0}).then(function(results){
           var found = false;
-          if (me !== undefined && me.length >= 0) {
-            for (var i = 0; i < me.length; i++) {
-              var coordinates = counties.features[me[i].id].geometry.coordinates;
-
-              if (Terraformer.Tools.coordinatesContainPoint(coordinates[0], [ position.coords.longitude, position.coords.latitude ])) {
-                $("#whereami")[0].innerHTML = "According to your browser, you are at " + position.coords.longitude + " longitude, " + position.coords.latitude + " latitude, and are in " + counties.features[me[i].id].properties.name + " county";
+          if (results !== undefined && results.length >= 0) {
+            for (var i = 0; i < results.length; i++) {
+              var coordinates = counties.features[results[0].id].geometry.coordinates;
+              if (Terraformer.Tools.coordinatesContainPoint(coordinates[0], [ lng, lat ])) {
+                $("#whereami")[0].innerHTML = "According to your browser, you are at " + lng + " longitude, " + lat + " latitude, and are in " + counties.features[results[i].id].properties.name + " county";
                 found = true;
                 break;
               }

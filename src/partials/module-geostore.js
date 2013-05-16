@@ -11,10 +11,12 @@
   }
 
   // Browser Global.
-  if (typeof root.Terraformer === "undefined"){
-    root.Terraformer = {};
+  if(typeof root.navigator === "object") {
+    if (typeof root.Terraformer === "undefined"){
+      root.Terraformer = {};
+    }
+    root.Terraformer.GeoStore = factory().GeoStore;
   }
-  root.Terraformer.RTree = factory().RTree;
 
 }(this, function() {
   var exports = { };
@@ -37,7 +39,7 @@
 
   "SOURCE";
 
-  exports.RTree = RTree;
+  exports.GeoStore = GeoStore;
 
   return exports;
 }));
