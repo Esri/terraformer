@@ -364,8 +364,8 @@ describe("ArcGIS Tools", function(){
 
     var output = Terraformer.ArcGIS.parse(input);
 
-    expect(output.coordinates).toEqual([[ [41.8359375,71.015625],[56.953125,33.75],[21.796875,36.5625],[41.8359375,71.015625] ]]);
-    expect(output).toBeInstanceOfClass(Terraformer.Polygon);
+    expect(output.coordinates).toEqual([[[ [41.8359375,71.015625],[56.953125,33.75],[21.796875,36.5625],[41.8359375,71.015625] ]]]);
+    expect(output).toBeInstanceOfClass(Terraformer.MultiPolygon);
   });
 
   it("should parse an ArcGIS Multipoint in a Terraformer GeoJSON MultiPoint", function() {
@@ -412,8 +412,31 @@ describe("ArcGIS Tools", function(){
 
     var output = Terraformer.ArcGIS.parse(input);
 
-    expect(output.coordinates).toEqual([ [ [ [-122.63,45.52],[-122.57,45.53],[-122.52,45.50],[-122.49,45.48],[-122.64,45.49],[-122.63,45.52],[-122.63,45.52] ],[ [-83,35],[-74,35],[-74,41],[-83,41],[-83,35] ] ] ]);
-    expect(output).toBeInstanceOfClass(Terraformer.MultiPolygon);
+    expect(output.coordinates).toEqual([
+      [
+        [ [-122.63,45.52],[-122.57,45.53],[-122.52,45.5],[-122.49,45.48],[-122.64,45.49],[-122.63,45.52],[-122.63,45.52] ]
+      ],
+      [
+        [ [-83,35],[-74,35],[-74,41],[-83,41],[-83,35] ]
+      ]
+    ]);
+    expect(output.type).toEqual("MultiPolygon");
+  });
+
+  it("should parse an ArcGIS MultiPolygon with holes in web mercator to a GeoJSON MultiPolygon", function(){
+    var input = {
+      "rings":[
+        [[-11214840,4858704],[-10520181,4853812],[-10510397,4149368],[-11219732,4144476],[-11214840,4858704]],
+        [[-11097433,4770648],[-10916430,4770648],[-10916430,4609213],[-10984918,4560294],[-11097433,4614105],[-11097433,4770648]],
+        [[-10779455,4472238],[-10833267,4296127],[-10750103,4242315],[-10622912,4349939],[-10779455,4472238]],
+        [[-11298004,4614105],[-11293112,4310803],[-11571954,4305911],[-11542602,4584753],[-11298004,4614105]]
+      ],
+      "spatialReference":{"wkid":102100}
+    };
+
+    var output = Terraformer.ArcGIS.parse(input);
+    expect(output.coordinates).toEqual([[[[-100.74462180954974,39.95017165502381],[-94.50439384003792,39.91647453608879],[-94.41650267263967,34.89313438177967],[-100.78856739324887,34.857081409967705],[-100.74462180954974,39.95017165502381]],[[-99.68993678392353,39.34108843344889],[-98.06395917020868,39.34108843344889],[-98.06395917020868,38.210554846669694],[-98.67919734199646,37.86444431771113],[-99.68993678392353,38.245076587858854],[-99.68993678392353,39.34108843344889]],[[-96.83349180978595,37.237320275075135],[-97.31689323047635,35.96733028298852],[-96.5698183075912,35.57512048069255],[-95.42724211456674,36.357601429255965],[-96.83349180978595,37.237320275075135]],[[-101.4916967324349,38.245076587858854],[-101.44775114873578,36.073960493943744],[-103.95263145328033,36.03843312329154],[-103.68895795108557,38.037700507674394],[-101.4916967324349,38.245076587858854]]]]);
+    expect(output.type).toEqual("MultiPolygon");
   });
 
   it("should parse an ArcGIS Graphic into a Terraformer Feature", function(){
@@ -433,8 +456,8 @@ describe("ArcGIS Tools", function(){
 
     output = Terraformer.ArcGIS.parse(input);
 
-    expect(output.geometry.coordinates).toEqual([[ [41.8359375,71.015625],[56.953125,33.75],[21.796875,36.5625],[41.8359375,71.015625] ]]);
-    expect(output.geometry.type).toEqual("Polygon");
+    expect(output.geometry.coordinates).toEqual([[[ [41.8359375,71.015625],[56.953125,33.75],[21.796875,36.5625],[41.8359375,71.015625] ]]]);
+    expect(output.geometry.type).toEqual("MultiPolygon");
     expect(output).toBeInstanceOfClass(Terraformer.Feature);
   });
 

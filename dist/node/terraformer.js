@@ -1,4 +1,4 @@
-/*! Terraformer JS - 0.0.1 - 2013-05-15
+/*! Terraformer JS - 0.0.1 - 2013-05-21
 *   https://github.com/geoloqi/Terraformer
 *   Copyright (c) 2013 Environmental Systems Research Institute, Inc.
 *   Licensed MIT */
@@ -1372,6 +1372,8 @@
   exports.Tools.calculateEnvelope = calculateEnvelope;
   exports.Tools.coordinatesContainPoint = coordinatesContainPoint;
   exports.Tools.polygonContainsPoint = polygonContainsPoint;
+  exports.Tools.arrayIntersectsArray =arrayIntersectsArray;
+  exports.Tools.coordinatesContainPoint = coordinatesContainPoint;
   exports.Tools.convexHull = convexHull;
 
   exports.MercatorCRS = MercatorCRS;

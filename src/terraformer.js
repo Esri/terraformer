@@ -1367,6 +1367,8 @@
   exports.Tools.calculateEnvelope = calculateEnvelope;
   exports.Tools.coordinatesContainPoint = coordinatesContainPoint;
   exports.Tools.polygonContainsPoint = polygonContainsPoint;
+  exports.Tools.arrayIntersectsArray =arrayIntersectsArray;
+  exports.Tools.coordinatesContainPoint = coordinatesContainPoint;
   exports.Tools.convexHull = convexHull;
 
   exports.MercatorCRS = MercatorCRS;
