@@ -1,0 +1,19 @@
+{
+  "name": "terraformer-geostore",
+  "version": "0.1.0",
+  "description": "In memory geographic storage and querying",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:esri/Terraformer.git"
+  },
+  "keywords": [
+    "GIS",
+    "Geography"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "terraformer": "latest"
+  }
+}

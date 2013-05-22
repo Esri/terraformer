@@ -1,4 +1,4 @@
-/*! Terraformer JS - 0.0.1 - 2013-05-15
+/*! Terraformer JS - 0.0.1 - 2013-05-21
 *   https://github.com/geoloqi/Terraformer
 *   Copyright (c) 2013 Environmental Systems Research Institute, Inc.
 *   Licensed MIT */
@@ -39,6 +39,48 @@
           "type": "ogcwkt"
         }
       };
+
+
+  function Deferred () {
+    this._thens = [];
+  }
+
+  Deferred.prototype = {
+
+    then: function (onResolve, onReject) {
+      this._thens.push({ resolve: onResolve, reject: onReject });
+      return this;
+    },
+
+    resolve: function (val) {
+      this._complete('resolve', val);
+      return this;
+    },
+
+    reject: function (ex) {
+      this._complete('reject', ex);
+      return this;
+    },
+
+    _complete: function (which, arg) {
+      // switch over to sync then()
+      this.then = (which === 'resolve') ?
+        function (resolve, reject) { resolve(arg); } :
+        function (resolve, reject) { reject(arg); };
+      // disallow multiple calls to resolve or reject
+      this.resolve = this.reject =
+        function () { throw new Error('Deferred already completed.'); };
+      // complete all waiting (async) then()s
+      for (var i = 0; i < this._thens.length; i++) {
+        var aThen = this._thens[i];
+        if(aThen[which]) {
+          aThen[which](arg);
+        }
+      }
+      delete this._thens;
+    }
+  };
+
   /*
   Internal: safe warning
   */
@@ -272,6 +314,16 @@
     }
 
     return calculateBoundsFromArray(extents);
+  }
+
+  function calculateEnvelope(geojson){
+    var bounds = calculateBounds(geojson);
+    return {
+      x: bounds[0],
+      y: bounds[1],
+      w: Math.abs(bounds[0] - bounds[2]),
+      h: Math.abs(bounds[1] - bounds[3])
+    };
   }
 
   /*
@@ -1317,12 +1369,17 @@
   exports.Tools.createCircle = createCircle;
 
   exports.Tools.calculateBounds = calculateBounds;
+  exports.Tools.calculateEnvelope = calculateEnvelope;
   exports.Tools.coordinatesContainPoint = coordinatesContainPoint;
   exports.Tools.polygonContainsPoint = polygonContainsPoint;
+  exports.Tools.arrayIntersectsArray =arrayIntersectsArray;
+  exports.Tools.coordinatesContainPoint = coordinatesContainPoint;
   exports.Tools.convexHull = convexHull;
 
   exports.MercatorCRS = MercatorCRS;
   exports.GeographicCRS = GeographicCRS;
+
+  exports.Deferred = Deferred;
 
   return exports;
 }));

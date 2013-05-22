@@ -15,11 +15,11 @@
     if (typeof root.Terraformer === "undefined"){
       root.Terraformer = {};
     }
-    root.Terraformer.ArcGIS = factory();
+    root.Terraformer.GeoStore = factory().GeoStore;
   }
 
 }(this, function() {
-  var exports = {};
+  var exports = { };
   var Terraformer;
 
   // Local Reference To Browser Global
@@ -38,6 +38,8 @@
   }
 
   "SOURCE";
+
+  exports.GeoStore = GeoStore;
 
   return exports;
 }));

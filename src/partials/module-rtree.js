@@ -7,16 +7,14 @@
 
   // AMD.
   if(typeof define === 'function' && define.amd) {
-    define(factory);
+    define(["terraformer/terraformer"],factory);
   }
 
   // Browser Global.
-  if(typeof window === "object") {
-    if (typeof root.Terraformer === "undefined"){
-      root.Terraformer = {};
-    }
-    root.Terraformer.RTree = factory().RTree;
+  if (typeof root.Terraformer === "undefined"){
+    root.Terraformer = {};
   }
+  root.Terraformer.RTree = factory().RTree;
 
 }(this, function() {
   var exports = { };
@@ -30,6 +28,11 @@
   // Setup Node Dependencies
   if(typeof module === 'object' && typeof module.exports === 'object') {
     Terraformer = require('terraformer');
+  }
+
+  // Setup AMD Dependencies
+  if(arguments[0] && typeof define === 'function' && define.amd) {
+    Terraformer = arguments[0];
   }
 
   "SOURCE";
