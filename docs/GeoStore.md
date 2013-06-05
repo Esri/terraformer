@@ -31,7 +31,7 @@ Once the index has returned its results each result is retrived from the store a
 
 Adding data to stores is simple. You can pass a Node JS style callback or use the returned deferred to add an optional callback.
 
-```
+``` js
 store.add(geojson, function(err, resp){
   // optional callback. Node style
 }).then(function(){
@@ -47,7 +47,7 @@ Only GeoJSON `Feature` and `FeatureCollection` objects are accepted. All `Featur
 
 If you need to update a record in a store just pass a GeoJSON `Feature` with the same `id` property.
 
-```
+``` js
 store.update(geojson, function(err, resp){
   // optional callback. Node style
 }).then(function(results){
