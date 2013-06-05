@@ -6,7 +6,7 @@
 
 `Terraformer.GeoStore` is instantiated with an instance of a `Terraformer.Store` and an index right now the only index available is `Terraformer.RTree`
 
-```js
+``` js
 var store = new Terraformer.GeoStore({
   store: new Terraformer.Store.Memory(),
   index: new Terraformer.RTree()
@@ -63,7 +63,7 @@ There are several method to query data on a `GeoStore`. You can ask for ojects t
 
 #### Contains
 
-```js
+``` js
 store.contains(geojson, function(err, resp){
   // optional callback. Node style
 }).then(function(){
@@ -83,7 +83,7 @@ You can pass a Node sytle callback or use the returned deferred to handle the re
 
 If you know a records `id` you can also retrive that record from the store.
 
-```js
+``` js
 store.get(id, function(err, resp){
   // optional callback. Node style
 }).then(function(){
@@ -97,7 +97,7 @@ store.get(id, function(err, resp){
 
 To remove a record just pass its id  to the `remove` method
 
-```js
+``` js
 store.remove(id, function(err, resp){
   // optional callback. Node style
 }).then(function(){
@@ -119,7 +119,7 @@ store.remove(id, function(err, resp){
 
 Create a new store and add some data to it
 
-```js
+``` js
 var store = new Terraformer.GeoStore({
   store: new Terraformer.Store.Memory(),
   index: new Terraformer.RTree()
@@ -130,7 +130,7 @@ var store = new Terraformer.GeoStore({
 
 Great now you can serialize the store and the index. each callback will recive
 
-```js
+``` js
 store.store.serialize(function(error, data){
   // persist the data respresenting the store somewhere
 });
@@ -142,7 +142,7 @@ store.index.serialize(function(error, data){
 
 When you need to load the store to the same state again just deserialize the data.
 
-```js
+``` js
 // do something to get the serialized store and index
 
 var store = new Terraformer.GeoStore({
@@ -159,7 +159,7 @@ You can listen for the callbacks to fire to know when deserializing is complete.
 
 If you want to create a custom way to persist data (perhaps asyncronously to a database or API) you can craete your own store. You can use this as a template.
 
-```js
+``` js
 // Function to act a a constructor
 var MyCustomStore = function MyCustomStore(){}
 
@@ -256,7 +256,7 @@ Functions recive a GeoJSON object to store and a deferred object to resolve or r
 
 When you are done you can create a new instace of your store to GeoStore.
 
-```js
+``` js
 var store = new Terraformer.GeoStore({
   store: new MyCustomStore(),
   index: new Terraformer.RTree()
