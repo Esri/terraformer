@@ -1,6 +1,6 @@
 # GeoStore
 
-`Terraformer.GeoStore` is a class built for handing lightweight storage and querying of large amounts of geometies.
+`Terraformer.GeoStore` is a class built for handing lightweight storage and querying of large amounts of [GeoJSON Features](http://www.geojson.org/geojson-spec.html#feature-objects). It is very fast and index the [rough US counties data](https://github.com/Esri/Terraformer/blob/master/examples/geostore/counties_rough.json) (about 950k) in about 120ms and search for which county contains a point in about 6.5ms. These numbers are form the latest version of Chrome.
 
 ## Introduction
 
@@ -13,7 +13,7 @@ var store = new Terraformer.GeoStore({
 });
 ```
 
-This will create an instace of GeoStore that lives in memory. You can easily write your own stores by adhering to a simple spec. But for now this will do.
+This will create an instance of GeoStore that lives in memory. You can easily write your own stores by adhering to a simple spec. But for now this will do.
 
 ### About Stores
 
@@ -41,7 +41,7 @@ store.add(geojson, function(err, resp){
 });
 ```
 
-Only GeoJSON `Feature` and `FeatureCollection` objects are accepted. All `Feature` objects that are added must have an `id` property, according ot the GeoJSON spec. Features and automatically indexed by the index and persisted via the store.
+Only GeoJSON `Feature` and `FeatureCollection` objects are accepted. All `Feature` objects that are added must have an `id` property, according ot the [GeoJSON spec](http://www.geojson.org/geojson-spec.html#feature-objects). Features and automatically indexed by the index and persisted via the store.
 
 ### Updating Data
 
@@ -73,15 +73,15 @@ store.contains(geojson, function(err, resp){
 });
 ```
 
-You can pass a Node sytle callback or use the returned deferred to handle the results. **You must use the callback to handle results even for syncronous stores**.
+You can pass a Node style callback or use the returned deferred to handle the results. **You must use the callback/deferred to handle results even for syncronous stores**.
 
 *Currently only `contains(point)` is supported in the future you will be able to pass any GeoJSON geometry.*
 
-*`contains` will be epricated in a future version and replaced by `intersects` for shapes where any part touches and `within` for shapes that are completely contained within other shapes.*
+*`contains` will be depricated in a future version and replaced by `intersects` for shapes where any part touches and `within` for shapes that are completely contained within other shapes.*
 
 #### By ID
 
-If you know a records `id` you can also retrive that record from the store.
+If you know a features `id` you can also retrive that feature from the store.
 
 ``` js
 store.get(id, function(err, resp){
@@ -95,7 +95,7 @@ store.get(id, function(err, resp){
 
 ### Removing Data
 
-To remove a record just pass its id  to the `remove` method
+To remove a feature just pass its id  to the `remove` method
 
 ``` js
 store.remove(id, function(err, resp){
@@ -111,9 +111,29 @@ store.remove(id, function(err, resp){
 
 `Terraformer.Store.Memory` and `Terraformer.Store.LocalStorage` both support `serialize` and `deserialize` methods. These are great if you want to dump the data to JSON and persist it somewhere.
 
+``` js
+store.store.serialize(function(err, serializedStore){
+  // optional callback. Node style
+}).then(function(serializedStore){
+  // Promises style success callback
+}, function(error){
+  // Promises style error callback
+});
+```
+
 ### Serializing Indexes
 
 `Terraformer.RTree` supports `serialize` and `deserialize` both methods take callbacks.
+
+``` js
+store.index.serialize(function(err, serializedStore){
+  // optional callback. Node style
+}).then(function(serializedStore){
+  // Promises style success callback
+}, function(error){
+  // Promises style error callback
+});
+```
 
 ### Serialization Example
 
@@ -157,10 +177,10 @@ You can listen for the callbacks to fire to know when deserializing is complete.
 
 ## Custom Stores
 
-If you want to create a custom way to persist data (perhaps asyncronously to a database or API) you can craete your own store. You can use this as a template.
+If you want to create a custom way to persist data (perhaps asyncronously to a database or API) you can create your own store. You can use this as a template most of this is comments so dont be intimidated.
 
 ``` js
-// Function to act a a constructor
+// function to act a a constructor
 var MyCustomStore = function MyCustomStore(){}
 
 // impliment an add method, this will get passed a geojson obejct that you should store
@@ -185,7 +205,7 @@ MyCustomStore.prototype.remove = function(id, deferred){
   // ... do whatever you need to do to delete the data ...
 
   // resolve the deferred when you are done deleting data
-  deferred.resolve(geojson);
+  deferred.resolve(true);
 
   // you can also reject the deferred if there is an error
   deferred.reject(yourError);
@@ -252,7 +272,7 @@ MyCustomStore.prototype.deserialize = function(serializedStore, deferred){
 };
 ```
 
-Functions recive a GeoJSON object to store and a deferred object to resolve or reject when you are done storing it. If you want to be able to serialize and deserialze your data you can also impliment those methods.
+Functions recive a GeoJSON Feature to store and a deferred object to resolve or reject when you are done storing it. If you want to be able to serialize and deserialze your data you can also impliment those methods.
 
 When you are done you can create a new instace of your store to GeoStore.
 
