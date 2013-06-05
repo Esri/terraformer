@@ -26,11 +26,11 @@ module.exports = function(grunt) {
         dest: 'dist/node/terraformer.js'
       },
       memory_store: {
-        src: ["source/stores/Memory.js"],
+        src: ['<banner:meta.banner>', "src/stores/Memory.js"],
         dest: 'dist/browser/stores/Memory.js'
       },
       local_store: {
-        src: ["source/stores/LocalStorage.js"],
+        src: ['<banner:meta.banner>', "src/stores/LocalStorage.js"],
         dest: 'dist/browser/stores/LocalStorage.js'
       }
     },
@@ -56,11 +56,11 @@ module.exports = function(grunt) {
         dest: 'dist/browser/geostore.min.js'
       },
       memory_store: {
-        src: ["dist/stores/Memory.js"],
+        src: ["dist/browser/stores/Memory.js"],
         dest: 'dist/browser/stores/Memory.js'
       },
       local_store: {
-        src: ["dist/stores/LocalStorage.js"],
+        src: ["dist/browser/stores/LocalStorage.js"],
         dest: 'dist/browser/stores/LocalStorage.js'
       }
     },

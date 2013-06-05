@@ -1,9 +1,4 @@
 (function (root, factory) {
-  // Node.
-  if(typeof module === 'object' && typeof module.exports === 'object') {
-    exports = module.exports = factory();
-  }
-
   // AMD.
   if(typeof define === 'function' && define.amd) {
     define([], factory);
