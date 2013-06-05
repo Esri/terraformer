@@ -5,16 +5,17 @@
     <title>Quick App</title>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
     <script src="../../dist/browser/terraformer.js"></script>
-    <script src="../../src/Stores/Memory.js"></script>
-    <script src="../../src/Stores/LocalStorage.js"></script>
+    <script src="../../dist/browser/Store/Memory.js"></script>
+    <script src="../../dist/browser/Store/LocalStorage.js"></script>
     <script src="../../dist/browser/rtree.js"></script>
     <script src="../../src/geostore.js"></script>
   </head>
   <body>
-    <h1>Geostore</h1>
+    <h1>GeoStore</h1>
     <script>
-      var gs = new Terraformer.Geostore({
-        store: Terraformer.Stores.LocalStorage
+      var gs = new Terraformer.GeoStore({
+        store: new Terraformer.Store.LocalStorage(),
+        index: new Terraformer.RTree
       });
 
       console.time("getting counties");
