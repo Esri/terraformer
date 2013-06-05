@@ -1,7 +1,0 @@
-{
-  "globals": {
-    "desribe":true
-    "it":true
-    "expect":true
-  }
-}
