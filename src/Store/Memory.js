@@ -14,10 +14,10 @@
     if (typeof root.Terraformer === "undefined"){
       root.Terraformer = { };
     }
-    if (typeof root.Terraformer.Stores === "undefined"){
-      root.Terraformer.Stores = {};
+    if (typeof root.Terraformer.Store === "undefined"){
+      root.Terraformer.Store = {};
     }
-    root.Terraformer.Stores.Memory = factory().Memory;
+    root.Terraformer.Store.Memory = factory().Memory;
   }
 }(this, function() {
   var exports = { };
@@ -64,13 +64,15 @@
     return dfd;
   };
 
-  Memory.prototype.serialize = function(){
-    return JSON.stringify(this);
+  Memory.prototype.serialize = function(dfd){
+    dfd.resolve(JSON.stringify(this));
+    return dfd;
   };
 
   Memory.prototype.deserialize = function(serializedStore){
     this.data = JSON.parse(serializedStore).data;
-    return this;
+    dfd.resolve(this);
+    return dfd;
   };
 
   exports.Memory = Memory;

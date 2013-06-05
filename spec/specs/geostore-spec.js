@@ -1,9 +1,9 @@
 if(typeof module === "object"){
   var Terraformer = require("../../dist/node/terraformer.js");
   Terraformer.RTree = require("../../dist/node/RTree/index.js").RTree;
-  Terraformer.Stores = {};
-  Terraformer.Stores.Memory = require("../../src/Stores/Memory.js").Memory;
-  Terraformer.Stores.LocalStorage = require("../../src/Stores/LocalStorage.js").LocalStorage;
+  Terraformer.Store = {};
+  Terraformer.Store.Memory = require("../../src/Store/Memory.js").Memory;
+  Terraformer.Store.LocalStorage = require("../../src/Store/LocalStorage.js").LocalStorage;
   Terraformer.GeoStore = require("../../dist/node/GeoStore/index.js").GeoStore;
 }
 
@@ -14,7 +14,7 @@ describe("geostore", function() {
     it("should create with a Memory store and an RTree", function(){
       expect(function() {
         gs = new Terraformer.GeoStore({
-          store: new Terraformer.Stores.Memory(),
+          store: new Terraformer.Store.Memory(),
           index: new Terraformer.RTree()
         });
       }).not.toThrow();
@@ -64,7 +64,7 @@ describe("geostore", function() {
       it("should create with a LocalStorage and an RTree", function(){
         expect(function() {
           gs = new Terraformer.GeoStore({
-            store: new Terraformer.Stores.LocalStorage(),
+            store: new Terraformer.Store.LocalStorage(),
             index: new Terraformer.RTree()
           });
         }).not.toThrow();
@@ -85,7 +85,6 @@ describe("geostore", function() {
       });
 
       it("shouldn't find any results if a feature is removed", function(){
-
         var result;
         gs.remove(41051);
         gs.contains({

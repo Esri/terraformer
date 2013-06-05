@@ -25,13 +25,21 @@ module.exports = function(grunt) {
         src: ['<banner:meta.banner>', 'src/terraformer.js'],
         dest: 'dist/node/terraformer.js'
       },
+      geostore: {
+        src: ['<banner:meta.banner>', "src/geostore.js"],
+        dest: 'dist/browser/geostore.js'
+      },
+      geostore_node: {
+        src: ['src/geostore.js'],
+        dest: 'dist/node/GeoStore/index.js'
+      },
       memory_store: {
-        src: ['<banner:meta.banner>', "src/stores/Memory.js"],
-        dest: 'dist/browser/stores/Memory.js'
+        src: ['<banner:meta.banner>', "src/Store/Memory.js"],
+        dest: 'dist/browser/Store/Memory.js'
       },
       local_store: {
-        src: ['<banner:meta.banner>', "src/stores/LocalStorage.js"],
-        dest: 'dist/browser/stores/LocalStorage.js'
+        src: ['<banner:meta.banner>', "src/Store/LocalStorage.js"],
+        dest: 'dist/browser/Store/LocalStorage.js'
       }
     },
     min: {
@@ -56,12 +64,12 @@ module.exports = function(grunt) {
         dest: 'dist/browser/geostore.min.js'
       },
       memory_store: {
-        src: ["dist/browser/stores/Memory.js"],
-        dest: 'dist/browser/stores/Memory.js'
+        src: ["dist/browser/Store/Memory.js"],
+        dest: 'dist/browser/Store/Memory.js'
       },
       local_store: {
-        src: ["dist/browser/stores/LocalStorage.js"],
-        dest: 'dist/browser/stores/LocalStorage.js'
+        src: ["dist/browser/Store/LocalStorage.js"],
+        dest: 'dist/browser/Store/LocalStorage.js'
       }
     },
     watch: {
@@ -119,7 +127,7 @@ module.exports = function(grunt) {
 
   // builds
   grunt.registerTask('build', 'default minify');
-  grunt.registerTask('build-source', 'build-terraformer build-wkt build-arcgis build-rtree build-geostore build-stores');
+  grunt.registerTask('build-source', 'build-terraformer build-wkt build-arcgis build-rtree build-geostore');
 
   // minify all the browser files
   grunt.registerTask('minify', 'min:terraformer min:rtree min:arcgis min:wkt min:geostore min:memory_store min:local_store');
@@ -143,11 +151,7 @@ module.exports = function(grunt) {
     grunt.log.write(grunt.helper('rtree-exports'));
   });
 
-  grunt.registerTask('build-geostore', 'Building GeoStore node module', function () {
-    grunt.log.write(grunt.helper('geostore-exports'));
-  });
-
-  grunt.registerTask('build-stores', 'concat:memory_store concat:local_store');
+  grunt.registerTask('build-geostore', 'concat:geostore_node concat:geostore concat:memory_store concat:local_store');
 
   // Register helpers
   grunt.registerHelper('wkt-parser', function() {
@@ -193,19 +197,6 @@ module.exports = function(grunt) {
 
     fs.writeFileSync("./dist/browser/rtree.js", wrapper, "utf8");
     fs.writeFileSync("./dist/node/RTree/index.js", wrapper, "utf8");
-
-    return 'Files created.\n';
-  });
-
-  grunt.registerHelper('geostore-exports', function() {
-    var src = fs.readFileSync('./src/geostore.js', 'utf8');
-
-    var wrapper = fs.readFileSync('./src/partials/module-geostore.js', 'utf8');
-
-    wrapper = wrapper.replace('"SOURCE";', src);
-
-    fs.writeFileSync("./dist/browser/geostore.js", wrapper, "utf8");
-    fs.writeFileSync("./dist/node/GeoStore/index.js", wrapper, "utf8");
 
     return 'Files created.\n';
   });

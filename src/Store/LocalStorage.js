@@ -9,10 +9,10 @@
     if(typeof root.Terraformer === "undefined"){
       root.Terraformer = {};
     }
-    if(typeof root.Terraformer.Stores === "undefined"){
-      root.Terraformer.Stores = {};
+    if(typeof root.Terraformer.Store === "undefined"){
+      root.Terraformer.Store = {};
     }
-    root.Terraformer.Stores.LocalStorage = factory().LocalStorage;
+    root.Terraformer.Store.LocalStorage = factory().LocalStorage;
   }
 }(this, function() {
   var exports = { };
@@ -79,15 +79,52 @@
     return exports;
   };
 
-  LocalStorage.prototype.serialize = function(){
-    return JSON.stringify(this);
+  LocalStorage.prototype.serialize = function(callback){
+    var objs = [];
+
+    // make a new deferred
+    var dfd = new this.deferred();
+
+    // map callback to dfd if we have one
+    if(callback){
+      dfd.then(function(result){
+        callback(null, result);
+      }, function(error){
+        callback(error, null);
+      });
+    }
+
+    for (key in localStorage){
+      if(key.match(this.key){
+        objs.push(localStorage.getItem(key));
+      }
+    };
+    dfd.resolve(JSON.stringify(objs));
+    return ;
   };
 
-  LocalStorage.prototype.deserialize = function(serial){
-    data = JSON.parse(serial);
-    for(var feature in data){
-      localStorage[feature] = data[feature];
+  LocalStorage.prototype.deserialize = function(serial, callback){
+    var data = JSON.parse(serial);
+
+    // make a new deferred
+    var dfd = new this.deferred();
+
+    // map callback to dfd if we have one
+    if(callback){
+      dfd.then(function(result){
+        callback(null, result);
+      }, function(error){
+        callback(error, null);
+      });
     }
+
+    for (var i = data.length - 1; i >= 0; i--) {
+      this.set(data[i]);
+    };
+
+    dfd.resolve(this);
+
+    return dfd;
   };
 
   exports.LocalStorage = LocalStorage;
