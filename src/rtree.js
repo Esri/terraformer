@@ -647,62 +647,6 @@ var RTree = function (width) {
    /* non-recursive function that deletes a specific
     * [ number ] = RTree.remove(rectangle, obj)
     */
-    // this.remove = function(shape, obj, callback) {
-    //   var args = Array.prototype.slice.call(arguments);
-    //   var conditional;
-    //   if(args[0].type){
-    //     var b = Terraformer.Tools.calculateBounds(shape);
-    //     args[0] = {
-    //       x: b[0],
-    //       y: b[1],
-    //       w: Math.abs(b[0] - b[2]),
-    //       h: Math.abs(b[1] - b[3])
-    //     };
-    //   }
-
-    //   var dfd = new Terraformer.Deferred();
-
-    //   if (args.length < 1) {
-    //     throw "Wrong number of arguments. RT.remove requires at least a bounding rectangle or GeoJSON.";
-    //   }
-
-    //   switch (args.length) {
-    //   case 1:
-    //     conditional = false;
-    //     break;
-    //   case 2:
-    //     if(typeof args[1] === "function"){
-    //       conditional = false;
-    //       callback = args[1];
-    //     } else {
-    //       conditional = args[1];
-    //     }
-    //     break;
-    //   }
-
-    //   if(callback){
-
-    //   }
-
-    //   args = [args[0], conditional, _T];
-
-    //   if (args[1] === false) { // Do area-wide delete
-    //     var numberdeleted = 0;
-    //     var ret_array = [];
-    //     do {
-    //       numberdeleted = ret_array.length;
-    //       ret_array = ret_array.concat(_remove_subtree.apply(this, args));
-    //     } while (numberdeleted !== ret_array.length);
-    //     dfd.resolve(ret_array);
-    //   } else { // Delete a specific item
-    //     dfd.resolve(_remove_subtree.apply(this, args));
-    //   }
-
-    //   return dfd;
-    // };
-    /* non-recursive function that deletes a specific
-     * [ number ] = RTree.remove(rectangle, obj)
-     */
     this.remove = function(shape, obj, callback) {
       var args = Array.prototype.slice.call(arguments);
       var dfd = new Terraformer.Deferred();
