@@ -3,7 +3,6 @@ if(typeof module === "object"){
   Terraformer.RTree = require("../../dist/node/RTree/index.js").RTree;
   Terraformer.Store = {};
   Terraformer.Store.Memory = require("../../src/Store/Memory.js").Memory;
-  Terraformer.Store.LocalStorage = require("../../src/Store/LocalStorage.js").LocalStorage;
   Terraformer.GeoStore = require("../../dist/node/GeoStore/index.js").GeoStore;
 }
 

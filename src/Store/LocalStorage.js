@@ -94,11 +94,11 @@
       });
     }
 
-    for (key in localStorage){
-      if(key.match(this.key){
+    for (var key in localStorage){
+      if(key.match(this.key)){
         objs.push(localStorage.getItem(key));
       }
-    };
+    }
     dfd.resolve(JSON.stringify(objs));
     return ;
   };
