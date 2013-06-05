@@ -7,16 +7,14 @@
 
   // AMD.
   if(typeof define === 'function' && define.amd) {
-    define(factory);
+    define(["terraformer/terraformer"],factory);
   }
 
   // Browser Global.
-  if(typeof window === "object") {
-    if (typeof root.Terraformer === "undefined"){
-      root.Terraformer = {};
-    }
-    root.Terraformer.RTree = factory().RTree;
+  if (typeof root.Terraformer === "undefined"){
+    root.Terraformer = {};
   }
+  root.Terraformer.RTree = factory().RTree;
 
 }(this, function() {
   var exports = { };
@@ -32,73 +30,12 @@
     Terraformer = require('terraformer');
   }
 
-  function Deferred () {
-  this._thens = [];
-}
-
-Deferred.prototype = {
-
-  /* This is the "front end" API. */
-
-  // then(onResolve, onReject): Code waiting for this promise uses the
-  // then() method to be notified when the promise is complete. There
-  // are two completion callbacks: onReject and onResolve. A more
-  // robust promise implementation will also have an onProgress handler.
-  then: function (onResolve, onReject) {
-    // capture calls to then()
-    this._thens.push({ resolve: onResolve, reject: onReject });
-  },
-
-  // Some promise implementations also have a cancel() front end API that
-  // calls all of the onReject() callbacks (aka a "cancelable promise").
-  // cancel: function (reason) {},
-
-  /* This is the "back end" API. */
-
-  // resolve(resolvedValue): The resolve() method is called when a promise
-  // is resolved (duh). The resolved value (if any) is passed by the resolver
-  // to this method. All waiting onResolve callbacks are called
-  // and any future ones are, too, each being passed the resolved value.
-  resolve: function (val) {
-    this._complete('resolve', val);
-  },
-
-  // reject(exception): The reject() method is called when a promise cannot
-  // be resolved. Typically, you'd pass an exception as the single parameter,
-  // but any other argument, including none at all, is acceptable.
-  // All waiting and all future onReject callbacks are called when reject()
-  // is called and are passed the exception parameter.
-  reject: function (ex) {
-    this._complete('reject', ex);
-  },
-
-  // Some promises may have a progress handler. The back end API to signal a
-  // progress "event" has a single parameter. The contents of this parameter
-  // could be just about anything and is specific to your implementation.
-  // progress: function (data) {},
-
-  /* "Private" methods. */
-
-  _complete: function (which, arg) {
-    // switch over to sync then()
-    this.then = (which === 'resolve') ?
-      function (resolve, reject) { resolve(arg); } :
-      function (resolve, reject) { reject(arg); };
-    // disallow multiple calls to resolve or reject
-    this.resolve = this.reject =
-      function () { throw new Error('Deferred already completed.'); };
-    // complete all waiting (async) then()s
-    for (var i = 0; i < this._thens.length; i++) {
-      var aThen = this._thens[i];
-      if(aThen[which]) {
-        aThen[which](arg);
-      }
-    }
-    delete this._thens;
+  // Setup AMD Dependencies
+  if(arguments[0] && typeof define === 'function' && define.amd) {
+    Terraformer = arguments[0];
   }
-};
 
-/******************************************************************************
+  /******************************************************************************
  rtree.js - General-Purpose Non-Recursive Javascript R-Tree Library
  Version 0.6.2, December 5st 2009
  Copyright (c) 2009 Jon-Carlos Rivera
@@ -575,7 +512,7 @@ var RTree = function (width) {
     * @public
     */
     this.serialize = function(callback) {
-      var dfd = new Deferred();
+      var dfd = new Terraformer.Deferred();
       if(callback){
         dfd.then(function(result){
           callback(null, result);
@@ -591,8 +528,9 @@ var RTree = function (width) {
     * @public
     */
     this.deserialize = function(new_tree, where, callback) {
+
       var args = Array.prototype.slice.call(arguments);
-      var dfd = new Deferred();
+      var dfd = new Terraformer.Deferred();
 
       switch (args.length) {
       case 1:
@@ -623,6 +561,7 @@ var RTree = function (width) {
     * [ nodes | objects ] = RTree.search(rectangle, [return node data], [array to fill])
     * @public
     */
+
     this.search = function(shape, callback) {
       var rect;
       if(shape.type){
@@ -637,7 +576,7 @@ var RTree = function (width) {
         rect = shape;
       }
 
-      var dfd = new Deferred();
+      var dfd = new Terraformer.Deferred();
 
       var args = [ rect, false, [ ], _T ];
 
@@ -747,7 +686,26 @@ var RTree = function (width) {
     */
     this.remove = function(shape, obj, callback) {
       var args = Array.prototype.slice.call(arguments);
-      var conditional;
+      var dfd = new Terraformer.Deferred();
+
+      // you only passed shape
+      if(args.length === 1){
+        // so make the args (shape, false)
+        args.push(false);
+      }
+
+      // you passed (shape, obj, callback)
+      // pop the callback off the args list
+      if(args.length === 3){
+        callback = args.pop();
+        dfd.then(function(result){
+          callback(null, result);
+        }, function(error){
+          callback(error, null);
+        });
+      }
+
+      // convert shape (the first arg) to a bbox if its geojson
       if(args[0].type){
         var b = Terraformer.Tools.calculateBounds(shape);
         args[0] = {
@@ -758,49 +716,20 @@ var RTree = function (width) {
         };
       }
 
-      var dfd = new Deferred();
+      // push a new root node onto the args stack
+      args.push(_T);
 
-      if (args.length < 1) {
-        throw "Wrong number of arguments. RT.remove requires at least a bounding rectangle or GeoJSON.";
-      }
-
-      switch (args.length) {
-      case 1:
-        conditional = false;
-        break;
-      case 2:
-        if(typeof args[1] === "function"){
-          conditional = false;
-          callback = args[1];
-        } else {
-          conditional = args[1];
-        }
-        break;
-      }
-
-      if(callback){
-        dfd.then(function(result){
-          callback(null, result);
-        }, function(error){
-          callback(error, null);
-        });
-      }
-
-      args = [args[0], conditional, _T];
-
-      if (args[1] === false) { // Do area-wide delete
+      if(obj === false) { // Do area-wide delete
         var numberdeleted = 0;
         var ret_array = [];
         do {
           numberdeleted = ret_array.length;
           ret_array = ret_array.concat(_remove_subtree.apply(this, args));
-        } while (numberdeleted !== ret_array.length);
-        dfd.resolve(ret_array);
+        } while( numberdeleted !==  ret_array.length);
+        return ret_array;
       } else { // Delete a specific item
-        dfd.resolve(_remove_subtree.apply(this, args));
+        return(_remove_subtree.apply(this, args));
       }
-
-      return dfd;
     };
 
    /* non-recursive insert function
@@ -820,7 +749,7 @@ var RTree = function (width) {
         rect = shape;
       }
 
-      var dfd = new Deferred();
+      var dfd = new Terraformer.Deferred();
 
       if (arguments.length < 2) {
         throw "Wrong number of arguments. RT.Insert requires at least a bounding rectangle or GeoJSON and an object.";

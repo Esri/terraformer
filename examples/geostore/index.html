@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset=utf-8 />
+    <title>Quick App</title>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+    <script src="../../dist/browser/terraformer.js"></script>
+    <script src="../../dist/browser/Store/Memory.js"></script>
+    <script src="../../dist/browser/Store/LocalStorage.js"></script>
+    <script src="../../dist/browser/rtree.js"></script>
+    <script src="../../src/geostore.js"></script>
+  </head>
+  <body>
+    <h1>GeoStore</h1>
+    <script>
+      var gs = new Terraformer.GeoStore({
+        store: new Terraformer.Store.LocalStorage(),
+        index: new Terraformer.RTree
+      });
+
+      console.time("getting counties");
+
+      $.getJSON("counties_rough.json").success(function(counties){
+
+        console.timeEnd("getting counties");
+
+        console.time("adding counties to store");
+
+        for (var i = 0; i < counties.length; i++) {
+          gs.add(counties[i]);
+        };
+
+        console.timeEnd("adding counties to store");
+
+        console.time("searching counties");
+
+        var point = { type: "Point", coordinates:[-122.61923540493, 45.533841334631] };
+
+        gs.contains(point).then(function(results){
+          console.log("Found "+results.length+" feature(s)", results);
+        });
+
+        console.timeEnd("searching counties");
+
+      });
+    </script>
+  </body>
+
+</html>
