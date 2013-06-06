@@ -68,11 +68,11 @@ module.exports = function (grunt) {
       },
       memory_store: {
         src: ["dist/browser/Store/Memory.js"],
-        dest: 'dist/browser/Store/Memory.js'
+        dest: 'dist/browser/Store/Memory.min.js'
       },
       local_store: {
         src: ["dist/browser/Store/LocalStorage.js"],
-        dest: 'dist/browser/Store/LocalStorage.js'
+        dest: 'dist/browser/Store/LocalStorage.min.js'
       }
     }
   });
