@@ -14,7 +14,7 @@ module.exports = function (grunt) {
     },
 
     jshint: {
-      files: [ 'grunt.js', 'src/*.js', 'src/Parsers/ArcGIS/*.js' ],
+      files: [ 'grunt.js', 'src/*.js', 'src/Parsers/ArcGIS/*.js', 'src/Store/*.js' ],
       options: {
         node: true
       }
@@ -74,6 +74,19 @@ module.exports = function (grunt) {
         src: ["dist/browser/Store/LocalStorage.js"],
         dest: 'dist/browser/Store/LocalStorage.min.js'
       }
+    },
+
+    complexity: {
+      generic: {
+        src: [ 'dist/browser/arcgis.js', 'dist/browser/geostore.js', 'dist/browser/rtree.js', 'dist/browser/terraformer.js', 'dist/browser/Store/Memory.js', 'dist/browser/Store/LocalStorage.js' ],
+        options: {
+          jsLintXML: 'report.xml', // create XML JSLint-like report
+          errorsOnly: false, // show only maintainability errors
+          cyclomatic: 5,
+          halstead: 15,
+          maintainability: 65
+        }
+      }
     }
   });
 
@@ -127,7 +140,7 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-uglify');
+  grunt.loadNpmTasks('grunt-complexity');
 
-
-  grunt.registerTask('default', [ 'wkt-parser', 'arcgis-parser', 'rtree-exports', 'concat', 'jshint', 'uglify' ]);
+  grunt.registerTask('default', [ 'wkt-parser', 'arcgis-parser', 'rtree-exports', 'concat', 'jshint', 'uglify', 'complexity' ]);
 };

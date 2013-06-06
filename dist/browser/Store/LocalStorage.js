@@ -1,1 +1,133 @@
-!function(a,b){"function"==typeof define&&define.amd&&define([],b),"object"==typeof a.navigator&&("undefined"==typeof a.Terraformer&&(a.Terraformer={}),"undefined"==typeof a.Terraformer.Store&&(a.Terraformer.Store={}),a.Terraformer.Store.LocalStorage=b().LocalStorage)}(this,function(){function a(){var a=arguments[0]||{};this._key=a.key||"_terraformer"}var b={};return arguments[0]&&"function"==typeof define&&define.amd&&(this.Terraformer=arguments[0]),a.prototype.add=function(a,b){if("FeatureCollection"===a.type)for(var c=0;c<a.features.length;c++)this.set(a.features[c]);else this.set(a);return b.resolve(a),b},a.prototype.key=function(a){return this._key+"_"+a},a.prototype.remove=function(a,b){return localStorage.removeItem(this.key(a)),b.resolve(),b},a.prototype.get=function(a,b){return b.resolve(JSON.parse(localStorage.getItem(this.key(a)))),b},a.prototype.set=function(a){localStorage.setItem(this.key(a.id),JSON.stringify(a))},a.prototype.update=function(a,b){return this.set(a),b.resolve(a),b},a.prototype.toJSON=function(){var a=new RegExp("^"+this._key),b={};for(var c in localStorage)c.match(a)&&(b[c]=localStorage[c]);return b},a.prototype.serialize=function(a){var b=[],c=new this.deferred;a&&c.then(function(b){a(null,b)},function(b){a(b,null)});for(var d in localStorage)d.match(this.key)&&b.push(localStorage.getItem(d));c.resolve(JSON.stringify(b))},a.prototype.deserialize=function(a,b){var c=JSON.parse(a),d=new this.deferred;b&&d.then(function(a){b(null,a)},function(a){b(a,null)});for(var e=c.length-1;e>=0;e--)this.set(c[e]);return d.resolve(this),d},b.LocalStorage=a,b});
+(function (root, factory) {
+  // AMD.
+  if(typeof define === 'function' && define.amd) {
+    define([], factory);
+  }
+
+  // Browser Global.
+  if(typeof root.navigator === "object") {
+    if(typeof root.Terraformer === "undefined"){
+      root.Terraformer = {};
+    }
+    if(typeof root.Terraformer.Store === "undefined"){
+      root.Terraformer.Store = {};
+    }
+    root.Terraformer.Store.LocalStorage = factory().LocalStorage;
+  }
+}(this, function() {
+  var exports = { };
+
+  // if we are in AMD terraformer core got passed in as our first requirement so we should set it.
+  if(arguments[0] && typeof define === 'function' && define.amd) {
+    this.Terraformer = arguments[0];
+  }
+
+  // These methods get called in context of the geostore
+  function LocalStorage(){
+    var opts = arguments[0] || {};
+    this._key = opts.key || "_terraformer";
+  }
+
+  // store the data at id returns true if stored successfully
+  LocalStorage.prototype.add = function(geojson, dfd){
+    if(geojson.type === "FeatureCollection"){
+      for (var i = 0; i < geojson.features.length; i++) {
+        this.set(geojson.features[i]);
+      }
+    } else {
+      this.set(geojson);
+    }
+    dfd.resolve(geojson);
+    return dfd;
+  };
+
+  LocalStorage.prototype.key = function(id){
+    return this._key +"_"+id;
+  };
+
+  // remove the data from the index and data with id returns true if removed successfully.
+  LocalStorage.prototype.remove = function(id, dfd){
+    localStorage.removeItem(this.key(id));
+    dfd.resolve();
+    return dfd;
+  };
+
+  // return the data stored at id
+  LocalStorage.prototype.get = function(id, dfd){
+    dfd.resolve(JSON.parse(localStorage.getItem(this.key(id))));
+    return dfd;
+  };
+
+  LocalStorage.prototype.set = function(feature){
+    localStorage.setItem(this.key(feature.id), JSON.stringify(feature));
+  };
+
+  LocalStorage.prototype.update = function(geojson, dfd){
+    this.set(geojson);
+    dfd.resolve(geojson);
+    return dfd;
+  };
+
+  LocalStorage.prototype.toJSON = function(){
+    var matcher = new RegExp("^"+this._key);
+    var exports = {};
+    for(var feature in localStorage){
+      if(feature.match(matcher)){
+        exports[feature] = localStorage[feature];
+      }
+    }
+    return exports;
+  };
+
+  LocalStorage.prototype.serialize = function(callback){
+    var objs = [];
+
+    // make a new deferred
+    var dfd = new this.deferred();
+
+    // map callback to dfd if we have one
+    if(callback){
+      dfd.then(function(result){
+        callback(null, result);
+      }, function(error){
+        callback(error, null);
+      });
+    }
+
+    for (var key in localStorage){
+      if(key.match(this.key)){
+        objs.push(localStorage.getItem(key));
+      }
+    }
+    dfd.resolve(JSON.stringify(objs));
+    return ;
+  };
+
+  LocalStorage.prototype.deserialize = function(serial, callback){
+    var data = JSON.parse(serial);
+
+    // make a new deferred
+    var dfd = new this.deferred();
+
+    // map callback to dfd if we have one
+    if(callback){
+      dfd.then(function(result){
+        callback(null, result);
+      }, function(error){
+        callback(error, null);
+      });
+    }
+
+    for (var i = data.length - 1; i >= 0; i--) {
+      this.set(data[i]);
+    }
+
+    dfd.resolve(this);
+
+    return dfd;
+  };
+
+  exports.LocalStorage = LocalStorage;
+
+  return exports;
+}));
