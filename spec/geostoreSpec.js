@@ -1,9 +1,9 @@
 if(typeof module === "object"){
-  var Terraformer = require("../../dist/node/terraformer.js");
-  Terraformer.RTree = require("../../dist/node/RTree/index.js").RTree;
+  var Terraformer = require("../dist/node/terraformer.js");
+  Terraformer.RTree = require("../dist/node/RTree/index.js").RTree;
   Terraformer.Store = {};
-  Terraformer.Store.Memory = require("../../src/Store/Memory.js").Memory;
-  Terraformer.GeoStore = require("../../dist/node/GeoStore/index.js").GeoStore;
+  Terraformer.Store.Memory = require("../src/Store/Memory.js").Memory;
+  Terraformer.GeoStore = require("../dist/node/GeoStore/index.js").GeoStore;
 }
 
 describe("geostore", function() {

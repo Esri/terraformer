@@ -42,6 +42,7 @@ module.exports = function(grunt) {
         dest: 'dist/browser/Store/LocalStorage.js'
       }
     },
+
     min: {
       terraformer: {
         src: ["dist/browser/terraformer.js"],
@@ -72,6 +73,7 @@ module.exports = function(grunt) {
         dest: 'dist/browser/Store/LocalStorage.js'
       }
     },
+
     watch: {
       files: '<config:lint.files>',
       tasks: 'default'

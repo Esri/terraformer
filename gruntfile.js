@@ -19,6 +19,7 @@ module.exports = function (grunt) {
         node: true
       }
     },
+
     concat: {
       browser: {
         src: ['<banner:meta.banner>', 'src/terraformer.js'],
@@ -45,42 +46,86 @@ module.exports = function (grunt) {
         dest: 'dist/browser/Store/LocalStorage.js'
       }
     },
+
     uglify: {
       terraformer: {
         src: ["dist/browser/terraformer.js"],
-        dest: 'dist/browser/terraformer.min.js'
+        dest: 'dist/minified/terraformer.min.js'
       },
       rtree: {
         src: ["dist/browser/rtree.js"],
-        dest: 'dist/browser/rtree.min.js'
+        dest: 'dist/minified/rtree.min.js'
       },
       arcgis: {
         src: ["dist/browser/arcgis.js"],
-        dest: 'dist/browser/arcgis.min.js'
+        dest: 'dist/minified/arcgis.min.js'
       },
       wkt: {
         src: ["dist/browser/wkt.js"],
-        dest: 'dist/browser/wkt.min.js'
+        dest: 'dist/minified/wkt.min.js'
       },
       geostore: {
         src: ["dist/browser/geostore.js"],
-        dest: 'dist/browser/geostore.min.js'
+        dest: 'dist/minified/geostore.min.js'
       },
       memory_store: {
         src: ["dist/browser/Store/Memory.js"],
-        dest: 'dist/browser/Store/Memory.min.js'
+        dest: 'dist/minified/Store/Memory.min.js'
       },
       local_store: {
         src: ["dist/browser/Store/LocalStorage.js"],
-        dest: 'dist/browser/Store/LocalStorage.min.js'
+        dest: 'dist/minified/Store/LocalStorage.min.js'
       }
+    },
+
+    jasmine: {
+      coverage: {
+        src: [
+          "dist/browser/terraformer.js",
+          "dist/browser/arcgis.js",
+          "dist/browser/wkt.js",
+          "dist/browser/rtree.js",
+          "dist/browser/geostore.js",
+          "dist/browser/Store/Memory.js",
+          "dist/browser/Store/LocalStorage.js"
+        ],
+        options: {
+          specs: 'spec/*Spec.js',
+          helpers: 'spec/*Helpers.js',
+          //keepRunner: true,
+          outfile: 'SpecRunner.html',
+          template: require('grunt-template-jasmine-istanbul'),
+          templateOptions: {
+            coverage: './.coverage/coverage.json',
+            report: './.coverage',
+            thresholds: {
+              lines: 75,
+              statements: 75,
+              branches: 75,
+              functions: 90
+            }
+          }
+        }
+      }
+    },
+
+    jasmine_node: {
+      options: {
+        forceExit: true,
+        match: '.',
+        matchall: false,
+        extensions: 'js',
+        specNameMatcher: 'Spec',
+        helperNameMatcher: 'Helpers'
+      },
+      all: ['spec/']
     },
 
     complexity: {
       generic: {
         src: [ 'dist/browser/arcgis.js', 'dist/browser/geostore.js', 'dist/browser/rtree.js', 'dist/browser/terraformer.js', 'dist/browser/Store/Memory.js', 'dist/browser/Store/LocalStorage.js' ],
         options: {
-          jsLintXML: 'report.xml', // create XML JSLint-like report
+          jsLintXML: 'complexity.xml', // create XML JSLint-like report
           errorsOnly: false, // show only maintainability errors
           cyclomatic: 5,
           halstead: 15,
@@ -141,6 +186,10 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-complexity');
+  grunt.loadNpmTasks('grunt-contrib-jasmine');
+  grunt.loadNpmTasks('grunt-jasmine-node');
 
-  grunt.registerTask('default', [ 'wkt-parser', 'arcgis-parser', 'rtree-exports', 'concat', 'jshint', 'uglify', 'complexity' ]);
+  grunt.registerTask('test', ['build_source', 'concat', 'jasmine_node', 'jasmine']);
+  grunt.registerTask('build_source', ['wkt-parser', 'arcgis-parser', 'rtree-exports']);
+  grunt.registerTask('default', [ 'build_source', 'concat', 'jshint', 'jasmine', 'jasmine_node', 'uglify', 'complexity' ]);
 };
