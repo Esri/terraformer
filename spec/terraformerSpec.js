@@ -1,6 +1,6 @@
 if(typeof module === "object"){
-  var Terraformer = require("../../dist/node/terraformer.js");
-  var GeoJSON = require("../GeoJSON.js");
+  var Terraformer = require("../dist/node/terraformer.js");
+  var GeoJSON = require("./GeoJSON.js");
 }
 
 beforeEach(function() {

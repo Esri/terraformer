@@ -1,1 +1,81 @@
-(function(e,t){typeof module=="object"&&typeof module.exports=="object"&&(exports=module.exports=t()),typeof define=="function"&&define.amd&&define([],t),typeof e.navigator=="object"&&(typeof e.Terraformer=="undefined"&&(e.Terraformer={}),typeof e.Terraformer.Store=="undefined"&&(e.Terraformer.Store={}),e.Terraformer.Store.Memory=t().Memory)})(this,function(){function t(){this.data={}}var e={};return arguments[0]&&typeof define=="function"&&define.amd&&(this.Terraformer=arguments[0]),t.prototype.add=function(e,t){if(e.type==="FeatureCollection")for(var n=0;n<e.features.length;n++)this.data[e.features[n].id]=e.features[n];else this.data[e.id]=e;return t.resolve(e),t},t.prototype.remove=function(e,t){return delete this.data[e],t.resolve(e),t},t.prototype.get=function(e,t){return t.resolve(this.data[e]),t},t.prototype.update=function(e,t){return this.data[e.id]=e,t.resolve(),t},t.prototype.serialize=function(e){return e.resolve(JSON.stringify(this)),e},t.prototype.deserialize=function(e){return this.data=JSON.parse(e).data,dfd.resolve(this),dfd},e.Memory=t,e});
+(function (root, factory) {
+  // Node.
+  if(typeof module === 'object' && typeof module.exports === 'object') {
+    exports = module.exports = factory();
+  }
+
+  // AMD.
+  if(typeof define === 'function' && define.amd) {
+    define([], factory);
+  }
+
+  // Browser Global.
+  if(typeof root.navigator === "object") {
+    if (typeof root.Terraformer === "undefined"){
+      root.Terraformer = { };
+    }
+    if (typeof root.Terraformer.Store === "undefined"){
+      root.Terraformer.Store = {};
+    }
+    root.Terraformer.Store.Memory = factory().Memory;
+  }
+}(this, function() {
+  var exports = { };
+
+  // if we are in AMD terraformer core got passed in as our first requirement so we should set it.
+  if(arguments[0] && typeof define === 'function' && define.amd) {
+    this.Terraformer = arguments[0];
+  }
+
+  // These methods get called in context of the geostore
+  function Memory(){
+    this.data = {};
+  }
+
+  // store the data at id returns true if stored successfully
+  Memory.prototype.add = function(geojson, dfd){
+    if(geojson.type === "FeatureCollection"){
+      for (var i = 0; i < geojson.features.length; i++) {
+        this.data[geojson.features[i].id] = geojson.features[i];
+      }
+    } else {
+      this.data[geojson.id] = geojson;
+    }
+    dfd.resolve(geojson);
+    return dfd;
+  };
+
+  // remove the data from the index and data with id returns true if removed successfully.
+  Memory.prototype.remove = function(id, dfd){
+    delete this.data[id];
+    dfd.resolve(id);
+    return dfd;
+  };
+
+  // return the data stored at id
+  Memory.prototype.get = function(id, dfd){
+    dfd.resolve(this.data[id]);
+    return dfd;
+  };
+
+  Memory.prototype.update = function(geojson, dfd){
+    this.data[geojson.id] = geojson;
+    dfd.resolve();
+    return dfd;
+  };
+
+  Memory.prototype.serialize = function(dfd){
+    dfd.resolve(JSON.stringify(this));
+    return dfd;
+  };
+
+  Memory.prototype.deserialize = function(serializedStore){
+    this.data = JSON.parse(serializedStore).data;
+    dfd.resolve(this);
+    return dfd;
+  };
+
+  exports.Memory = Memory;
+
+  return exports;
+}));

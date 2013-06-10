@@ -1,3 +1,12 @@
+# Ignore complexity output
+complexity.xml
+
+# Ignore Coverage output
+.coverage
+
+# Ignore Grunt temp files
+.grunt
+
 # Ignore environment variables set on this machine
 .env
 

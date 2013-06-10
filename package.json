@@ -4,10 +4,15 @@
   "description": "Tools for converting ArcGIS and GeoJSON, as well as converting spatial references.",
   "main": "src/terraformer.js",
   "devDependencies": {
-    "grunt": "0.3.17",
-    "grunt-jasmine-node": "git+ssh://git@github.com:patrickarlt/grunt-jasmine-node.git",
-    "grunt-jasmine-task": "0.2.3",
-    "jison": "~0.3.12"
+    "grunt": "0.4.x",
+    "grunt-contrib-concat": "0.3.x",
+    "grunt-contrib-jshint": "0.6.x",
+    "jison": "~0.3.12",
+    "grunt-contrib-uglify": "~0.2.2",
+    "grunt-complexity": "~0.1.3",
+    "grunt-contrib-jasmine": "~0.4.2",
+    "grunt-jasmine-node": "git://github.com/magicmoose/grunt-jasmine-node.git",
+    "grunt-template-jasmine-istanbul": "~0.2.4"
   },
   "scripts": {
     "test": "./node_modules/grunt/bin/grunt node"
@@ -22,6 +27,5 @@
     "Jerry Sievert <jsievert@esri.com> (http://legitimatesounding.com)"
   ],
   "license": "MIT",
-  "dependencies": {
-  }
+  "dependencies": {}
 }
