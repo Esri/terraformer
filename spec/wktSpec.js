@@ -1,6 +1,6 @@
 if(typeof module === "object"){
- var Terraformer = require("../../dist/node/terraformer.js");
- Terraformer.WKT = require("../../dist/node/Parsers/WKT/index.js");
+ var Terraformer = require("../dist/node/terraformer.js");
+ Terraformer.WKT = require("../dist/node/Parsers/WKT/index.js");
 }
 
 describe("WKT Parser", function() {

@@ -1,5 +1,5 @@
 if(typeof module === "object"){
- var Terraformer = require("../../dist/node/terraformer.js");
+  var Terraformer = require("../dist/node/terraformer.js");
 }
 
 describe("Spatial Reference Converters", function(){
