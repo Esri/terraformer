@@ -496,7 +496,7 @@ function pointToWKTPoint (primitive) {
     return ret;
   } else if (primitive.coordinates.length === 3) {
     // 3d or time? default to 3d
-    if (primitive.properties.m === true) {
+    if (primitive.properties && primitive.properties.m === true) {
       ret += 'M ';
     } else {
       ret += 'Z ';
@@ -519,13 +519,13 @@ function lineStringToWKTLineString (primitive) {
     ret += 'EMPTY';
 
     return ret;
-  } else if (primitive.coordinates[0][0].length === 3) {
-    if (primitive.properties.m === true) {
+  } else if (primitive.coordinates[0].length === 3) {
+    if (primitive.properties && primitive.properties.m === true) {
       ret += 'M ';
     } else {
       ret += 'Z ';
     }
-  } else if (primitive.coordinates[0][0].length === 4) {
+  } else if (primitive.coordinates[0].length === 4) {
     ret += 'ZM ';
   }
 
@@ -542,7 +542,7 @@ function polygonToWKTPolygon (primitive) {
 
     return ret;
   } else if (primitive.coordinates[0][0].length === 3) {
-    if (primitive.properties.m === true) {
+    if (primitive.properties && primitive.properties.m === true) {
       ret += 'M ';
     } else {
       ret += 'Z ';
@@ -570,13 +570,13 @@ function multiPointToWKTMultiPoint (primitive) {
     ret += 'EMPTY';
 
     return ret;
-  } else if (primitive.coordinates[0][0].length === 3) {
-    if (primitive.properties.m === true) {
+  } else if (primitive.coordinates[0].length === 3) {
+    if (primitive.properties && primitive.properties.m === true) {
       ret += 'M ';
     } else {
       ret += 'Z ';
     }
-  } else if (primitive.coordinates[0][0].length === 4) {
+  } else if (primitive.coordinates[0].length === 4) {
     ret += 'ZM ';
   }
 
@@ -593,7 +593,7 @@ function multiLineStringToWKTMultiLineString (primitive) {
 
     return ret;
   } else if (primitive.coordinates[0][0].length === 3) {
-    if (primitive.properties.m === true) {
+    if (primitive.properties && primitive.properties.m === true) {
       ret += 'M ';
     } else {
       ret += 'Z ';
@@ -622,7 +622,7 @@ function multiPolygonToWKTMultiPolygon (primitive) {
 
     return ret;
   } else if (primitive.coordinates[0][0][0].length === 3) {
-    if (primitive.properties.m === true) {
+    if (primitive.properties && primitive.properties.m === true) {
       ret += 'M ';
     } else {
       ret += 'Z ';
@@ -656,22 +656,16 @@ function convert (primitive) {
   switch (primitive.type) {
     case 'Point':
       return pointToWKTPoint(primitive);
-      break;
     case 'LineString':
       return lineStringToWKTLineString(primitive);
-      break;
     case 'Polygon':
       return polygonToWKTPolygon(primitive);
-      break;
     case 'MultiPoint':
       return multiPointToWKTMultiPoint(primitive);
-      break;
     case 'MultiLineString':
       return multiLineStringToWKTMultiLineString(primitive);
-      break;
     case 'MultiPolygon':
       return multiPolygonToWKTMultiPolygon(primitive);
-      break;
     default:
       throw Error ("Unknown Type: " + primitive.type);
   }
@@ -776,7 +770,6 @@ exports.convert = convert;
     try {
       res = parser.parse(element);
     } catch (err) {
-    console.dir(err);
       throw Error("Unable to parse", err);
     }
 

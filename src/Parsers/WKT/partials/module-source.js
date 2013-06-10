@@ -135,7 +135,6 @@
     try {
       res = parser.parse(element);
     } catch (err) {
-    console.dir(err);
       throw Error("Unable to parse", err);
     }
 
