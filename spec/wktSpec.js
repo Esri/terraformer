@@ -129,6 +129,96 @@ describe("WKT Convert", function () {
     expect(output).toEqual("MULTIPOINT (30 10, 20 20, 30 20)");
   });
 
+  it("should convert a MULTIPOINT with Z", function () {
+    var input = {
+      type: "MultiPoint",
+      coordinates: [ [ 30, 10, 1 ], [ 20, 20, 2 ], [ 30, 20, 3 ] ]
+    };
+
+    var output = Terraformer.WKT.convert(input);
+
+    expect(output).toEqual("MULTIPOINT Z (30 10 1, 20 20 2, 30 20 3)");
+  });
+
+  it("should convert a MULTIPOINT with ZM", function () {
+    var input = {
+      type: "MultiPoint",
+      coordinates: [ [ 30, 10, 1, 2 ], [ 20, 20, 3, 4 ], [ 30, 20, 5, 6 ] ]
+    };
+
+    var output = Terraformer.WKT.convert(input);
+
+    expect(output).toEqual("MULTIPOINT ZM (30 10 1 2, 20 20 3 4, 30 20 5 6)");
+  });
+
+  it("should convert a MULTIPOINT with M (nonstandard)", function () {
+    var input = {
+      properties: { m: true },
+      type: "MultiPoint",
+      coordinates: [ [ 30, 10, 1 ], [ 20, 20, 2 ], [ 30, 20, 3 ] ]
+    };
+
+    var output = Terraformer.WKT.convert(input);
+
+    expect(output).toEqual("MULTIPOINT M (30 10 1, 20 20 2, 30 20 3)");
+  });
+
+  it("should convert an EMPTY MULTIPOINT", function () {
+    var input = {
+      type: "MultiPoint",
+      coordinates: [ ]
+    };
+
+    var output = Terraformer.WKT.convert(input);
+
+    expect(output).toEqual("MULTIPOINT EMPTY");
+  });
+
+  it("should convert a LINESTRING with Z", function () {
+    var input = {
+      type: "LineString",
+      coordinates: [ [ 30, 10, 2 ], [ 20, 20, 1 ], [ 30, 20, 0 ] ]
+    };
+
+    var output = Terraformer.WKT.convert(input);
+
+    expect(output).toEqual("LINESTRING Z (30 10 2, 20 20 1, 30 20 0)");
+  });
+
+  it("should convert a LINESTRING with ZM", function () {
+    var input = {
+      type: "LineString",
+      coordinates: [ [ 30, 10, 1, 2 ], [ 20, 20, 3, 4 ], [ 30, 20, 5, 6 ] ]
+    };
+
+    var output = Terraformer.WKT.convert(input);
+
+    expect(output).toEqual("LINESTRING ZM (30 10 1 2, 20 20 3 4, 30 20 5 6)");
+  });
+
+  it("should convert a LINESTRING with M (nonstandard)", function () {
+    var input = {
+      properties: { m: true },
+      type: "LineString",
+      coordinates: [ [ 30, 10, 1 ], [ 20, 20, 2 ], [ 30, 20, 3 ] ]
+    };
+
+    var output = Terraformer.WKT.convert(input);
+
+    expect(output).toEqual("LINESTRING M (30 10 1, 20 20 2, 30 20 3)");
+  });
+
+  it("should convert an EMPTY LINESTRING", function () {
+    var input = {
+      type: "LineString",
+      coordinates: [ ]
+    };
+
+    var output = Terraformer.WKT.convert(input);
+
+    expect(output).toEqual("LINESTRING EMPTY");
+  });
+
   it("should convert a LINESTRING", function () {
     var input = {
       type: "LineString",
@@ -151,6 +241,51 @@ describe("WKT Convert", function () {
     expect(output).toEqual("MULTILINESTRING ((30 10, 20 20, 30 20))");
   });
 
+  it("should convert a MULTILINESTRING with Z", function () {
+    var input = {
+      type: "MultiLineString",
+      coordinates: [ [ [ 30, 10, 1 ], [ 20, 20, 2 ], [ 30, 20, 3 ] ] ]
+    };
+
+    var output = Terraformer.WKT.convert(input);
+
+    expect(output).toEqual("MULTILINESTRING Z ((30 10 1, 20 20 2, 30 20 3))");
+  });
+
+  it("should convert a MULTILINESTRING with Z and M", function () {
+    var input = {
+      type: "MultiLineString",
+      coordinates: [ [ [ 30, 10, 1, 2 ], [ 20, 20, 3, 4 ], [ 30, 20, 5, 6 ] ] ]
+    };
+
+    var output = Terraformer.WKT.convert(input);
+
+    expect(output).toEqual("MULTILINESTRING ZM ((30 10 1 2, 20 20 3 4, 30 20 5 6))");
+  });
+
+  it("should convert a MULTILINESTRING with M (nonstandard)", function () {
+    var input = {
+      properties: { m: true },
+      type: "MultiLineString",
+      coordinates: [ [ [ 30, 10, 1 ], [ 20, 20, 2 ], [ 30, 20, 3 ] ] ]
+    };
+
+    var output = Terraformer.WKT.convert(input);
+
+    expect(output).toEqual("MULTILINESTRING M ((30 10 1, 20 20 2, 30 20 3))");
+  });
+
+  it("should convert an EMPTY MULTILINESTRING", function () {
+    var input = {
+      type: "MultiLineString",
+      coordinates: [ ]
+    };
+
+    var output = Terraformer.WKT.convert(input);
+
+    expect(output).toEqual("MULTILINESTRING EMPTY");
+  });
+
   it("should convert a MULTIPOLYGON", function () {
     var input = { "type": "MultiPolygon",
       "coordinates": [
@@ -161,6 +296,51 @@ describe("WKT Convert", function () {
     };
     var output = Terraformer.WKT.convert(input);
     expect(output).toEqual("MULTIPOLYGON (((102 2, 103 2, 103 3, 102 3, 102 2)), ((100 0, 101 0, 101 1, 100 1, 100 0), (100.2 0.2, 100.8 0.2, 100.8 0.8, 100.2 0.8, 100.2 0.2)))");
+  });
+
+  it("should convert a MULTIPOLYGON with Z", function () {
+    var input = { "type": "MultiPolygon",
+      "coordinates": [
+        [[[102.0, 2.0, 1], [103.0, 2.0, 2], [103.0, 3.0, 3], [102.0, 3.0, 4], [102.0, 2.0, 5]]],
+        [[[100.0, 0.0], [101.0, 0.0], [101.0, 1.0], [100.0, 1.0], [100.0, 0.0]],
+         [[100.2, 0.2], [100.8, 0.2], [100.8, 0.8], [100.2, 0.8], [100.2, 0.2]]]
+      ]
+    };
+    var output = Terraformer.WKT.convert(input);
+    expect(output).toEqual("MULTIPOLYGON Z (((102 2 1, 103 2 2, 103 3 3, 102 3 4, 102 2 5)), ((100 0, 101 0, 101 1, 100 1, 100 0), (100.2 0.2, 100.8 0.2, 100.8 0.8, 100.2 0.8, 100.2 0.2)))");
+  });
+
+  it("should convert a MULTIPOLYGON with Z and M", function () {
+    var input = { "type": "MultiPolygon",
+      "coordinates": [
+        [[[102.0, 2.0, 1, 2], [103.0, 2.0, 3, 4], [103.0, 3.0, 5, 6], [102.0, 3.0, 7, 8], [102.0, 2.0, 9, 10]]],
+        [[[100.0, 0.0], [101.0, 0.0], [101.0, 1.0], [100.0, 1.0], [100.0, 0.0]],
+         [[100.2, 0.2], [100.8, 0.2], [100.8, 0.8], [100.2, 0.8], [100.2, 0.2]]]
+      ]
+    };
+    var output = Terraformer.WKT.convert(input);
+    expect(output).toEqual("MULTIPOLYGON ZM (((102 2 1 2, 103 2 3 4, 103 3 5 6, 102 3 7 8, 102 2 9 10)), ((100 0, 101 0, 101 1, 100 1, 100 0), (100.2 0.2, 100.8 0.2, 100.8 0.8, 100.2 0.8, 100.2 0.2)))");
+  });
+
+  it("should convert a MULTIPOLYGON with M (nonstandard)", function () {
+    var input = { "type": "MultiPolygon",
+      properties: { m: true },
+      "coordinates": [
+        [[[102.0, 2.0, 1], [103.0, 2.0, 2], [103.0, 3.0, 3], [102.0, 3.0, 4], [102.0, 2.0, 5]]],
+        [[[100.0, 0.0], [101.0, 0.0], [101.0, 1.0], [100.0, 1.0], [100.0, 0.0]],
+         [[100.2, 0.2], [100.8, 0.2], [100.8, 0.8], [100.2, 0.8], [100.2, 0.2]]]
+      ]
+    };
+    var output = Terraformer.WKT.convert(input);
+    expect(output).toEqual("MULTIPOLYGON M (((102 2 1, 103 2 2, 103 3 3, 102 3 4, 102 2 5)), ((100 0, 101 0, 101 1, 100 1, 100 0), (100.2 0.2, 100.8 0.2, 100.8 0.8, 100.2 0.8, 100.2 0.2)))");
+  });
+
+  it("should convert an EMPTY MULTIPOLYGON", function () {
+    var input = { "type": "MultiPolygon",
+      "coordinates": [ ]
+    };
+    var output = Terraformer.WKT.convert(input);
+    expect(output).toEqual("MULTIPOLYGON EMPTY");
   });
 
 });

@@ -43,13 +43,13 @@ function lineStringToWKTLineString (primitive) {
     ret += 'EMPTY';
 
     return ret;
-  } else if (primitive.coordinates[0][0].length === 3) {
-    if (primitive.properties.m === true) {
+  } else if (primitive.coordinates[0].length === 3) {
+    if (primitive.properties && primitive.properties.m === true) {
       ret += 'M ';
     } else {
       ret += 'Z ';
     }
-  } else if (primitive.coordinates[0][0].length === 4) {
+  } else if (primitive.coordinates[0].length === 4) {
     ret += 'ZM ';
   }
 
@@ -94,13 +94,13 @@ function multiPointToWKTMultiPoint (primitive) {
     ret += 'EMPTY';
 
     return ret;
-  } else if (primitive.coordinates[0][0].length === 3) {
+  } else if (primitive.coordinates[0].length === 3) {
     if (primitive.properties && primitive.properties.m === true) {
       ret += 'M ';
     } else {
       ret += 'Z ';
     }
-  } else if (primitive.coordinates[0][0].length === 4) {
+  } else if (primitive.coordinates[0].length === 4) {
     ret += 'ZM ';
   }
 
