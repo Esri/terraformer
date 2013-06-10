@@ -1,7 +1,16 @@
 if(typeof module === "object"){
- var Terraformer = require("../../dist/node/terraformer.js");
- Terraformer.ArcGIS = require("../../dist/node/Parsers/ArcGIS/index.js");
+  var Terraformer = require("../dist/node/terraformer.js");
+  Terraformer.ArcGIS = require("../dist/node/Parsers/ArcGIS/index.js");
 }
+
+beforeEach(function() {
+  this.addMatchers({
+    toBeInstanceOfClass: function(classRef){
+      return this.actual instanceof classRef;
+    }
+  });
+});
+
 
 describe("ArcGIS Tools", function(){
 
@@ -28,7 +37,7 @@ describe("ArcGIS Tools", function(){
       "coordinates": [ [21.4453125,-14.0625],[33.3984375,-20.7421875],[38.3203125,-24.609375] ]
     };
 
-    output = Terraformer.ArcGIS.convert(input);
+    var output = Terraformer.ArcGIS.convert(input);
 
     expect(output).toEqual({
       "paths":[
