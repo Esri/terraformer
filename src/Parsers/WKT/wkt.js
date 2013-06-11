@@ -733,7 +733,6 @@ exports.convert = convert;
     } else {
       return data;
     }
-    return data;
   };
 
   function PolygonList (polygon) {
@@ -754,11 +753,6 @@ exports.convert = convert;
       data = data.concat( [ this.data[i].toJSON() ] );
     }
 
-    if (data.length === 1) {
-      return data;
-    } else {
-      return data;
-    }
     return data;
   };
 

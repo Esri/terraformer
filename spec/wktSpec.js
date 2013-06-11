@@ -343,6 +343,19 @@ describe("WKT Convert", function () {
     expect(output).toEqual("MULTIPOLYGON EMPTY");
   });
 
+  it("should fail a conversion on an unknown type", function () {
+    var input = { "type": "MultiPolygonLikeThingy",
+      "coordinates": [ ]
+    };
+    var error;
+    try {
+      var output = Terraformer.WKT.convert(input);
+    } catch (err) {
+      error = err.toString();
+    }
+    expect(error).toEqual("Error: Unknown Type: MultiPolygonLikeThingy");
+  });
+
 });
 
 
@@ -352,6 +365,14 @@ describe("WKT Parser", function() {
     var input = "POINT (30 10)";
     var output = new Terraformer.WKT.parse(input);
     expect(output.coordinates).toEqual([30,10]);
+    expect(output).toBeInstanceOfClass(Terraformer.Point);
+    expect(output.type).toEqual("Point");
+  });
+
+  it("should parse an EMPTY POINT", function(){
+    var input = "POINT EMPTY";
+    var output = new Terraformer.WKT.parse(input);
+    expect(output.coordinates).toEqual([ ]);
     expect(output).toBeInstanceOfClass(Terraformer.Point);
     expect(output.type).toEqual("Point");
   });
@@ -388,6 +409,14 @@ describe("WKT Parser", function() {
     expect(output.type).toEqual("LineString");
   });
 
+  it("should parse an EMPTY LINESTRING", function(){
+    var input = "LINESTRING EMPTY";
+    var output = new Terraformer.WKT.parse(input);
+    expect(output.coordinates).toEqual([ ]);
+    expect(output).toBeInstanceOfClass(Terraformer.LineString);
+    expect(output.type).toEqual("LineString");
+  });
+
   it("should parse a LINESTRING with a Z coordinate", function(){
     var input = "LINESTRING Z (30 10 5, 10 30 15, 40 40 25)";
     var output = new Terraformer.WKT.parse(input);
@@ -416,6 +445,14 @@ describe("WKT Parser", function() {
     var input = "POLYGON ((30 10, 10 20, 20 40, 40 40, 30 10))";
     var output = new Terraformer.WKT.parse(input);
     expect(output.coordinates).toEqual([ [ [30, 10], [10, 20], [20, 40], [40, 40], [30, 10] ] ]);
+    expect(output).toBeInstanceOfClass(Terraformer.Polygon);
+    expect(output.type).toEqual("Polygon");
+  });
+
+  it("should parse an EMPTY POLYGON", function(){
+    var input = "POLYGON EMPTY";
+    var output = new Terraformer.WKT.parse(input);
+    expect(output.coordinates).toEqual([ ]);
     expect(output).toBeInstanceOfClass(Terraformer.Polygon);
     expect(output.type).toEqual("Polygon");
   });
@@ -459,6 +496,14 @@ describe("WKT Parser", function() {
     var input = "MULTIPOINT ((10 40), (40 30), (20 20), (30 10))";
     var output = new Terraformer.WKT.parse(input);
     expect(output.coordinates).toEqual([ [10, 40],[40, 30], [20,20], [30,10] ]);
+    expect(output).toBeInstanceOfClass(Terraformer.MultiPoint);
+    expect(output.type).toEqual("MultiPoint");
+  });
+
+  it("should parse an EMPTY MULTIPOINT", function(){
+    var input = "MULTIPOINT EMPTY";
+    var output = new Terraformer.WKT.parse(input);
+    expect(output.coordinates).toEqual([ ]);
     expect(output).toBeInstanceOfClass(Terraformer.MultiPoint);
     expect(output.type).toEqual("MultiPoint");
   });
@@ -530,6 +575,14 @@ describe("WKT Parser", function() {
     expect(output.type).toEqual("MultiLineString");
   });
 
+  it("should parse an EMPTY MULTILINESTRING", function(){
+    var input = "MULTILINESTRING EMPTY";
+    var output = new Terraformer.WKT.parse(input);
+    expect(output.coordinates).toEqual([ ]);
+    expect(output).toBeInstanceOfClass(Terraformer.MultiLineString);
+    expect(output.type).toEqual("MultiLineString");
+  });
+
   it("should parse a MULTILINESTRING with alternate syntax and Z coordinates", function(){
     var input = "MULTILINESTRING Z ((10 10 10, 20 20 20, 10 40 30),(40 40 30, 30 30 20, 40 20 10, 30 10 10))";
     var output = new Terraformer.WKT.parse(input);
@@ -574,6 +627,14 @@ describe("WKT Parser", function() {
         [ [15,5],[40,10],[10,20],[5,10],[15,5] ]
       ]
     ]);
+    expect(output).toBeInstanceOfClass(Terraformer.MultiPolygon);
+    expect(output.type).toEqual("MultiPolygon");
+  });
+
+  it("should parse an EMPTY MULTIPOLYGON", function(){
+    var input = "MULTIPOLYGON EMPTY";
+    var output = new Terraformer.WKT.parse(input);
+    expect(output.coordinates).toEqual([ ]);
     expect(output).toBeInstanceOfClass(Terraformer.MultiPolygon);
     expect(output.type).toEqual("MultiPolygon");
   });
@@ -637,6 +698,18 @@ describe("WKT Parser", function() {
     ]);
     expect(output).toBeInstanceOfClass(Terraformer.MultiPolygon);
     expect(output.type).toEqual("MultiPolygon");
+  });
+
+  it("should throw an error on a bad parse", function(){
+    var input = "FOO BAR BAZ";
+    var error;
+    try {
+      var output = new Terraformer.WKT.parse(input);
+    } catch (err) {
+      error = err.toString();
+    }
+
+    expect(error).toEqual("Error: Unable to parse");
   });
 
 });
