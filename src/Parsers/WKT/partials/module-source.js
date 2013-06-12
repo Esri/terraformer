@@ -96,7 +96,6 @@
     } else {
       return data;
     }
-    return data;
   };
 
   function PolygonList (polygon) {
@@ -117,11 +116,6 @@
       data = data.concat( [ this.data[i].toJSON() ] );
     }
 
-    if (data.length === 1) {
-      return data;
-    } else {
-      return data;
-    }
     return data;
   };
 
