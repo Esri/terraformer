@@ -17,9 +17,21 @@
 }(this, function() {
   var exports = { };
 
-  // if we are in AMD terraformer core got passed in as our first requirement so we should set it.
+  var Terraformer;
+
+  // Local Reference To Browser Global
+  if(typeof this.navigator === "object") {
+    Terraformer = this.Terraformer;
+  }
+
+  // Setup Node Dependencies
+  if(typeof module === 'object' && typeof module.exports === 'object') {
+    Terraformer = require('terraformer');
+  }
+
+  // Setup AMD Dependencies
   if(arguments[0] && typeof define === 'function' && define.amd) {
-    this.Terraformer = arguments[0];
+    Terraformer = arguments[0];
   }
 
   // These methods get called in context of the geostore
@@ -69,10 +81,9 @@
   };
 
   LocalStorage.prototype.toJSON = function(){
-    var matcher = new RegExp("^"+this._key);
     var exports = {};
     for(var feature in localStorage){
-      if(feature.match(matcher)){
+      if(feature.match(this._key)){
         exports[feature] = localStorage[feature];
       }
     }
@@ -83,7 +94,7 @@
     var objs = [];
 
     // make a new deferred
-    var dfd = new this.deferred();
+    var dfd = new Terraformer.Deferred();
 
     // map callback to dfd if we have one
     if(callback){
@@ -95,36 +106,22 @@
     }
 
     for (var key in localStorage){
-      if(key.match(this.key)){
+      if(key.match(this._key)){
         objs.push(localStorage.getItem(key));
       }
     }
+
     dfd.resolve(JSON.stringify(objs));
-    return ;
+
+    return dfd;
   };
 
-  LocalStorage.prototype.deserialize = function(serial, callback){
+  LocalStorage.prototype.deserialize = function(serial){
     var data = JSON.parse(serial);
-
-    // make a new deferred
-    var dfd = new this.deferred();
-
-    // map callback to dfd if we have one
-    if(callback){
-      dfd.then(function(result){
-        callback(null, result);
-      }, function(error){
-        callback(error, null);
-      });
-    }
-
     for (var i = data.length - 1; i >= 0; i--) {
       this.set(data[i]);
     }
-
-    dfd.resolve(this);
-
-    return dfd;
+    return this;
   };
 
   exports.LocalStorage = LocalStorage;
