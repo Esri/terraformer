@@ -33,6 +33,10 @@ var RTree = function (width) {
       _Min_Width = Math.floor(width / 2.0);
       _Max_Width = width;
     }
+
+    this.min_width = _Min_Width;
+    this.max_width = _Max_Width;
+
     // Start with an empty root-tree
     var _T = {
       x: 0,
@@ -560,89 +564,6 @@ var RTree = function (width) {
       return dfd;
     };
 
-   /* partially-recursive toJSON function
-    * [ string ] = RTree.toJSON([rectangle], [tree])
-    * @public
-    */
-    this.toJSON = function(rect, tree) {
-      var hit_stack = []; // Contains the elements that overlap
-      var count_stack = []; // Contains the elements that overlap
-      var return_stack = {}; // Contains the elements that overlap
-      var max_depth = 3; // This triggers recursion and tree-splitting
-      var current_depth = 1;
-      var return_string = "";
-
-      if (rect && !RTree.Rectangle.overlap_rectangle(rect, _T)) {
-        return "";
-      }
-
-      if (!tree) {
-        count_stack.push(_T.nodes.length);
-        hit_stack.push(_T.nodes);
-        return_string += "var main_tree = {x:" + _T.x.toFixed() + ",y:" + _T.y.toFixed() + ",w:" + _T.w.toFixed() + ",h:" + _T.h.toFixed() + ",nodes:[";
-      } else {
-        max_depth += 4;
-        count_stack.push(tree.nodes.length);
-        hit_stack.push(tree.nodes);
-        return_string += "var main_tree = {x:" + tree.x.toFixed() + ",y:" + tree.y.toFixed() + ",w:" + tree.w.toFixed() + ",h:" + tree.h.toFixed() + ",nodes:[";
-      }
-
-      do {
-        var nodes = hit_stack.pop();
-        var i = count_stack.pop() - 1;
-
-        if (i >= 0 && i < nodes.length - 1) {
-          return_string += ",";
-        }
-
-        while (i >= 0) {
-          var ltree = nodes[i];
-          if (!rect || RTree.Rectangle.overlap_rectangle(rect, ltree)) {
-            if (ltree.nodes) { // Not a Leaf
-              if (current_depth >= max_depth) {
-                var len = return_stack.length;
-                var nam = _name_to_id("saved_subtree");
-                return_string += "{x:" + ltree.x.toFixed() + ",y:" + ltree.y.toFixed() + ",w:" + ltree.w.toFixed() + ",h:" + ltree.h.toFixed() + ",load:'" + nam + ".js'}";
-                return_stack[nam] = this.toJSON(rect, ltree);
-                if (i > 0) {
-                  return_string += ",";
-                }
-              } else {
-                return_string += "{x:" + ltree.x.toFixed() + ",y:" + ltree.y.toFixed() + ",w:" + ltree.w.toFixed() + ",h:" + ltree.h.toFixed() + ",nodes:[";
-                current_depth += 1;
-                count_stack.push(i);
-                hit_stack.push(nodes);
-                nodes = ltree.nodes;
-                i = ltree.nodes.length;
-              }
-            } else if (ltree.leaf) { // A Leaf !!
-              var data = ltree.leaf.toJSON ? ltree.leaf.toJSON() : JSON.stringify(ltree.leaf);
-              return_string += "{x:" + ltree.x.toFixed() + ",y:" + ltree.y.toFixed() + ",w:" + ltree.w.toFixed() + ",h:" + ltree.h.toFixed() + ",leaf:" + data + "}";
-              if (i > 0) {
-                return_string += ",";
-              }
-            } else if (ltree.load) { // A load
-              return_string += "{x:" + ltree.x.toFixed() + ",y:" + ltree.y.toFixed() + ",w:" + ltree.w.toFixed() + ",h:" + ltree.h.toFixed() + ",load:'" + ltree.load + "'}";
-              if (i > 0) {
-                return_string += ",";
-              }
-            }
-          }
-          i -= 1;
-        }
-        if (i < 0) {
-          return_string += "]}";
-          current_depth -= 1;
-        }
-      } while (hit_stack.length > 0);
-
-      return_string += ";";
-
-      for (var my_key in return_stack) {
-        return_string += "\nvar " + my_key + " = function(){" + return_stack[my_key] + " return(main_tree);};";
-      }
-      return (return_string);
-    };
 
    /* non-recursive function that deletes a specific
     * [ number ] = RTree.remove(rectangle, obj)
