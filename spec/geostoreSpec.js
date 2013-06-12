@@ -141,6 +141,33 @@ describe("geostore", function() {
       gs.update({"type":"Feature","id":"41067","properties":{"name":"Multnomah"},"geometry":{"type":"Polygon","coordinates":[[[-122.926547,45.725029],[-122.762239,45.730506],[-122.247407,45.549767],[-121.924267,45.648352],[-121.820205,45.462136],[-122.356945,45.462136],[-122.745808,45.434751],[-122.926547,45.725029]]]}}, spy);
       expect(spy.callCount).toEqual(1);
     });
+
+    var serial;
+
+    it("should serialize a Memory store", function(){
+      var success = jasmine.createSpy("success");
+      var error = jasmine.createSpy("error");
+      var callback = jasmine.createSpy("callback");
+      gs.store.serialize(callback).then(success, error);
+      expect(callback).toHaveBeenCalled();
+      expect(success).toHaveBeenCalled();
+      expect(error).not.toHaveBeenCalled();
+      expect(success).toHaveBeenCalledWith(JSON.stringify(gs.store.data));
+    });
+
+    it("should deserialize a memory store", function(){
+      var spy = jasmine.createSpy();
+      var serial;
+      gs.store.serialize(function(error, data){
+        serial = data;
+      });
+      gs = new Terraformer.GeoStore({
+        store: new Terraformer.Store.Memory().deserialize(serial),
+        index: new Terraformer.RTree()
+      });
+      expect(gs.store.data[41005]).toBeTruthy();
+      expect(gs.store.data[41067]).toBeTruthy();
+    });
   });
 
   if(typeof navigator !== "undefined"){
@@ -203,6 +230,29 @@ describe("geostore", function() {
         expect(function() {
           gs.update({"type":"Polygon","coordinates":[[[-122.926547,45.725029],[-122.762239,45.730506],[-122.247407,45.549767],[-121.924267,45.648352],[-121.820205,45.462136],[-122.356945,45.462136],[-122.745808,45.434751],[-122.926547,45.725029]]]});
         }).toThrow();
+      });
+
+      it("should serialize a LocalStore store", function(){
+        var success = jasmine.createSpy("success");
+        var error = jasmine.createSpy("error");
+        var callback = jasmine.createSpy("callback");
+        gs.store.serialize(callback).then(success, error);
+        expect(callback).toHaveBeenCalled();
+        expect(success).toHaveBeenCalled();
+        expect(error).not.toHaveBeenCalled();
+      });
+
+      it("should deserialize a LocalStore store", function(){
+        var spy = jasmine.createSpy();
+        var serial;
+        gs.store.serialize(function(error, data){
+          serial = data;
+        });
+        gs = new Terraformer.GeoStore({
+          store: new Terraformer.Store.LocalStorage().deserialize(serial),
+          index: new Terraformer.RTree()
+        });
+        expect(window.localStorage[gs.store._key+"_41067"]).toBeTruthy();
       });
     });
 
