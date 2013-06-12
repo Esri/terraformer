@@ -31,7 +31,7 @@
 
   // Setup Node Dependencies
   if(typeof module === 'object' && typeof module.exports === 'object') {
-    Terraformer = require('terraformer');
+    Terraformer = require('../terraformer.js');
   }
 
   // Setup AMD Dependencies
