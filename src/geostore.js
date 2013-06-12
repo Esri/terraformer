@@ -157,6 +157,7 @@
     this.index.search(envelope).then(bind(this, function(found){
       var results = [];
       var completed = 0;
+      var errors = 0;
 
       // the function to evalute results from the index
       var evaluate = function(primitive){
@@ -169,14 +170,30 @@
         }
 
         if(completed >= found.length){
-          dfd.resolve(results);
+          if(!errors){
+            dfd.resolve(results);
+          } else {
+            dfd.reject("could not get all geometries");
+          }
+        }
+
+        if(completed >= found.length && errors){
+          dfd.reject("could not get all geometries");
+        }
+      };
+
+      var error = function(){
+        completed++;
+        errors++;
+        if(completed >= found.length){
+          dfd.reject("could not get all geometries");
         }
       };
 
       // for each result see if the polygon contains the point
       if(found.length){
         for (var i = 0; i < found.length; i++) {
-          this.get(found[i]).then(evaluate);
+          this.get(found[i]).then(evaluate, error);
         }
       } else {
         dfd.resolve(results);

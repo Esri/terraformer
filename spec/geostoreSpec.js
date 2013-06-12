@@ -168,6 +168,56 @@ describe("geostore", function() {
       expect(gs.store.data[41005]).toBeTruthy();
       expect(gs.store.data[41067]).toBeTruthy();
     });
+
+    var badStore = new Terraformer.GeoStore({
+      store: {
+        get: function(id, dfd){
+          return dfd.reject("ERROR");
+        },
+        add: function(geo, dfd){
+          return dfd.reject("ERROR");
+        },
+        remove: function(id, dfd){
+          return dfd.reject("ERROR");
+        },
+        update: function(geo, dfd){
+          return dfd.reject("ERROR");
+        }
+      },
+      index: new Terraformer.RTree()
+    });
+
+    it("should run an error callback when the store rejects the deferred when adding an item", function(){
+      var spy = jasmine.createSpy();
+      badStore.add({"type":"Feature","id":"41067","properties":{"name":"Multnomah"},"geometry":{"type":"Polygon","coordinates":[[[-122.926547,45.725029],[-122.762239,45.730506],[-122.247407,45.549767],[-121.924267,45.648352],[-121.820205,45.462136],[-122.356945,45.462136],[-122.745808,45.434751],[-122.926547,45.725029]]]}}, spy);
+      expect(spy).toHaveBeenCalledWith("ERROR", null);
+    });
+
+    it("should run an error callback when the store rejects the deferred when updating an item", function(){
+      var spy = jasmine.createSpy();
+      badStore.update({"type":"Feature","id":"41067","properties":{"name":"Multnomah"},"geometry":{"type":"Polygon","coordinates":[[[-122.926547,45.725029],[-122.762239,45.730506],[-122.247407,45.549767],[-121.924267,45.648352],[-121.820205,45.462136],[-122.356945,45.462136],[-122.745808,45.434751],[-122.926547,45.725029]]]}}, spy);
+      expect(spy).toHaveBeenCalledWith("ERROR", null);
+    });
+
+    it("should run an error callback when the store rejects the deferred when getting an item", function(){
+      var spy = jasmine.createSpy();
+      badStore.get("41067", spy);
+      expect(spy).toHaveBeenCalledWith("ERROR", null);
+    });
+
+    it("should run an error callback when the store rejects the deferred when updating an item", function(){
+      var spy = jasmine.createSpy();
+      badStore.remove("41067", spy);
+      expect(spy).toHaveBeenCalledWith("ERROR", null);
+    });
+    it("should run an error callback when the store rejects the deferred when querying an item", function(){
+      var spy = jasmine.createSpy();
+      badStore.contains({
+        type:"Point",
+        coordinates: [-122.676048, 45.516544]
+      }, spy);
+      expect(spy).toHaveBeenCalledWith("could not get all geometries", null);
+    });
   });
 
   if(typeof navigator !== "undefined"){

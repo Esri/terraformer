@@ -157,6 +157,8 @@
     this.index.search(envelope).then(bind(this, function(found){
       var results = [];
       var completed = 0;
+      var errors = 0;
+      var dfdComplete = false;
 
       // the function to evalute results from the index
       var evaluate = function(primitive){
@@ -168,15 +170,29 @@
           results.push(geojson);
         }
 
-        if(completed >= found.length){
+        if(completed >= found.length && !errors){
           dfd.resolve(results);
+          dfdComplete = true;
+        }
+
+        if(completed >= found.length && errors){
+          dfd.reject("could not get all geometries");
+        }
+      };
+
+      var error = function(){
+        completed++;
+        errors++;
+        if(completed >= found.length){
+          dfd.reject("could not get all geometries");
+          dfdComplete = true;
         }
       };
 
       // for each result see if the polygon contains the point
       if(found.length){
         for (var i = 0; i < found.length; i++) {
-          this.get(found[i]).then(evaluate);
+          this.get(found[i]).then(evaluate, error);
         }
       } else {
         dfd.resolve(results);
