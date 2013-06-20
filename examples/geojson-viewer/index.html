@@ -8,7 +8,7 @@
         async: true,
         packages: [{
           name: "terraformer",
-          location: "/dist/browser"
+          location: "https://raw.github.com/esri/Terraformer/master/dist/browser/"
         }]
       }
     </script>
@@ -18,32 +18,16 @@
     <style>
       #map {
         height: 400px;
-        width: 800px;
-        float: left;
       }
       #input {
         width: 400px;
         height: 200px;
-        float: left;
       }
     </style>
   </head>
   <body>
     <div id="map"></div>
-    <textarea id="input" placeholder="GeoJSON Object">
-    {
-      "type":"Feature",
-      "geometry": {
-        "type": "Polygon",
-        "coordinates": [
-          [ [41.8359375,71.015625],[56.953125,33.75],[21.796875,36.5625],[41.8359375,71.015625] ]
-        ]
-      },
-      "properties": {
-        "foo":"bar"
-      }
-    }
-    </textarea>
+    <textarea id="input" placeholder="GeoJSON Object"></textarea>
     <button id="submit">Show On Map</button>
   </body>
 </html>

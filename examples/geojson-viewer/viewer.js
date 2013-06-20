@@ -3,7 +3,6 @@ require([
   "terraformer/arcgis",
   "esri/map"
 ], function ($, TerraformerArcGIS) {
-  console.log(TerraformerArcGIS);
   var map = new esri.Map("map", {
     basemap: "gray",
     center: [-122, 45],
@@ -11,19 +10,14 @@ require([
   });
 
   function showOnMap(){
-    var jsonObject = JSON.parse($("#input").attr("value")[0]);
-
-    // convert the geojson object to a arcgis json representation
-    var arcgis = TerraformerArcGIS.convert(jsonObject);
-
-    console.log(arcgis);
-    console.log(JSON.stringify(arcgis));
-
     // parse the input as json
+    var jsonObject = JSON.parse($("#input").attr("value")[0]);
     var fullextent,
       extent,
       gfx;
 
+    // convert the geojson object to a arcgis json representation
+    var arcgis = TerraformerArcGIS.convert(jsonObject);
 
     //if arcgis is an array loop through
     if (Array.isArray(arcgis)){
@@ -33,7 +27,7 @@ require([
         if (gfx.geometry.type !== "point"){
           extent = gfx.geometry.getExtent();
         } else{
-          extent = new esri.geometry.Extent(gfx.geometry.x - 0.5, gfx.geometry.y - 0.5, gfx.geometry.x + 0.5, gfx.geometry.y + 0.5);
+          extent = new esri.geometry.Extent(gfx.geometry.x - .5, gfx.geometry.y - .5, gfx.geometry.x + .5, gfx.geometry.y + .5)
         }
         fullextent = (fullextent !== undefined) ? fullextent.union(extent) : extent;
       }
@@ -43,7 +37,7 @@ require([
       if (gfx.geometry.type !== "point"){
         fullextent = gfx.geometry.getExtent();
       } else{
-        fullextent = new esri.geometry.Extent(gfx.geometry.x - 0.5, gfx.geometry.y - 0.5, gfx.geometry.x + 0.5, gfx.geometry.y + 0.5);
+        fullextent = new esri.geometry.Extent(gfx.geometry.x - .5, gfx.geometry.y - .5, gfx.geometry.x + .5, gfx.geometry.y + .5)
       }
     }
 
@@ -64,7 +58,6 @@ require([
     }
     //set appropriate symbol for type of geometry
     gfx.setSymbol(getSymbolForGraphic(gfx.geometry));
-
     return gfx;
   }
 
@@ -75,18 +68,18 @@ require([
     }
 
     switch(geometry.type) {
-    case "point":
-      symbol = new esri.symbol.SimpleMarkerSymbol();
-      break;
-    case "multipoint":
-      symbol = new esri.symbol.SimpleMarkerSymbol();
-      break;
-    case "polyline":
-      symbol = new esri.symbol.SimpleLineSymbol();
-      break;
-    case "polygon":
-      symbol = new esri.symbol.SimpleFillSymbol();
-      break;
+      case "point":
+        symbol = new esri.symbol.SimpleMarkerSymbol();
+        break;
+      case "multipoint":
+        symbol = new esri.symbol.SimpleMarkerSymbol();
+        break;
+      case "polyline":
+        symbol = new esri.symbol.SimpleLineSymbol();
+        break;
+      case "polygon":
+        symbol = new esri.symbol.SimpleFillSymbol();
+        break;
     }
     return symbol;
   }
