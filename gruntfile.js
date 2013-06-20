@@ -29,6 +29,14 @@ module.exports = function (grunt) {
         src: ['<banner:meta.banner>', 'src/terraformer.js'],
         dest: 'dist/node/terraformer.js'
       },
+      arcgis: {
+        src: ['<banner:meta.banner>', 'src/Parsers/ArcGIS/arcgis.js'],
+        dest: 'dist/browser/arcgis.js'
+      },
+      arcgis_node: {
+        src: ['<banner:meta.banner>', 'src/Parsers/ArcGIS/arcgis.js'],
+        dest: 'dist/node/Parsers/ArcGIS/index.js'
+      },
       geostore: {
         src: ['<banner:meta.banner>', "src/geostore.js"],
         dest: 'dist/browser/geostore.js'
@@ -99,10 +107,10 @@ module.exports = function (grunt) {
             coverage: './.coverage/coverage.json',
             report: './.coverage',
             thresholds: {
-              lines: 70,
-              statements: 70,
-              branches: 50,
-              functions: 70
+              lines: 75,
+              statements: 75,
+              branches: 75,
+              functions: 75
             }
           }
         }
@@ -156,18 +164,18 @@ module.exports = function (grunt) {
     grunt.log.write('Files created.\n');
   });
 
-  grunt.registerTask('arcgis-parser', 'Building ArcGIS Parser', function() {
-    var src = fs.readFileSync('./src/Parsers/ArcGIS/arcgis.js', 'utf8');
+  // grunt.registerTask('arcgis-parser', 'Building ArcGIS Parser', function() {
+  //   var src = fs.readFileSync('./src/Parsers/ArcGIS/arcgis.js', 'utf8');
 
-    var wrapper = fs.readFileSync('./src/Parsers/ArcGIS/partials/module-source.js', 'utf8');
+  //   var wrapper = fs.readFileSync('./src/Parsers/ArcGIS/partials/module-source.js', 'utf8');
 
-    wrapper = wrapper.replace('"SOURCE";', src);
+  //   wrapper = wrapper.replace('"SOURCE";', src);
 
-    fs.writeFileSync("./dist/browser/arcgis.js", wrapper, "utf8");
-    fs.writeFileSync("./dist/node/Parsers/ArcGIS/index.js", wrapper, "utf8");
+  //   fs.writeFileSync("./dist/browser/arcgis.js", wrapper, "utf8");
+  //   fs.writeFileSync("./dist/node/Parsers/ArcGIS/index.js", wrapper, "utf8");
 
-    grunt.log.write('Files created.\n');
-  });
+  //   grunt.log.write('Files created.\n');
+  // });
 
   grunt.registerTask('rtree-exports', 'Building RTree node module', function() {
     var src = fs.readFileSync('./src/rtree.js', 'utf8');
@@ -190,6 +198,6 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-jasmine-node');
 
   grunt.registerTask('test', ['build_source', 'concat', 'jasmine_node', 'jasmine']);
-  grunt.registerTask('build_source', ['wkt-parser', 'arcgis-parser', 'rtree-exports']);
+  grunt.registerTask('build_source', ['wkt-parser', 'rtree-exports']);
   grunt.registerTask('default', [ 'build_source', 'concat', 'jshint', 'jasmine', 'jasmine_node', 'uglify', 'complexity' ]);
 };
