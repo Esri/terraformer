@@ -158,7 +158,6 @@
       var results = [];
       var completed = 0;
       var errors = 0;
-      var dfdComplete = false;
 
       // the function to evalute results from the index
       var evaluate = function(primitive){
@@ -170,9 +169,12 @@
           results.push(geojson);
         }
 
-        if(completed >= found.length && !errors){
-          dfd.resolve(results);
-          dfdComplete = true;
+        if(completed >= found.length){
+          if(!errors){
+            dfd.resolve(results);
+          } else {
+            dfd.reject("could not get all geometries");
+          }
         }
 
         if(completed >= found.length && errors){
@@ -185,7 +187,6 @@
         errors++;
         if(completed >= found.length){
           dfd.reject("could not get all geometries");
-          dfdComplete = true;
         }
       };
 
