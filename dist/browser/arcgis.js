@@ -291,10 +291,6 @@
 
   exports.parse   = parse;
   exports.convert = convert;
-  exports.flattenMultiPolygonRings = flattenMultiPolygonRings;
-  exports.flattenPolygonRings = flattenPolygonRings;
-  exports.ringIsClockwise = ringIsClockwise;
-  exports.coordinatesContainCoordinates = coordinatesContainCoordinates;
 
   return exports;
 }));
