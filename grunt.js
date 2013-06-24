@@ -107,7 +107,8 @@ module.exports = function(grunt) {
       all: {
         src:['spec/SpecRunner.html'],
         errorReporting: true,
-        timeout: 2000
+        timeout: 2000,
+        keepRunner: true
       }
     },
     jasmine_node: {

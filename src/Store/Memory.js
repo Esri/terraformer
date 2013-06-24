@@ -22,9 +22,21 @@
 }(this, function() {
   var exports = { };
 
-  // if we are in AMD terraformer core got passed in as our first requirement so we should set it.
+  var Terraformer;
+
+  // Local Reference To Browser Global
+  if(typeof this.navigator === "object") {
+    Terraformer = this.Terraformer;
+  }
+
+  // Setup Node Dependencies
+  if(typeof module === 'object' && typeof module.exports === 'object') {
+    Terraformer = require('../terraformer.js');
+  }
+
+  // Setup AMD Dependencies
   if(arguments[0] && typeof define === 'function' && define.amd) {
-    this.Terraformer = arguments[0];
+    Terraformer = arguments[0];
   }
 
   // These methods get called in context of the geostore
@@ -64,15 +76,28 @@
     return dfd;
   };
 
-  Memory.prototype.serialize = function(dfd){
-    dfd.resolve(JSON.stringify(this));
+  Memory.prototype.serialize = function(callback){
+    // make a new deferred
+    var dfd = new Terraformer.Deferred();
+    var data = JSON.stringify(this.data);
+
+    // map callback to dfd if we have one
+    if(callback){
+      dfd.then(function(result){
+        callback(null, result);
+      }, function(error){
+        callback(error, null);
+      });
+    }
+
+    dfd.resolve(data);
+
     return dfd;
   };
 
   Memory.prototype.deserialize = function(serializedStore){
-    this.data = JSON.parse(serializedStore).data;
-    dfd.resolve(this);
-    return dfd;
+    this.data = JSON.parse(serializedStore);
+    return this;
   };
 
   exports.Memory = Memory;
