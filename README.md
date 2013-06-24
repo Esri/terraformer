@@ -87,6 +87,35 @@ You can then include Terraformer in your Dojo code
 
 Sample code and examples coming soon...
 
+## Documentation
+
+### Basics
+
+* [Primitives](Primitives.md)
+
+### Parsers
+
+* [ArcGIS](ArcGIS.md)
+* [Well Known Text](WKT.md)
+* [GeoJSON](GeoJSON.md)
+
+### Indexes
+
+* [Indexes](Indexes.md)
+
+### Tools
+
+* [Tools](Tools.md)
+* [Geostore](GeoStore.md)
+
+## Examples
+* [Visualize and search US County data with the ArcGIS Javascript API and `Terraformer.GeoStore`](https://github.com/Esri/Terraformer/tree/master/examples/counties)
+* [View GeoJSON on and ArcGIS map with Terraformer](https://github.com/Esri/Terraformer/tree/master/examples/geojson-viewer)
+* [Visualize Well Known text on a Google map](https://github.com/Esri/Terraformer/tree/master/examples/googlemaps-wkt)
+* [Use Terraformer with Require JS and Leaflet](https://github.com/Esri/Terraformer/tree/master/examples/require-js-leaflet)
+* [Create a simple timezone API with Terraformer and Node JS](https://github.com/Esri/Terraformer/tree/master/examples/timezone)
+* [Visualize Well Known Text with the ArcGIS Javascript API and `Terraformer.RTree`](https://github.com/Esri/Terraformer/tree/master/examples/wkt-viewer)
+
 ## Testing
 Tests are written in Jasmine and can be run through `$ grunt` or `$ npm install` then `$ npm test`. To run the tests run the following commands to setup PhantomJS and Grunt...
 
