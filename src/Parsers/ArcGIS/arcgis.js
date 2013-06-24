@@ -193,7 +193,8 @@
   }
 
   // ArcGIS -> GeoJSON
-  function parse(arcgis){
+  function parse(input){
+    var arcgis = JSON.parse(JSON.stringify(input));
     var geojson = {};
 
     if(arcgis.x && arcgis.y){
@@ -237,10 +238,11 @@
   }
 
   // GeoJSON -> ArcGIS
-  function convert(geojson){
-    var i;
+  function convert(input){
+    var geojson = JSON.parse(JSON.stringify(input));
     var spatialReference = { wkid: 4326 };
     var result = {};
+    var i;
 
     switch(geojson.type){
     case "Point":

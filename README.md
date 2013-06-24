@@ -87,6 +87,35 @@ You can then include Terraformer in your Dojo code
 
 Sample code and examples coming soon...
 
+## Documentation
+
+### Basics
+
+* [Primitives](Primitives.md)
+
+### Parsers
+
+* [ArcGIS](ArcGIS.md)
+* [Well Known Text](WKT.md)
+* [GeoJSON](GeoJSON.md)
+
+### Indexes
+
+* [Indexes](Indexes.md)
+
+### Tools
+
+* [Tools](Tools.md)
+* [Geostore](GeoStore.md)
+
+## Examples
+* [Visualize and search US County data with the ArcGIS Javascript API and `Terraformer.GeoStore`](https://github.com/Esri/Terraformer/tree/master/examples/counties)
+* [View GeoJSON on and ArcGIS map with Terraformer](https://github.com/Esri/Terraformer/tree/master/examples/geojson-viewer)
+* [Visualize Well Known text on a Google map](https://github.com/Esri/Terraformer/tree/master/examples/googlemaps-wkt)
+* [Use Terraformer with Require JS and Leaflet](https://github.com/Esri/Terraformer/tree/master/examples/require-js-leaflet)
+* [Create a simple timezone API with Terraformer and Node JS](https://github.com/Esri/Terraformer/tree/master/examples/timezone)
+* [Visualize Well Known Text with the ArcGIS Javascript API and `Terraformer.RTree`](https://github.com/Esri/Terraformer/tree/master/examples/wkt-viewer)
+
 ## Testing
 Tests are written in Jasmine and can be run through `$ grunt` or `$ npm install` then `$ npm test`. To run the tests run the following commands to setup PhantomJS and Grunt...
 
@@ -99,13 +128,14 @@ Then run the tests with `$ grunt` which will buld all the files and then run the
 
 Running the `$ grunt build` command will build the libraries to `dist/node` and `dist/browser`. If you want to build with a different version number run `$ grunt build-versioned`.
 
-## Future Features/Known Issues
-* Storeage API that combines RTree with backend stores like PostGIS/Localstorage/IndexedDB
+## Future Features
 * GeoJSON validation
-* Convert FeatureCollections and GeometryCollections to arrys of ArcGIS geometries/graphics
-* Convert an array of ArcGIS Geometries/Graphics to a GeometryCollection/FeatureCollection
-* Convert Features to ArcGIS Graphics. [Issue](https://github.com/esri/Terraformer/issues/29)
-* Proper handling of holes in polygons/multipolygons when making ArcGIS <-> GeoJSON conversions. [Issue](https://github.com/esri/Terraformer/issues/30)
+* Google Maps format support
+* Leaflet format support
+
+## Known Issues
+The following are known issues that we have acknowledged but have not or will not fix. See individual issues for details.
+* Convert an array of ArcGIS Geometries/Graphics to a GeometryCollection/FeatureCollection. (Issue)[https://github.com/Esri/Terraformer/issues/104]
 
 [](Esri Tags: Terraformer GeoJSON WKT Well-Known-Text)
 [](Esri Language: JavaScript)

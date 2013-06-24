@@ -8,8 +8,7 @@
         async: true,
         packages: [{
           name: "terraformer",
-          //location: "https://raw.github.com/esri/Terraformer/master/dist/browser/"
-          location: "/dist/browser"
+          location: window.location.href.replace("index.html", "").replace("examples/counties", "dist/browser")
         }]
       }
     </script>
