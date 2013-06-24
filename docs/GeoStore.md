@@ -166,14 +166,14 @@ When you need to load the store to the same state again just deserialize the dat
 // do something to get the serialized store and index
 
 var store = new Terraformer.GeoStore({
-  store: new Terraformer.Store.Memory().deserialize(serializedStore, callback),
-  index: new Terraformer.RTree().deserialize(serializedIndex, callback)
+  store: new Terraformer.Store.Memory().deserialize(serializedStore),
+  index: new Terraformer.RTree().deserialize(serializedIndex)
 });
 
 // do stuff...
 ```
 
-You can listen for the callbacks to fire to know when deserializing is complete. Because `Terraformer.Store.Memory`, `Terraformer.Store.LocalStorage` and `Terraformer.RTree` are all syncronous all callback will execute syncronously.
+You can listen for the callbacks to fire to know when deserializing is complete. Because `Terraformer.Store.Memory`, `Terraformer.Store.LocalStorage` and `Terraformer.RTree` are all syncronous.
 
 ## Custom Stores
 
@@ -258,17 +258,8 @@ MyCustomStore.prototype.serialize = function(deferred){
 };
 
 
-MyCustomStore.prototype.deserialize = function(serializedStore, deferred){
+MyCustomStore.prototype.deserialize = function(serializedStore){
   // ... do whatever you need to do to deserialize your data ...
-
-  // resolve the deferred when you are done deserializing data
-  deferred.resolve(this);
-
-  // you can also reject the deferred if there is an error
-  deferred.reject(yourError);
-
-  // return the deferred so it can accept callbacks
-  return deferred;
 };
 ```
 
