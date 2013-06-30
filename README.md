@@ -91,22 +91,22 @@ Sample code and examples coming soon...
 
 ### Basics
 
-* [Primitives](Primitives.md)
+* [Primitives](docs/Primitives.md)
 
 ### Parsers
 
-* [ArcGIS](ArcGIS.md)
-* [Well Known Text](WKT.md)
-* [GeoJSON](GeoJSON.md)
+* [ArcGIS](docs/ArcGIS.md)
+* [Well Known Text](docs/WKT.md)
+* [GeoJSON](docs/GeoJSON.md)
 
 ### Indexes
 
-* [Indexes](Indexes.md)
+* [Indexes](docs/Indexes.md)
 
 ### Tools
 
-* [Tools](Tools.md)
-* [Geostore](GeoStore.md)
+* [Tools](docs/Tools.md)
+* [Geostore](docs/GeoStore.md)
 
 ## Examples
 * [Visualize and search US County data with the ArcGIS Javascript API and `Terraformer.GeoStore`](https://github.com/Esri/Terraformer/tree/master/examples/counties)
