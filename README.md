@@ -135,7 +135,7 @@ Running the `$ grunt build` command will build the libraries to `dist/node` and 
 
 ## Known Issues
 The following are known issues that we have acknowledged but have not or will not fix. See individual issues for details.
-* Convert an array of ArcGIS Geometries/Graphics to a GeometryCollection/FeatureCollection. (Issue)[https://github.com/Esri/Terraformer/issues/104]
+* Convert an array of ArcGIS Geometries/Graphics to a GeometryCollection/FeatureCollection. [https://github.com/Esri/Terraformer/issues/104](https://github.com/Esri/Terraformer/issues/104)
 
 [](Esri Tags: Terraformer GeoJSON WKT Well-Known-Text)
 [](Esri Language: JavaScript)
