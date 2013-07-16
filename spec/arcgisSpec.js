@@ -483,6 +483,49 @@ describe("ArcGIS Tools", function(){
     expect(output).toBeInstanceOfClass(Terraformer.Feature);
   });
 
+  it("should parse an ArcGIS Graphic w/ empty attributes into a Terraformer Feature", function(){
+    var input = {
+      "geometry": {
+        "rings": [
+          [ [41.8359375,71.015625],[56.953125,33.75],[21.796875,36.5625],[41.8359375,71.015625] ]
+        ],
+        "spatialReference": {
+          "wkid": 4326
+        }
+      },
+      "attributes": {}
+    };
+
+    var output = Terraformer.ArcGIS.parse(input);
+
+    expect(output.geometry.coordinates).toEqual([
+      [ [41.8359375,71.015625],[56.953125,33.75],[21.796875,36.5625],[41.8359375,71.015625] ]
+    ]);
+    expect(output.geometry.type).toEqual("Polygon");
+    expect(output).toBeInstanceOfClass(Terraformer.Feature);
+  });
+
+  it("should parse an ArcGIS Graphic w/ no attributes into a Terraformer Feature", function(){
+    var input = {
+      "geometry": {
+        "rings": [
+          [ [41.8359375,71.015625],[56.953125,33.75],[21.796875,36.5625],[41.8359375,71.015625] ]
+        ],
+        "spatialReference": {
+          "wkid": 4326
+        }
+      }
+    };
+
+    var output = Terraformer.ArcGIS.parse(input);
+
+    expect(output.geometry.coordinates).toEqual([
+      [ [41.8359375,71.015625],[56.953125,33.75],[21.796875,36.5625],[41.8359375,71.015625] ]
+    ]);
+    expect(output.geometry.type).toEqual("Polygon");
+    expect(output).toBeInstanceOfClass(Terraformer.Feature);
+  });
+
   it("should convert to WGS84/4326 while parsing", function(){
     var input = {
       "x": -13580977.876779145,
