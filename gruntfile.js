@@ -56,6 +56,9 @@ module.exports = function (grunt) {
     },
 
     uglify: {
+      options: {
+        report: 'gzip'
+      },
       terraformer: {
         src: ["dist/browser/terraformer.js"],
         dest: 'dist/minified/terraformer.min.js'

@@ -221,10 +221,10 @@
       geojson = convertRingsToGeoJSON(arcgis.rings);
     }
 
-    if(arcgis.attributes && arcgis.geometry) {
+    if(arcgis.geometry) {
       geojson.type = "Feature";
       geojson.geometry = parse(arcgis.geometry);
-      geojson.properties = arcgis.attributes;
+      geojson.properties = arcgis.attributes || {};
     }
 
     var inputSpatialReference = (arcgis.geometry) ? arcgis.geometry.spatialReference : arcgis.spatialReference;
