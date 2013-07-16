@@ -1,4 +1,4 @@
-var fs = require('fs');
+  var fs = require('fs');
 var jison = require('jison');
 
 module.exports = function (grunt) {

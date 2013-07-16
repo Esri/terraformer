@@ -88,7 +88,7 @@
     if(geojson.type === "FeatureCollection"){
       for (var i = 0; i < geojson.features.length; i++) {
         var feature = geojson.features[i];
-        bbox = (feature.bbox) ? feature.bbox : Terraformer.Tools.calculateBounds(feature);
+        bbox = Terraformer.Tools.calculateBounds(feature);
         if(!feature.id) {
           throw new Error("Terraform.GeoStore : Feature does not have an id property");
         }
@@ -101,7 +101,7 @@
       }
       this.store.add(geojson, dfd);
     } else {
-      bbox = (geojson.bbox) ? geojson.bbox : Terraformer.Tools.calculateBounds(geojson);
+      bbox = Terraformer.Tools.calculateBounds(geojson);
       this.index.insert({
         x: bbox[0],
         y: bbox[1],
@@ -247,7 +247,7 @@
     this.index.remove(geojson.id);
 
     // set a bounding box
-    var bbox = (geojson.bbox) ? geojson.bbox : Terraformer.Tools.calculateBounds(geojson);
+    var bbox = Terraformer.Tools.calculateBounds(geojson);
 
     // index the new data
     this.index.insert({

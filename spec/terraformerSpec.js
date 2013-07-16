@@ -121,14 +121,6 @@ describe("Primitives", function(){
       expect(json.properties.steps).toBeTruthy();
       expect(json.properties.radius).toBeTruthy();
     });
-
-    it("should convert a Primitive to stringified JSON", function(){
-      var point = new Terraformer.Primitive(GeoJSON.points[0]);
-
-      var json = point.toJson();
-
-      expect(json).toEqual(JSON.stringify(point));
-    });
   });
 
   describe("Point", function(){
@@ -152,7 +144,7 @@ describe("Primitives", function(){
     });
 
     it("should calculate bounds", function(){
-      expect(point.bbox).toEqual([45, 60, 45, 60]);
+      expect(point.bbox()).toEqual([45, 60, 45, 60]);
     });
 
     it("should calculate convex hull", function(){
@@ -180,10 +172,6 @@ describe("Primitives", function(){
       }).toThrow("Terraformer: invalid input for Terraformer.MultiPoint");
     });
 
-    it("should have a getter for length", function(){
-      expect(multiPoint.length).toEqual(2);
-    });
-
     it("should be able to add a point", function(){
       multiPoint.addPoint([80,-60]);
       expect(multiPoint.coordinates).toEqual([ [100,0],[-45, 122],[80,-60] ]);
@@ -207,13 +195,13 @@ describe("Primitives", function(){
     it("should be able to itterate over all points", function(){
       var spy = jasmine.createSpy();
       multiPoint.forEach(spy);
-      expect(spy.callCount).toEqual(multiPoint.length);
+      expect(spy.callCount).toEqual(multiPoint.coordinates.length);
       expect(spy).toHaveBeenCalledWith([100,0], 0, multiPoint.coordinates);
       expect(spy).toHaveBeenCalledWith([-45,122], 1, multiPoint.coordinates);
     });
 
     it("should calculate bounds", function(){
-      expect(multiPoint.bbox).toEqual([-45, 0, 100, 122]);
+      expect(multiPoint.bbox()).toEqual([-45, 0, 100, 122]);
     });
 
     it("should calculate convex hull", function(){
@@ -262,7 +250,7 @@ describe("Primitives", function(){
     });
 
     it("should calculate bounds", function(){
-      expect(lineString.bbox).toEqual([-45, 0, 100, 122]);
+      expect(lineString.bbox()).toEqual([-45, 0, 100, 122]);
     });
 
     it("should calculate convex hull", function(){
@@ -297,11 +285,11 @@ describe("Primitives", function(){
     });
 
     it("should have a getter for length", function(){
-      expect(multiLineString.length).toEqual(2);
+      expect(multiLineString.coordinates.length).toEqual(2);
     });
 
     it("should calculate bounds", function(){
-      expect(multiLineString.bbox).toEqual([-115, 40, -100, 55]);
+      expect(multiLineString.bbox()).toEqual([-115, 40, -100, 55]);
     });
 
     it("should calculate convex hull", function(){
@@ -350,7 +338,7 @@ describe("Primitives", function(){
     });
 
     it("should calculate bounds", function(){
-      expect(polygon.bbox).toEqual([100, 0, 101, 1]);
+      expect(polygon.bbox()).toEqual([100, 0, 101, 1]);
     });
 
     it("should calculate convex hull", function(){
@@ -428,11 +416,11 @@ describe("Primitives", function(){
     });
 
     it("should have a getter for length", function(){
-      expect(multiPolygon.length).toEqual(2);
+      expect(multiPolygon.coordinates.length).toEqual(2);
     });
 
     it("should calculate bounds", function(){
-      expect(multiPolygon.bbox).toEqual([100, 0, 103, 3]);
+      expect(multiPolygon.bbox()).toEqual([100, 0, 103, 3]);
     });
 
     it("should calculate convex hull", function (){
@@ -471,34 +459,34 @@ describe("Primitives", function(){
     });
 
     it("should have a getter for steps", function(){
-      expect(circle.steps).toEqual(128);
+      expect(circle.steps()).toEqual(128);
     });
 
     it("should have a setter for steps", function(){
-      circle.steps = 64;
-      expect(circle.steps).toEqual(64);
+      circle.steps(64);
+      expect(circle.properties.steps).toEqual(64);
     });
 
     it("should have a getter for radius", function(){
-      expect(circle.radius).toEqual(1000);
+      expect(circle.radius()).toEqual(1000);
     });
 
     it("should have a setter for radius", function(){
-      circle.radius = 500;
-      expect(circle.radius).toEqual(500);
+      circle.radius(500);
+      expect(circle.properties.radius).toEqual(500);
     });
 
     it("should have a getter for center", function(){
-      expect(circle.center).toEqual([-122,45]);
+      expect(circle.center()).toEqual([-122,45]);
     });
 
     it("should have a setter for center", function(){
-      circle.center = [80,50];
-      expect(circle.center).toEqual([80,50]);
+      circle.center([80,50]);
+      expect(circle.properties.center).toEqual([80,50]);
     });
 
     it("should calculate bounds", function(){
-      expect(circle.bbox).toEqual([ -122.00898315283914, 44.99364759960156, -121.99101684715673, 45.00635169618245 ]);
+      expect(circle.bbox()).toEqual([ -122.00898315283914, 44.99364759960156, -121.99101684715673, 45.00635169618245 ]);
     });
 
     it("should calculate envelope", function(){
@@ -530,7 +518,7 @@ describe("Primitives", function(){
     });
 
     it("should calculate bounds", function(){
-      expect(feature.bbox).toEqual([21.79, 33.75, 56.95, 71.01]);
+      expect(feature.bbox()).toEqual([21.79, 33.75, 56.95, 71.01]);
     });
 
     it("should calculate envelope", function(){
@@ -564,7 +552,7 @@ describe("Primitives", function(){
     });
 
     it("should calculate bounds", function(){
-      expect(featureCollection.bbox).toEqual([ -104.99404, 33.75, 56.95, 71.01 ] );
+      expect(featureCollection.bbox()).toEqual([ -104.99404, 33.75, 56.95, 71.01 ] );
     });
 
     it("should calculate envelope", function(){
@@ -597,7 +585,7 @@ describe("Primitives", function(){
     });
 
     it("should calculate bounds", function(){
-      expect(geometryCollection.bbox).toEqual([ -84.32281494140625, 33.73804486328907, 56.95, 71.01 ]);
+      expect(geometryCollection.bbox()).toEqual([ -84.32281494140625, 33.73804486328907, 56.95, 71.01 ]);
     });
 
     it("should calculate envelope", function(){
