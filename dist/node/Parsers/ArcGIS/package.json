@@ -1,6 +1,6 @@
 {
   "name": "terraformer-arcgis-parser",
-  "version": "0.1.6",
+  "version": "0.1.8",
   "description": "ArcGIS parser",
   "main": "index.js",
   "directories": {
@@ -21,7 +21,7 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "terraformer": "latest"
+    "terraformer": "~0.1.7"
   },
   "devDependencies": {
     "vows": "~0.7.0"
