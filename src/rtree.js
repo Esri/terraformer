@@ -432,9 +432,9 @@ var RTree = function (width) {
         }
 
         // If there is data attached to this ret_obj
-        if ("leaf" in ret_obj || "nodes" in ret_obj || Array.isArray(ret_obj)) {
+        if ("leaf" in ret_obj || "nodes" in ret_obj || isArray(ret_obj)) {
           // Do Insert
-          if (Array.isArray(ret_obj)) {
+          if (isArray(ret_obj)) {
             for (var ai = 0; ai < ret_obj.length; ai++) {
               RTree.Rectangle.expand_rectangle(bc, ret_obj[ai]);
             }

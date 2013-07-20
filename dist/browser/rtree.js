@@ -35,6 +35,10 @@
     Terraformer = arguments[0];
   }
 
+  function isArray(obj) {
+    return Object.prototype.toString.call(obj) === '[object Array]';
+  }
+
   /******************************************************************************
  rtree.js - General-Purpose Non-Recursive Javascript R-Tree Library
  Version 0.6.2, December 5st 2009
@@ -469,9 +473,9 @@ var RTree = function (width) {
         }
 
         // If there is data attached to this ret_obj
-        if ("leaf" in ret_obj || "nodes" in ret_obj || Array.isArray(ret_obj)) {
+        if ("leaf" in ret_obj || "nodes" in ret_obj || isArray(ret_obj)) {
           // Do Insert
-          if (Array.isArray(ret_obj)) {
+          if (isArray(ret_obj)) {
             for (var ai = 0; ai < ret_obj.length; ai++) {
               RTree.Rectangle.expand_rectangle(bc, ret_obj[ai]);
             }
