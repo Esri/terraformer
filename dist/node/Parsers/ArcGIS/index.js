@@ -193,7 +193,8 @@
   }
 
   // ArcGIS -> GeoJSON
-  function parse(arcgis){
+  function parse(input){
+    var arcgis = JSON.parse(JSON.stringify(input));
     var geojson = {};
 
     if(arcgis.x && arcgis.y){
@@ -220,10 +221,10 @@
       geojson = convertRingsToGeoJSON(arcgis.rings);
     }
 
-    if(arcgis.attributes && arcgis.geometry) {
+    if(arcgis.geometry) {
       geojson.type = "Feature";
       geojson.geometry = parse(arcgis.geometry);
-      geojson.properties = arcgis.attributes;
+      geojson.properties = arcgis.attributes || {};
     }
 
     var inputSpatialReference = (arcgis.geometry) ? arcgis.geometry.spatialReference : arcgis.spatialReference;
@@ -237,10 +238,11 @@
   }
 
   // GeoJSON -> ArcGIS
-  function convert(geojson){
-    var i;
+  function convert(input){
+    var geojson = JSON.parse(JSON.stringify(input));
     var spatialReference = { wkid: 4326 };
     var result = {};
+    var i;
 
     switch(geojson.type){
     case "Point":

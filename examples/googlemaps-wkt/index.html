@@ -4,21 +4,18 @@
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
    <style>
       #map_canvas {
-        height: 800px;
+        float: left;
+        width: 600px;
+        height: 400px;
       }
       #input {
         width: 400px;
         height: 200px;
       }
     </style>
-    <script type="text/javascript"
-      src="https://maps.googleapis.com/maps/api/js?sensor=false">
-    </script>
-    <script type="text/javascript"
-      src="https://raw.github.com/esri/Terraformer/master/dist/browser/terraformer.js">
-    </script>
-    <script type="text/javascript" src="https://raw.github.com/esri/Terraformer/master/dist/browser/wkt.js">
-    </script>
+    <script type="text/javascript" src="//maps.googleapis.com/maps/api/js?sensor=false"></script>
+    <script type="text/javascript" src="../../dist/browser/terraformer.js"></script>
+    <script type="text/javascript" src="../../dist/browser/wkt.js"></script>
     <script type="text/javascript">
       var map;
       function initialize() {

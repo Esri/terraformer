@@ -703,10 +703,42 @@
     return true;
   }
 
+  function coordinatesEqual(a, b) {
+    if (a.length !== b.length) {
+      return false;
+    }
+
+    function comp(p1, p2) {
+      if(p1[0] - p2[0] > p1[1] - p2[1]) {
+        return 1;
+      } else if(p1[0] - p2[0] < p1[1] - p2[1]) {
+        return -1;
+      } else {
+        return 0;
+      }
+    }
+
+    var na = a.slice().sort(comp);
+    var nb = b.slice().sort(comp);
+
+    for (var i = 0; i < na.length; i++) {
+      if (na[i].length !== nb[i].length) {
+        return false;
+      }
+      for (var j = 0; j < na.length; j++) {
+        if (na[i][j] !== nb[i][j]) {
+          return false;
+        }
+      }
+    }
+
+    return true;
+  }
+
   /*
   Internal: An array of variables that will be excluded form JSON objects.
   */
-  var excludeFromJSON = ["length", "bbox"];
+  var excludeFromJSON = ["length"];
 
   /*
   Internal: Base GeoJSON Primitive
@@ -714,35 +746,35 @@
   function Primitive(geojson){
     if(geojson){
       switch (geojson.type) {
-        case 'Point':
-          return new Point(geojson);
+      case 'Point':
+        return new Point(geojson);
 
-        case 'MultiPoint':
-          return new MultiPoint(geojson);
+      case 'MultiPoint':
+        return new MultiPoint(geojson);
 
-        case 'LineString':
-          return new LineString(geojson);
+      case 'LineString':
+        return new LineString(geojson);
 
-        case 'MultiLineString':
-          return new MultiLineString(geojson);
+      case 'MultiLineString':
+        return new MultiLineString(geojson);
 
-        case 'Polygon':
-          return new Polygon(geojson);
+      case 'Polygon':
+        return new Polygon(geojson);
 
-        case 'MultiPolygon':
-          return new MultiPolygon(geojson);
+      case 'MultiPolygon':
+        return new MultiPolygon(geojson);
 
-        case 'Feature':
-          return new Feature(geojson);
+      case 'Feature':
+        return new Feature(geojson);
 
-        case 'FeatureCollection':
-          return new FeatureCollection(geojson);
+      case 'FeatureCollection':
+        return new FeatureCollection(geojson);
 
-        case 'GeometryCollection':
-          return new GeometryCollection(geojson);
+      case 'GeometryCollection':
+        return new GeometryCollection(geojson);
 
-        default:
-          throw new Error("Unknown type: " + geojson.type);
+      default:
+        throw new Error("Unknown type: " + geojson.type);
       }
     }
   }
@@ -762,6 +794,9 @@
         w: Math.abs(bounds[0] - bounds[2]),
         h: Math.abs(bounds[1] - bounds[3])
       };
+    },
+    bbox: function(){
+      return calculateBounds(this);
     },
     convexHull: function(){
       var coordinates = [ ], i, j;
@@ -810,14 +845,11 @@
       }
       obj.bbox = calculateBounds(this);
       return obj;
-    },
-    toJson: function () {
-      return JSON.stringify(this);
     }
   };
 
   Primitive.prototype.within = function(primitive) {
-    var coordinates;
+    var coordinates, i, contains;
     if (primitive.type === "Point") {
       if (this.type === "Point") {
         return pointsEqual(this.coordinates, primitive.coordinates);
@@ -828,9 +860,16 @@
 
     if (primitive.type === "Polygon") {
       if (this.type === "Polygon") {
-        console.log("inside");
+        // check for equal polygons
+        if (primitive.coordinates.length === this.coordinates.length) {
+          for (i = 0; i < this.coordinates.length; i++) {
+            if (coordinatesEqual(this.coordinates[i], primitive.coordinates[i])) {
+              return true;
+            }
+          }
+        }
+
         if (this.coordinates.length && polygonContainsPoint(primitive.coordinates, this.coordinates[0][0])) {
-          console.log("further inside");
           return !primitiveVertexesIntersect(this, primitive);
         } else {
           return false;
@@ -843,7 +882,7 @@
     if (primitive.type === "MultiPolygon") {
       if (this.type === "Point") {
         if (primitive.coordinates.length) {
-          for (var i = 0; i < primitive.coordinates.length; i++) {
+          for (i = 0; i < primitive.coordinates.length; i++) {
             coordinates = primitive.coordinates[i];
             if (polygonContainsPoint(coordinates, this.coordinates) && multiArrayIntersectsMultiArray(this.coordinates, primitive.coordinates) === false) {
               return true;
@@ -853,16 +892,28 @@
 
         return false;
       } else if (this.type === "Polygon") {
+        for (i = 0; i < this.coordinates.length; i++) {
+          if (primitive.coordinates[i].length === this.coordinates.length) {
+            for (j = 0; j < this.coordinates.length; j++) {
+              if (coordinatesEqual(this.coordinates[j], primitive.coordinates[i][j])) {
+                return true;
+              }
+            }
+          }
+        }
+
         if (multiArrayIntersectsMultiMultiArray(this.coordinates, primitive.coordinates) === false) {
           if (primitive.coordinates.length) {
-            for (var j = 0; j < primitive.coordinates.length; j++) {
-              coordinates = primitive.coordinates[j];
+            for (i = 0; i < primitive.coordinates.length; i++) {
+              coordinates = primitive.coordinates[i];
               if (polygonContainsPoint(coordinates, this.coordinates[0][0]) === false) {
-                return false;
+                contains = false;
+              } else {
+                contains = true;
               }
-
-              return true;
             }
+
+            return contains;
           }
         }
       }
@@ -906,22 +957,52 @@
       } else if (primitive.type === 'MultiPolygon') {
         return multiArrayIntersectsMultiMultiArray(closedPolygon(this.coordinates), primitive.coordinates);
       }
-    } else if (this.type === 'MultiPolygon') {
-      if (primitive.type === 'LineString') {
-        return arrayIntersectsMultiMultiArray(primitive.coordinates, this.coordinates);
-      } else if (primitive.type === 'Polygon' || primitive.type === 'MultiLineString') {
-        return multiArrayIntersectsMultiMultiArray(closedPolygon(primitive.coordinates), this.coordinates);
-      } else if (primitive.type === 'MultiPolygon') {
-        return multiMultiArrayIntersectsMultiMultiArray(this.coordinates, primitive.coordinates);
-      }
-    } else if (this.type === 'Feature') {
-      // in the case of a Feature, use the internal primitive for intersection
-      var inner = new Primitive(this.geometry);
-      return inner.intersects(primitive);
-    }
 
-    warn("Type " + this.type + " to " + primitive.type + " intersection is not supported by intersects");
-    return false;
+      if (this.type === 'LineString') {
+        if (primitive.type === 'LineString') {
+          return arrayIntersectsArray(this.coordinates, primitive.coordinates);
+        } else if (primitive.type === 'MultiLineString') {
+          return arrayIntersectsMultiArray(this.coordinates, primitive.coordinates);
+        } else if (primitive.type === 'Polygon') {
+          return arrayIntersectsMultiArray(this.coordinates, closedPolygon(primitive.coordinates));
+        } else if (primitive.type === 'MultiPolygon') {
+          return arrayIntersectsMultiMultiArray(this.coordinates, primitive.coordinates);
+        }
+      } else if (this.type === 'MultiLineString') {
+        if (primitive.type === 'LineString') {
+          return arrayIntersectsMultiArray(primitive.coordinates, this.coordinates);
+        } else if (primitive.type === 'Polygon' || primitive.type === 'MultiLineString') {
+          return multiArrayIntersectsMultiArray(this.coordinates, primitive.coordinates);
+        } else if (primitive.type === 'MultiPolygon') {
+          return multiArrayIntersectsMultiMultiArray(this.coordinates, primitive.coordinates);
+        }
+      } else if (this.type === 'Polygon') {
+        if (primitive.type === 'LineString') {
+          return arrayIntersectsMultiArray(primitive.coordinates, closedPolygon(this.coordinates));
+        } else if (primitive.type === 'MultiLineString') {
+          return multiArrayIntersectsMultiArray(closedPolygon(this.coordinates), primitive.coordinates);
+        } else if (primitive.type === 'Polygon') {
+          return multiArrayIntersectsMultiArray(closedPolygon(this.coordinates), closedPolygon(primitive.coordinates));
+        } else if (primitive.type === 'MultiPolygon') {
+          return multiArrayIntersectsMultiMultiArray(closedPolygon(this.coordinates), primitive.coordinates);
+        }
+      } else if (this.type === 'MultiPolygon') {
+        if (primitive.type === 'LineString') {
+          return arrayIntersectsMultiMultiArray(primitive.coordinates, this.coordinates);
+        } else if (primitive.type === 'Polygon' || primitive.type === 'MultiLineString') {
+          return multiArrayIntersectsMultiMultiArray(closedPolygon(primitive.coordinates), this.coordinates);
+        } else if (primitive.type === 'MultiPolygon') {
+          return multiMultiArrayIntersectsMultiMultiArray(this.coordinates, primitive.coordinates);
+        }
+      } else if (this.type === 'Feature') {
+        // in the case of a Feature, use the internal primitive for intersection
+        var inner = new Primitive(this.geometry);
+        return inner.intersects(primitive);
+      }
+
+      warn("Type " + this.type + " to " + primitive.type + " intersection is not supported by intersects");
+      return false;
+    }
   };
 
 
@@ -950,10 +1031,6 @@
     }
 
     this.type = "Point";
-
-    this.__defineGetter__("bbox", function(){
-      return calculateBounds(this);
-    });
   }
 
   Point.prototype = new Primitive();
@@ -978,20 +1055,12 @@
     }
 
     this.type = "MultiPoint";
-
-    this.__defineGetter__("bbox", function(){
-      return calculateBounds(this);
-    });
-
-    this.__defineGetter__('length', function () {
-      return this.coordinates ? this.coordinates.length : 0;
-    });
   }
 
   MultiPoint.prototype = new Primitive();
   MultiPoint.prototype.constructor = MultiPoint;
   MultiPoint.prototype.forEach = function(func){
-    for (var i = 0; i < this.length; i++) {
+    for (var i = 0; i < this.coordinates.length; i++) {
       func.apply(this, [this.coordinates[i], i, this.coordinates]);
     }
     return this;
@@ -1035,10 +1104,6 @@
     }
 
     this.type = "LineString";
-
-    this.__defineGetter__("bbox", function(){
-      return calculateBounds(this);
-    });
   }
 
   LineString.prototype = new Primitive();
@@ -1075,14 +1140,6 @@
     }
 
     this.type = "MultiLineString";
-
-    this.__defineGetter__("bbox", function(){
-      return calculateBounds(this);
-    });
-
-    this.__defineGetter__('length', function () {
-      return this.coordinates ? this.coordinates.length : 0;
-    });
   }
 
   MultiLineString.prototype = new Primitive();
@@ -1115,10 +1172,6 @@
     }
 
     this.type = "Polygon";
-
-    this.__defineGetter__("bbox", function(){
-      return calculateBounds(this);
-    });
   }
 
   Polygon.prototype = new Primitive();
@@ -1182,14 +1235,6 @@
     }
 
     this.type = "MultiPolygon";
-
-    this.__defineGetter__("bbox", function(){
-      return calculateBounds(this);
-    });
-
-    this.__defineGetter__('length', function () {
-      return this.coordinates ? this.coordinates.length : 0;
-    });
   }
 
   MultiPolygon.prototype = new Primitive();
@@ -1241,10 +1286,6 @@
     }
 
     this.type = "Feature";
-
-    this.__defineGetter__("bbox", function(){
-      return calculateBounds(this);
-    });
   }
 
   Feature.prototype = new Primitive();
@@ -1290,14 +1331,6 @@
     }
 
     this.type = "FeatureCollection";
-
-    this.__defineGetter__('length', function () {
-      return this.features ? this.features.length : 0;
-    });
-
-    this.__defineGetter__("bbox", function(){
-      return calculateBounds(this);
-    });
   }
 
   FeatureCollection.prototype = new Primitive();
@@ -1339,15 +1372,6 @@
     }
 
     this.type = "GeometryCollection";
-
-    this.__defineGetter__('length', function () {
-      return this.geometries ? this.geometries.length : 0;
-    });
-
-    this.__defineGetter__("bbox", function(){
-      return calculateBounds(this);
-    });
-
   }
 
   GeometryCollection.prototype = new Primitive();
@@ -1393,63 +1417,44 @@
         steps: steps
       }
     }));
-
-    this.__defineGetter__("bbox", function(){
-      return calculateBounds(this);
-    });
-
-    this.__defineGetter__("radius", function(){
-      return this.properties.radius;
-    });
-
-    this.__defineSetter__("radius", function(val){
-      this.properties.radius = val;
-      this.recalculate();
-    });
-
-    this.__defineGetter__("steps", function(){
-      return this.properties.steps;
-    });
-
-    this.__defineSetter__("steps", function(val){
-      this.properties.steps = val;
-      this.recalculate();
-    });
-
-    this.__defineGetter__("center", function(){
-      return this.properties.center;
-    });
-
-    this.__defineSetter__("center", function(val){
-      this.properties.center = val;
-      this.recalculate();
-    });
-
   }
 
   Circle.prototype = new Primitive();
   Circle.prototype.constructor = Circle;
   Circle.prototype.recalculate = function(){
-    this.geometry = createCircle(this.center, this.radius, this.steps);
+    this.geometry = createCircle(this.properties.center, this.properties.radius, this.properties.steps);
     return this;
   };
-
+  Circle.prototype.center = function(coordinates){
+    if(coordinates){
+      this.properties.center = coordinates;
+      this.recalculate();
+    }
+    return this.properties.center;
+  };
+  Circle.prototype.radius = function(radius){
+    if(radius){
+      this.properties.radius = radius;
+      this.recalculate();
+    }
+    return this.properties.radius;
+  };
+  Circle.prototype.steps = function(steps){
+    if(steps){
+      this.properties.steps = steps;
+      this.recalculate();
+    }
+    return this.properties.steps;
+  };
   Circle.prototype.contains = function(primitive) {
     if (primitive.type !== "Point") {
       throw new Error("Only points are supported");
     }
-
     return polygonContainsPoint(this.geometry.coordinates, primitive.coordinates);
   };
 
   Circle.prototype.toJSON = function() {
     var output = Primitive.prototype.toJSON.call(this);
-    output.properties.center = output.center;
-    output.properties.steps = output.steps;
-    output.properties.radius = output.radius;
-    delete output.center;
-    delete output.steps;
-    delete output.radius;
     return output;
   };
 
@@ -1480,7 +1485,7 @@
   exports.Tools.calculateEnvelope = calculateEnvelope;
   exports.Tools.coordinatesContainPoint = coordinatesContainPoint;
   exports.Tools.polygonContainsPoint = polygonContainsPoint;
-  exports.Tools.arrayIntersectsArray =arrayIntersectsArray;
+  exports.Tools.arrayIntersectsArray = arrayIntersectsArray;
   exports.Tools.coordinatesContainPoint = coordinatesContainPoint;
   exports.Tools.convexHull = convexHull;
 

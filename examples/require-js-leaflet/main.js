@@ -1,7 +1,7 @@
 requirejs.config({
   //In order for proper loading of depenencies in Terraformer modules set the path up in requirejs.config
   paths: {
-    terraformer: "https://raw.github.com/esri/Terraformer/master/dist/browser/",
+    terraformer: "../../dist/browser",
     Leaflet: "leaflet/leaflet"
   },
    shim: {
@@ -36,7 +36,7 @@ requirejs([
   var layer = L.geoJson(geojson, {}).addTo(map);
 
   // get a geojson bounding box xmin, ymin, xmax, ymax
-  var bounds = geojson.bbox;
+  var bounds = geojson.bbox();
 
   // fit the map tp the bounds of the fire.
   map.fitBounds([ [bounds[1], bounds[0]], [bounds[3], bounds[2]] ]);
