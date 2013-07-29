@@ -1,6 +1,6 @@
 {
   "name": "terraformer-wkt-parser",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "Well-Known Text parser",
   "main": "index.js",
   "directories": {
@@ -21,7 +21,7 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "terraformer": "latest"
+    "terraformer": "~0.1.7"
   },
   "devDependencies": {
     "vows": "~0.7.0"

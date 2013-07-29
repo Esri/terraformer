@@ -56,6 +56,18 @@ This will return an envelope suitible for use with `Terraformer.RTree` of `x, y,
     // returns the convex hull of the polygon
     var ev = polygon.envelope();
 
+### Within
+
+This will return true if the `primitive` is contained or equal to the `primitive` passed.
+
+    var polygon1 = new Terraformer.Polygon([ [ [ 2, 2 ], [ 2, 3 ], [ 3, 3 ], [ 3, 2 ], [ 2, 2 ] ] ]);
+    var polygon2 = new Terraformer.Polygon([ [ [ 1, 1 ], [ 1, 5 ], [ 5, 5 ], [ 5, 1 ], [ 1, 1 ] ] ]);
+    
+    // true
+    polygon1.within(polygon2);
+    
+    // false
+    polygon2.within(polygon1);
 
 ## Point
 
