@@ -850,15 +850,32 @@
 
   Primitive.prototype.within = function(primitive) {
     var coordinates, i, contains;
+
+    // point.within(point) :: equality
     if (primitive.type === "Point") {
       if (this.type === "Point") {
         return pointsEqual(this.coordinates, primitive.coordinates);
-      } else {
-        return false;
+
+      }
+    }
+
+    // point.within(linestring), point.within(multipoint)
+    if (primitive.type === "LineString" || primitive.type === "MultiPoint") {
+      if (this.type === "Point") {
+        for (i = 0; i < primitive.coordinates.length; i++) {
+          if (this.coordinates.length !== primitive.coordinates[i].length) {
+            return false;
+          }
+
+          if (pointsEqual(this.coordinates, primitive.coordinates[i])) {
+            return true;
+          }
+        }
       }
     }
 
     if (primitive.type === "Polygon") {
+      // polygon.within(polygon)
       if (this.type === "Polygon") {
         // check for equal polygons
         if (primitive.coordinates.length === this.coordinates.length) {
@@ -874,12 +891,31 @@
         } else {
           return false;
         }
+
+      // point.within(polygon)
       } else if (this.type === "Point") {
         return polygonContainsPoint(primitive.coordinates, this.coordinates);
+
+      // linestring/multipoint withing polygon
+      } else if (this.type === "LineString" || this.type === "MultiPoint") {
+        if (!this.coordinates || this.coordinates.length === 0) {
+          return false;
+        }
+
+        for (i = 0; i < this.coordinates.length; i++) {
+          if (polygonContainsPoint(primitive.coordinates, this.coordinates[i]) === false) {
+            return false;
+          }
+        }
+
+        return true;
+
       }
+
     }
 
     if (primitive.type === "MultiPolygon") {
+      // point.within(multipolygon)
       if (this.type === "Point") {
         if (primitive.coordinates.length) {
           for (i = 0; i < primitive.coordinates.length; i++) {
@@ -891,6 +927,7 @@
         }
 
         return false;
+      // polygon.within(multipolygon)
       } else if (this.type === "Polygon") {
         for (i = 0; i < this.coordinates.length; i++) {
           if (primitive.coordinates[i].length === this.coordinates.length) {
@@ -915,6 +952,18 @@
 
             return contains;
           }
+        }
+
+      // linestring.within(multipolygon), multipoint.within(multipolygon)
+      } else if (this.type === "LineString" || this.type === "MultiPoint") {
+        for (i = 0; i < primitive.coordinates.length; i++) {
+          var p = { type: "Polygon", coordinates: primitive.coordinates[i] };
+
+          if (this.within(p)) {
+            return true;
+          }
+
+          return false;
         }
       }
     }

@@ -736,6 +736,39 @@ describe("Intersection", function(){
 
   });
 
+  describe("MultiPolygon Within", function(){
+    beforeEach(function(){
+      multipolygon = new Terraformer.MultiPolygon([ [ [ [ 5, 5 ], [ 5, 15 ], [ 15, 15 ], [ 15, 5 ], [ 5, 5 ] ] ], [ [ [ 25, 25 ], [ 25, 35 ], [ 35, 35 ], [ 35, 25 ], [ 25, 25 ] ] ] ]);
+    });
+
+
+    it("should return true if a linestring is within a multipolygon", function(){
+      var linestring = new Terraformer.LineString([ [ 6, 6 ], [ 6, 14 ] ]);
+      expect(linestring.within(multipolygon)).toEqual(true);
+    });
+
+    it("should return true if a multipoint is within a multipolygon", function(){
+      var linestring = new Terraformer.MultiPoint([ [ 6, 6 ], [ 6, 14 ] ]);
+      expect(linestring.within(multipolygon)).toEqual(true);
+    });
+  });
+
+  describe("Point Within", function() {
+    beforeEach(function(){
+      point = new Terraformer.Point([ 6, 6 ]);
+    });
+
+    it("should return true if a point is within a multipoint", function(){
+      var multipoint = new Terraformer.MultiPoint([ [ 1, 1 ], [ 2, 2 ], [ 3, 3 ], [ 6, 6 ] ]);
+      expect(point.within(multipoint)).toEqual(true);
+    });
+
+    it("should return true if a point is within a linestring", function(){
+      var linestring = new Terraformer.LineString([ [ 1, 1 ], [ 2, 2 ], [ 3, 3 ], [ 6, 6 ] ]);
+      expect(point.within(linestring)).toEqual(true);
+    });
+  });
+
   describe("Polygon Within", function(){
     beforeEach(function(){
       polygon = new Terraformer.Polygon([ [ [ 5, 5 ], [ 5, 15 ], [ 15, 15 ], [ 15, 5 ], [ 5, 5 ] ] ]);
@@ -769,6 +802,26 @@ describe("Intersection", function(){
     it("should return true when one of the polygons is the same polygon", function(){
       var mp = new Terraformer.MultiPolygon([ [ [ [ 5, 5 ], [ 5, 15 ], [ 15, 15 ], [ 15, 5 ], [ 5, 5 ] ] ], [ [ [ 1, 1 ], [ 1, 2 ], [ 2, 1 ] ] ] ]);
       expect(polygon.within(mp)).toEqual(true);
+    });
+
+    it("should return true if all of the points in a linestring are in the same polygon", function(){
+      var ls = new Terraformer.LineString([ [ 6, 6 ], [ 6, 14 ], [ 14, 14 ] ]);
+      expect(ls.within(polygon)).toEqual(true);
+    });
+
+    it("should return true if all of the points in a multipoint are in the same polygon", function(){
+      var ls = new Terraformer.MultiPoint([ [ 6, 6 ], [ 6, 14 ], [ 14, 14 ] ]);
+      expect(ls.within(polygon)).toEqual(true);
+    });
+
+    it("should return false if one of the points in a linestring leave the polygon", function(){
+      var ls = new Terraformer.LineString([ [ 6, 6 ], [ 6, 14 ], [ 16, 16 ] ]);
+      expect(ls.within(polygon)).toEqual(false);
+    });
+
+    it("should return false if one of the points in a multipoint leave the polygon", function(){
+      var ls = new Terraformer.MultiPoint([ [ 6, 6 ], [ 6, 14 ], [ 16, 16 ] ]);
+      expect(ls.within(polygon)).toEqual(false);
     });
 
   });
