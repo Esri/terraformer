@@ -859,6 +859,19 @@
       }
     }
 
+    // point.within(multilinestring)
+    if (primitive.type === "MultiLineString") {
+      if (this.type === "Point") {
+        for (i = 0; i < primitive.coordinates.length; i++) {
+          var linestring = { type: "LineString", coordinates: primitive.coordinates[i] };
+
+          if (this.within(linestring)) {
+            return true;
+          }
+        }
+      }
+    }
+
     // point.within(linestring), point.within(multipoint)
     if (primitive.type === "LineString" || primitive.type === "MultiPoint") {
       if (this.type === "Point") {
@@ -910,6 +923,30 @@
 
         return true;
 
+      // multilinestring.within(polygon)
+      } else if (this.type === "MultiLineString") {
+        for (i = 0; i < this.coordinates.length; i++) {
+          var ls = new Terraformer.LineString(this.coordinates[i]);
+
+          if (ls.within(primitive) === false) {
+            contains++;
+            return false;
+          }
+        }
+
+        return true;
+
+      // multipolygon.within(polygon)
+      } else if (this.type === "MultiPolygon") {
+        for (i = 0; i < this.coordinates.length; i++) {
+          var p1 = new Terraformer.Primitive({ type: "Polygon", coordinates: this.coordinates[i] });
+
+          if (p1.within(primitive) === false) {
+            return false;
+          }
+        }
+
+        return true;
       }
 
     }
@@ -965,6 +1002,30 @@
 
           return false;
         }
+
+      // multilinestring.within(multipolygon)
+      } else if (this.type === "MultiLineString") {
+        for (i = 0; i < this.coordinates.length; i++) {
+          var lines = new Terraformer.LineString(this.coordinates[i]);
+
+          if (lines.within(primitive) === false) {
+            return false;
+          }
+        }
+
+        return true;
+
+      // multipolygon.within(multipolygon)
+      } else if (this.type === "MultiPolygon") {
+        for (i = 0; i < primitive.coordinates.length; i++) {
+          var mpoly = { type: "Polygon", coordinates: primitive.coordinates[i] };
+
+          if (this.within(mpoly) === false) {
+            return false;
+          }
+        }
+
+        return true;
       }
     }
 
