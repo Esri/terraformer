@@ -35,6 +35,10 @@
     Terraformer = arguments[0];
   }
 
+  function isArray(obj) {
+    return Object.prototype.toString.call(obj) === '[object Array]';
+  }
+
   "SOURCE";
 
   exports.RTree = RTree;
