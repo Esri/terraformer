@@ -345,59 +345,13 @@ describe("Primitives", function(){
       expect(polygon.convexHull()).toEqual([ [ 100, 1 ], [ 100, 0 ], [ 101, 0 ], [ 101, 1 ] ]);
     });
 
-    it("should contain a point", function(){
-      expect(polygon.contains({type:"Point", coordinates: [ 100.5, 0.5 ]})).toEqual(true);
-    });
-
     it("should calculate envelope", function(){
       expect(multiPoint.envelope()).toEqual({ x : -45, y : 0, w : 145, h : 122 });
     });
 
-    it("should contain a polygon", function(){
-      expect(polygon.contains({type:"Polygon", coordinates: [ [ [100.5, 0.5],[100.7, 0.5],[100.7, 0.7],[100.5, 0.7],[100.5, 0.5] ] ] })).toEqual(true);
-    });
-
-    it("should fail when does not contain a polygon", function(){
-      expect(polygon.contains({type:"Polygon", coordinates: [ [ [101.5, 1.5],[101.7, 1.5],[101.7, 1.7],[101.5, 1.7],[101.5, 1.5] ] ] })).toEqual(false);
-    });
-
-    it("should fail when does not contain a multipolygon", function(){
-      expect(polygon.contains({type:"MultiPolygon", coordinates: [ [ [ [101.5, 1.5],[101.7, 1.5],[101.7, 1.7],[101.5, 1.7],[101.5, 1.5] ] ] ] })).toEqual(false);
-    });
-
-    it("should contain a multipolygon", function(){
-      expect(polygon.contains({type:"MultiPolygon", coordinates: [ [ [ [100.5, 0.5],[100.7, 0.5],[100.7, 0.7],[100.5, 0.7],[100.5, 0.5] ] ] ] })).toEqual(true);
-    });
   });
 
-  describe("Polygon with a Hole", function(){
-    beforeEach(function(){
-      polygon = new Terraformer.Polygon([
-        [
-          [100.0, 0.0],
-          [101.0, 0.0],
-          [101.0, 1.0],
-          [100.0, 1.0],
-          [100.0, 0.0]
-        ],
-        [
-          [100.2, 0.2],
-          [100.8, 0.2],
-          [100.8, 0.8],
-          [100.2, 0.8],
-          [100.2, 0.2]
-        ]
-      ]);
-    });
 
-    it("should contain a point when not in hole", function() {
-      expect(polygon.contains({type:"Point", coordinates: [100.1, 0.1]}));
-    });
-
-    it("should not contain a point when in hole", function() {
-      expect(polygon.contains({type:"Point", coordinates: [100.3, 0.3]}));
-    });
-  });
 
   describe("MultiPolygon", function(){
     beforeEach(function(){
@@ -425,10 +379,6 @@ describe("Primitives", function(){
 
     it("should calculate convex hull", function (){
       expect(multiPolygon.convexHull()).toEqual([ [ 102, 3 ], [ 100, 1 ], [ 100, 0 ], [ 101, 0 ], [ 103, 2 ], [ 103, 3 ] ]);
-    });
-
-    it("should contain a point", function() {
-      expect(multiPolygon.contains(new Terraformer.Point([102.5, 2.5]))).toEqual(true);
     });
 
     it("should calculate envelope", function(){
@@ -493,9 +443,6 @@ describe("Primitives", function(){
       expect(circle.envelope()).toEqual({ x : -122.00898315283914, y : 44.99364759960156, w : 0.01796630568240687, h : 0.012704096580890223 });
     });
 
-    it("should contain a point", function() {
-      expect(circle.contains(new Terraformer.Point([-122, 45]))).toEqual(true);
-    });
   });
 
   describe("Feature", function(){
@@ -525,9 +472,6 @@ describe("Primitives", function(){
       expect(feature.envelope()).toEqual({ x : 21.79, y : 33.75, w : 35.160000000000004, h : 37.260000000000005 });
     });
 
-    it("should contain a point", function() {
-      expect(feature.contains(new Terraformer.Point([41.83,51.01]))).toEqual(true);
-    });
   });
 
   describe("FeatureCollection", function(){
