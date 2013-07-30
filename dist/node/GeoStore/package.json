@@ -1,6 +1,6 @@
 {
   "name": "terraformer-geostore",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "In memory geographic storage and querying",
   "main": "index.js",
   "repository": {
@@ -14,6 +14,6 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "terraformer": "latest"
+    "terraformer": "~0.1.7"
   }
 }
