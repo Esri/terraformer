@@ -304,6 +304,16 @@ describe("Primitives", function(){
       expect(multiLineString.get(0)).toBeInstanceOfClass(Terraformer.LineString);
       expect(multiLineString.get(0).coordinates).toEqual([ [-105, 40], [-110, 45], [-115, 55] ]);
     });
+
+    it("should work with forEach correctly", function(){
+      var count = 0;
+      multiLineString.forEach(function () {
+        count++;
+      });
+
+      expect(count).toEqual(2);
+    });
+
   });
 
   describe("Polygon", function(){
@@ -389,6 +399,16 @@ describe("Primitives", function(){
       expect(multiPolygon.get(0)).toBeInstanceOfClass(Terraformer.Polygon);
       expect(multiPolygon.get(0).coordinates).toEqual(GeoJSON.multiPolygons[0].coordinates[0]);
     });
+
+    it("should work with forEach correctly", function(){
+      var count = 0;
+      multiPolygon.forEach(function () {
+        count++;
+      });
+
+      expect(count).toEqual(2);
+    });
+
   });
 
   describe("Circle", function(){
@@ -541,6 +561,15 @@ describe("Primitives", function(){
       expect(geometryCollection.get(0).coordinates).toEqual(GeoJSON.polygons[0].coordinates);
     });
 
+    it("should work with forEach correctly", function(){
+      var count = 0;
+      geometryCollection.forEach(function () {
+        count++;
+      });
+
+      expect(count).toEqual(2);
+    });
+
   });
 });
 
@@ -570,6 +599,10 @@ describe("Intersection", function(){
   describe("Polygon", function(){
     beforeEach(function() {
       polygon = new Terraformer.Polygon([ [ [ 0, 0 ], [ 10, 0 ], [ 10, 5 ], [ 0, 5 ] ] ]);
+    });
+
+    it("should correctly figure out intersection of the same object", function(){
+      expect(polygon.intersects(polygon)).toEqual(true);
     });
 
     it("should correctly figure out intersection with a Polygon", function(){
