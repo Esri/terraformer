@@ -653,6 +653,17 @@ describe("Intersection", function(){
 
   });
 
+  describe("MultiPolygon", function(){
+    beforeEach(function() {
+      multiPolygon = new Terraformer.MultiPolygon([ [ [ [ 48.5, -122.5 ], [ 50, -123 ], [ 48.5, -122.5 ] ] ] ]);
+    });
+
+    it("should return false if two MultiPolygons do not intersect", function() {
+      var mp = new Terraformer.MultiPolygon([ [ [ [ 1, 2 ], [ 3, 4 ], [ 5, 6 ] ] ] ]);
+      expect(multiPolygon.intersects(mp)).toEqual(false);
+    });
+  });
+
   describe("Feature", function(){
     beforeEach(function() {
       feature = new Terraformer.Feature(      {
@@ -889,6 +900,11 @@ describe("Intersection", function(){
     it("should return true if a multipolygon is within a polygon", function () {
       var mp = new Terraformer.MultiPolygon([ [ [ [ 6, 14 ], [ 14, 14 ], [ 14, 6 ], [ 6, 6 ], [ 6, 14 ] ] ] ]);
       expect(mp.within(polygon)).toEqual(true);
+    });
+
+    it("should return false if an empty LineString is checked within a polygon", function(){
+      var ls = new Terraformer.LineString([]);
+      expect(ls.within(polygon)).toEqual(false);
     });
 
   });
