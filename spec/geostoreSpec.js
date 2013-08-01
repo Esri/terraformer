@@ -72,7 +72,7 @@ describe("geostore", function() {
 
     it("should find no results", function(){
       var result;
-      gs.contains({
+      gs.within({
         type:"Point",
         coordinates: [0, 0]
       }).then(function(found){
@@ -82,7 +82,7 @@ describe("geostore", function() {
 
     it("should find one result", function(){
       var result;
-      gs.contains({
+      gs.within({
         type:"Point",
         coordinates: [-122.676048, 45.516544]
       }).then(function(found){
@@ -91,10 +91,11 @@ describe("geostore", function() {
       });
     });
 
+
     it("should remove a feature", function(){
       var result;
       var spy = jasmine.createSpy();
-      gs.remove(41051, spy);
+      gs.remove("41051", spy);
       expect(spy.callCount).toEqual(1);
       expect(gs.store.data[41051]).toBeFalsy();
       expect(gs.store.data[41067]).toBeTruthy();
@@ -103,7 +104,7 @@ describe("geostore", function() {
     it("shouldn't find any results", function(){
       var result;
       var spy = jasmine.createSpy();
-      gs.contains({
+      gs.within({
         type:"Point",
         coordinates: [-122.676048, 45.516544]
       }, spy).then(function(found){
@@ -126,7 +127,7 @@ describe("geostore", function() {
       var spy = jasmine.createSpy();
       gs.update({"type":"Feature","id":"41067","properties":{"name":"Multnomah"},"geometry":{"type":"Polygon","coordinates":[[[-122.926547,45.725029],[-122.762239,45.730506],[-122.247407,45.549767],[-121.924267,45.648352],[-121.820205,45.462136],[-122.356945,45.462136],[-122.745808,45.434751],[-122.926547,45.725029]]]}}, spy);
       expect(spy.callCount).toEqual(1);
-      gs.contains({
+      gs.within({
         type:"Point",
         coordinates: [-122.676048, 45.516544]
       }, spy).then(function(found){
@@ -196,7 +197,7 @@ describe("geostore", function() {
     it("should run an error callback when the store rejects the deferred when updating an item", function(){
       var spy = jasmine.createSpy();
       badStore.update({"type":"Feature","id":"41067","properties":{"name":"Multnomah"},"geometry":{"type":"Polygon","coordinates":[[[-122.926547,45.725029],[-122.762239,45.730506],[-122.247407,45.549767],[-121.924267,45.648352],[-121.820205,45.462136],[-122.356945,45.462136],[-122.745808,45.434751],[-122.926547,45.725029]]]}}, spy);
-      expect(spy).toHaveBeenCalledWith("ERROR", null);
+      expect(spy).toHaveBeenCalledWith("Could not get all geometries", null);
     });
 
     it("should run an error callback when the store rejects the deferred when getting an item", function(){
@@ -205,14 +206,15 @@ describe("geostore", function() {
       expect(spy).toHaveBeenCalledWith("ERROR", null);
     });
 
-    it("should run an error callback when the store rejects the deferred when updating an item", function(){
+    it("should run an error callback when the store rejects the deferred when deleting an item", function(){
       var spy = jasmine.createSpy();
       badStore.remove("41067", spy);
-      expect(spy).toHaveBeenCalledWith("ERROR", null);
+      expect(spy).toHaveBeenCalledWith("Could not remove feature", null);
     });
+
     it("should run an error callback when the store rejects the deferred when querying an item", function(){
       var spy = jasmine.createSpy();
-      badStore.contains({
+      badStore.within({
         type:"Point",
         coordinates: [-122.676048, 45.516544]
       }, spy);
@@ -238,7 +240,7 @@ describe("geostore", function() {
         var result;
         gs.add({"type":"Feature","id":"41051","properties":{"name":"Multnomah"},"geometry":{"type":"Polygon","coordinates":[[[-122.926547,45.725029],[-122.762239,45.730506],[-122.247407,45.549767],[-121.924267,45.648352],[-121.820205,45.462136],[-122.356945,45.462136],[-122.745808,45.434751],[-122.926547,45.725029]]]}});
         gs.add({"type":"Feature","id":"41067","properties":{"name":"Washington"},"geometry":{"type":"Polygon","coordinates":[[[-123.134671,45.779798],[-122.926547,45.725029],[-122.745808,45.434751],[-122.866301,45.319735],[-123.063471,45.401889],[-123.463287,45.434751],[-123.359225,45.779798],[-123.134671,45.779798]]]}});
-        gs.contains({
+        gs.within({
           type:"Point",
           coordinates: [-122.676048, 45.516544]
         }).then(function(found){
@@ -250,7 +252,7 @@ describe("geostore", function() {
       it("shouldn't find any results if a feature is removed", function(){
         var result;
         gs.remove(41051);
-        gs.contains({
+        gs.within({
           type:"Point",
           coordinates: [-122.676048, 45.516544]
         }).then(function(found){
@@ -261,7 +263,7 @@ describe("geostore", function() {
       it("should update a feature and run a successful query", function(){
         var result;
         gs.update({"type":"Feature","id":"41067","properties":{"name":"Multnomah"},"geometry":{"type":"Polygon","coordinates":[[[-122.926547,45.725029],[-122.762239,45.730506],[-122.247407,45.549767],[-121.924267,45.648352],[-121.820205,45.462136],[-122.356945,45.462136],[-122.745808,45.434751],[-122.926547,45.725029]]]}});
-        gs.contains({
+        gs.within({
           type:"Point",
           coordinates: [-122.676048, 45.516544]
         }).then(function(found){
