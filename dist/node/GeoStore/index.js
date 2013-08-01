@@ -118,9 +118,6 @@
   };
 
   GeoStore.prototype.remove = function(id, callback){
-    // removes a geojson object from the store by id.
-
-    // make a new deferred
     var dfd = new this.deferred();
 
     if(callback){
@@ -131,17 +128,26 @@
       });
     }
 
-    // remove from index
-    this.index.remove(id);
-    this.store.remove(id, dfd);
+    this.get(id).then(bind(this, function(geojson){
+      this.index.remove(geojson, id, bind(this, function(error, leaf){
+        if(error){
+          dfd.reject("Could not remove from index");
+        } else {
+          this.store.remove(id, dfd);
+        }
+      }));
+    }), function(error){
+      dfd.reject("Could not remove feature");
+    });
 
-    // remove from the store
     return dfd;
   };
 
-  GeoStore.prototype._test = function(test, shape, callback){
+  GeoStore.prototype.within = function(geojson, callback){
     // make a new deferred
+    var shape = new Terraformer.Primitive(geojson);
     var dfd = new this.deferred();
+
     if(callback){
       dfd.then(function(result){
         callback(null, result);
@@ -162,36 +168,37 @@
       // the function to evalute results from the index
       var evaluate = function(primitive){
         completed++;
+        var geometry = new Terraformer.Primitive(primitive.geometry);
 
-        var geojson = new Terraformer.Primitive(primitive);
-
-        if(geojson[test] && geojson[test](shape)){
-          results.push(geojson);
+        if(shape.within(geometry)){
+          results.push(primitive);
         }
 
         if(completed >= found.length){
           if(!errors){
             dfd.resolve(results);
           } else {
-            dfd.reject("could not get all geometries");
+            dfd.reject("Could not get all geometries");
           }
         }
 
         if(completed >= found.length && errors){
-          dfd.reject("could not get all geometries");
+          dfd.reject("Could not get all geometries");
         }
+
       };
 
       var error = function(){
         completed++;
         errors++;
         if(completed >= found.length){
-          dfd.reject("could not get all geometries");
+          dfd.reject("Could not get all geometries");
         }
       };
 
       // for each result see if the polygon contains the point
       if(found.length){
+
         for (var i = 0; i < found.length; i++) {
           this.get(found[i]).then(evaluate, error);
         }
@@ -205,26 +212,8 @@
     return dfd;
   };
 
-  GeoStore.prototype.within = function(shape, callback){
-    console.error("`within` is not implemented");
-    //return this._test("within", shape, callback);
-  };
-
-  GeoStore.prototype.intersects = function(shape, callback){
-    console.error("`intersects` is not implemented");
-    //return this._test("intersects", shape, callback);
-  };
-
-  GeoStore.prototype.contains = function(shape, callback){
-    console.warn("contains will be depricated soon when `within` and `intersects` are complete");
-    return this._test("contains", shape, callback);
-  };
-
   GeoStore.prototype.update = function(geojson, callback){
-    // updates an existing object in the store and the index
-    // accepts a geojson object and uses its id to find and update the item
-    // should return a deferred
-
+    var feature = Terraformer.Primitive(geojson);
     var dfd = new this.deferred();
 
     if(callback){
@@ -235,30 +224,22 @@
       });
     }
 
-    if (geojson.type !== "Feature") {
+    if (feature.type !== "Feature") {
       throw new Error("Terraform.GeoStore : only Features and FeatureCollections are supported");
     }
 
-    if(!geojson.id) {
+    if(!feature.id) {
       throw new Error("Terraform.GeoStore : Feature does not have an id property");
     }
 
-    //remove the index
-    this.index.remove(geojson.id);
-
-    // set a bounding box
-    var bbox = Terraformer.Tools.calculateBounds(geojson);
-
-    // index the new data
-    this.index.insert({
-      x: bbox[0],
-      y: bbox[1],
-      w: Math.abs(bbox[0] - bbox[2]),
-      h: Math.abs(bbox[1] - bbox[3])
-    }, geojson.id);
-
-    // update the store
-    this.store.update(geojson, dfd);
+    this.get(feature.id).then(bind(this, function(oldFeatureGeoJSON){
+      var oldFeature = new Terraformer.Primitive(oldFeatureGeoJSON);
+      this.index.remove(oldFeature.envelope(), oldFeature.id);
+      this.index.insert(feature.envelope(), feature.id);
+      this.store.update(feature, dfd);
+    }), function(error){
+      dfd.reject("Could find feature");
+    });
 
     return dfd;
   };

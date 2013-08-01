@@ -591,7 +591,7 @@ var RTree = function (width) {
 
       // convert shape (the first arg) to a bbox if its geojson
       if(args[0].type){
-        var b = Terraformer.Tools.calculateBounds(shape);
+        var b = Terraformer.Tools.calculateBounds(args[0]);
         args[0] = {
           x: b[0],
           y: b[1],
@@ -610,9 +610,9 @@ var RTree = function (width) {
           numberdeleted = ret_array.length;
           ret_array = ret_array.concat(_remove_subtree.apply(this, args));
         } while( numberdeleted !==  ret_array.length);
-        return ret_array;
+        dfd.resolve(ret_array);
       } else { // Delete a specific item
-        return(_remove_subtree.apply(this, args));
+        dfd.resolve(_remove_subtree.apply(this, args));
       }
     };
 

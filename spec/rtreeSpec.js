@@ -76,7 +76,7 @@ describe("RTree", function(){
     tree.insert({ x: 10, y: 10, w: 10, h: 10 }, 'good');
     tree.insert({ x: 100, y: 100, w: 10, h: 10 }, 'bad');
 
-    tree.remove({ x: 10, y: 10, w: 10, h: 10 });
+    tree.remove({ x: 10, y: 10, w: 10, h: 10 }, 'good');
 
     var dfd = tree.search({ x: 15, y: 15, w: 0, h: 0 }, spy);
 

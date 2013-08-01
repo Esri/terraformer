@@ -60,7 +60,7 @@
   // remove the data from the index and data with id returns true if removed successfully.
   LocalStorage.prototype.remove = function(id, dfd){
     localStorage.removeItem(this.key(id));
-    dfd.resolve();
+    dfd.resolve(id);
     return dfd;
   };
 
