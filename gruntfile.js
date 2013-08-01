@@ -105,17 +105,17 @@ module.exports = function (grunt) {
           helpers: 'spec/*Helpers.js',
           //keepRunner: true,
           outfile: 'SpecRunner.html',
-          // template: require('grunt-template-jasmine-istanbul'),
-          // templateOptions: {
-          //   coverage: './.coverage/coverage.json',
-          //   report: './.coverage',
-          //   thresholds: {
-          //     lines: 75,
-          //     statements: 75,
-          //     branches: 75,
-          //     functions: 75
-          //   }
-          // }
+          template: require('grunt-template-jasmine-istanbul'),
+          templateOptions: {
+            coverage: './.coverage/coverage.json',
+            report: './.coverage',
+            thresholds: {
+              lines: 75,
+              statements: 75,
+              branches: 75,
+              functions: 75
+            }
+          }
         }
       }
     },

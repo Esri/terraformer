@@ -197,7 +197,7 @@ describe("geostore", function() {
     it("should run an error callback when the store rejects the deferred when updating an item", function(){
       var spy = jasmine.createSpy();
       badStore.update({"type":"Feature","id":"41067","properties":{"name":"Multnomah"},"geometry":{"type":"Polygon","coordinates":[[[-122.926547,45.725029],[-122.762239,45.730506],[-122.247407,45.549767],[-121.924267,45.648352],[-121.820205,45.462136],[-122.356945,45.462136],[-122.745808,45.434751],[-122.926547,45.725029]]]}}, spy);
-      expect(spy).toHaveBeenCalledWith("Could not get all geometries", null);
+      expect(spy).toHaveBeenCalledWith('Could find feature', null);
     });
 
     it("should run an error callback when the store rejects the deferred when getting an item", function(){
@@ -209,7 +209,7 @@ describe("geostore", function() {
     it("should run an error callback when the store rejects the deferred when deleting an item", function(){
       var spy = jasmine.createSpy();
       badStore.remove("41067", spy);
-      expect(spy).toHaveBeenCalledWith("Could not remove feature", null);
+      expect(spy).toHaveBeenCalledWith('Could not remove feature', null);
     });
 
     it("should run an error callback when the store rejects the deferred when querying an item", function(){
@@ -218,7 +218,7 @@ describe("geostore", function() {
         type:"Point",
         coordinates: [-122.676048, 45.516544]
       }, spy);
-      expect(spy).toHaveBeenCalledWith("could not get all geometries", null);
+      expect(spy).toHaveBeenCalledWith("Could not get all geometries", null);
     });
   });
 
@@ -251,7 +251,7 @@ describe("geostore", function() {
 
       it("shouldn't find any results if a feature is removed", function(){
         var result;
-        gs.remove(41051);
+        gs.remove("41051");
         gs.within({
           type:"Point",
           coordinates: [-122.676048, 45.516544]

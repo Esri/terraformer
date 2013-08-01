@@ -156,8 +156,11 @@
       });
     }
 
+    // create our envelope
+    var envelope = Terraformer.Tools.calculateEnvelope(shape);
+
     // search the index
-    this.index.search(shape).then(bind(this, function(found){
+    this.index.search(envelope).then(bind(this, function(found){
       var results = [];
       var completed = 0;
       var errors = 0;
