@@ -629,6 +629,39 @@ describe("Intersection", function(){
     it("should correctly figure out intersection with a MultiPolygon", function(){
       expect(polygon.intersects(new Terraformer.MultiPolygon([ [ [ [ 1, 1 ], [ 11, 1 ], [ 11, 6 ], [ 1, 6 ] ] ] ]))).toEqual(true);
     });
+
+        it("should correctly figure out intersection with a Polygon", function(){
+      expect(polygon.intersects(new Terraformer.Polygon([ [ [ 1, 1 ], [ 11, 1 ], [ 11, 6 ], [ 1, 6 ] ] ]))).toEqual(true);
+    });
+
+    it("should correctly figure out intersection with a MultiLineString", function(){
+      expect(polygon.intersects(new Terraformer.MultiLineString([ [ [ 1, 1 ], [ 11, 1 ], [ 11, 6 ], [ 1, 6 ] ] ]))).toEqual(true);
+    });
+
+    it("should correctly figure out intersection with a LineString", function(){
+      expect(polygon.intersects(new Terraformer.LineString([ [ 1, 1 ], [ 11, 1 ], [ 11, 6 ], [ 1, 6 ] ]))).toEqual(true);
+    });
+
+    it("should correctly figure out intersection with a MultiPolygon", function(){
+      expect(polygon.intersects(new Terraformer.MultiPolygon([ [ [ [ 1, 1 ], [ 11, 1 ], [ 11, 6 ], [ 1, 6 ] ] ] ]))).toEqual(true);
+    });
+
+    it("should correctly figure out intersection with a MultiPolygon in reverse", function(){
+      var mp = new Terraformer.MultiPolygon([ [ [ [ 1, 1 ], [ 11, 1 ], [ 11, 6 ], [ 1, 6 ] ] ] ]);
+      expect(mp.intersects(polygon)).toEqual(true);
+    });
+
+  });
+
+  describe("MultiPolygon", function(){
+    beforeEach(function() {
+      multiPolygon = new Terraformer.MultiPolygon([ [ [ [ 48.5, -122.5 ], [ 50, -123 ], [ 48.5, -122.5 ] ] ] ]);
+    });
+
+    it("should return false if two MultiPolygons do not intersect", function() {
+      var mp = new Terraformer.MultiPolygon([ [ [ [ 1, 2 ], [ 3, 4 ], [ 5, 6 ] ] ] ]);
+      expect(multiPolygon.intersects(mp)).toEqual(false);
+    });
   });
 
   describe("Feature", function(){
@@ -642,13 +675,6 @@ describe("Intersection", function(){
       });
     });
 
-    it("should correctly figure out intersection with a Polygon", function(){
-      expect(polygon.intersects(new Terraformer.Polygon([ [ [ 1, 1 ], [ 11, 1 ], [ 11, 6 ], [ 1, 6 ] ] ]))).toEqual(true);
-    });
-
-    it("should correctly figure out intersection with a MultiPolygon", function(){
-      expect(polygon.intersects(new Terraformer.MultiPolygon([ [ [ [ 1, 1 ], [ 11, 1 ], [ 11, 6 ], [ 1, 6 ] ] ] ]))).toEqual(true);
-    });
   });
 
   describe("LineString", function(){
@@ -691,6 +717,12 @@ describe("Intersection", function(){
     it("should correctly figure out lack of intersection with MultiPolygon", function(){
       expect(lineString.intersects(new Terraformer.MultiPolygon([ [ [ [ 48.5, -122.5 ], [ 50, -123 ], [ 48.5, -122.5 ] ] ] ]))).toEqual(false);
     });
+
+    it("should correctly figure out lack of intersection with MultiPolygon in reverse", function(){
+      var mp = new Terraformer.MultiPolygon([ [ [ [ 48.5, -122.5 ], [ 50, -123 ], [ 48.5, -122.5 ] ] ] ]);
+      expect(mp.intersects(lineString)).toEqual(false);
+    });
+
   });
 
   describe("Point Within", function(){
@@ -783,6 +815,11 @@ describe("Intersection", function(){
       expect(point.within(multipoint)).toEqual(true);
     });
 
+    it("should return false if a point is within a multipoint with different length", function(){
+      var multipoint = new Terraformer.MultiPoint([ [ 1, 1, 1 ], [ 2, 2, 2 ], [ 3, 3, 3 ], [ 6, 6, 6 ] ]);
+      expect(point.within(multipoint)).toEqual(false);
+    });
+
     it("should return true if a point is within a linestring", function(){
       var linestring = new Terraformer.LineString([ [ 1, 1 ], [ 2, 2 ], [ 3, 3 ], [ 6, 6 ] ]);
       expect(point.within(linestring)).toEqual(true);
@@ -865,6 +902,11 @@ describe("Intersection", function(){
       expect(mp.within(polygon)).toEqual(true);
     });
 
+    it("should return false if an empty LineString is checked within a polygon", function(){
+      var ls = new Terraformer.LineString([]);
+      expect(ls.within(polygon)).toEqual(false);
+    });
+
   });
 
   describe("Catch All", function(){
@@ -917,6 +959,14 @@ describe("Intersection", function(){
 
     it("should return false if a polygonContainsPoint is called and the point is outside the polygon", function(){
       expect(Terraformer.Tools.polygonContainsPoint([[1,2], [2,2], [2,1], [1, 1], [1, 2]], [10,10])).toEqual(false);
+    });
+
+    it("should return false if coordinatesEqual are given non-equal lengths", function(){
+      expect(Terraformer.Tools.coordinatesEqual([ [1, 2] ], [ [ 1, 2 ], [ 2, 3 ] ])).toEqual(false);
+    });
+
+    it("should return false if coordinatesEqual coordinates are non-equal lengths", function(){
+      expect(Terraformer.Tools.coordinatesEqual([ [1, 2] ], [ [ 1, 2, 3 ] ])).toEqual(false);
     });
   });
 
