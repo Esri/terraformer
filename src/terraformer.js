@@ -100,20 +100,6 @@
   }
 
   /*
-  Internal: Merge two objects together.
-  */
-  function mergeObjects (base, add) {
-    add = add || {};
-
-    var keys = Object.keys(add);
-    for (var i in keys) {
-      base[keys[i]] = add[keys[i]];
-    }
-
-    return base;
-  }
-
-  /*
   Public: Calculate an bounding box for a geojson object
   */
   function calculateBounds (geojson) {
@@ -607,6 +593,7 @@
   }
 
   function multiMultiArrayIntersectsMultiMultiArray(a, b) {
+    console.log("a.length = " + a.length);
     for (var i = 0; i < a.length; i++) {
       if (multiArrayIntersectsMultiMultiArray(a[i], b)) {
         return true;
@@ -633,62 +620,6 @@
     }
 
     return outer;
-  }
-
-
-  function primitiveVertexesIntersect(primitive1, primitive2) {
-    // if we are passed a feature, use the polygon inside instead
-    if (primitive1.type === 'Feature') {
-      primitive1 = primitive1.geometry;
-    }
-
-    if (primitive2.type === 'Feature') {
-      primitive2 = primitive2.geometry;
-    }
-
-    if (primitive1.type === 'LineString') {
-      if (primitive2.type === 'LineString') {
-        return arrayIntersectsArray(primitive1.coordinates, primitive2.coordinates);
-      } else if (primitive2.type === 'MultiLineString') {
-        return arrayIntersectsMultiArray(primitive1.coordinates, primitive2.coordinates);
-      } else if (primitive2.type === 'Polygon') {
-        return arrayIntersectsMultiArray(primitive1.coordinates, closedPolygon(primitive2.coordinates));
-      } else if (primitive2.type === 'MultiPolygon') {
-        return arrayIntersectsMultiMultiArray(primitive1.coordinates, primitive2.coordinates);
-      }
-    } else if (primitive1.type === 'MultiLineString') {
-      if (primitive2.type === 'LineString') {
-        return arrayIntersectsMultiArray(primitive2.coordinates, primitive1.coordinates);
-      } else if (primitive2.type === 'Polygon' || primitive2.type === 'MultiLineString') {
-        return multiArrayIntersectsMultiArray(primitive1.coordinates, primitive2.coordinates);
-      } else if (primitive2.type === 'MultiPolygon') {
-        return multiArrayIntersectsMultiMultiArray(primitive1.coordinates, primitive2.coordinates);
-      }
-    } else if (primitive1.type === 'Polygon') {
-      if (primitive2.type === 'LineString') {
-        return arrayIntersectsMultiArray(primitive2.coordinates, closedPolygon(primitive1.coordinates));
-      } else if (primitive2.type === 'MultiLineString') {
-        return multiArrayIntersectsMultiArray(closedPolygon(primitive1.coordinates), primitive2.coordinates);
-      } else if (primitive2.type === 'Polygon') {
-        return multiArrayIntersectsMultiArray(closedPolygon(primitive1.coordinates), closedPolygon(primitive2.coordinates));
-      } else if (primitive2.type === 'MultiPolygon') {
-        return multiArrayIntersectsMultiMultiArray(closedPolygon(primitive1.coordinates), primitive2.coordinates);
-      }
-    } else if (primitive1.type === 'MultiPolygon') {
-      if (primitive2.type === 'LineString') {
-        return arrayIntersectsMultiMultiArray(primitive2.coordinates, primitive1.coordinates);
-      } else if (primitive2.type === 'Polygon' || primitive2.type === 'MultiLineString') {
-        return multiArrayIntersectsMultiMultiArray(closedPolygon(primitive2.coordinates), primitive1.coordinates);
-      } else if (primitive2.type === 'MultiPolygon') {
-        return multiMultiArrayIntersectsMultiMultiArray(primitive1.coordinates, primitive2.coordinates);
-      }
-    } else if (primitive1.type === 'Feature') {
-      // in the case of a Feature, use the internal primitive for intersection
-      var inner = new Primitive(primitive1.geometry);
-      return inner.intersects(primitive2);
-    }
-
-    return false;
   }
 
   function pointsEqual(a, b) {
@@ -900,7 +831,7 @@
         }
 
         if (this.coordinates.length && polygonContainsPoint(primitive.coordinates, this.coordinates[0][0])) {
-          return !primitiveVertexesIntersect(this, primitive);
+          return !multiArrayIntersectsMultiArray(closedPolygon(this.coordinates), closedPolygon(primitive.coordinates));
         } else {
           return false;
         }
@@ -1073,51 +1004,42 @@
         return multiArrayIntersectsMultiMultiArray(closedPolygon(this.coordinates), primitive.coordinates);
       }
 
-      if (this.type === 'LineString') {
-        if (primitive.type === 'LineString') {
-          return arrayIntersectsArray(this.coordinates, primitive.coordinates);
-        } else if (primitive.type === 'MultiLineString') {
-          return arrayIntersectsMultiArray(this.coordinates, primitive.coordinates);
-        } else if (primitive.type === 'Polygon') {
-          return arrayIntersectsMultiArray(this.coordinates, closedPolygon(primitive.coordinates));
-        } else if (primitive.type === 'MultiPolygon') {
-          return arrayIntersectsMultiMultiArray(this.coordinates, primitive.coordinates);
-        }
-      } else if (this.type === 'MultiLineString') {
-        if (primitive.type === 'LineString') {
-          return arrayIntersectsMultiArray(primitive.coordinates, this.coordinates);
-        } else if (primitive.type === 'Polygon' || primitive.type === 'MultiLineString') {
-          return multiArrayIntersectsMultiArray(this.coordinates, primitive.coordinates);
-        } else if (primitive.type === 'MultiPolygon') {
-          return multiArrayIntersectsMultiMultiArray(this.coordinates, primitive.coordinates);
-        }
-      } else if (this.type === 'Polygon') {
-        if (primitive.type === 'LineString') {
-          return arrayIntersectsMultiArray(primitive.coordinates, closedPolygon(this.coordinates));
-        } else if (primitive.type === 'MultiLineString') {
-          return multiArrayIntersectsMultiArray(closedPolygon(this.coordinates), primitive.coordinates);
-        } else if (primitive.type === 'Polygon') {
-          return multiArrayIntersectsMultiArray(closedPolygon(this.coordinates), closedPolygon(primitive.coordinates));
-        } else if (primitive.type === 'MultiPolygon') {
-          return multiArrayIntersectsMultiMultiArray(closedPolygon(this.coordinates), primitive.coordinates);
-        }
-      } else if (this.type === 'MultiPolygon') {
-        if (primitive.type === 'LineString') {
-          return arrayIntersectsMultiMultiArray(primitive.coordinates, this.coordinates);
-        } else if (primitive.type === 'Polygon' || primitive.type === 'MultiLineString') {
-          return multiArrayIntersectsMultiMultiArray(closedPolygon(primitive.coordinates), this.coordinates);
-        } else if (primitive.type === 'MultiPolygon') {
-          return multiMultiArrayIntersectsMultiMultiArray(this.coordinates, primitive.coordinates);
-        }
-      } else if (this.type === 'Feature') {
-        // in the case of a Feature, use the internal primitive for intersection
-        var inner = new Primitive(this.geometry);
-        return inner.intersects(primitive);
-      }
 
-      warn("Type " + this.type + " to " + primitive.type + " intersection is not supported by intersects");
-      return false;
+    } else if (this.type === 'MultiLineString') {
+      if (primitive.type === 'LineString') {
+        return arrayIntersectsMultiArray(primitive.coordinates, this.coordinates);
+      } else if (primitive.type === 'Polygon' || primitive.type === 'MultiLineString') {
+        return multiArrayIntersectsMultiArray(this.coordinates, primitive.coordinates);
+      } else if (primitive.type === 'MultiPolygon') {
+        return multiArrayIntersectsMultiMultiArray(this.coordinates, primitive.coordinates);
+      }
+    } else if (this.type === 'Polygon') {
+      if (primitive.type === 'LineString') {
+        return arrayIntersectsMultiArray(primitive.coordinates, closedPolygon(this.coordinates));
+      } else if (primitive.type === 'MultiLineString') {
+        return multiArrayIntersectsMultiArray(closedPolygon(this.coordinates), primitive.coordinates);
+      } else if (primitive.type === 'Polygon') {
+        return multiArrayIntersectsMultiArray(closedPolygon(this.coordinates), closedPolygon(primitive.coordinates));
+      } else if (primitive.type === 'MultiPolygon') {
+        return multiArrayIntersectsMultiMultiArray(closedPolygon(this.coordinates), primitive.coordinates);
+      }
+    } else if (this.type === 'MultiPolygon') {
+      if (primitive.type === 'LineString') {
+        return arrayIntersectsMultiMultiArray(primitive.coordinates, this.coordinates);
+      } else if (primitive.type === 'Polygon' || primitive.type === 'MultiLineString') {
+        return multiArrayIntersectsMultiMultiArray(closedPolygon(primitive.coordinates), this.coordinates);
+      } else if (primitive.type === 'MultiPolygon') {
+        console.log("multi vs multi");
+        return multiMultiArrayIntersectsMultiMultiArray(this.coordinates, primitive.coordinates);
+      }
+    } else if (this.type === 'Feature') {
+      // in the case of a Feature, use the internal primitive for intersection
+      var inner = new Primitive(this.geometry);
+      return inner.intersects(primitive);
     }
+
+    warn("Type " + this.type + " to " + primitive.type + " intersection is not supported by intersects");
+    return false;
   };
 
 
