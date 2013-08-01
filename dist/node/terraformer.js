@@ -593,7 +593,6 @@
   }
 
   function multiMultiArrayIntersectsMultiMultiArray(a, b) {
-    console.log("a.length = " + a.length);
     for (var i = 0; i < a.length; i++) {
       if (multiArrayIntersectsMultiMultiArray(a[i], b)) {
         return true;
@@ -1029,7 +1028,6 @@
       } else if (primitive.type === 'Polygon' || primitive.type === 'MultiLineString') {
         return multiArrayIntersectsMultiMultiArray(closedPolygon(primitive.coordinates), this.coordinates);
       } else if (primitive.type === 'MultiPolygon') {
-        console.log("multi vs multi");
         return multiMultiArrayIntersectsMultiMultiArray(this.coordinates, primitive.coordinates);
       }
     } else if (this.type === 'Feature') {
