@@ -857,7 +857,7 @@
       // multilinestring.within(polygon)
       } else if (this.type === "MultiLineString") {
         for (i = 0; i < this.coordinates.length; i++) {
-          var ls = new Terraformer.LineString(this.coordinates[i]);
+          var ls = new LineString(this.coordinates[i]);
 
           if (ls.within(primitive) === false) {
             contains++;
@@ -870,7 +870,7 @@
       // multipolygon.within(polygon)
       } else if (this.type === "MultiPolygon") {
         for (i = 0; i < this.coordinates.length; i++) {
-          var p1 = new Terraformer.Primitive({ type: "Polygon", coordinates: this.coordinates[i] });
+          var p1 = new Primitive({ type: "Polygon", coordinates: this.coordinates[i] });
 
           if (p1.within(primitive) === false) {
             return false;
@@ -937,7 +937,7 @@
       // multilinestring.within(multipolygon)
       } else if (this.type === "MultiLineString") {
         for (i = 0; i < this.coordinates.length; i++) {
-          var lines = new Terraformer.LineString(this.coordinates[i]);
+          var lines = new LineString(this.coordinates[i]);
 
           if (lines.within(primitive) === false) {
             return false;
@@ -970,7 +970,7 @@
       primitive = primitive.geometry;
     }
 
-    var p = new Terraformer.Primitive(primitive);
+    var p = new Primitive(primitive);
     if (this.within(primitive) || p.within(this)) {
       return true;
     }
