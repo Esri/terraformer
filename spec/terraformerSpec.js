@@ -151,6 +151,10 @@ describe("Primitives", function(){
       expect(point.convexHull()).toEqual([[45, 60]]);
     });
 
+    it("should calculate convex hull using Tools", function(){
+      expect(Terraformer.Tools.convexHull([ point.coordinates ])).toEqual([[45, 60]]);
+    });
+
     it("should calculate envelope", function(){
       expect(point.envelope()).toEqual({ x: 45, y: 60, w: 0, h: 0 });
     });
@@ -371,6 +375,19 @@ describe("Primitives", function(){
     it("should create a MultiPolygon from an array of GeoJSON Polygons", function(){
       expect(multiPolygon.type).toEqual("MultiPolygon");
       expect(multiPolygon.coordinates).toEqual(GeoJSON.multiPolygons[0].coordinates);
+    });
+
+    it("should return true when a MultiPolygon intersects another", function(){
+      var mp = new Terraformer.MultiPolygon([
+        [
+          [ [102.0, 2.0], [103.0, 2.0], [103.0, 3.0], [102.0, 3.0], [102.0, 2.0] ]
+        ],
+        [
+          [ [100.0, 0.0], [102.0, 0.0], [102.0, 1.0], [100.0, 1.0], [100.0, 0.0] ]
+        ]
+      ]);
+
+      expect(multiPolygon.intersects(mp)).toEqual(true);
     });
 
     it("should throw an error when called invalid data", function(){
@@ -711,6 +728,16 @@ describe("Intersection", function(){
       expect(point.within(mp)).toEqual(false);
     });
 
+    it("should return false when inside a hole of a polygon", function(){
+      var polygon = new Terraformer.Polygon([ [ [ 5, 5 ], [ 5, 15 ], [ 15, 15 ], [ 15, 5 ], [ 5, 5 ] ], [ [ 9, 9 ], [ 9, 11 ], [ 11, 11 ], [ 11, 9 ], [ 9, 9 ] ] ]);
+      expect(point.within(polygon)).toEqual(false);
+    });
+
+    it("should return true when not inside a hole of a polygon", function(){
+      var polygon = new Terraformer.Polygon([ [ [ 5, 5 ], [ 5, 15 ], [ 15, 15 ], [ 15, 5 ], [ 5, 5 ] ], [ [ 9, 9 ], [ 9, 9.5 ], [ 9.5, 9.5 ], [ 9.5, 9 ], [ 9, 9 ] ] ]);
+      expect(point.within(polygon)).toEqual(true);
+    });
+
   });
 
   describe("MultiPolygon Within", function(){
@@ -840,4 +867,58 @@ describe("Intersection", function(){
 
   });
 
+  describe("Catch All", function(){
+    it("should return an empty array for an empty convexHull", function() {
+      expect(Terraformer.Tools.convexHull([])).toEqual([]);
+    });
+
+    it("should return an empty array for an empty convexHull for Point", function() {
+      var point = new Terraformer.Point([]);
+      expect(point.convexHull()).toEqual([]);
+    });
+
+    it("should return an empty array for an empty convexHull for LineString", function() {
+      var ls = new Terraformer.LineString([]);
+      expect(ls.convexHull()).toEqual([]);
+    });
+
+    it("should return an empty array for an empty convexHull for Polygon", function() {
+      var p = new Terraformer.Polygon([]);
+      expect(p.convexHull()).toEqual([]);
+    });
+
+    it("should return an empty array for an empty convexHull for MultiPolygon", function() {
+      var mp = new Terraformer.MultiPolygon([]);
+      expect(mp.convexHull()).toEqual([]);
+    });
+
+    it("should throw an error for an unknown type for convexHull", function() {
+      var f = new Terraformer.Feature(GeoJSON.features[0]);
+      expect(function(){
+        new Terraformer.Point(f.convexHull());
+      }).toThrow("Unable to get convex hull of Feature");
+    });
+
+    it("should throw an error for an unknow type in Primitive", function(){
+      expect(function(){
+        new Terraformer.Primitive({type: "foobar"});
+      }).toThrow("Unknown type: foobar");
+    });
+
+    it("should throw an error for an unknow type in calculateBounds", function(){
+      expect(function(){
+        Terraformer.Tools.calculateBounds({type: "foobar"});
+      }).toThrow("Unknown type: foobar");
+    });
+
+    it("should return false when polygonContainsPoint is passed an empty polygon", function() {
+      expect(Terraformer.Tools.polygonContainsPoint([], [])).toEqual(false);
+    });
+
+    it("should return false if a polygonContainsPoint is called and the point is outside the polygon", function(){
+      expect(Terraformer.Tools.polygonContainsPoint([[1,2], [2,2], [2,1], [1, 1], [1, 2]], [10,10])).toEqual(false);
+    });
+  });
+
 });
+
