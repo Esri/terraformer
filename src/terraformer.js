@@ -1002,26 +1002,6 @@
       } else if (primitive.type === 'MultiPolygon') {
         return multiArrayIntersectsMultiMultiArray(closedPolygon(this.coordinates), primitive.coordinates);
       }
-
-
-    } else if (this.type === 'MultiLineString') {
-      if (primitive.type === 'LineString') {
-        return arrayIntersectsMultiArray(primitive.coordinates, this.coordinates);
-      } else if (primitive.type === 'Polygon' || primitive.type === 'MultiLineString') {
-        return multiArrayIntersectsMultiArray(this.coordinates, primitive.coordinates);
-      } else if (primitive.type === 'MultiPolygon') {
-        return multiArrayIntersectsMultiMultiArray(this.coordinates, primitive.coordinates);
-      }
-    } else if (this.type === 'Polygon') {
-      if (primitive.type === 'LineString') {
-        return arrayIntersectsMultiArray(primitive.coordinates, closedPolygon(this.coordinates));
-      } else if (primitive.type === 'MultiLineString') {
-        return multiArrayIntersectsMultiArray(closedPolygon(this.coordinates), primitive.coordinates);
-      } else if (primitive.type === 'Polygon') {
-        return multiArrayIntersectsMultiArray(closedPolygon(this.coordinates), closedPolygon(primitive.coordinates));
-      } else if (primitive.type === 'MultiPolygon') {
-        return multiArrayIntersectsMultiMultiArray(closedPolygon(this.coordinates), primitive.coordinates);
-      }
     } else if (this.type === 'MultiPolygon') {
       if (primitive.type === 'LineString') {
         return arrayIntersectsMultiMultiArray(primitive.coordinates, this.coordinates);
@@ -1456,6 +1436,7 @@
   exports.Tools.polygonContainsPoint = polygonContainsPoint;
   exports.Tools.arrayIntersectsArray = arrayIntersectsArray;
   exports.Tools.coordinatesContainPoint = coordinatesContainPoint;
+  exports.Tools.coordinatesEqual = coordinatesEqual;
   exports.Tools.convexHull = convexHull;
 
   exports.MercatorCRS = MercatorCRS;
