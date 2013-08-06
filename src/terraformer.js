@@ -417,6 +417,19 @@
     }
   }
 
+  /*
+  Internal: used for sorting
+  */
+  function compSort(p1, p2) {
+    if(p1[0] - p2[0] > p1[1] - p2[1]) {
+      return 1;
+    } else if(p1[0] - p2[0] < p1[1] - p2[1]) {
+      return -1;
+    } else {
+      return 0;
+    }
+  }
+
 
   /*
   Internal: used to determine turn
@@ -459,18 +472,8 @@
       return points;
     }
 
-    function comp(p1, p2) {
-      if(p1[0] - p2[0] > p1[1] - p2[1]) {
-        return 1;
-      } else if(p1[0] - p2[0] < p1[1] - p2[1]) {
-        return -1;
-      } else {
-        return 0;
-      }
-    }
-
     // Returns the points on the convex hull of points in CCW order.
-    var hull = [points.sort(comp)[0]];
+    var hull = [points.sort(compSort)[0]];
 
     for(var p = 0; p < hull.length; p++) {
       var q = nextHullPoint(points, hull[p]);
@@ -638,18 +641,8 @@
       return false;
     }
 
-    function comp(p1, p2) {
-      if(p1[0] - p2[0] > p1[1] - p2[1]) {
-        return 1;
-      } else if(p1[0] - p2[0] < p1[1] - p2[1]) {
-        return -1;
-      } else {
-        return 0;
-      }
-    }
-
-    var na = a.slice().sort(comp);
-    var nb = b.slice().sort(comp);
+    var na = a.slice().sort(compSort);
+    var nb = b.slice().sort(compSort);
 
     for (var i = 0; i < na.length; i++) {
       if (na[i].length !== nb[i].length) {
