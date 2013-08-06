@@ -1327,10 +1327,9 @@
     return new Primitive(this.geometries[i]);
   };
 
-  function createCircle(center, rad, interpolate){
+  function createCircle(center, radius, interpolate){
     var mercatorPosition = positionToMercator(center);
     var steps = interpolate || 64;
-    var radius = rad || 250;
     var polygon = {
       type: "Polygon",
       coordinates: [[]]
