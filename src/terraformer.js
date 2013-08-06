@@ -717,13 +717,7 @@
       return toGeographic(this);
     },
     envelope: function(){
-      var bounds = calculateBounds(this);
-      return {
-        x: bounds[0],
-        y: bounds[1],
-        w: Math.abs(bounds[0] - bounds[2]),
-        h: Math.abs(bounds[1] - bounds[3])
-      };
+      return calculateEnvelope(this);
     },
     bbox: function(){
       return calculateBounds(this);
