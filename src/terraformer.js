@@ -417,6 +417,19 @@
     }
   }
 
+  /*
+  Internal: used for sorting
+  */
+  function compSort(p1, p2) {
+    if(p1[0] - p2[0] > p1[1] - p2[1]) {
+      return 1;
+    } else if(p1[0] - p2[0] < p1[1] - p2[1]) {
+      return -1;
+    } else {
+      return 0;
+    }
+  }
+
 
   /*
   Internal: used to determine turn
@@ -459,18 +472,8 @@
       return points;
     }
 
-    function comp(p1, p2) {
-      if(p1[0] - p2[0] > p1[1] - p2[1]) {
-        return 1;
-      } else if(p1[0] - p2[0] < p1[1] - p2[1]) {
-        return -1;
-      } else {
-        return 0;
-      }
-    }
-
     // Returns the points on the convex hull of points in CCW order.
-    var hull = [points.sort(comp)[0]];
+    var hull = [points.sort(compSort)[0]];
 
     for(var p = 0; p < hull.length; p++) {
       var q = nextHullPoint(points, hull[p]);
@@ -638,18 +641,8 @@
       return false;
     }
 
-    function comp(p1, p2) {
-      if(p1[0] - p2[0] > p1[1] - p2[1]) {
-        return 1;
-      } else if(p1[0] - p2[0] < p1[1] - p2[1]) {
-        return -1;
-      } else {
-        return 0;
-      }
-    }
-
-    var na = a.slice().sort(comp);
-    var nb = b.slice().sort(comp);
+    var na = a.slice().sort(compSort);
+    var nb = b.slice().sort(compSort);
 
     for (var i = 0; i < na.length; i++) {
       if (na[i].length !== nb[i].length) {
@@ -717,13 +710,7 @@
       return toGeographic(this);
     },
     envelope: function(){
-      var bounds = calculateBounds(this);
-      return {
-        x: bounds[0],
-        y: bounds[1],
-        w: Math.abs(bounds[0] - bounds[2]),
-        h: Math.abs(bounds[1] - bounds[3])
-      };
+      return calculateEnvelope(this);
     },
     bbox: function(){
       return calculateBounds(this);
@@ -1037,7 +1024,7 @@
 
     if(input && input.type === "Point" && input.coordinates){
       extend(this, input);
-    } else if(input && Array.isArray(input)) {
+    } else if(input && Object.prototype.toString.call(input) === "[object Array]") {
       this.coordinates = input;
     } else if(args.length >= 2) {
       this.coordinates = args;
@@ -1204,6 +1191,10 @@
     return this;
   };
 
+  Polygon.prototype.close = function() {
+    this.coordinates = closedPolygon(this.coordinates);
+  };
+
   /*
   GeoJSON MultiPolygon Class
       new MultiPolygon();
@@ -1340,10 +1331,9 @@
     return new Primitive(this.geometries[i]);
   };
 
-  function createCircle(center, rad, interpolate){
+  function createCircle(center, radius, interpolate){
     var mercatorPosition = positionToMercator(center);
     var steps = interpolate || 64;
-    var radius = rad || 250;
     var polygon = {
       type: "Polygon",
       coordinates: [[]]
