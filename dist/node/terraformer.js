@@ -1024,7 +1024,7 @@
 
     if(input && input.type === "Point" && input.coordinates){
       extend(this, input);
-    } else if(input && Array.isArray(input)) {
+    } else if(input && Object.prototype.toString.call(input) === "[object Array]") {
       this.coordinates = input;
     } else if(args.length >= 2) {
       this.coordinates = args;
