@@ -1191,6 +1191,10 @@
     return this;
   };
 
+  Polygon.prototype.close = function() {
+    this.coordinates = closedPolygon(this.coordinates);
+  };
+
   /*
   GeoJSON MultiPolygon Class
       new MultiPolygon();
