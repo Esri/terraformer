@@ -1,0 +1,33 @@
+{
+  "name": "terraformer-wkt-parser",
+  "version": "0.1.9",
+  "description": "Well-Known Text parser",
+  "main": "terraformer-wkt-parser.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "grunt test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:Esri/terraformer-wkt-parser.git"
+  },
+  "keywords": [
+    "WKT",
+    "GIS",
+    "Geography"
+  ],
+  "author": "Jerry Sievert <code@legitimatesounding.com> (http://legitimatesounding.com)",
+  "license": "MIT",
+  "dependencies": {
+    "terraformer": "~0.1.7"
+  },
+  "devDependencies": {
+    "vows": "~0.7.0",
+    "grunt": "0.4.x",
+    "jison": "~0.3.12",
+    "grunt-contrib-uglify": "~0.2.2",
+    "grunt-vows": "~0.4.0"
+  }
+}
