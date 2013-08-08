@@ -492,7 +492,7 @@
       if (((coordinates[i][1] <= point[1] && point[1] < coordinates[j][1]) ||
            (coordinates[j][1] <= point[1] && point[1] < coordinates[i][1])) &&
           (point[0] < (coordinates[j][0] - coordinates[i][0]) * (point[1] - coordinates[i][1]) / (coordinates[j][1] - coordinates[i][1]) + coordinates[i][0])) {
-        contains = true;
+        contains = !contains;
       }
     }
     return contains;
