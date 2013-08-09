@@ -126,7 +126,7 @@ Then run the tests with `$ grunt` which will buld all the files and then run the
 
 ## Building
 
-Running the `$ grunt build` command will build the libraries to `dist/node` and `dist/browser`. If you want to build with a different version number run `$ grunt build-versioned`.
+Running the `$ grunt build_source` command will build the libraries to `dist/node` and `dist/browser`.
 
 ## Future Features
 * GeoJSON validation
