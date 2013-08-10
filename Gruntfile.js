@@ -34,7 +34,7 @@ module.exports = function (grunt) {
         src: [ "test/*.js" ]
       }
     },
-/*
+
     jasmine: {
       coverage: {
         src: [
@@ -59,7 +59,7 @@ module.exports = function (grunt) {
         }
       }
     },
-*/
+
     jasmine_node: {
       options: {
         forceExit: true,
