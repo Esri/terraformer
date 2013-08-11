@@ -434,6 +434,42 @@ var RTree = function (width) {
       return return_array;
     };
 
+    var _search_subtree_reverse = function(rect, return_node, return_array, root) {
+      var hit_stack = []; // Contains the elements that overlap
+      if (!RTree.Rectangle.overlap_rectangle(root, rect)) {
+        return return_array;
+      }
+
+      var load_callback = function(local_tree, local_node) {
+          return function(data) {
+            local_tree._attach_data(local_node, data);
+          };
+      };
+
+      hit_stack.push(root.nodes);
+
+      do {
+        var nodes = hit_stack.pop();
+
+        for (var i = nodes.length - 1; i >= 0; i--) {
+          var ltree = nodes[i];
+          if (RTree.Rectangle.overlap_rectangle(ltree, rect)) {
+            if ("nodes" in ltree) { // Not a Leaf
+              hit_stack.push(ltree.nodes);
+            } else if ("leaf" in ltree) { // A Leaf !!
+              if (!return_node) {
+                return_array.push(ltree.leaf);
+              } else {
+                return_array.push(ltree);
+              }
+            }
+          }
+        }
+      } while (hit_stack.length > 0);
+
+      return return_array;
+    };
+
    /* non-recursive internal insert function
     * [] = _insert_subtree(rectangle, object to insert, root to begin insertion at)
     * @private
@@ -601,6 +637,41 @@ var RTree = function (width) {
       }
 
       dfd.resolve(_search_subtree.apply(this, args));
+
+      return dfd;
+    };
+
+    this.within = function(shape, callback) {
+      var rect;
+      if(shape.type){
+        var b = Terraformer.Tools.calculateBounds(shape);
+        rect = {
+          x: b[0],
+          y: b[1],
+          w: Math.abs(b[0] - b[2]),
+          h: Math.abs(b[1] - b[3])
+        };
+      } else {
+        rect = shape;
+      }
+
+      var dfd = new Terraformer.Deferred();
+
+      var args = [ rect, false, [ ], _T ];
+
+      if (rect === undefined) {
+        throw "Wrong number of arguments. RT.Search requires at least a bounding rectangle.";
+      }
+
+      if(callback){
+        dfd.then(function(result){
+          callback(null, result);
+        }, function(error){
+          callback(error, null);
+        });
+      }
+
+      dfd.resolve(_search_subtree_reverse.apply(this, args));
 
       return dfd;
     };
