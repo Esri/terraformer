@@ -38,6 +38,7 @@ module.exports = function (grunt) {
     jasmine: {
       coverage: {
         src: [
+          "node_modules/terraformer/terraformer.js",
           "terraformer-wkt-parser.js"
         ],
         options: {
@@ -70,7 +71,7 @@ module.exports = function (grunt) {
         helperNameMatcher: 'Helpers'
       },
       all: ['spec/']
-    },
+    }
   });
 
   grunt.registerTask('wkt-parser', 'Building WKT Parser', function() {
@@ -96,6 +97,6 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-contrib-jasmine');
   grunt.loadNpmTasks('grunt-jasmine-node');
 
-  grunt.registerTask('test', [ 'wkt-parser', 'vows' ]);
+  grunt.registerTask('test', [ 'wkt-parser', 'vows', 'jasmine', 'jasmine_node' ]);
   grunt.registerTask('default', [ 'wkt-parser', 'vows', 'uglify' ]);
 };
