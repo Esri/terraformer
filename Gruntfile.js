@@ -38,6 +38,7 @@ module.exports = function (grunt) {
     jasmine: {
       coverage: {
         src: [
+          "node_modules/terraformer/terraformer.js",
           "terraformer-wkt-parser.js"
         ],
         options: {
