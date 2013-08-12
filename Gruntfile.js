@@ -98,5 +98,5 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-jasmine-node');
 
   grunt.registerTask('test', [ 'wkt-parser', 'vows', 'jasmine', 'jasmine_node' ]);
-  grunt.registerTask('default', [ 'wkt-parser', 'vows', 'uglify' ]);
+  grunt.registerTask('default', [ 'wkt-parser', 'vows', 'jasmine', 'jasmine_node', 'uglify' ]);
 };
