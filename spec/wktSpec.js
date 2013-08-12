@@ -3,6 +3,14 @@ if(typeof module === "object"){
  Terraformer.WKT = require("../terraformer-wkt-parser");
 }
 
+beforeEach(function() {
+  this.addMatchers({
+    toBeInstanceOfClass: function(classRef){
+      return this.actual instanceof classRef;
+    }
+  });
+});
+
 describe("WKT Convert", function () {
 
   it("should convert a POINT", function () {
@@ -15,7 +23,6 @@ describe("WKT Convert", function () {
 
     expect(output).toEqual("POINT (30 10)");
   });
-
 
   it("should convert a POINT with Z", function () {
     var input = {
