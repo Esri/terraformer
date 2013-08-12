@@ -211,4 +211,24 @@ describe("RTree", function(){
     expect(tree.min_width).toEqual(5);
     expect(tree.max_width).toEqual(10);
   });
+
+  it("should find 5 result within an rtree with 11 entries that contains the within request", function(){
+    var tree = new Terraformer.RTree();
+    var spy = jasmine.createSpy();
+    tree.insert({ x: 101, y: 101, w: 1, h: 1 }, 'bad1');
+    tree.insert({ x: 102, y: 102, w: 1, h: 1 }, 'good1');
+    tree.insert({ x: 103, y: 103, w: 1, h: 1 }, 'good2');
+    tree.insert({ x: 104, y: 104, w: 1, h: 1 }, 'good3');
+    tree.insert({ x: 105, y: 105, w: 1, h: 1 }, 'good4');
+    tree.insert({ x: 106, y: 106, w: 1, h: 1 }, 'good5');
+    tree.insert({ x: 107, y: 107, w: 1, h: 1 }, 'bad2');
+    tree.insert({ x: 108, y: 108, w: 1, h: 1 }, 'bad3');
+    tree.insert({ x: 109, y: 109, w: 1, h: 1 }, 'bad4');
+    tree.insert({ x: 110, y: 110, w: 1, h: 1 }, 'bad5');
+
+    var dfd = tree.within({ x: 102, y: 102, w: 5, h: 5 }, spy);
+
+    expect(spy.mostRecentCall.args[1].sort()).toEqual([ 'good1', 'good2', 'good3', 'good4', 'good5' ]);
+  });
+
 });
