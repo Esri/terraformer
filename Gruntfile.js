@@ -50,11 +50,12 @@ module.exports = function (grunt) {
           templateOptions: {
             coverage: './coverage/coverage.json',
             report: './coverage',
+            // due to the generated aspects of the parser, thresholds are much lower
             thresholds: {
-              lines: 75,
-              statements: 75,
-              branches: 75,
-              functions: 75
+              lines: 50,
+              statements: 50,
+              branches: 50,
+              functions: 50
             }
           }
         }
