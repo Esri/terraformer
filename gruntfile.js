@@ -38,11 +38,11 @@ module.exports = function (grunt) {
         dest: 'dist/node/Parsers/ArcGIS/index.js'
       },
       geostore: {
-        src: ['<banner:meta.banner>', "src/geostore.js"],
+        src: ['<banner:meta.banner>', 'src/helpers/browser/extend.js', 'src/helpers/browser/eventemitter.js', 'src/helpers/browser/stream.js', 'src/geostore.js'],
         dest: 'dist/browser/geostore.js'
       },
       geostore_node: {
-        src: ['src/geostore.js'],
+        src: [ 'src/helpers/stream.js', 'src/geostore.js'],
         dest: 'dist/node/GeoStore/index.js'
       },
       memory_store: {
