@@ -75,7 +75,7 @@ Documentation Coming Soon...
 ### Parsers
 
 * [ArcGIS](ArcGIS.md)
-* [Well Known Text](WKT.md)
+* [Well Known Text](https://github.com/esri/terraformer-wkt-parser)
 * [GeoJSON](GeoJSON.md)
 
 ### Indexes
