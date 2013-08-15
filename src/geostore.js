@@ -192,7 +192,7 @@
     var envelope = Terraformer.Tools.calculateEnvelope(shape);
 
     // search the index using within
-    this.index.within(envelope).then(bind(this, function(found){
+    this.index.within(envelope, bind(this, function(err, found){
       var results = [];
       var completed = 0;
       var errors = 0;
@@ -230,7 +230,7 @@
       };
 
       // for each result see if the polygon contains the point
-      if(found.length){
+      if(found && found.length){
         var getCB = function(err, result){
           if (err) error();
           else evaluate( result );

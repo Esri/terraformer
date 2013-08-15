@@ -124,21 +124,12 @@
   GeoStore.prototype.contains = function(geojson, callback){
     // make a new deferred
     var shape = new Terraformer.Primitive(geojson);
-    var dfd = new this.deferred();
-
-    if(callback){
-      dfd.then(function(result){
-        callback(null, result);
-      }, function(error){
-        callback(error, null);
-      });
-    }
 
     // create our envelope
     var envelope = Terraformer.Tools.calculateEnvelope(shape);
 
     // search the index
-    this.index.search(envelope).then(bind(this, function(found){
+    this.index.search(envelope, bind(this, function(err, found){
       var results = [];
       var completed = 0;
       var errors = 0;
@@ -155,14 +146,14 @@
 
           if(completed >= found.length){
             if(!errors){
-              dfd.resolve(results);
+              if ( callback ) callback( null, results );
             } else {
-              dfd.reject("Could not get all geometries");
+              if (callback) callback("Could not get all geometries", null);
             }
           }
 
           if(completed >= found.length && errors){
-            dfd.reject("Could not get all geometries");
+            if (callback) callback("Could not get all geometries", null);
           }
         }
 
@@ -172,12 +163,12 @@
         completed++;
         errors++;
         if(completed >= found.length){
-          dfd.reject("Could not get all geometries");
+          if (callback) callback("Could not get all geometries", null);
         }
       };
 
       // for each result see if the polygon contains the point
-      if(found.length){
+      if(found && found.length){
         var getCB = function(err, result){
           if (err) error();
           else evaluate( result );
@@ -187,34 +178,21 @@
           this.get(found[i], getCB);
         }
       } else {
-        dfd.resolve(results);
-        //if ( callback ) callback( null, results );
+        if ( callback ) callback( null, results );
       }
 
     }));
-
-    // return the deferred
-    return dfd;
   };
 
   GeoStore.prototype.within = function(geojson, callback){
     // make a new deferred
     var shape = new Terraformer.Primitive(geojson);
-    var dfd = new this.deferred();
-
-    if(callback){
-      dfd.then(function(result){
-        callback(null, result);
-      }, function(error){
-        callback(error, null);
-      });
-    }
 
     // create our envelope
     var envelope = Terraformer.Tools.calculateEnvelope(shape);
 
     // search the index using within
-    this.index.within(envelope).then(bind(this, function(found){
+    this.index.within(envelope, bind(this, function(err, found){
       var results = [];
       var completed = 0;
       var errors = 0;
@@ -231,14 +209,14 @@
 
           if(completed >= found.length){
             if(!errors){
-              dfd.resolve(results);
+              if (callback) callback(null, results);
             } else {
-              dfd.reject("Could not get all geometries");
+              if (callback) callback("Could not get all geometries", null);
             }
           }
 
           if(completed >= found.length && errors){
-            dfd.reject("Could not get all geometries");
+            if (callback) callback("Could not get all geometries", null);
           }
         }
       };
@@ -247,12 +225,12 @@
         completed++;
         errors++;
         if(completed >= found.length){
-          dfd.reject("Could not get all geometries");
+          if (callback) callback("Could not get all geometries", null);
         }
       };
 
       // for each result see if the polygon contains the point
-      if(found.length){
+      if(found && found.length){
         var getCB = function(err, result){
           if (err) error();
           else evaluate( result );
@@ -262,26 +240,15 @@
           this.get(found[i], getCB);
         }
       } else {
-        dfd.resolve(results);
+        if (callback) callback(null, results); 
       }
 
     }));
 
-    // return the deferred
-    return dfd;
   };
 
   GeoStore.prototype.update = function(geojson, callback){
     var feature = Terraformer.Primitive(geojson);
-    var dfd = new this.deferred();
-
-    if(callback){
-      dfd.then(function(result){
-        callback(null, result);
-      }, function(error){
-        callback(error, null);
-      });
-    }
 
     if (feature.type !== "Feature") {
       throw new Error("Terraform.GeoStore : only Features and FeatureCollections are supported");
@@ -301,11 +268,7 @@
         this.store.update(feature, callback);
       }
     }));
-    //, function(error){
-    //  dfd.reject("Could find feature");
-    //});
 
-    return dfd;
   };
 
   // gets an item by id
