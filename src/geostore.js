@@ -124,15 +124,6 @@
   GeoStore.prototype.contains = function(geojson, callback){
     // make a new deferred
     var shape = new Terraformer.Primitive(geojson);
-    var dfd = new this.deferred();
-
-    if(callback){
-      dfd.then(function(result){
-        callback(null, result);
-      }, function(error){
-        callback(error, null);
-      });
-    }
 
     // create our envelope
     var envelope = Terraformer.Tools.calculateEnvelope(shape);
@@ -155,14 +146,14 @@
 
           if(completed >= found.length){
             if(!errors){
-              dfd.resolve(results);
+              if ( callback ) callback( null, results );
             } else {
-              dfd.reject("Could not get all geometries");
+              if (callback) callback("Could not get all geometries", null);
             }
           }
 
           if(completed >= found.length && errors){
-            dfd.reject("Could not get all geometries");
+            if (callback) callback("Could not get all geometries", null);
           }
         }
 
@@ -172,7 +163,7 @@
         completed++;
         errors++;
         if(completed >= found.length){
-          dfd.reject("Could not get all geometries");
+          if (callback) callback("Could not get all geometries", null);
         }
       };
 
@@ -187,14 +178,10 @@
           this.get(found[i], getCB);
         }
       } else {
-        dfd.resolve(results);
-        //if ( callback ) callback( null, results );
+        if ( callback ) callback( null, results );
       }
 
     }));
-
-    // return the deferred
-    return dfd;
   };
 
   GeoStore.prototype.within = function(geojson, callback){
