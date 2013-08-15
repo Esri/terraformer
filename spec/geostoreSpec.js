@@ -126,11 +126,10 @@ describe("geostore", function() {
       gs.contains({
         type:"Point",
         coordinates: [-122.676048, 45.516544]
-      }, spy).then(function(found){
+      }, function(error, found){
         expect(found.length).toEqual(1);
         expect(found[0].id).toEqual("41067");
       });
-      expect(spy.callCount).toEqual(2);
     });
 
     it("should update features in store and run a callback", function(){
