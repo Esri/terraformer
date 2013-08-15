@@ -48,8 +48,7 @@
   /* OPTIONS
   {
     store: Terraformer.Store.Memory,
-    index: Terraformer.RTree,
-    deferred: Terraformer.Deferred,
+    index: Terraformer.RTree
   }
   */
   function GeoStore(config){
@@ -57,7 +56,6 @@
     if(!config.store || !config.index){
       throw new Error("Terraformer.GeoStore requires an instace of a Terraformer.Store and a instance of Terraformer.RTree");
     }
-    this.deferred = (config.deferred) ? config.deferred : Terraformer.Deferred;
     this.index = config.index;
     this.store = config.store;
   }
