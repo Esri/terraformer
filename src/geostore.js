@@ -106,15 +106,6 @@
   };
 
   GeoStore.prototype.remove = function(id, callback){
-    var dfd = new this.deferred();
-
-    if(callback){
-      dfd.then(function(result){
-        callback(null, result);
-      }, function(error){
-        callback(error, null);
-      });
-    }
     this.get(id, bind(this, function(error, geojson){
       if ( error ){
         callback("Could not get feature to remove", null);
@@ -128,8 +119,6 @@
         }));
       }
     })); 
-
-    return dfd;
   };
 
   GeoStore.prototype.contains = function(geojson, callback){

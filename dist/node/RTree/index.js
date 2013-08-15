@@ -702,7 +702,7 @@ var RTree = function (width) {
       }
 
       // convert shape (the first arg) to a bbox if its geojson
-      if(args[0].type){
+      if(args && args[0] && args[0].type){
         var b = Terraformer.Tools.calculateBounds(args[0]);
         args[0] = {
           x: b[0],
