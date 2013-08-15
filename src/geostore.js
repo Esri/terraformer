@@ -262,15 +262,6 @@
 
   GeoStore.prototype.update = function(geojson, callback){
     var feature = Terraformer.Primitive(geojson);
-    var dfd = new this.deferred();
-
-    if(callback){
-      dfd.then(function(result){
-        callback(null, result);
-      }, function(error){
-        callback(error, null);
-      });
-    }
 
     if (feature.type !== "Feature") {
       throw new Error("Terraform.GeoStore : only Features and FeatureCollections are supported");
@@ -290,11 +281,7 @@
         this.store.update(feature, callback);
       }
     }));
-    //, function(error){
-    //  dfd.reject("Could find feature");
-    //});
 
-    return dfd;
   };
 
   // gets an item by id
