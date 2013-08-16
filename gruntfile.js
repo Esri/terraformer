@@ -42,7 +42,7 @@ module.exports = function (grunt) {
         dest: 'dist/browser/geostore.js'
       },
       geostore_node: {
-        src: [ 'src/partials/geostore-head.js', 'src/helpers/stream.js', 'src/geostore.js', 'src/partials/geostore-tail.js' ],
+        src: [ 'src/partials/geostore-head.js', 'src/helpers/node/stream.js', 'src/geostore.js', 'src/partials/geostore-tail.js' ],
         dest: 'dist/node/GeoStore/index.js'
       },
       memory_store: {
