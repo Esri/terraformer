@@ -121,6 +121,8 @@ stream.on("end", function (geojson) {
 });
 ```
 
+Since streams are not reentrant in the `GeoStore`, it is recommended to create a new `GeoStore` for each stream.  Streams are destroyed after the `end` event has been called.
+
 ### Removing Data
 
 To remove a feature just pass its id  to the `remove` method
