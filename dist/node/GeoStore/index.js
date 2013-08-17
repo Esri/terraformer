@@ -19,6 +19,8 @@
   }
 
 }(this, function() {
+
+ 
   var exports = { };
   var Terraformer;
 
@@ -60,6 +62,7 @@
     this.deferred = (config.deferred) ? config.deferred : Terraformer.Deferred;
     this.index = config.index;
     this.store = config.store;
+    this._stream = null;
   }
 
   // add the geojson object to the store
@@ -170,13 +173,26 @@
         completed++;
         var geometry = new Terraformer.Primitive(primitive.geometry);
 
-        if(shape.within(geometry)){
-          results.push(primitive);
+        if (shape.within(geometry)){
+          if (this._stream) {
+            if (completed === found.length - 1) {
+              this._stream.emit("end", primitive);
+            } else {
+              this._stream.emit("data", primitive);
+            }
+          } else {
+            results.push(primitive);
+          }
         }
 
         if(completed >= found.length){
-          if(!errors){
-            dfd.resolve(results);
+          if(!errors) {
+            if (this._stream) {
+              this._stream = null;
+              dfd.resolve();
+            } else {
+              dfd.resolve(results);
+            }
           } else {
             dfd.reject("Could not get all geometries");
           }
@@ -239,20 +255,29 @@
         completed++;
         var geometry = new Terraformer.Primitive(primitive.geometry);
 
-        if(geometry.within(shape)){
-          results.push(primitive);
-        }
-
-        if(completed >= found.length){
-          if(!errors){
-            dfd.resolve(results);
+        if (geometry.within(shape)){
+          if (this._stream) {
+            if (completed === found.length - 1) {
+              this._stream.emit("end", primitive);
+            } else {
+              this._stream.emit("data", primitive);
+            }
           } else {
-            dfd.reject("Could not get all geometries");
+            results.push(primitive);
           }
         }
 
-        if(completed >= found.length && errors){
-          dfd.reject("Could not get all geometries");
+        if(completed >= found.length){
+          if(!errors) {
+            if (this._stream) {
+              this._stream = null;
+              dfd.resolve();
+            } else {
+              dfd.resolve(results);
+            }
+          } else {
+            dfd.reject("Could not get all geometries");
+          }
         }
 
       };
@@ -332,7 +357,12 @@
     return dfd;
   };
 
+  GeoStore.prototype.createReadStream = function () {
+    this._stream = new ReadableStream();
+  };
+
   exports.GeoStore = GeoStore;
 
   return exports;
+
 }));
