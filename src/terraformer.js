@@ -139,6 +139,17 @@
 
   /*
   Internal: Calculate an bounding box from an nested array of positions
+  [
+    [
+      [ [lng, lat],[lng, lat],[lng, lat] ]
+    ]
+    [
+      [lng, lat],[lng, lat],[lng, lat]
+    ]
+    [
+      [lng, lat],[lng, lat],[lng, lat]
+    ]
+  ]
   */
   function calculateBoundsFromNestedArrays (array) {
     var x1 = null, x2 = null, y1 = null, y2 = null;
@@ -183,6 +194,11 @@
 
   /*
   Internal: Calculate a bounding box from an array of arrays of arrays
+  [
+    [ [lng, lat],[lng, lat],[lng, lat] ]
+    [ [lng, lat],[lng, lat],[lng, lat] ]
+    [ [lng, lat],[lng, lat],[lng, lat] ]
+  ]
   */
   function calculateBoundsFromNestedArrayOfArrays (array) {
     var x1 = null, x2 = null, y1 = null, y2 = null;
@@ -230,13 +246,15 @@
 
   /*
   Internal: Calculate a bounding box from an array of positions
+  [
+    [lng, lat],[lng, lat],[lng, lat]
+  ]
   */
   function calculateBoundsFromArray (array) {
     var x1 = null, x2 = null, y1 = null, y2 = null;
 
     for (var i = 0; i < array.length; i++) {
       var lonlat = array[i];
-
       var lon = lonlat[0];
       var lat = lonlat[1];
 
@@ -1285,7 +1303,6 @@
 
   Feature.prototype = new Primitive();
   Feature.prototype.constructor = Feature;
-
 
   /*
   GeoJSON FeatureCollection Class
