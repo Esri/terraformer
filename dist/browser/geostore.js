@@ -92,7 +92,7 @@ function EventEmitter() {
 
       if (this._events[event]) {
         for (i = this._events[event].length; i--;) {
-          this._events[event][i].listener.apply(args);
+          this._events[event][i].listener.apply(null, args);
           if (this._events[event][i].once) {
             remove.push(listener);
           }
@@ -304,7 +304,7 @@ Stream.prototype.unpipe = function (destination) {
 
         if (shape.within(geometry)){
           if (self._stream) {
-            if (completed === found.length - 1) {
+            if (completed === found.length) {
               self._stream.emit("end", primitive);
             } else {
               self._stream.emit("data", primitive);
@@ -387,7 +387,7 @@ Stream.prototype.unpipe = function (destination) {
 
         if (geometry.within(shape)){
           if (self._stream) {
-            if (completed === found.length - 1) {
+            if (completed === found.length) {
               self._stream.emit("end", primitive);
             } else {
               self._stream.emit("data", primitive);

@@ -70,7 +70,7 @@ function EventEmitter() {
 
       if (this._events[event]) {
         for (i = this._events[event].length; i--;) {
-          this._events[event][i].listener.apply(args);
+          this._events[event][i].listener.apply(null, args);
           if (this._events[event][i].once) {
             remove.push(listener);
           }

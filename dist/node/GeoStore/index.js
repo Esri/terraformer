@@ -178,7 +178,7 @@ var Stream = require('stream');
 
         if (shape.within(geometry)){
           if (self._stream) {
-            if (completed === found.length - 1) {
+            if (completed === found.length) {
               self._stream.emit("end", primitive);
             } else {
               self._stream.emit("data", primitive);
@@ -261,7 +261,7 @@ var Stream = require('stream');
 
         if (geometry.within(shape)){
           if (self._stream) {
-            if (completed === found.length - 1) {
+            if (completed === found.length) {
               self._stream.emit("end", primitive);
             } else {
               self._stream.emit("data", primitive);
