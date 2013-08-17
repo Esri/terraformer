@@ -65,6 +65,8 @@
   // should return a deferred
   GeoStore.prototype.add = function(geojson, callback){
 
+    var bbox;
+
     if (!geojson.type.match(/Feature/)) {
       throw new Error("Terraform.GeoStore : only Features and FeatureCollections are supported");
     }
@@ -116,7 +118,7 @@
           }
         }));
       }
-    })); 
+    }));
   };
 
   GeoStore.prototype.contains = function(geojson, callback){
@@ -238,7 +240,7 @@
           this.get(found[i], getCB);
         }
       } else {
-        if (callback) callback(null, results); 
+        if (callback) callback(null, results);
       }
 
     }));
