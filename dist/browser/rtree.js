@@ -475,7 +475,6 @@ var RTree = function (width) {
     * @private
     */
     var _insert_subtree = function(node, root) {
-      console.log("_insert_subtree", node, root);
       var bc; // Best Current node
       // Initial insertion is special because we resize the Tree and we don't
       // care about any overflow (seriously, how can the first object overflow?)
@@ -580,7 +579,7 @@ var RTree = function (width) {
       }
 
       var deserialized = _attach_data(where, new_tree);
-console.log(deserialized);
+
       if(callback){
         callback(null, deserialized);
       }
