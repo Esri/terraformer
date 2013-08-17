@@ -1,4 +1,4 @@
-function ReadableStream () {
+function Stream () {
   var self = this;
 
   this._destination = [ ];
@@ -20,13 +20,13 @@ function ReadableStream () {
   };
 }
 
-extend(ReadableStream, EventEmitter);
+extend(Stream, EventEmitter);
 
-ReadableStream.prototype.pipe = function (destination) {
+Stream.prototype.pipe = function (destination) {
   this._destination.push(destination);
 };
 
-ReadableStream.prototype.unpipe = function (destination) {
+Stream.prototype.unpipe = function (destination) {
   if (!destination) {
     this._destination = [ ];
   } else {

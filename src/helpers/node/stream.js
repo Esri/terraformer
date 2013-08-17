@@ -1,1 +1,1 @@
-var ReadableStream = require('stream').Readble;
+var Stream = require('stream');
