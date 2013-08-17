@@ -103,6 +103,24 @@ store.get(id, function(err, resp){
 });
 ```
 
+#### Streams
+
+`GeoStores` support Readable Streams in both the browser and Node.js.  Currently only `flowing` streams are supported.  Streams are created with the `createReadStream` method.  Streams are used in place of callbacks for `within` and `contains`, and exist for the duration of a single request to `within` or `contains`.
+
+The stream will emit `data` on any data events and `end` with the final entry found.
+
+``` js
+var stream = store.createReadStream();
+
+stream.on("data", function (geojson) {
+  // found geojson
+});
+
+stream.on("end", function (geojson) {
+  // final geojson object
+});
+```
+
 ### Removing Data
 
 To remove a feature just pass its id  to the `remove` method
