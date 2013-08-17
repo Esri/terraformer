@@ -370,7 +370,6 @@ describe("geostore", function() {
       var completed = 0;
       var s = gs.createReadStream();
       var spy = jasmine.createSpy();
-      s.on("data", spy);
       s.on("end", spy);
       gs.within({
         "type": "Polygon",
