@@ -1,6 +1,8 @@
 function Stream () {
   var self = this;
 
+  EventEmitter.call(this);
+
   this._destination = [ ];
   this._emit = this.emit;
 
@@ -19,8 +21,6 @@ function Stream () {
     self._emit(signal, data);
   };
 }
-
-extend(Stream, EventEmitter);
 
 Stream.prototype.pipe = function (destination) {
   this._destination.push(destination);

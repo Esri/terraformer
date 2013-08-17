@@ -340,5 +340,45 @@ describe("geostore", function() {
       });
     });
   });
+
+  describe("with a memory store and streams", function(){
+    var gs;
+
+    it("should create with a Memory store and an RTree", function(){
+      expect(function() {
+        gs = new Terraformer.GeoStore({
+          store: new Terraformer.Store.Memory(),
+          index: new Terraformer.RTree()
+        });
+      }).not.toThrow();
+      expect(gs).toBeTruthy();
+    });
+
+    it("should be able to add coordinates", function(){
+      expect(function() {
+        gs.add({ "id": 1, "type": "Feature", "geometry": { "type": "Polygon", "coordinates": [ [ [ -122.655849602879201, 45.538304922840894, 0.0 ], [ -122.655691867426299, 45.538304448196108, 0.0 ], [ -122.655692285611451, 45.538236031205983, 0.0 ], [ -122.655850019628431, 45.538236506773742, 0.0 ], [ -122.655849602879201, 45.538304922840894, 0.0 ] ] ] } });
+        gs.add({ "id": 2, "type": "Feature", "geometry": { "type": "Polygon", "coordinates": [ [ [ -122.589480827112766, 45.477987695417717, 0.0 ], [ -122.589481271327131, 45.477926424718063, 0.0 ], [ -122.589631424206658, 45.477926964033657, 0.0 ], [ -122.589630980154141, 45.477988234733886, 0.0 ], [ -122.589480827112766, 45.477987695417717, 0.0 ] ] ] } });
+      }).not.toThrow();
+      expect(gs).toBeTruthy();
+    });
+
+    it("should be able to create a Stream", function(){
+      expect(gs.createReadStream()).toBeTruthy();
+    });
+
+    it("should be able to use within and get data streamed to it", function(){
+      var completed = 0;
+      var s = gs.createReadStream();
+      var spy = jasmine.createSpy();
+      s.on("data", spy);
+      s.on("end", spy);
+      gs.within({
+        "type": "Polygon",
+        "coordinates": [ [ [ -122.655849602879201, 45.538304922840894, 0.0 ], [ -122.655691867426299, 45.538304448196108, 0.0 ], [ -122.655692285611451, 45.538236031205983, 0.0 ], [ -122.655850019628431, 45.538236506773742, 0.0 ], [ -122.655849602879201, 45.538304922840894, 0.0 ] ] ]
+      });
+
+      expect(spy.callCount).toEqual(1);
+    });
+  });
   
 });
