@@ -11,7 +11,7 @@
     "vows": "~0.7.0"
   },
   "dependencies": {
-    "terraformer": "~0.1.7"
+    "terraformer": "*"
   },
   "author": "",
   "license": "MIT"
