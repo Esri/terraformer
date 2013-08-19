@@ -145,6 +145,7 @@
       var results = [];
       var completed = 0;
       var errors = 0;
+      var self = this;
 
       // the function to evalute results from the index
       var evaluate = function(primitive){
@@ -152,11 +153,11 @@
         var geometry = new Terraformer.Primitive(primitive.geometry);
 
         if (shape.within(geometry)){
-          if (this._stream) {
-            if (completed === found.length - 1) {
-              this._stream.emit("end", primitive);
+          if (self._stream) {
+            if (completed === found.length) {
+              self._stream.emit("end", primitive);
             } else {
-              this._stream.emit("data", primitive);
+              self._stream.emit("data", primitive);
             }
           } else {
             results.push(primitive);
@@ -165,8 +166,8 @@
 
         if(completed >= found.length){
           if(!errors) {
-            if (this._stream) {
-              this._stream = null;
+            if (self._stream) {
+              self._stream = null;
               dfd.resolve();
             } else {
               dfd.resolve(results);
@@ -227,6 +228,7 @@
       var results = [];
       var completed = 0;
       var errors = 0;
+      var self = this;
 
       // the function to evalute results from the index
       var evaluate = function(primitive){
@@ -234,11 +236,11 @@
         var geometry = new Terraformer.Primitive(primitive.geometry);
 
         if (geometry.within(shape)){
-          if (this._stream) {
-            if (completed === found.length - 1) {
-              this._stream.emit("end", primitive);
+          if (self._stream) {
+            if (completed === found.length) {
+              self._stream.emit("end", primitive);
             } else {
-              this._stream.emit("data", primitive);
+              self._stream.emit("data", primitive);
             }
           } else {
             results.push(primitive);
@@ -247,8 +249,8 @@
 
         if(completed >= found.length){
           if(!errors) {
-            if (this._stream) {
-              this._stream = null;
+            if (self._stream) {
+              self._stream = null;
               dfd.resolve();
             } else {
               dfd.resolve(results);
@@ -336,7 +338,8 @@
   };
 
   GeoStore.prototype.createReadStream = function () {
-    this._stream = new ReadableStream();
+    this._stream = new Stream();
+    return this._stream;
   };
 
   exports.GeoStore = GeoStore;
