@@ -146,14 +146,20 @@
 
           if(completed >= found.length){
             if(!errors){
-              if ( callback ) callback( null, results );
+              if (callback) { 
+                callback( null, results );
+              }
             } else {
-              if (callback) callback("Could not get all geometries", null);
+              if (callback) { 
+                callback("Could not get all geometries", null);
+              }
             }
           }
 
           if(completed >= found.length && errors){
-            if (callback) callback("Could not get all geometries", null);
+            if (callback) { 
+              callback("Could not get all geometries", null);
+            }
           }
         }
 
@@ -163,22 +169,29 @@
         completed++;
         errors++;
         if(completed >= found.length){
-          if (callback) callback("Could not get all geometries", null);
+          if (callback) { 
+            callback("Could not get all geometries", null);
+          }
         }
       };
 
       // for each result see if the polygon contains the point
       if(found && found.length){
         var getCB = function(err, result){
-          if (err) error();
-          else evaluate( result );
+          if (err) { 
+            error();
+          } else { 
+            evaluate( result );
+          }
         };
 
         for (var i = 0; i < found.length; i++) {
           this.get(found[i], getCB);
         }
       } else {
-        if ( callback ) callback( null, results );
+        if ( callback ) { 
+          callback( null, results );
+        }
       }
 
     }));
@@ -209,14 +222,20 @@
 
           if(completed >= found.length){
             if(!errors){
-              if (callback) callback(null, results);
+              if (callback) { 
+                callback(null, results);
+              }
             } else {
-              if (callback) callback("Could not get all geometries", null);
+              if (callback) { 
+                callback("Could not get all geometries", null);
+              }
             }
           }
 
           if(completed >= found.length && errors){
-            if (callback) callback("Could not get all geometries", null);
+            if (callback) { 
+              callback("Could not get all geometries", null);
+            }
           }
         }
       };
@@ -225,22 +244,29 @@
         completed++;
         errors++;
         if(completed >= found.length){
-          if (callback) callback("Could not get all geometries", null);
+          if (callback) { 
+            callback("Could not get all geometries", null);
+          }
         }
       };
 
       // for each result see if the polygon contains the point
       if(found && found.length){
         var getCB = function(err, result){
-          if (err) error();
-          else evaluate( result );
+          if (err) { 
+            error();
+          } else { 
+            evaluate( result );
+          }
         };
 
         for (var i = 0; i < found.length; i++) {
           this.get(found[i], getCB);
         }
       } else {
-        if (callback) callback(null, results);
+        if (callback) { 
+          callback(null, results);
+        }
       }
 
     }));

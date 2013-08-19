@@ -59,22 +59,30 @@
   // remove the data from the index and data with id returns true if removed successfully.
   Memory.prototype.remove = function(id, callback){
     delete this.data[id];
-    if ( callback ) callback( null, id );
+    if ( callback ) { 
+      callback( null, id );
+    }
   };
 
   // return the data stored at id
   Memory.prototype.get = function(id, callback){
-    if ( callback ) callback( null, this.data[id] );
+    if ( callback ) { 
+      callback( null, this.data[id] );
+    }
   };
 
   Memory.prototype.update = function(geojson, callback){
     this.data[geojson.id] = geojson;
-    if ( callback ) callback( null );
+    if ( callback ) { 
+      callback( null );
+    }
   };
 
   Memory.prototype.serialize = function(callback){
     var data = JSON.stringify(this.data);
-    if ( callback ) callback( null, data );
+    if ( callback ) { 
+      callback( null, data );
+    }
   };
 
   Memory.prototype.deserialize = function(serializedStore){
