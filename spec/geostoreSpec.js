@@ -1,3 +1,5 @@
+    var gs;
+
 if(typeof module === "object"){
   var Terraformer = require("../dist/node/terraformer.js");
   Terraformer.RTree = require("../dist/node/RTree/index.js").RTree;
@@ -8,7 +10,6 @@ if(typeof module === "object"){
 
 describe("geostore", function() {
   describe("with a memory store and rtree", function(){
-    var gs;
 
     it("should throw an error when initalized without a store or index", function(){
       expect(function() {
@@ -327,5 +328,5 @@ describe("geostore", function() {
       });
     });
   });
-  
+
 });

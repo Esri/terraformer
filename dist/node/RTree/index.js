@@ -556,16 +556,7 @@ var RTree = function (width) {
     * @public
     */
     this.serialize = function(callback) {
-      var dfd = new Terraformer.Deferred();
-      if(callback){
-        dfd.then(function(result){
-          callback(null, result);
-        }, function(error){
-          callback(error, null);
-        });
-      }
-      dfd.resolve(_T);
-      return dfd;
+      callback(null, _T);
     };
 
    /* accepts a JSON representation of the tree and inserts it
@@ -574,7 +565,6 @@ var RTree = function (width) {
     this.deserialize = function(new_tree, where, callback) {
 
       var args = Array.prototype.slice.call(arguments);
-      var dfd = new Terraformer.Deferred();
 
       switch (args.length) {
       case 1:
@@ -588,17 +578,11 @@ var RTree = function (width) {
         break;
       }
 
+      var deserialized = _attach_data(where, new_tree);
+
       if(callback){
-        dfd.then(function(result){
-          callback(null, result);
-        }, function(error){
-          callback(error, null);
-        });
+        callback(null, deserialized);
       }
-
-      dfd.resolve(_attach_data(where, new_tree));
-
-      return dfd;
     };
 
    /* non-recursive search function
@@ -620,25 +604,17 @@ var RTree = function (width) {
         rect = shape;
       }
 
-      var dfd = new Terraformer.Deferred();
-
       var args = [ rect, false, [ ], _T ];
 
       if (rect === undefined) {
         throw "Wrong number of arguments. RT.Search requires at least a bounding rectangle.";
       }
 
+      var results = _search_subtree.apply(this, args);
+
       if(callback){
-        dfd.then(function(result){
-          callback(null, result);
-        }, function(error){
-          callback(error, null);
-        });
+        callback(null, results);
       }
-
-      dfd.resolve(_search_subtree.apply(this, args));
-
-      return dfd;
     };
 
     this.within = function(shape, callback) {
@@ -655,25 +631,17 @@ var RTree = function (width) {
         rect = shape;
       }
 
-      var dfd = new Terraformer.Deferred();
-
       var args = [ rect, false, [ ], _T ];
 
       if (rect === undefined) {
         throw "Wrong number of arguments. RT.Search requires at least a bounding rectangle.";
       }
 
+      var search = _search_subtree_reverse.apply(this, args);
+
       if(callback){
-        dfd.then(function(result){
-          callback(null, result);
-        }, function(error){
-          callback(error, null);
-        });
+        callback(null, search);
       }
-
-      dfd.resolve(_search_subtree_reverse.apply(this, args));
-
-      return dfd;
     };
 
 
@@ -682,7 +650,6 @@ var RTree = function (width) {
     */
     this.remove = function(shape, obj, callback) {
       var args = Array.prototype.slice.call(arguments);
-      var dfd = new Terraformer.Deferred();
 
       // you only passed shape
       if(args.length === 1){
@@ -694,11 +661,6 @@ var RTree = function (width) {
       // pop the callback off the args list
       if(args.length === 3){
         callback = args.pop();
-        dfd.then(function(result){
-          callback(null, result);
-        }, function(error){
-          callback(error, null);
-        });
       }
 
       // convert shape (the first arg) to a bbox if its geojson
@@ -722,9 +684,14 @@ var RTree = function (width) {
           numberdeleted = ret_array.length;
           ret_array = ret_array.concat(_remove_subtree.apply(this, args));
         } while( numberdeleted !==  ret_array.length);
-        dfd.resolve(ret_array);
+        if(callback){
+          callback(null, ret_array);
+        }
       } else { // Delete a specific item
-        dfd.resolve(_remove_subtree.apply(this, args));
+        var removal = _remove_subtree.apply(this, args);
+        if(callback){
+          callback(null, removal);
+        }
       }
     };
 
@@ -745,29 +712,21 @@ var RTree = function (width) {
         rect = shape;
       }
 
-      var dfd = new Terraformer.Deferred();
-
       if (arguments.length < 2) {
         throw "Wrong number of arguments. RT.Insert requires at least a bounding rectangle or GeoJSON and an object.";
       }
 
-      if(callback){
-        dfd.then(function(result){
-          callback(null, result);
-        }, function(error){
-          callback(error, null);
-        });
-      }
-
-      dfd.resolve(_insert_subtree({
+      var insert = _insert_subtree({
         x: rect.x,
         y: rect.y,
         w: rect.w,
         h: rect.h,
         leaf: obj
-      }, _T));
+      }, _T);
 
-      return dfd;
+      if(callback){
+        callback(null, insert);
+      }
     };
 
    /* non-recursive delete function
@@ -775,7 +734,7 @@ var RTree = function (width) {
     */
 
     //End of RTree
-    };
+  };
 
 /* Rectangle - Generic rectangle object - Not yet used */
 RTree.Rectangle = function(ix, iy, iw, ih) { // new Rectangle(bounds) or new Rectangle(x, y, w, h)
