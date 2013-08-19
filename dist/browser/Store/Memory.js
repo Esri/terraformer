@@ -45,7 +45,7 @@
   }
 
   // store the data at id returns true if stored successfully
-  Memory.prototype.add = function(geojson, dfd){
+  Memory.prototype.add = function(geojson, callback){
     if(geojson.type === "FeatureCollection"){
       for (var i = 0; i < geojson.features.length; i++) {
         this.data[geojson.features[i].id] = geojson.features[i];
@@ -53,46 +53,28 @@
     } else {
       this.data[geojson.id] = geojson;
     }
-    dfd.resolve(geojson);
-    return dfd;
+    if ( callback ) callback( null, geojson);
   };
 
   // remove the data from the index and data with id returns true if removed successfully.
-  Memory.prototype.remove = function(id, dfd){
+  Memory.prototype.remove = function(id, callback){
     delete this.data[id];
-    dfd.resolve(id);
-    return dfd;
+    if ( callback ) callback( null, id );
   };
 
   // return the data stored at id
-  Memory.prototype.get = function(id, dfd){
-    dfd.resolve(this.data[id]);
-    return dfd;
+  Memory.prototype.get = function(id, callback){
+    if ( callback ) callback( null, this.data[id] );
   };
 
-  Memory.prototype.update = function(geojson, dfd){
+  Memory.prototype.update = function(geojson, callback){
     this.data[geojson.id] = geojson;
-    dfd.resolve();
-    return dfd;
+    if ( callback ) callback( null );
   };
 
   Memory.prototype.serialize = function(callback){
-    // make a new deferred
-    var dfd = new Terraformer.Deferred();
     var data = JSON.stringify(this.data);
-
-    // map callback to dfd if we have one
-    if(callback){
-      dfd.then(function(result){
-        callback(null, result);
-      }, function(error){
-        callback(error, null);
-      });
-    }
-
-    dfd.resolve(data);
-
-    return dfd;
+    if ( callback ) callback( null, data );
   };
 
   Memory.prototype.deserialize = function(serializedStore){

@@ -75,9 +75,19 @@ store.contains(geojson, function(err, resp){
 
 You can pass a Node style callback or use the returned deferred to handle the results. **You must use the callback/deferred to handle results even for syncronous stores**.
 
-*Currently only `contains(point)` is supported in the future you will be able to pass any GeoJSON geometry.*
+#### Within
 
-*`contains` will be depricated in a future version and replaced by `intersects` for shapes where any part touches and `within` for shapes that are completely contained within other shapes.*
+``` js
+store.within(geojson, function(err, resp){
+  // optional callback. Node style
+}).then(function(){
+  // Promises style success callback
+}), function(){
+  // Promises style error callback  
+});
+```
+
+Returns all polygons that are `within` then geojson passed in.
 
 #### By ID
 
