@@ -17,7 +17,7 @@
 }(this, function() {
   var exports = { };
 
-  var Terraformer;
+  var Terraformer, callback;
 
   // Local Reference To Browser Global
   if(typeof this.navigator === "object") {
@@ -41,7 +41,7 @@
   }
 
   // store the data at id returns true if stored successfully
-  LocalStorage.prototype.add = function(geojson, dfd){
+  LocalStorage.prototype.add = function(geojson, callback){
     if(geojson.type === "FeatureCollection"){
       for (var i = 0; i < geojson.features.length; i++) {
         this.set(geojson.features[i]);
@@ -49,8 +49,9 @@
     } else {
       this.set(geojson);
     }
-    dfd.resolve(geojson);
-    return dfd;
+    if ( callback ) { 
+      callback( null, geojson );
+    }
   };
 
   LocalStorage.prototype.key = function(id){
@@ -58,26 +59,31 @@
   };
 
   // remove the data from the index and data with id returns true if removed successfully.
-  LocalStorage.prototype.remove = function(id, dfd){
-    localStorage.removeItem(this.key(id));
-    dfd.resolve(id);
-    return dfd;
+  LocalStorage.prototype.remove = function( id, callback ){
+    localStorage.removeItem( this.key( id ) );
+    if ( callback ) { 
+      callback( null, id );
+    }
   };
 
   // return the data stored at id
-  LocalStorage.prototype.get = function(id, dfd){
-    dfd.resolve(JSON.parse(localStorage.getItem(this.key(id))));
-    return dfd;
+  LocalStorage.prototype.get = function(id, callback){
+    if ( callback ) { 
+      callback( null, JSON.parse(localStorage.getItem(this.key(id))));
+    }
   };
 
   LocalStorage.prototype.set = function(feature){
-    localStorage.setItem(this.key(feature.id), JSON.stringify(feature));
+    if ( callback ) { 
+      localStorage.setItem(this.key(feature.id), JSON.stringify(feature));
+    }
   };
 
-  LocalStorage.prototype.update = function(geojson, dfd){
+  LocalStorage.prototype.update = function(geojson, callback){
     this.set(geojson);
-    dfd.resolve(geojson);
-    return dfd;
+    if ( callback ) { 
+      callback( null, geojson );
+    }
   };
 
   LocalStorage.prototype.toJSON = function(){
@@ -93,27 +99,15 @@
   LocalStorage.prototype.serialize = function(callback){
     var objs = [];
 
-    // make a new deferred
-    var dfd = new Terraformer.Deferred();
-
-    // map callback to dfd if we have one
-    if(callback){
-      dfd.then(function(result){
-        callback(null, result);
-      }, function(error){
-        callback(error, null);
-      });
-    }
-
     for (var key in localStorage){
       if(key.match(this._key)){
         objs.push(localStorage.getItem(key));
       }
     }
 
-    dfd.resolve(JSON.stringify(objs));
-
-    return dfd;
+    if ( callback ) { 
+      callback(null, JSON.stringify(objs));
+    }
   };
 
   LocalStorage.prototype.deserialize = function(serial){
