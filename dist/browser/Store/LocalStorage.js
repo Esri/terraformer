@@ -49,7 +49,9 @@
     } else {
       this.set(geojson);
     }
-    if ( callback ) callback( null, geojson );
+    if ( callback ) { 
+      callback( null, geojson );
+    }
   };
 
   LocalStorage.prototype.key = function(id){
@@ -59,21 +61,29 @@
   // remove the data from the index and data with id returns true if removed successfully.
   LocalStorage.prototype.remove = function( id, callback ){
     localStorage.removeItem( this.key( id ) );
-    if ( callback ) callback( null, id );
+    if ( callback ) { 
+      callback( null, id );
+    }
   };
 
   // return the data stored at id
   LocalStorage.prototype.get = function(id, callback){
-    if ( callback ) callback( null, JSON.parse(localStorage.getItem(this.key(id))));
+    if ( callback ) { 
+      callback( null, JSON.parse(localStorage.getItem(this.key(id))));
+    }
   };
 
   LocalStorage.prototype.set = function(feature){
-    if ( callback ) localStorage.setItem(this.key(feature.id), JSON.stringify(feature));
+    if ( callback ) { 
+      localStorage.setItem(this.key(feature.id), JSON.stringify(feature));
+    }
   };
 
   LocalStorage.prototype.update = function(geojson, callback){
     this.set(geojson);
-    if ( callback ) callback( null, geojson );
+    if ( callback ) { 
+      callback( null, geojson );
+    }
   };
 
   LocalStorage.prototype.toJSON = function(){
@@ -95,7 +105,9 @@
       }
     }
 
-    if ( callback ) callback(null, JSON.stringify(objs));
+    if ( callback ) { 
+      callback(null, JSON.stringify(objs));
+    }
   };
 
   LocalStorage.prototype.deserialize = function(serial){
