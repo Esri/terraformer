@@ -122,6 +122,82 @@
     }));
   };
 
+  GeoStore.prototype.intersects = function(geojson, callback){
+    // make a new deferred
+    var shape = new Terraformer.Primitive(geojson);
+
+    // create our envelope
+    var envelope = Terraformer.Tools.calculateEnvelope(shape);
+
+    // search the index
+    this.index.search(envelope, bind(this, function(err, found){
+      var results = [];
+      var completed = 0;
+      var errors = 0;
+
+      // the function to evalute results from the index
+      var evaluate = function(primitive){
+        completed++;
+        if ( primitive ){
+          var geometry = new Terraformer.Primitive(primitive.geometry);
+
+          if(shape.intersects(geometry)){
+            results.push(primitive);
+          }
+
+          if(completed >= found.length){
+            if(!errors){
+              if (callback) { 
+                callback( null, results );
+              }
+            } else {
+              if (callback) { 
+                callback("Could not get all geometries", null);
+              }
+            }
+          }
+
+          if(completed >= found.length && errors){
+            if (callback) { 
+              callback("Could not get all geometries", null);
+            }
+          }
+        }
+
+      };
+
+      var error = function(){
+        completed++;
+        errors++;
+        if(completed >= found.length){
+          if (callback) { 
+            callback("Could not get all geometries", null);
+          }
+        }
+      };
+
+      // for each result see if the polygon contains the point
+      if(found && found.length){
+        var getCB = function(err, result){
+          if (err) { 
+            error();
+          } else { 
+            evaluate( result );
+          }
+        };
+
+        for (var i = 0; i < found.length; i++) {
+          this.get(found[i], getCB);
+        }
+      } else {
+        if ( callback ) { 
+          callback( null, results );
+        }
+      }
+
+    }));
+  };
+
   GeoStore.prototype.contains = function(geojson, callback){
     // make a new deferred
     var shape = new Terraformer.Primitive(geojson);
