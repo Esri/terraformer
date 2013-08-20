@@ -19,6 +19,136 @@
   }
 
 }(this, function() {
+
+// super light weight EventEmitter implementation
+
+function EventEmitter() {
+  this._events = { };
+  this._once   = { };
+  // default to 10 max liseners
+  this._maxListeners = 10;
+
+  this._add = function (event, listener, once) {
+    var entry = { listener: listener };
+    if (once) {
+      entry.once = true;
+    }
+
+    if (this._events[event]) {
+      this._events[event].push(entry);
+    } else {
+      this._events[event] = [ entry ];
+    }
+
+    if (this._maxListeners && this._events[event].count > this._maxListeners && console && console.warn) {
+      console.warn("EventEmitter Error: Maximum number of listeners");
+    }
+
+    return this;
+  };
+
+  this.on = function (event, listener) {
+    return this._add(event, listener);
+  };
+
+  this.addListener = this.on;
+
+  this.once = function (event, listener) {
+    return this._add(event, listener, true);
+  };
+
+  this.removeListener = function (event, listener) {
+    if (!this._events[event]) {
+      return this;
+    }
+
+    for(var i = this._events.length-1; i--;) {
+      if (this._events[i].listener === callback) {
+        this._events.splice(i, 1);
+      }
+    }
+
+    return this;
+  };
+
+  this.removeAllListeners = function (event) {
+    this._events[event] = undefined;
+
+    return this;
+  };
+
+  this.setMaxListeners = function (count) {
+    this._maxListeners = count;
+
+    return this;
+  };
+
+  this.emit = function () {
+    var args = Array.prototype.slice.apply(arguments);
+    var remove = [ ], i;
+
+    if (args.length) {
+      var event = args.shift();
+
+      if (this._events[event]) {
+        for (i = this._events[event].length; i--;) {
+          this._events[event][i].listener.apply(null, args);
+          if (this._events[event][i].once) {
+            remove.push(listener);
+          }
+        }
+      }
+
+      for (i = remove.length; i--;) {
+        this.removeListener(event, remove[i]);
+      }
+    }
+
+    return this;
+  };
+}
+
+function Stream () {
+  var self = this;
+
+  EventEmitter.call(this);
+
+  this._destination = [ ];
+  this._emit = this.emit;
+
+  this.emit = function (signal, data) {
+    var i;
+
+    if (signal === "data") {
+      for (i = self._destination.length; i--;) {
+        self._destination[i].write(data);
+      }
+    } else if (signal === "end") {
+      for (i = self._destination.length; i--;) {
+        self._destination[i].write(data);
+      }
+    }
+    self._emit(signal, data);
+  };
+}
+
+Stream.prototype.pipe = function (destination) {
+  this._destination.push(destination);
+};
+
+Stream.prototype.unpipe = function (destination) {
+  if (!destination) {
+    this._destination = [ ];
+  } else {
+    for(var i = this._destination.length-1; i--;) {
+      if (this._destination[i].listener === destination) {
+        this._destination.splice(i, 1);
+      }
+    }
+  }
+};
+
+ 
   var exports = { };
   var Terraformer;
 
@@ -58,6 +188,7 @@
     }
     this.index = config.index;
     this.store = config.store;
+    this._stream = null;
   }
 
   // add the geojson object to the store
@@ -133,6 +264,7 @@
       var results = [];
       var completed = 0;
       var errors = 0;
+      var self = this;
 
       // the function to evalute results from the index
       var evaluate = function(primitive){
@@ -141,19 +273,34 @@
           var geometry = new Terraformer.Primitive(primitive.geometry);
 
           if(shape.within(geometry)){
-            results.push(primitive);
+            if (self._stream) {
+              if (completed === found.length) {
+                self._stream.emit("end", primitive);
+              } else {
+                self._stream.emit("data", primitive);
+              }
+            } else {
+              results.push(primitive);
+            }
           }
-
           if(completed >= found.length){
             if(!errors){
-              if ( callback ) callback( null, results );
+              if (self._stream) {
+                self._stream = null;
+              } else if (callback) {
+                callback( null, results );
+              }
             } else {
-              if (callback) callback("Could not get all geometries", null);
+              if (callback) {
+                callback("Could not get all geometries", null);
+              }
             }
           }
 
           if(completed >= found.length && errors){
-            if (callback) callback("Could not get all geometries", null);
+            if (callback) {
+              callback("Could not get all geometries", null);
+            }
           }
         }
 
@@ -163,22 +310,29 @@
         completed++;
         errors++;
         if(completed >= found.length){
-          if (callback) callback("Could not get all geometries", null);
+          if (callback) {
+            callback("Could not get all geometries", null);
+          }
         }
       };
 
       // for each result see if the polygon contains the point
       if(found && found.length){
         var getCB = function(err, result){
-          if (err) error();
-          else evaluate( result );
+          if (err) {
+            error();
+          } else {
+            evaluate( result );
+          }
         };
 
         for (var i = 0; i < found.length; i++) {
           this.get(found[i], getCB);
         }
       } else {
-        if ( callback ) callback( null, results );
+        if ( callback ) {
+          callback( null, results );
+        }
       }
 
     }));
@@ -196,6 +350,7 @@
       var results = [];
       var completed = 0;
       var errors = 0;
+      var self = this;
 
       // the function to evalute results from the index
       var evaluate = function(primitive){
@@ -203,20 +358,30 @@
         if ( primitive ){
           var geometry = new Terraformer.Primitive(primitive.geometry);
 
-          if(geometry.within(shape)){
-            results.push(primitive);
+          if (geometry.within(shape)){
+            if (self._stream) {
+              if (completed === found.length) {
+                self._stream.emit("end", primitive);
+              } else {
+                self._stream.emit("data", primitive);
+              }
+            } else {
+              results.push(primitive);
+            }
           }
 
           if(completed >= found.length){
             if(!errors){
-              if (callback) callback(null, results);
+              if (self._stream) {
+                self._stream = null;
+              } else if (callback) {
+                callback( null, results );
+              }
             } else {
-              if (callback) callback("Could not get all geometries", null);
+              if (callback) {
+                callback("Could not get all geometries", null);
+              }
             }
-          }
-
-          if(completed >= found.length && errors){
-            if (callback) callback("Could not get all geometries", null);
           }
         }
       };
@@ -225,22 +390,29 @@
         completed++;
         errors++;
         if(completed >= found.length){
-          if (callback) callback("Could not get all geometries", null);
+          if (callback) {
+            callback("Could not get all geometries", null);
+          }
         }
       };
 
       // for each result see if the polygon contains the point
       if(found && found.length){
         var getCB = function(err, result){
-          if (err) error();
-          else evaluate( result );
+          if (err) {
+            error();
+          } else {
+            evaluate( result );
+          }
         };
 
         for (var i = 0; i < found.length; i++) {
           this.get(found[i], getCB);
         }
       } else {
-        if (callback) callback(null, results);
+        if (callback) {
+          callback(null, results);
+        }
       }
 
     }));
@@ -276,7 +448,14 @@
     this.store.get( id, callback );
   };
 
+  GeoStore.prototype.createReadStream = function () {
+    this._stream = new Stream();
+    return this._stream;
+  };
+
   exports.GeoStore = GeoStore;
 
   return exports;
+
+
 }));
