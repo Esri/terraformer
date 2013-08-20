@@ -1,24 +1,4 @@
-(function (root, factory) {
-
-  // Node.
-  if(typeof module === 'object' && typeof module.exports === 'object') {
-    exports = module.exports = factory();
-  }
-
-  // AMD.
-  if(typeof define === 'function' && define.amd) {
-    define(["terraformer/terraformer"],factory);
-  }
-
-  // Browser Global.
-  if(typeof root.navigator === "object") {
-    if (typeof root.Terraformer === "undefined"){
-      root.Terraformer = {};
-    }
-    root.Terraformer.GeoStore = factory().GeoStore;
-  }
-
-}(this, function() {
+ 
   var exports = { };
   var Terraformer;
 
@@ -58,6 +38,7 @@
     }
     this.index = config.index;
     this.store = config.store;
+    this._stream = null;
   }
 
   // add the geojson object to the store
@@ -133,6 +114,7 @@
       var results = [];
       var completed = 0;
       var errors = 0;
+      var self = this;
 
       // the function to evalute results from the index
       var evaluate = function(primitive){
@@ -141,23 +123,32 @@
           var geometry = new Terraformer.Primitive(primitive.geometry);
 
           if(shape.within(geometry)){
-            results.push(primitive);
+            if (self._stream) {
+              if (completed === found.length) {
+                self._stream.emit("end", primitive);
+              } else {
+                self._stream.emit("data", primitive);
+              }
+            } else {
+              results.push(primitive);
+            }
           }
-
           if(completed >= found.length){
             if(!errors){
-              if (callback) { 
+              if (self._stream) {
+                self._stream = null;
+              } else if (callback) {
                 callback( null, results );
               }
             } else {
-              if (callback) { 
+              if (callback) {
                 callback("Could not get all geometries", null);
               }
             }
           }
 
           if(completed >= found.length && errors){
-            if (callback) { 
+            if (callback) {
               callback("Could not get all geometries", null);
             }
           }
@@ -169,7 +160,7 @@
         completed++;
         errors++;
         if(completed >= found.length){
-          if (callback) { 
+          if (callback) {
             callback("Could not get all geometries", null);
           }
         }
@@ -178,9 +169,9 @@
       // for each result see if the polygon contains the point
       if(found && found.length){
         var getCB = function(err, result){
-          if (err) { 
+          if (err) {
             error();
-          } else { 
+          } else {
             evaluate( result );
           }
         };
@@ -189,7 +180,7 @@
           this.get(found[i], getCB);
         }
       } else {
-        if ( callback ) { 
+        if ( callback ) {
           callback( null, results );
         }
       }
@@ -209,6 +200,7 @@
       var results = [];
       var completed = 0;
       var errors = 0;
+      var self = this;
 
       // the function to evalute results from the index
       var evaluate = function(primitive){
@@ -216,25 +208,29 @@
         if ( primitive ){
           var geometry = new Terraformer.Primitive(primitive.geometry);
 
-          if(geometry.within(shape)){
-            results.push(primitive);
+          if (geometry.within(shape)){
+            if (self._stream) {
+              if (completed === found.length) {
+                self._stream.emit("end", primitive);
+              } else {
+                self._stream.emit("data", primitive);
+              }
+            } else {
+              results.push(primitive);
+            }
           }
 
           if(completed >= found.length){
             if(!errors){
-              if (callback) { 
-                callback(null, results);
+              if (self._stream) {
+                self._stream = null;
+              } else if (callback) {
+                callback( null, results );
               }
             } else {
-              if (callback) { 
+              if (callback) {
                 callback("Could not get all geometries", null);
               }
-            }
-          }
-
-          if(completed >= found.length && errors){
-            if (callback) { 
-              callback("Could not get all geometries", null);
             }
           }
         }
@@ -244,7 +240,7 @@
         completed++;
         errors++;
         if(completed >= found.length){
-          if (callback) { 
+          if (callback) {
             callback("Could not get all geometries", null);
           }
         }
@@ -253,9 +249,9 @@
       // for each result see if the polygon contains the point
       if(found && found.length){
         var getCB = function(err, result){
-          if (err) { 
+          if (err) {
             error();
-          } else { 
+          } else {
             evaluate( result );
           }
         };
@@ -264,7 +260,7 @@
           this.get(found[i], getCB);
         }
       } else {
-        if (callback) { 
+        if (callback) {
           callback(null, results);
         }
       }
@@ -302,7 +298,12 @@
     this.store.get( id, callback );
   };
 
+  GeoStore.prototype.createReadStream = function () {
+    this._stream = new Stream();
+    return this._stream;
+  };
+
   exports.GeoStore = GeoStore;
 
   return exports;
-}));
+

@@ -1,0 +1,1 @@
+var Stream = require('stream');
