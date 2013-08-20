@@ -189,6 +189,8 @@ Stream.prototype.unpipe = function (destination) {
     this.index = config.index;
     this.store = config.store;
     this._stream = null;
+
+    this._additional_indexes = [ ];
   }
 
   // add the geojson object to the store
@@ -252,7 +254,16 @@ Stream.prototype.unpipe = function (destination) {
     }));
   };
 
-  GeoStore.prototype.contains = function(geojson, callback){
+  GeoStore.prototype.contains = function(geojson){
+    var args = Array.prototype.slice.call(arguments);
+    args.shift();
+
+    var callback = args.pop();
+    if (args.length) {
+      var indexQuery = args[1];
+    }
+
+
     // make a new deferred
     var shape = new Terraformer.Primitive(geojson);
 
@@ -338,7 +349,15 @@ Stream.prototype.unpipe = function (destination) {
     }));
   };
 
-  GeoStore.prototype.within = function(geojson, callback){
+  GeoStore.prototype.within = function(geojson){
+    var args = Array.prototype.slice.call(arguments);
+    args.shift();
+
+    var callback = args.pop();
+    if (args.length) {
+      var indexQuery = args[0];
+    }
+
     // make a new deferred
     var shape = new Terraformer.Primitive(geojson);
 
@@ -351,6 +370,26 @@ Stream.prototype.unpipe = function (destination) {
       var completed = 0;
       var errors = 0;
       var self = this;
+
+      // should we do set elimination with additional indexes?
+      if (indexQuery && self._additional_indexes.length) {
+        // convert "found" to an object with keys
+        var set = { }, i;
+
+        for (i = 0; i < found.length; i++) {
+          set[found[i]] = true;
+        }
+
+        // iterate through the queries, find the correct indexes, and apply them
+        var keys = Object.keys(indexQuery);
+
+        for (var j = 0; j < keys.length; j++) {
+          for (i = 0; i < self._additional_indexes.length; i++) {
+            // set checks here
+          }
+        }
+
+      }
 
       // the function to evalute results from the index
       var evaluate = function(primitive){
@@ -452,6 +491,72 @@ Stream.prototype.unpipe = function (destination) {
     this._stream = new Stream();
     return this._stream;
   };
+
+  // add an index
+  GeoStore.prototype.addIndex = function(index) {
+    this._additional_indexes.push(index);
+  };
+
+
+  /*
+    "crime":
+    {
+      "equals": "arson"
+    }
+
+    index -> specific index that references the property keyword
+    query -> object containing the specific queries for the index
+    set -> object containing keys of all of the id's matching currently
+
+    callback -> object containing keys of all of the id's still matching:
+    {
+      1: true,
+      23: true
+    }
+
+    TODO: add functionality for
+    "crime":
+    {
+      "or": {
+        "equals": "arson",
+        "equals": "theft"
+      }
+    }
+   */
+  function eliminateForIndex(index, query, set, callback) {
+    var queryKeys = Object.keys(query);
+    var count = 0;
+
+    for (var i = 0; i < queryKeys.length; i++) {
+      if (typeof index[queryKeys[i]] !== "function") {
+        callback("Index does not have a method matching " + queryKeys[i]);
+        return;
+      }
+
+      index[queryKeys[i]](query[i], function (err, data) {
+        count++;
+
+        if (err) {
+          callback(err);
+
+          // short-circuit the scan, we hit an error. this is fatal.
+          count = queryKeys.length;
+          return;
+        } else {
+          var setKeys = Object.keys(set);
+          for (var j = 0; j < setKeys.length; j++) {
+            if (!data[setKeys[j]]) {
+              delete set[setKeys[j]];
+            }
+          }
+        }
+
+        if (count === queryKeys.length) {
+          callback(null, set);
+        }
+      });
+    }
+  }
 
   exports.GeoStore = GeoStore;
 
