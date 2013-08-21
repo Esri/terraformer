@@ -20,6 +20,61 @@
 
 }(this, function() {
 
+// super lightweight async to sync handling
+
+function Sync () {
+	this._steps = [ ];
+  this._current = 0;
+  this._error = null;
+}
+
+Sync.prototype.next = function (step) {
+  this._steps.push(step);
+
+  return this;
+};
+
+Sync.prototype.error = function (error) {
+  this._error = error;
+
+  return this;
+};
+
+Sync.prototype.done = function (err) {
+  var args = Array.prototype.slice.call(arguments);
+
+  // if there is an error, we are done
+  if (err) {
+    if (this._error) {
+      this._error.apply(this, args);
+    }
+  } else {
+    if (this._steps.length) {
+      var next = this._steps.shift();
+      next.apply(this, this.internalCallback);
+    } else {
+      if (this._callback) {
+        this._callback();
+      }
+    }
+  }
+};
+
+Sync.prototype.start = function (callback) {
+  this._callback = callback;
+
+  var start = this._steps.shift();
+
+  if (start) {
+    start.apply(this, this._internalCallback);
+  } else {
+    if (this._callback) {
+      this._callback();
+    }
+  }
+};
+
+
 var Stream = require('stream');
 
  
@@ -244,11 +299,14 @@ var Stream = require('stream');
       var completed = 0;
       var errors = 0;
       var self = this;
+      var sync = new Sync();
+      var set;
+      var i;
 
       // should we do set elimination with additional indexes?
       if (indexQuery && self._additional_indexes.length) {
         // convert "found" to an object with keys
-        var set = { }, i;
+        set = { };
 
         for (i = 0; i < found.length; i++) {
           set[found[i]] = true;
@@ -259,74 +317,93 @@ var Stream = require('stream');
 
         for (var j = 0; j < keys.length; j++) {
           for (i = 0; i < self._additional_indexes.length; i++) {
-            // set checks here
+            // index property matches query
+            if (self._additional_indexes[i].property === keys[j]) {
+              var which = indexQuery[keys[j]], index = self._additional_indexes[i].index, id = i;
+
+              sync.next(function () {
+                console.log("id = " + id);
+                var next = this;
+                eliminateForIndex(index, which, set, function (err, newSet) {
+                  set = newSet;
+                  next.done(err);
+                });
+              });
+            }
           }
         }
 
       }
 
-      // the function to evalute results from the index
-      var evaluate = function(primitive){
-        completed++;
-        if ( primitive ){
-          var geometry = new Terraformer.Primitive(primitive.geometry);
+      sync.start(function () {
+        // if we have a set, it is our new "found"
+        if (set) {
+          found = Object.keys(set);
+        }
 
-          if (geometry.within(shape)){
-            if (self._stream) {
-              if (completed === found.length) {
-                self._stream.emit("end", primitive);
-              } else {
-                self._stream.emit("data", primitive);
-              }
-            } else {
-              results.push(primitive);
-            }
-          }
+        // the function to evalute results from the index
+        var evaluate = function(primitive){
+          completed++;
+          if ( primitive ){
+            var geometry = new Terraformer.Primitive(primitive.geometry);
 
-          if(completed >= found.length){
-            if(!errors){
+            if (geometry.within(shape)){
               if (self._stream) {
-                self._stream = null;
-              } else if (callback) {
-                callback( null, results );
-              }
-            } else {
-              if (callback) {
-                callback("Could not get all geometries", null);
+                if (completed === found.length) {
+                  self._stream.emit("end", primitive);
+                } else {
+                  self._stream.emit("data", primitive);
+                }
+              } else {
+                results.push(primitive);
               }
             }
-          }
-        }
-      };
 
-      var error = function(){
-        completed++;
-        errors++;
-        if(completed >= found.length){
-          if (callback) {
-            callback("Could not get all geometries", null);
-          }
-        }
-      };
-
-      // for each result see if the polygon contains the point
-      if(found && found.length){
-        var getCB = function(err, result){
-          if (err) {
-            error();
-          } else {
-            evaluate( result );
+            if(completed >= found.length){
+              if(!errors){
+                if (self._stream) {
+                  self._stream = null;
+                } else if (callback) {
+                  callback( null, results );
+                }
+              } else {
+                if (callback) {
+                  callback("Could not get all geometries", null);
+                }
+              }
+            }
           }
         };
 
-        for (var i = 0; i < found.length; i++) {
-          this.get(found[i], getCB);
+        var error = function(){
+          completed++;
+          errors++;
+          if(completed >= found.length){
+            if (callback) {
+              callback("Could not get all geometries", null);
+            }
+          }
+        };
+
+        // for each result see if the polygon contains the point
+        if(found && found.length){
+          var getCB = function(err, result){
+            if (err) {
+              error();
+            } else {
+              evaluate( result );
+            }
+          };
+
+          for (var i = 0; i < found.length; i++) {
+            self.get(found[i], getCB);
+          }
+        } else {
+          if (callback) {
+            callback(null, results);
+          }
         }
-      } else {
-        if (callback) {
-          callback(null, results);
-        }
-      }
+      });
 
     }));
 
@@ -398,10 +475,13 @@ var Stream = require('stream');
     }
    */
   function eliminateForIndex(index, query, set, callback) {
+    console.log("query", query);
+    console.log("index", index);
     var queryKeys = Object.keys(query);
     var count = 0;
 
     for (var i = 0; i < queryKeys.length; i++) {
+      console.log(index[queryKeys[i]]);
       if (typeof index[queryKeys[i]] !== "function") {
         callback("Index does not have a method matching " + queryKeys[i]);
         return;
