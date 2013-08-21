@@ -2,12 +2,15 @@
 
 function Sync () {
 	this._steps = [ ];
+  this._arguments = [ ];
   this._current = 0;
   this._error = null;
 }
 
-Sync.prototype.next = function (step) {
-  this._steps.push(step);
+Sync.prototype.next = function () {
+  var args = Array.prototype.slice.call(arguments);
+  this._steps.push(args.shift());
+  this._arguments[this._steps.length - 1] = args;
 
   return this;
 };
@@ -19,6 +22,7 @@ Sync.prototype.error = function (error) {
 };
 
 Sync.prototype.done = function (err) {
+  this._current++;
   var args = Array.prototype.slice.call(arguments);
 
   // if there is an error, we are done
@@ -29,7 +33,8 @@ Sync.prototype.done = function (err) {
   } else {
     if (this._steps.length) {
       var next = this._steps.shift();
-      next.apply(this, this.internalCallback);
+      var a = this._arguments[this._current];
+      next.apply(this, this._arguments[this._current]);
     } else {
       if (this._callback) {
         this._callback();
@@ -44,7 +49,8 @@ Sync.prototype.start = function (callback) {
   var start = this._steps.shift();
 
   if (start) {
-    start.apply(this, this._internalCallback);
+    var args = this._arguments[0];
+    start.apply(this, args);
   } else {
     if (this._callback) {
       this._callback();

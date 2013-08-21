@@ -240,16 +240,15 @@
           for (i = 0; i < self._additional_indexes.length; i++) {
             // index property matches query
             if (self._additional_indexes[i].property === keys[j]) {
-              var which = indexQuery[keys[j]], index = self._additional_indexes[i].index, id = i;
+              var which = indexQuery[keys[j]], index = self._additional_indexes[i].index;
 
-              sync.next(function () {
-                console.log("id = " + id);
+              sync.next(function (index, which, set, id) {
                 var next = this;
                 eliminateForIndex(index, which, set, function (err, newSet) {
                   set = newSet;
                   next.done(err);
                 });
-              });
+              }, index, which, set);
             }
           }
         }
@@ -396,13 +395,10 @@
     }
    */
   function eliminateForIndex(index, query, set, callback) {
-    console.log("query", query);
-    console.log("index", index);
     var queryKeys = Object.keys(query);
     var count = 0;
 
     for (var i = 0; i < queryKeys.length; i++) {
-      console.log(index[queryKeys[i]]);
       if (typeof index[queryKeys[i]] !== "function") {
         callback("Index does not have a method matching " + queryKeys[i]);
         return;
