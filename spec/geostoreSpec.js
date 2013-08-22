@@ -1,3 +1,5 @@
+    var gs;
+
 if(typeof module === "object"){
   var Terraformer = require("../dist/node/terraformer.js");
   Terraformer.RTree = require("../dist/node/RTree/index.js").RTree;
@@ -8,7 +10,6 @@ if(typeof module === "object"){
 
 describe("geostore", function() {
   describe("with a memory store and rtree", function(){
-    var gs;
 
     it("should throw an error when initalized without a store or index", function(){
       expect(function() {
@@ -75,7 +76,7 @@ describe("geostore", function() {
       gs.contains({
         type:"Point",
         coordinates: [0, 0]
-      }).then(function(found){
+      }, function(error, found){
         expect(found.length).toEqual(0);
       });
     });
@@ -85,7 +86,7 @@ describe("geostore", function() {
       gs.contains({
         type:"Point",
         coordinates: [-122.676048, 45.516544]
-      }).then(function(found){
+      }, function(error, found){
         expect(found.length).toEqual(1);
         expect(found[0].id).toEqual("41051");
       });
@@ -103,23 +104,19 @@ describe("geostore", function() {
 
     it("shouldn't find any results", function(){
       var result;
-      var spy = jasmine.createSpy();
       gs.contains({
         type:"Point",
         coordinates: [-122.676048, 45.516544]
-      }, spy).then(function(found){
+      }, function(error, found){
         expect(found.length).toEqual(0);
       });
-      expect(spy.callCount).toEqual(1);
     });
 
     it("should get a single result by id", function(){
       var result;
-      var spy = jasmine.createSpy();
-      gs.get("41067", spy).then(function(found){
+      gs.get("41067", function(error, found){
         expect(found.id).toEqual("41067");
       });
-      expect(spy.callCount).toEqual(1);
     });
 
     it("should update a feature and run a successful query", function(){
@@ -130,11 +127,10 @@ describe("geostore", function() {
       gs.contains({
         type:"Point",
         coordinates: [-122.676048, 45.516544]
-      }, spy).then(function(found){
+      }, function(error, found){
         expect(found.length).toEqual(1);
         expect(found[0].id).toEqual("41067");
       });
-      expect(spy.callCount).toEqual(2);
     });
 
     it("should update features in store and run a callback", function(){
@@ -146,14 +142,10 @@ describe("geostore", function() {
     var serial;
 
     it("should serialize a Memory store", function(){
-      var success = jasmine.createSpy("success");
-      var error = jasmine.createSpy("error");
       var callback = jasmine.createSpy("callback");
-      gs.store.serialize(callback).then(success, error);
+      gs.store.serialize(callback);
       expect(callback).toHaveBeenCalled();
-      expect(success).toHaveBeenCalled();
-      expect(error).not.toHaveBeenCalled();
-      expect(success).toHaveBeenCalledWith(JSON.stringify(gs.store.data));
+      expect(callback).toHaveBeenCalledWith(null, JSON.stringify(gs.store.data));
     });
 
     it("should deserialize a memory store", function(){
@@ -172,17 +164,17 @@ describe("geostore", function() {
 
     var badStore = new Terraformer.GeoStore({
       store: {
-        get: function(id, dfd){
-          return dfd.reject("ERROR");
+        get: function(id, callback){
+          return callback("ERROR", null);
         },
-        add: function(geo, dfd){
-          return dfd.reject("ERROR");
+        add: function(geo, callback){
+          return callback("ERROR", null);
         },
-        remove: function(id, dfd){
-          return dfd.reject("ERROR");
+        remove: function(id, callback){
+          return callback("ERROR", null);
         },
-        update: function(geo, dfd){
-          return dfd.reject("ERROR");
+        update: function(geo, callback){
+          return callback("ERROR", null);
         }
       },
       index: new Terraformer.RTree()
@@ -200,16 +192,16 @@ describe("geostore", function() {
       expect(spy).toHaveBeenCalledWith('Could find feature', null);
     });
 
-    it("should run an error callback when the store rejects the deferred when getting an item", function(){
+    it("should return an error in the callback when the store cant get an item", function(){
       var spy = jasmine.createSpy();
       badStore.get("41067", spy);
       expect(spy).toHaveBeenCalledWith("ERROR", null);
     });
 
-    it("should run an error callback when the store rejects the deferred when deleting an item", function(){
+    it("should return an error in the callback when the store cant find a feature to remove", function(){
       var spy = jasmine.createSpy();
       badStore.remove("41067", spy);
-      expect(spy).toHaveBeenCalledWith('Could not remove feature', null);
+      expect(spy).toHaveBeenCalledWith('Could not get feature to remove', null);
     });
 
     it("should run an error callback when the store rejects the deferred when querying an item", function(){
@@ -243,7 +235,7 @@ describe("geostore", function() {
         gs.contains({
           type:"Point",
           coordinates: [-122.676048, 45.516544]
-        }).then(function(found){
+        }, function(error, found){
           expect(found.length).toEqual(1);
           expect(found[0].id).toEqual("41051");
         });
@@ -255,7 +247,7 @@ describe("geostore", function() {
         gs.within({
           type:"Point",
           coordinates: [-122.676048, 45.516544]
-        }).then(function(found){
+        }, function(error, found){
           expect(found.length).toEqual(0);
         });
       });
@@ -266,7 +258,7 @@ describe("geostore", function() {
         gs.contains({
           type:"Point",
           coordinates: [-122.676048, 45.516544]
-        }).then(function(found){
+        }, function( error, found){
           expect(found.length).toEqual(1);
           expect(found[0].id).toEqual("41067");
         });
@@ -285,13 +277,9 @@ describe("geostore", function() {
       });
 
       it("should serialize a LocalStore store", function(){
-        var success = jasmine.createSpy("success");
-        var error = jasmine.createSpy("error");
         var callback = jasmine.createSpy("callback");
-        gs.store.serialize(callback).then(success, error);
+        gs.store.serialize(callback);
         expect(callback).toHaveBeenCalled();
-        expect(success).toHaveBeenCalled();
-        expect(error).not.toHaveBeenCalled();
       });
 
       it("should deserialize a LocalStore store", function(){
@@ -335,10 +323,50 @@ describe("geostore", function() {
       gs.within({
         "type": "Polygon",
         "coordinates": [ [ [ -122.655849602879201, 45.538304922840894, 0.0 ], [ -122.655691867426299, 45.538304448196108, 0.0 ], [ -122.655692285611451, 45.538236031205983, 0.0 ], [ -122.655850019628431, 45.538236506773742, 0.0 ], [ -122.655849602879201, 45.538304922840894, 0.0 ] ] ]
-      }).then(function (res) {
+      }, function (err, res) {
         expect(res[0].id).toEqual(1);
       });
     });
   });
+
+  describe("with a memory store and streams", function(){
+    var gs;
+
+    it("should create with a Memory store and an RTree", function(){
+      expect(function() {
+        gs = new Terraformer.GeoStore({
+          store: new Terraformer.Store.Memory(),
+          index: new Terraformer.RTree()
+        });
+      }).not.toThrow();
+      expect(gs).toBeTruthy();
+    });
+
+    it("should be able to add coordinates", function(){
+      expect(function() {
+        gs.add({ "id": 1, "type": "Feature", "geometry": { "type": "Polygon", "coordinates": [ [ [ -122.655849602879201, 45.538304922840894, 0.0 ], [ -122.655691867426299, 45.538304448196108, 0.0 ], [ -122.655692285611451, 45.538236031205983, 0.0 ], [ -122.655850019628431, 45.538236506773742, 0.0 ], [ -122.655849602879201, 45.538304922840894, 0.0 ] ] ] } });
+        gs.add({ "id": 2, "type": "Feature", "geometry": { "type": "Polygon", "coordinates": [ [ [ -122.589480827112766, 45.477987695417717, 0.0 ], [ -122.589481271327131, 45.477926424718063, 0.0 ], [ -122.589631424206658, 45.477926964033657, 0.0 ], [ -122.589630980154141, 45.477988234733886, 0.0 ], [ -122.589480827112766, 45.477987695417717, 0.0 ] ] ] } });
+      }).not.toThrow();
+      expect(gs).toBeTruthy();
+    });
+
+    it("should be able to create a Stream", function(){
+      expect(gs.createReadStream()).toBeTruthy();
+    });
+
+    it("should be able to use within and get data streamed to it", function(){
+      var completed = 0;
+      var s = gs.createReadStream();
+      var spy = jasmine.createSpy();
+      s.on("end", spy);
+      gs.within({
+        "type": "Polygon",
+        "coordinates": [ [ [ -122.655849602879201, 45.538304922840894, 0.0 ], [ -122.655691867426299, 45.538304448196108, 0.0 ], [ -122.655692285611451, 45.538236031205983, 0.0 ], [ -122.655850019628431, 45.538236506773742, 0.0 ], [ -122.655849602879201, 45.538304922840894, 0.0 ] ] ]
+      });
+
+      expect(spy.callCount).toEqual(1);
+    });
+  });
   
 });
+
