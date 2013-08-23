@@ -321,7 +321,7 @@ Stream.prototype.unpipe = function (destination) {
 
     var callback = args.pop();
     if (args.length) {
-      var indexQuery = args[1];
+      var indexQuery = args[0];
     }
 
 
@@ -337,75 +337,110 @@ Stream.prototype.unpipe = function (destination) {
       var completed = 0;
       var errors = 0;
       var self = this;
+      var sync = new Sync();
+      var set;
+      var i;
 
-      // the function to evalute results from the index
-      var evaluate = function(primitive){
-        completed++;
-        if ( primitive ){
-          var geometry = new Terraformer.Primitive(primitive.geometry);
+      // should we do set elimination with additional indexes?
+      if (indexQuery && self._additional_indexes.length) {
+        // convert "found" to an object with keys
+        set = { };
 
-          if(shape.within(geometry)){
-            if (self._stream) {
-              if (completed === found.length) {
-                self._stream.emit("end", primitive);
-              } else {
-                self._stream.emit("data", primitive);
-              }
-            } else {
-              results.push(primitive);
+        for (i = 0; i < found.length; i++) {
+          set[found[i]] = true;
+        }
+
+        // iterate through the queries, find the correct indexes, and apply them
+        var keys = Object.keys(indexQuery);
+
+        for (var j = 0; j < keys.length; j++) {
+          for (i = 0; i < self._additional_indexes.length; i++) {
+            // index property matches query
+            if (self._additional_indexes[i].property === keys[j]) {
+              var which = indexQuery[keys[j]], index = self._additional_indexes[i].index;
+
+              sync.next(function (index, which, set, id) {
+                var next = this;
+                eliminateForIndex(index, which, set, function (err, newSet) {
+                  set = newSet;
+                  next.done(err);
+                });
+              }, index, which, set);
             }
           }
-          if(completed >= found.length){
-            if(!errors){
+        }
+
+      }
+
+      sync.start(function () {
+        // if we have a set, it is our new "found"
+        if (set) {
+          found = Object.keys(set);
+        }
+
+        // the function to evalute results from the index
+        var evaluate = function(primitive){
+          completed++;
+          if ( primitive ){
+            var geometry = new Terraformer.Primitive(primitive.geometry);
+
+            if (shape.within(geometry)){
               if (self._stream) {
-                self._stream = null;
-              } else if (callback) {
-                callback( null, results );
+                if (completed === found.length) {
+                  self._stream.emit("end", primitive);
+                } else {
+                  self._stream.emit("data", primitive);
+                }
+              } else {
+                results.push(primitive);
               }
-            } else {
-              if (callback) {
-                callback("Could not get all geometries", null);
+            }
+
+            if(completed >= found.length){
+              if(!errors){
+                if (self._stream) {
+                  self._stream = null;
+                } else if (callback) {
+                  callback( null, results );
+                }
+              } else {
+                if (callback) {
+                  callback("Could not get all geometries", null);
+                }
               }
             }
           }
+        };
 
-          if(completed >= found.length && errors){
+        var error = function(){
+          completed++;
+          errors++;
+          if(completed >= found.length){
             if (callback) {
               callback("Could not get all geometries", null);
             }
           }
-        }
-
-      };
-
-      var error = function(){
-        completed++;
-        errors++;
-        if(completed >= found.length){
-          if (callback) {
-            callback("Could not get all geometries", null);
-          }
-        }
-      };
-
-      // for each result see if the polygon contains the point
-      if(found && found.length){
-        var getCB = function(err, result){
-          if (err) {
-            error();
-          } else {
-            evaluate( result );
-          }
         };
 
-        for (var i = 0; i < found.length; i++) {
-          this.get(found[i], getCB);
+        // for each result see if the polygon contains the point
+        if(found && found.length){
+          var getCB = function(err, result){
+            if (err) {
+              error();
+            } else {
+              evaluate( result );
+            }
+          };
+
+          for (var i = 0; i < found.length; i++) {
+            self.get(found[i], getCB);
+          }
+        } else {
+          if (callback) {
+            callback(null, results);
+          }
         }
-      } else {
-        if ( callback ) {
-          callback( null, results );
-        }
-      }
+      });
 
     }));
   };
