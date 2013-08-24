@@ -33,11 +33,7 @@ Adding data to stores is simple. You can pass a Node JS style callback or use th
 
 ``` js
 store.add(geojson, function(err, resp){
-  // optional callback. Node style
-}).then(function(){
-  // Promises style success callback
-}, function(){
-  // Promises style error callback
+  // callback. Node style
 });
 ```
 
@@ -49,11 +45,7 @@ If you need to update a record in a store just pass a GeoJSON `Feature` with the
 
 ``` js
 store.update(geojson, function(err, resp){
-  // optional callback. Node style
-}).then(function(results){
-  // Promises style success callback
-}, function(error){
-  // Promises style error callback
+  // callback. Node style
 });
 ```
 
@@ -65,11 +57,7 @@ There are several method to query data on a `GeoStore`. You can ask for ojects t
 
 ``` js
 store.contains(geojson, function(err, resp){
-  // optional callback. Node style
-}).then(function(){
-  // Promises style success callback
-}, function(){
-  // Promises style error callback
+  // callback. Node style
 });
 ```
 
@@ -79,11 +67,7 @@ You can pass a Node style callback or use the returned deferred to handle the re
 
 ``` js
 store.within(geojson, function(err, resp){
-  // optional callback. Node style
-}).then(function(){
-  // Promises style success callback
-}), function(){
-  // Promises style error callback  
+  // callback. Node style
 });
 ```
 
@@ -95,13 +79,29 @@ If you know a features `id` you can also retrive that feature from the store.
 
 ``` js
 store.get(id, function(err, resp){
-  // optional callback. Node style
-}).then(function(){
-  // Promises style success callback
-}, function(){
-  // Promises style error callback
+  // callback. Node style
 });
 ```
+
+#### Streams
+
+`GeoStores` support Readable Streams in both the browser and Node.js.  Currently only `flowing` streams are supported.  Streams are created with the `createReadStream` method.  Streams are used in place of callbacks for `within` and `contains`, and exist for the duration of a single request to `within` or `contains`.
+
+The stream will emit `data` on any data events and `end` with the final entry found.
+
+``` js
+var stream = store.createReadStream();
+
+stream.on("data", function (geojson) {
+  // found geojson
+});
+
+stream.on("end", function (geojson) {
+  // final geojson object
+});
+```
+
+Since streams are not reentrant in the `GeoStore`, it is recommended to create a new `GeoStore` for each stream.  Streams are destroyed after the `end` event has been called.
 
 ### Removing Data
 
@@ -109,11 +109,7 @@ To remove a feature just pass its id  to the `remove` method
 
 ``` js
 store.remove(id, function(err, resp){
-  // optional callback. Node style
-}).then(function(){
-  // Promises style success callback
-}, function(){
-  // Promises style error callback
+  // callback. Node style
 });
 ```
 
@@ -123,11 +119,7 @@ store.remove(id, function(err, resp){
 
 ``` js
 store.store.serialize(function(err, serializedStore){
-  // optional callback. Node style
-}).then(function(serializedStore){
-  // Promises style success callback
-}, function(error){
-  // Promises style error callback
+  // callback. Node style
 });
 ```
 
@@ -137,11 +129,7 @@ store.store.serialize(function(err, serializedStore){
 
 ``` js
 store.index.serialize(function(err, serializedStore){
-  // optional callback. Node style
-}).then(function(serializedStore){
-  // Promises style success callback
-}, function(error){
-  // Promises style error callback
+  // callback. Node style
 });
 ```
 
@@ -194,77 +182,40 @@ If you want to create a custom way to persist data (perhaps asyncronously to a d
 var MyCustomStore = function MyCustomStore(){}
 
 // impliment an add method, this will get passed a geojson obejct that you should store
-// and a deferred that you should resolve when you are done persisting the geojson
-MyCustomStore.prototype.add = function(geojson, deferred){
+// and a callback you should call when you are done persisting the geojson
+MyCustomStore.prototype.add = function(geojson, callback){
 
   // ... do whatever you need to do to persist the data ...
+  callback(err, data);
 
-  // resolve the deferred when you are done persisting data
-  deferred.resolve(geojson);
-
-  // you can also reject the deferred if there is an error
-  deferred.reject(yourError);
-
-  // return the deferred so it can accept callbacks
-  return deferred;
 };
 
 // remove the data from the index and data with id returns true if removed successfully.
-MyCustomStore.prototype.remove = function(id, deferred){
+MyCustomStore.prototype.remove = function(id, callback){
 
   // ... do whatever you need to do to delete the data ...
-
-  // resolve the deferred when you are done deleting data
-  deferred.resolve(true);
-
-  // you can also reject the deferred if there is an error
-  deferred.reject(yourError);
-
-  // return the deferred so it can accept callbacks
-  return deferred;
+  callback(err, data);
 };
 
 // return the data stored at id
-MyCustomStore.prototype.get = function(id, deferred){
+MyCustomStore.prototype.get = function(id, callback){
 
   // ... do whatever you need to do to get the data ...
+  callback(err, data);
 
-  // resolve the deferred when you are done getting data
-  deferred.resolve(geojson);
-
-  // you can also reject the deferred if there is an error
-  deferred.reject(yourError);
-
-  // return the deferred so it can accept callbacks
-  return deferred;
 };
 
-MyCustomStore.prototype.update = function(geojson, deferred){
+MyCustomStore.prototype.update = function(geojson, callback){
 
   // ... do whatever you need to do to update the data ...
-
-  // resolve the deferred when you are done updating data
-  deferred.resolve(geojson);
-
-  // you can also reject the deferred if there is an error
-  deferred.reject(yourError);
-
-  // return the deferred so it can accept callbacks
-  return deferred;
+  callback(err, data);
 };
 
-MyCustomStore.prototype.serialize = function(deferred){
+MyCustomStore.prototype.serialize = function(callback){
 
   // ... do whatever you need to do to serialize your data ...
+  callback(err, data);
 
-  // resolve the deferred when you are done serializing data
-  deferred.resolve(this);
-
-  // you can also reject the deferred if there is an error
-  deferred.reject(yourError);
-
-  // return the deferred so it can accept callbacks
-  return deferred;
 };
 
 
@@ -287,3 +238,7 @@ var store = new Terraformer.GeoStore({
 ## Custom Indexes
 
 It is possible to create custom indexes. Documentation will be coming soon.
+
+### Additional Indexes
+
+Additional indexes can be used to further query data and refine results.  Additional documentation will be coming soon.
