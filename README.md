@@ -96,7 +96,7 @@ Sample code and examples coming soon...
 ### Parsers
 
 * [ArcGIS](docs/ArcGIS.md)
-* [Well Known Text](docs/WKT.md)
+* [Well Known Text](https://github.com/esri/terraformer-parser-wkt)
 * [GeoJSON](docs/GeoJSON.md)
 
 ### Indexes
