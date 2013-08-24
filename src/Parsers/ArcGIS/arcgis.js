@@ -236,9 +236,9 @@
 
     return new Terraformer.Primitive(geojson);
   }
-
+  
   // GeoJSON -> ArcGIS
-  function convert(input){
+  function convert(input, arcgisIdField){
     var geojson = JSON.parse(JSON.stringify(input));
     var spatialReference = { wkid: 4326 };
     var result = {};
@@ -273,11 +273,18 @@
     case "Feature":
       result.geometry = convert(geojson.geometry);
       result.attributes = geojson.properties;
+      if (geojson.hasOwnProperty("id")) {
+	    if (typeof arcgisIdField === "undefined" || 
+	    	arcgisIdField===null) { 
+	    	arcgisIdField = "geojsonid";
+	    }
+      	result[arcgisIdField] = geojson.id;
+      }
       break;
     case "FeatureCollection":
       result = [];
       for (i = 0; i < geojson.features.length; i++){
-        result.push(convert(geojson.features[i]));
+        result.push(convert(geojson.features[i], arcgisIdField));
       }
       break;
     case "GeometryCollection":
