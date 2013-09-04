@@ -93,4 +93,4 @@ var arcgis = Terraformer.ArcGIS.convert(point);
 
 ### Notes
 
-Terraformer will also handle converting `FeatureCollection` and GeometryCollection` objects to arrays of ArcGIS geometries or feautres. However it will **Not** do this in reverse as there is no official structure for arrays of features in ArcGIS and all the output features will not have `id` properties.
+Terraformer will also handle converting `FeatureCollection` and `GeometryCollection` objects to arrays of ArcGIS geometries or feautres. However it will **Not** do this in reverse as there is no official structure for arrays of features in ArcGIS and all the output features will not have `id` properties. See [this issue](https://github.com/Esri/Terraformer/issues/104) for more details.

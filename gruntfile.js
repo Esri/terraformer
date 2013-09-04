@@ -37,14 +37,6 @@ module.exports = function (grunt) {
         src: ['<banner:meta.banner>', 'src/Parsers/ArcGIS/arcgis.js'],
         dest: 'dist/node/Parsers/ArcGIS/index.js'
       },
-      geostore: {
-        src: ['<banner:meta.banner>', 'src/partials/geostore-head.js', 'src/helpers/sync.js', 'src/helpers/browser/eventemitter.js', 'src/helpers/browser/stream.js', 'src/geostore.js', 'src/partials/geostore-tail.js' ],
-        dest: 'dist/browser/geostore.js'
-      },
-      geostore_node: {
-        src: [ 'src/partials/geostore-head.js', 'src/helpers/sync.js', 'src/helpers/node/stream.js', 'src/geostore.js', 'src/partials/geostore-tail.js' ],
-        dest: 'dist/node/GeoStore/index.js'
-      },
       memory_store: {
         src: ['<banner:meta.banner>', "src/Store/Memory.js"],
         dest: 'dist/browser/Store/Memory.js'
@@ -71,10 +63,6 @@ module.exports = function (grunt) {
         src: ["dist/browser/arcgis.js"],
         dest: 'dist/minified/arcgis.min.js'
       },
-      geostore: {
-        src: ["dist/browser/geostore.js"],
-        dest: 'dist/minified/geostore.min.js'
-      },
       memory_store: {
         src: ["dist/browser/Store/Memory.js"],
         dest: 'dist/minified/Store/Memory.min.js'
@@ -90,10 +78,7 @@ module.exports = function (grunt) {
         src: [
           "dist/browser/terraformer.js",
           "dist/browser/arcgis.js",
-          "dist/browser/rtree.js",
-          "dist/browser/geostore.js",
-          "dist/browser/Store/Memory.js",
-          "dist/browser/Store/LocalStorage.js"
+          "dist/browser/rtree.js"
         ],
         options: {
           specs: 'spec/*Spec.js',
@@ -129,7 +114,7 @@ module.exports = function (grunt) {
 
     complexity: {
       generic: {
-        src: [ 'dist/browser/arcgis.js', 'dist/browser/geostore.js', 'dist/browser/rtree.js', 'dist/browser/terraformer.js', 'dist/browser/Store/Memory.js', 'dist/browser/Store/LocalStorage.js' ],
+        src: [ 'dist/browser/arcgis.js', 'dist/browser/rtree.js', 'dist/browser/terraformer.js', 'dist/browser/Store/Memory.js', 'dist/browser/Store/LocalStorage.js' ],
         options: {
           jsLintXML: 'complexity.xml', // create XML JSLint-like report
           errorsOnly: false, // show only maintainability errors
