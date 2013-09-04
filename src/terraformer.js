@@ -756,7 +756,7 @@
     toJSON: function(){
       var obj = {};
       for (var key in this) {
-        if (this.hasOwnProperty(key) && this[key] && excludeFromJSON.indexOf(key)) {
+        if (this.hasOwnProperty(key) && excludeFromJSON.indexOf(key) === -1) {
           obj[key] = this[key];
         }
       }

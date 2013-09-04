@@ -54,7 +54,8 @@
       throw new Error("Terraform.GeoStore : only Features and FeatureCollections are supported");
     }
 
-    if(geojson.type === "Feature" && !geojson.id) {
+    if(geojson.type === "Feature" && 
+       ((!geojson.hasOwnProperty("id")) || (geojson.id === null))) {
       throw new Error("Terraform.GeoStore : Feature does not have an id property");
     }
 
@@ -63,7 +64,7 @@
       for (var i = 0; i < geojson.features.length; i++) {
         var feature = geojson.features[i];
         bbox = Terraformer.Tools.calculateBounds(feature);
-        if(!feature.id) {
+        if((!feature.hasOwnProperty("id")) || feature.id === null) {
           throw new Error("Terraform.GeoStore : Feature does not have an id property");
         }
         this.index.insert({
