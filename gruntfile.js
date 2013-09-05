@@ -32,10 +32,6 @@ module.exports = function (grunt) {
       memory_store: {
         src: ['<banner:meta.banner>', "src/Store/Memory.js"],
         dest: 'dist/browser/Store/Memory.js'
-      },
-      local_store: {
-        src: ['<banner:meta.banner>', "src/Store/LocalStorage.js"],
-        dest: 'dist/browser/Store/LocalStorage.js'
       }
     },
 
@@ -54,10 +50,6 @@ module.exports = function (grunt) {
       memory_store: {
         src: ["dist/browser/Store/Memory.js"],
         dest: 'dist/minified/Store/Memory.min.js'
-      },
-      local_store: {
-        src: ["dist/browser/Store/LocalStorage.js"],
-        dest: 'dist/minified/Store/LocalStorage.min.js'
       }
     },
 
@@ -101,7 +93,7 @@ module.exports = function (grunt) {
 
     complexity: {
       generic: {
-        src: [ 'dist/browser/rtree.js', 'dist/browser/terraformer.js', 'dist/browser/Store/Memory.js', 'dist/browser/Store/LocalStorage.js' ],
+        src: [ 'dist/browser/rtree.js', 'dist/browser/terraformer.js', 'dist/browser/Store/Memory.js' ],
         options: {
           jsLintXML: 'complexity.xml', // create XML JSLint-like report
           errorsOnly: false, // show only maintainability errors
