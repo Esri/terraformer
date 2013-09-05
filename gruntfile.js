@@ -29,10 +29,6 @@ module.exports = function (grunt) {
         src: ['<banner:meta.banner>', 'src/terraformer.js'],
         dest: 'dist/node/terraformer.js'
       },
-      memory_store: {
-        src: ['<banner:meta.banner>', "src/Store/Memory.js"],
-        dest: 'dist/browser/Store/Memory.js'
-      }
     },
 
     uglify: {
@@ -47,10 +43,6 @@ module.exports = function (grunt) {
         src: ["dist/browser/rtree.js"],
         dest: 'dist/minified/rtree.min.js'
       },
-      memory_store: {
-        src: ["dist/browser/Store/Memory.js"],
-        dest: 'dist/minified/Store/Memory.min.js'
-      }
     },
 
     jasmine: {
@@ -93,7 +85,7 @@ module.exports = function (grunt) {
 
     complexity: {
       generic: {
-        src: [ 'dist/browser/rtree.js', 'dist/browser/terraformer.js', 'dist/browser/Store/Memory.js' ],
+        src: [ 'dist/browser/rtree.js', 'dist/browser/terraformer.js' ],
         options: {
           jsLintXML: 'complexity.xml', // create XML JSLint-like report
           errorsOnly: false, // show only maintainability errors
