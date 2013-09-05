@@ -38,12 +38,13 @@ module.exports = function (grunt) {
     jasmine: {
       coverage: {
         src: [
-          "node_modules/terraformer/terraformer.js",
           "terraformer-wkt-parser.js"
         ],
         options: {
           specs: 'spec/*Spec.js',
-          helpers: 'spec/*Helpers.js',
+          helpers: [
+            "node_modules/terraformer/terraformer.js"
+          ],
           //keepRunner: true,
           outfile: 'SpecRunner.html',
           template: require('grunt-template-jasmine-istanbul'),
@@ -52,10 +53,10 @@ module.exports = function (grunt) {
             report: './coverage',
             // due to the generated aspects of the parser, thresholds are much lower
             thresholds: {
-              lines: 50,
-              statements: 50,
-              branches: 50,
-              functions: 50
+              lines: 80,
+              statements: 80,
+              branches: 70,
+              functions: 80
             }
           }
         }
