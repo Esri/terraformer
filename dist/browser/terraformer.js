@@ -5,11 +5,6 @@
     exports = module.exports = factory();
   }
 
-  // AMD.
-  if(typeof define === 'function' && define.amd) {
-    define(factory);
-  }
-
   // Browser Global.
   if(typeof window === "object") {
     root.Terraformer = factory();
@@ -34,47 +29,6 @@
           "type": "ogcwkt"
         }
       };
-
-
-  function Deferred () {
-    this._thens = [];
-  }
-
-  Deferred.prototype = {
-
-    then: function (onResolve, onReject) {
-      this._thens.push({ resolve: onResolve, reject: onReject });
-      return this;
-    },
-
-    resolve: function (val) {
-      this._complete('resolve', val);
-      return this;
-    },
-
-    reject: function (ex) {
-      this._complete('reject', ex);
-      return this;
-    },
-
-    _complete: function (which, arg) {
-      // switch over to sync then()
-      this.then = (which === 'resolve') ?
-        function (resolve, reject) { resolve(arg); } :
-        function (resolve, reject) { reject(arg); };
-      // disallow multiple calls to resolve or reject
-      this.resolve = this.reject =
-        function () { throw new Error('Deferred already completed.'); };
-      // complete all waiting (async) then()s
-      for (var i = 0; i < this._thens.length; i++) {
-        var aThen = this._thens[i];
-        if(aThen[which]) {
-          aThen[which](arg);
-        }
-      }
-      delete this._thens;
-    }
-  };
 
   /*
   Internal: safe warning
@@ -139,6 +93,17 @@
 
   /*
   Internal: Calculate an bounding box from an nested array of positions
+  [
+    [
+      [ [lng, lat],[lng, lat],[lng, lat] ]
+    ]
+    [
+      [lng, lat],[lng, lat],[lng, lat]
+    ]
+    [
+      [lng, lat],[lng, lat],[lng, lat]
+    ]
+  ]
   */
   function calculateBoundsFromNestedArrays (array) {
     var x1 = null, x2 = null, y1 = null, y2 = null;
@@ -183,6 +148,11 @@
 
   /*
   Internal: Calculate a bounding box from an array of arrays of arrays
+  [
+    [ [lng, lat],[lng, lat],[lng, lat] ]
+    [ [lng, lat],[lng, lat],[lng, lat] ]
+    [ [lng, lat],[lng, lat],[lng, lat] ]
+  ]
   */
   function calculateBoundsFromNestedArrayOfArrays (array) {
     var x1 = null, x2 = null, y1 = null, y2 = null;
@@ -230,13 +200,15 @@
 
   /*
   Internal: Calculate a bounding box from an array of positions
+  [
+    [lng, lat],[lng, lat],[lng, lat]
+  ]
   */
   function calculateBoundsFromArray (array) {
     var x1 = null, x2 = null, y1 = null, y2 = null;
 
     for (var i = 0; i < array.length; i++) {
       var lonlat = array[i];
-
       var lon = lonlat[0];
       var lat = lonlat[1];
 
@@ -1257,7 +1229,6 @@
   Feature.prototype = new Primitive();
   Feature.prototype.constructor = Feature;
 
-
   /*
   GeoJSON FeatureCollection Class
       new FeatureCollection();
@@ -1431,8 +1402,6 @@
 
   exports.MercatorCRS = MercatorCRS;
   exports.GeographicCRS = GeographicCRS;
-
-  exports.Deferred = Deferred;
 
   return exports;
 }));

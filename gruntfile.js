@@ -29,14 +29,6 @@ module.exports = function (grunt) {
         src: ['<banner:meta.banner>', 'src/terraformer.js'],
         dest: 'dist/node/terraformer.js'
       },
-      arcgis: {
-        src: ['<banner:meta.banner>', 'src/Parsers/ArcGIS/arcgis.js'],
-        dest: 'dist/browser/arcgis.js'
-      },
-      arcgis_node: {
-        src: ['<banner:meta.banner>', 'src/Parsers/ArcGIS/arcgis.js'],
-        dest: 'dist/node/Parsers/ArcGIS/index.js'
-      },
       memory_store: {
         src: ['<banner:meta.banner>', "src/Store/Memory.js"],
         dest: 'dist/browser/Store/Memory.js'
@@ -59,10 +51,6 @@ module.exports = function (grunt) {
         src: ["dist/browser/rtree.js"],
         dest: 'dist/minified/rtree.min.js'
       },
-      arcgis: {
-        src: ["dist/browser/arcgis.js"],
-        dest: 'dist/minified/arcgis.min.js'
-      },
       memory_store: {
         src: ["dist/browser/Store/Memory.js"],
         dest: 'dist/minified/Store/Memory.min.js'
@@ -77,7 +65,6 @@ module.exports = function (grunt) {
       coverage: {
         src: [
           "dist/browser/terraformer.js",
-          "dist/browser/arcgis.js",
           "dist/browser/rtree.js"
         ],
         options: {
@@ -114,7 +101,7 @@ module.exports = function (grunt) {
 
     complexity: {
       generic: {
-        src: [ 'dist/browser/arcgis.js', 'dist/browser/rtree.js', 'dist/browser/terraformer.js', 'dist/browser/Store/Memory.js', 'dist/browser/Store/LocalStorage.js' ],
+        src: [ 'dist/browser/rtree.js', 'dist/browser/terraformer.js', 'dist/browser/Store/Memory.js', 'dist/browser/Store/LocalStorage.js' ],
         options: {
           jsLintXML: 'complexity.xml', // create XML JSLint-like report
           errorsOnly: false, // show only maintainability errors
