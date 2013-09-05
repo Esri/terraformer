@@ -5,11 +5,6 @@
     exports = module.exports = factory();
   }
 
-  // AMD.
-  if(typeof define === 'function' && define.amd) {
-    define(factory);
-  }
-
   // Browser Global.
   if(typeof window === "object") {
     root.Terraformer = factory();
@@ -34,47 +29,6 @@
           "type": "ogcwkt"
         }
       };
-
-
-  function Deferred () {
-    this._thens = [];
-  }
-
-  Deferred.prototype = {
-
-    then: function (onResolve, onReject) {
-      this._thens.push({ resolve: onResolve, reject: onReject });
-      return this;
-    },
-
-    resolve: function (val) {
-      this._complete('resolve', val);
-      return this;
-    },
-
-    reject: function (ex) {
-      this._complete('reject', ex);
-      return this;
-    },
-
-    _complete: function (which, arg) {
-      // switch over to sync then()
-      this.then = (which === 'resolve') ?
-        function (resolve, reject) { resolve(arg); } :
-        function (resolve, reject) { reject(arg); };
-      // disallow multiple calls to resolve or reject
-      this.resolve = this.reject =
-        function () { throw new Error('Deferred already completed.'); };
-      // complete all waiting (async) then()s
-      for (var i = 0; i < this._thens.length; i++) {
-        var aThen = this._thens[i];
-        if(aThen[which]) {
-          aThen[which](arg);
-        }
-      }
-      delete this._thens;
-    }
-  };
 
   /*
   Internal: safe warning
@@ -1448,8 +1402,6 @@
 
   exports.MercatorCRS = MercatorCRS;
   exports.GeographicCRS = GeographicCRS;
-
-  exports.Deferred = Deferred;
 
   return exports;
 }));

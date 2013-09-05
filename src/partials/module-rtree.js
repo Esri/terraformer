@@ -12,7 +12,7 @@
     root.Terraformer.RTree = factory(root.Terraformer).RTree;
   }
 
-}(this, function() {
+}(this, function(Terraformer) {
   var exports = { };
 
   function isArray(obj) {
