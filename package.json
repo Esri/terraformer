@@ -10,7 +10,12 @@
     "grunt-complexity": "~0.1.3",
     "grunt-contrib-jasmine": "~0.4.2",
     "grunt-jasmine-node": "https://github.com/magicmoose/grunt-jasmine-node/tarball/master",
-    "grunt-template-jasmine-istanbul": "~0.2.4"
+    "grunt-template-jasmine-istanbul": "~0.2.4",
+    "docpad-plugin-marked": "~2.1.1",
+    "docpad-plugin-eco": "~2.0.2",
+    "docpad-plugin-ghpages": "~2.3.0",
+    "docpad-plugin-highlightjs": "~2.1.7",
+    "docpad-plugin-cleanurls": "~2.5.1"
   },
   "scripts": {
     "test": "grunt test"
@@ -26,10 +31,5 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "docpad-plugin-marked": "~2.1.1",
-    "docpad-plugin-eco": "~2.0.2",
-    "docpad-plugin-ghpages": "~2.3.0",
-    "docpad-plugin-highlightjs": "~2.1.7",
-    "docpad-plugin-cleanurls": "~2.5.1"
   }
 }
