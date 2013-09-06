@@ -1,5 +1,3 @@
-  var fs = require('fs');
-var jison = require('jison');
 
 module.exports = function (grunt) {
   grunt.initConfig({
@@ -14,7 +12,7 @@ module.exports = function (grunt) {
     },
 
     jshint: {
-      files: [ 'grunt.js', 'src/*.js', 'src/Parsers/ArcGIS/*.js', 'src/Store/*.js' ],
+      files: [ 'gruntfile.js', 'src/*.js' ],
       options: {
         node: true
       }
@@ -29,14 +27,6 @@ module.exports = function (grunt) {
         src: ['<banner:meta.banner>', 'src/terraformer.js'],
         dest: 'dist/node/terraformer.js'
       },
-      memory_store: {
-        src: ['<banner:meta.banner>', "src/Store/Memory.js"],
-        dest: 'dist/browser/Store/Memory.js'
-      },
-      local_store: {
-        src: ['<banner:meta.banner>', "src/Store/LocalStorage.js"],
-        dest: 'dist/browser/Store/LocalStorage.js'
-      }
     },
 
     uglify: {
@@ -46,26 +36,13 @@ module.exports = function (grunt) {
       terraformer: {
         src: ["dist/browser/terraformer.js"],
         dest: 'dist/minified/terraformer.min.js'
-      },
-      rtree: {
-        src: ["dist/browser/rtree.js"],
-        dest: 'dist/minified/rtree.min.js'
-      },
-      memory_store: {
-        src: ["dist/browser/Store/Memory.js"],
-        dest: 'dist/minified/Store/Memory.min.js'
-      },
-      local_store: {
-        src: ["dist/browser/Store/LocalStorage.js"],
-        dest: 'dist/minified/Store/LocalStorage.min.js'
       }
     },
 
     jasmine: {
       coverage: {
         src: [
-          "dist/browser/terraformer.js",
-          "dist/browser/rtree.js"
+          "dist/browser/terraformer.js"
         ],
         options: {
           specs: 'spec/*Spec.js',
@@ -101,7 +78,7 @@ module.exports = function (grunt) {
 
     complexity: {
       generic: {
-        src: [ 'dist/browser/rtree.js', 'dist/browser/terraformer.js', 'dist/browser/Store/Memory.js', 'dist/browser/Store/LocalStorage.js' ],
+        src: [ 'dist/browser/terraformer.js' ],
         options: {
           jsLintXML: 'complexity.xml', // create XML JSLint-like report
           errorsOnly: false, // show only maintainability errors
@@ -114,19 +91,6 @@ module.exports = function (grunt) {
   });
 
 
-  grunt.registerTask('rtree-exports', 'Building RTree node module', function() {
-    var src = fs.readFileSync('./src/rtree.js', 'utf8');
-
-    var wrapper = fs.readFileSync('./src/partials/module-rtree.js', 'utf8');
-
-    wrapper = wrapper.replace('"SOURCE";', src);
-
-    fs.writeFileSync("./dist/browser/rtree.js", wrapper, "utf8");
-    fs.writeFileSync("./dist/node/RTree/index.js", wrapper, "utf8");
-
-    grunt.log.write('Files created.\n');
-  });
-
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-uglify');
@@ -134,7 +98,6 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-contrib-jasmine');
   grunt.loadNpmTasks('grunt-jasmine-node');
 
-  grunt.registerTask('test', ['build_source', 'concat', 'jasmine_node', 'jasmine']);
-  grunt.registerTask('build_source', ['rtree-exports']);
-  grunt.registerTask('default', [ 'build_source', 'concat', 'jshint', 'jasmine', 'jasmine_node', 'uglify', 'complexity' ]);
+  grunt.registerTask('test', ['concat', 'jasmine_node', 'jasmine']);
+  grunt.registerTask('default', [ 'concat', 'jshint', 'jasmine', 'jasmine_node', 'uglify', 'complexity' ]);
 };
