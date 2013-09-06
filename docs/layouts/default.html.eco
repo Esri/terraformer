@@ -1,0 +1,11 @@
+<html>
+<head>
+    <title><%= @document.title %></title>
+    <%- @getBlock("meta").toHTML() %>
+    <%- @getBlock("styles").add(["/css/solarized-dark.css"]).toHTML() %>
+</head>
+<body>
+    <%- @content %>
+    <%- @getBlock("scripts").toHTML() %>
+</body>
+</html>

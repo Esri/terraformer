@@ -25,5 +25,11 @@
     "Jerry Sievert <jsievert@esri.com> (http://legitimatesounding.com)"
   ],
   "license": "MIT",
-  "dependencies": {}
+  "dependencies": {
+    "docpad-plugin-marked": "~2.1.1",
+    "docpad-plugin-eco": "~2.0.2",
+    "docpad-plugin-ghpages": "~2.3.0",
+    "docpad-plugin-highlightjs": "~2.1.7",
+    "docpad-plugin-cleanurls": "~2.5.1"
+  }
 }
