@@ -1,3 +1,7 @@
+---
+layout: default
+---
+
 # Terraformer Primitives
 
 Terraformer includes a lightweight wrapper to `GeoJSON` allowing for a number of methods to be used on them.

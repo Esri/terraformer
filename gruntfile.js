@@ -4,45 +4,34 @@ module.exports = function (grunt) {
     pkg:   grunt.file.readJSON('package.json'),
 
     meta: {
-      version: '0.0.1',
-      banner: '/*! Terraformer JS - <%= meta.version %> - <%= grunt.template.today("yyyy-mm-dd") %>\n' +
-        '*   https://github.com/geoloqi/Terraformer\n' +
-        '*   Copyright (c) <%= grunt.template.today("yyyy") %> Environmental Systems Research Institute, Inc.\n' +
-        '*   Licensed MIT */'
+      version: '0.0.1'
     },
 
     jshint: {
-      files: [ 'gruntfile.js', 'src/*.js' ],
+      files: [ 'gruntfile.js', 'terraformer.js' ],
       options: {
         node: true
       }
     },
 
-    concat: {
-      browser: {
-        src: ['<banner:meta.banner>', 'src/terraformer.js'],
-        dest: 'dist/browser/terraformer.js'
-      },
-      node: {
-        src: ['<banner:meta.banner>', 'src/terraformer.js'],
-        dest: 'dist/node/terraformer.js'
-      },
-    },
-
     uglify: {
       options: {
-        report: 'gzip'
+        report: 'gzip',
+        banner: '/*! Terraformer JS - <%= meta.version %> - <%= grunt.template.today("yyyy-mm-dd") %>\n' +
+        '*   https://github.com/esri/Terraformer\n' +
+        '*   Copyright (c) <%= grunt.template.today("yyyy") %> Environmental Systems Research Institute, Inc.\n' +
+        '*   Licensed MIT */'
       },
       terraformer: {
-        src: ["dist/browser/terraformer.js"],
-        dest: 'dist/minified/terraformer.min.js'
+        src: ['terraformer.js'],
+        dest: 'terraformer.min.js'
       }
     },
 
     jasmine: {
       coverage: {
         src: [
-          "dist/browser/terraformer.js"
+          "terraformer.js"
         ],
         options: {
           specs: 'spec/*Spec.js',
@@ -54,10 +43,10 @@ module.exports = function (grunt) {
             coverage: './.coverage/coverage.json',
             report: './.coverage',
             thresholds: {
-              lines: 75,
-              statements: 75,
-              branches: 75,
-              functions: 75
+              lines: 90,
+              statements: 90,
+              branches: 90,
+              functions: 90
             }
           }
         }
@@ -78,7 +67,7 @@ module.exports = function (grunt) {
 
     complexity: {
       generic: {
-        src: [ 'dist/browser/terraformer.js' ],
+        src: [ 'terraformer.js' ],
         options: {
           jsLintXML: 'complexity.xml', // create XML JSLint-like report
           errorsOnly: false, // show only maintainability errors
@@ -92,12 +81,11 @@ module.exports = function (grunt) {
 
 
   grunt.loadNpmTasks('grunt-contrib-jshint');
-  grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-complexity');
   grunt.loadNpmTasks('grunt-contrib-jasmine');
   grunt.loadNpmTasks('grunt-jasmine-node');
 
-  grunt.registerTask('test', ['concat', 'jasmine_node', 'jasmine']);
-  grunt.registerTask('default', [ 'concat', 'jshint', 'jasmine', 'jasmine_node', 'uglify', 'complexity' ]);
+  grunt.registerTask('test', ['jshint', 'jasmine_node', 'jasmine']);
+  grunt.registerTask('default', ['test', 'uglify', 'complexity' ]);
 };
