@@ -16,7 +16,8 @@
     "docpad-plugin-ghpages": "~2.3.0",
     "docpad-plugin-highlightjs": "~2.1.7",
     "docpad-plugin-cleanurls": "~2.5.1",
-    "docpad-plugin-partials": "~2.8.0"
+    "docpad-plugin-partials": "~2.8.0",
+    "docpad-plugin-nodesass": "~2.0.2"
   },
   "scripts": {
     "test": "grunt test"

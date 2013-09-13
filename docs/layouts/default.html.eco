@@ -3,10 +3,29 @@
     <title><%= @document.title %></title>
     <%- @getBlock("meta").toHTML() %>
     <%- @getBlock("styles").add(["/css/solarized-dark.css"]).toHTML() %>
+    <%- @getBlock("styles").add(["/css/tester.css"]).toHTML() %>
 </head>
 <body>
-    <%- @partial('derp', false) %>
-    <%- @content %>
+    <nav>
+      <%- @partial('nav', false) %>
+    </nav>
+    <header>
+      <h1>hey</h1>
+    </header>
+    <main>
+      <section class="introduction">
+        <%- @content %>
+      </section>
+
+      <section class="terraformer-core">
+       <%- @partial('terraformer_core', false) %>
+      </section>
+    </main>
+
+    <footer>
+      <%- @partial('footer', false) %>
+    </footer>
+
     <%- @getBlock("scripts").toHTML() %>
 </body>
 </html>
