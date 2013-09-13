@@ -5,6 +5,7 @@
     <%- @getBlock("styles").add(["/css/solarized-dark.css"]).toHTML() %>
 </head>
 <body>
+    <%- @partial('derp', false) %>
     <%- @content %>
     <%- @getBlock("scripts").toHTML() %>
 </body>
