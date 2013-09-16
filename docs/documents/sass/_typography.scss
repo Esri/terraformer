@@ -20,7 +20,7 @@ h5 {@include p12; @include Open;}
 h6 {@include p10-5; @include Open;}
 
 // Basic Copy ------------
-p {
+p, a {
   @include p12;
   padding-bottom: 1*$baseline;
 }

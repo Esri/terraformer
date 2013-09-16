@@ -4,6 +4,9 @@ main {
 }
 
 section {
+  padding-top: 36*$point;
+  // margin-top: 3*$point;
+  // margin-bottom: 3*$point;
   padding-left: $edge;
   h2 {
     @include p18;
@@ -20,7 +23,6 @@ section {
     margin-top: 1*$baseline;
     float: right;
     margin-right: $spine;
-    padding-right:
     a {
 
     }

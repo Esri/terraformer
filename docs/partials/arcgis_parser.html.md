@@ -1,5 +1,5 @@
-### [Get Core](/)
-## Terraformer Core
+### [Get ArcGIS Parser](/)
+## ArcGIS Parser
 
 <h4> Primitives </h4>
 
@@ -9,4 +9,4 @@ The Terraformer Primitives are classes that map directly to their GeoJSON equiva
 
 Terraformer also exposes many generic tools for working with geographic data.
 
-[Terraformer Core Documentation](/)
+[ArcGIS Parser Documentation](/)

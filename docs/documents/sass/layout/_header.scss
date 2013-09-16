@@ -1,7 +1,7 @@
 header {
   background-color: $lightest-gray;
-  height: 2*$baseline;
-  padding: 5*$baseline;
+  // height: 16*$baseline;
+  padding: 10*$baseline;
   h1 {
     @include upperCase;
     @include narrowTrack;

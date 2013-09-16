@@ -157,7 +157,7 @@ h6 {
 }
 
 /* line 23, ../sass/_typography.scss */
-p {
+p, a {
   font-size: 1rem;
   line-height: 1.5rem;
   margin-top: 0;
@@ -332,9 +332,10 @@ main {
 
 /* line 6, ../sass/layout/_grid.scss */
 section {
+  padding-top: 3rem;
   padding-left: 18.75%;
 }
-/* line 8, ../sass/layout/_grid.scss */
+/* line 11, ../sass/layout/_grid.scss */
 section h2 {
   font-size: 1.5rem;
   line-height: 1.5rem;
@@ -350,7 +351,7 @@ section h2 {
   line-height: 3rem;
   width: 62.5%;
 }
-/* line 17, ../sass/layout/_grid.scss */
+/* line 20, ../sass/layout/_grid.scss */
 section h3 {
   font-family: 'Open Sans', sans-serif;
   font-style: normal;
@@ -364,9 +365,8 @@ section h3 {
   margin-top: 1.5rem;
   float: right;
   margin-right: 37.5%;
-  padding-right: a;
 }
-/* line 28, ../sass/layout/_grid.scss */
+/* line 30, ../sass/layout/_grid.scss */
 section h4 {
   font-family: 'Open Sans', sans-serif;
   font-style: normal;
@@ -378,17 +378,17 @@ section h4 {
   padding-top: 0.375rem;
   margin-bottom: -0.375rem;
 }
-/* line 33, ../sass/layout/_grid.scss */
+/* line 35, ../sass/layout/_grid.scss */
 section p {
   width: 62.5%;
 }
-/* line 37, ../sass/layout/_grid.scss */
+/* line 39, ../sass/layout/_grid.scss */
 section blockquote {
   float: right;
   max-width: 37.5%;
   padding-top: 1rem;
 }
-/* line 42, ../sass/layout/_grid.scss */
+/* line 44, ../sass/layout/_grid.scss */
 section blockquote p {
   font-family: 'Cardo', serif;
   font-style: italic;
@@ -451,8 +451,7 @@ footer {
 /* line 1, ../sass/layout/_header.scss */
 header {
   background-color: #ededed;
-  height: 3rem;
-  padding: 7.5rem;
+  padding: 15rem;
 }
 /* line 5, ../sass/layout/_header.scss */
 header h1 {

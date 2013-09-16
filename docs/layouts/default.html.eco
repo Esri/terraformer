@@ -19,6 +19,18 @@
       <section class="terraformer-core">
        <%- @partial('terraformer_core', false) %>
       </section>
+
+      <section class="arcgis-parser">
+       <%- @partial('arcgis_parser', false) %>
+      </section>
+
+      <section class="wkt-parser">
+       <%- @partial('wkt_parser', false) %>
+      </section>
+
+      <section class="geostore">
+       <%- @partial('geostore', false) %>
+      </section>
     </main>
 
     <footer>

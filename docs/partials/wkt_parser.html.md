@@ -1,5 +1,5 @@
-### [Get Core](/)
-## Terraformer Core
+### [Get WKT Parser](/)
+## Well Known Text parser
 
 <h4> Primitives </h4>
 
@@ -9,4 +9,4 @@ The Terraformer Primitives are classes that map directly to their GeoJSON equiva
 
 Terraformer also exposes many generic tools for working with geographic data.
 
-[Terraformer Core Documentation](/)
+[WKT Parser Documentation](/)
