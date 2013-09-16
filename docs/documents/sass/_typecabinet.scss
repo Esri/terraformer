@@ -2,14 +2,13 @@
 // CONFIG
 ////
 
-
 // Baseline and Pica Measures
 $pica: 1rem;
 $point: $pica/12;
 $p: $point;
 $baseline: 18*$point;
 // $baseline = $base-line-height = 24px = 18*$point = 1.71429rem
-// body {@include baseline-grid-background($baseline, #E1F0FB)}
+body {@include baseline-grid-background($baseline, #E1F0FB)};
 // #header {display: none;}
 // .navigation-bar {display:none;}
 // Double Stranded Modular Scale
@@ -103,20 +102,64 @@ $baseline: 18*$point;
     // 3p stable - 21p
   margin-top: 0;
   padding-top: 3*$p;
-  margin-bottom: -3*$p;}
+  margin-bottom:  -3*$p;}
 @mixin p24 {
   font-size:24*$point;
   line-height: 2*$baseline;
   // 9p stable - 33p
   margin-top: 0;
-  padding-top: 9*$p;
-  margin-bottom: -9*$p;}
+  padding-top: 8*$p;
+  margin-bottom: -8*$p;}
 @mixin p28-5 {
   font-size:28.5*$point;
     line-height: 2*$baseline;
     // 9p stable - 37.5pq
   margin-top: 0;
-  padding-top: 8.5*$p;
-  margin-bottom: -8.5*$p;}
+  padding-top: 6.5*$p;
+  margin-bottom: -6.5*$p;}
+
+// Tracking and Kerning
+@mixin wideTrack {
+  letter-spacing: 3*$point;
+}
+
+@mixin narrowTrack {
+  letter-spacing: 1*$point;
+}
+
+// Casing
+@mixin upperCase {
+  text-transform: uppercase;
+}
+
+@mixin lowerCase {
+  text-transform: lowercase;
+}
+
+// Proportions
+$octave: 1/2;
+$major7th: 1/1.875;
+$minor7th: 1/1.778;
+$major6th: 1/1.667;
+$minor6th: 1/1.6;
+$fifth: 1/1.5;
+$dim5th: 1/1.414;
+$aug4th: 1/1.414;
+$fourth: 1/1.33;
+$major3rd: 1/1.25;
+$minor3rd: 1/1.2;
+$major2nd: 1/1.125;
+$minor2nd: 1/1.067;
+$unison: 1/1;
+
+
+// Two Sets of proporions set up relationships
+$proportion: $minor6th;
+$tonal: $octave;
+
+// Set of proportions, turned into usable numbers. Create realtionships with them.
+$measure: $proportion*100%;
+$edge: $tonal*(100%-$measure);
+$spine: 100%-$measure;
 
 

@@ -1,6 +1,7 @@
 // Baseline -----------
 
 body {
+  color: $darkest-gray;
   @include Lucida;
 }
 
@@ -20,12 +21,12 @@ h6 {@include p10-5; @include Open;}
 
 // Basic Copy ------------
 p {
-  @include p10-5;
+  @include p12;
   padding-bottom: 1*$baseline;
 }
 
 blockquote {
-  @include p10-5;
+  @include p12;
   // @include apply-side-rhythm-border(left, 5px, 1, 14px);
   margin-left: 0;
   // border-color: $lighter-gray;
@@ -71,7 +72,7 @@ sub {
 
 // Code Block ------------
 pre {;
-  @include p9;
+  @include p10-5;
   padding-top: 0;
   white-space: pre;
   white-space: pre-wrap;
@@ -104,11 +105,11 @@ dl {
   margin-top: 0;
   dt {
     @include Open;
-    @include p12;
+    @include p13-5;
   }
   dd {
     margin: 0;
-    @include p10-5;
+    @include p12;
 
   }
 }
@@ -118,11 +119,11 @@ dl.horizontal {
   padding-top: 6*$p;
   dt {
     @include Open;
-    @include p12;
+    @include p13-5;
     float: left;
   }
   dd {
     margin-left: 12*$pica;
-    @include p10-5;
+    @include p12;
   }
 }

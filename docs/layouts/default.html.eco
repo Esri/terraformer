@@ -9,7 +9,7 @@
       <%- @partial('nav', false) %>
     </nav>
     <header>
-      <h1>hey</h1>
+      <h1>The Terraformer Project</h1>
     </header>
     <main>
       <section class="introduction">
