@@ -2,8 +2,7 @@
 <head>
     <title><%= @document.title %></title>
     <%- @getBlock("meta").toHTML() %>
-    <%- @getBlock("styles").add(["/css/solarized-dark.css"]).toHTML() %>
-    <%- @getBlock("styles").add(["/css/tester.css"]).toHTML() %>
+    <%- @getBlock("styles").add(["/css/terraformer.css"]).toHTML() %>
 </head>
 <body>
     <nav>
