@@ -18,3 +18,13 @@ $darker-gray:           hsl(0, 0, 20); //#333333
 $darkest-gray:          hsl(0, 0, 12); //#1F1F1F
 $off-black:             hsl(0, 0, 2);  //#050505
 $black:                 hsl(0, 0, 0);  //#000000
+
+$desktop:       1280px !default;
+$laptop-large:  1180px !default;
+$laptop:        1080px !default;
+$tablet-wide:   1024px !default;
+$tablet-mid:    960px  !default;
+$tablet-tall:   768px  !default;
+$phone-large:   662px  !default;
+$phone:         480px  !default;
+$phone-tall:    320px  !default;

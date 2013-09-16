@@ -2,7 +2,7 @@
 layout: default
 ---
 
-### [Full Project](/)
+### [Full Project](https://github.com/Esri/Terraformer)
 ## The Terraformer Project
 
 > Lorem ipsum dolor sit amet, cons

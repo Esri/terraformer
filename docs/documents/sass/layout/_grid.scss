@@ -5,50 +5,73 @@ main {
 
 section {
   padding-top: 36*$point;
-  // margin-top: 3*$point;
-  // margin-bottom: 3*$point;
   padding-left: $edge;
+  @include respond-to($tablet-mid) {
+    padding-left: $edge;
+    padding-right: $edge;
+  }
+  @include respond-to($phone-large) {
+    padding-left: 0.5*$edge;
+    padding-right: 0.5*$edge;
+  }
+
   h2 {
     @include p18;
     @include OpenBold;
     padding-top: 11*$p;
-    margin-bottom:  -11*$p;
+    margin-bottom: -11*$p;
     line-height: 2*$baseline;
     width: $measure;
-    // min-width: 28rem;
+    @include respond-to($tablet-mid) {
+      width: 100%;
+    }
   }
+
   h3 {
     @include OpenBold;
     @include p13-5;
     margin-top: 1*$baseline;
     float: right;
     margin-right: $spine;
-    a {
-
+    @include respond-to($tablet-mid) {
+      margin-right: 0;
     }
   }
+
   h4 {
     @include OpenBold;
     @include p13-5;
-    // margin-bottom: 1*$baseline;
   }
+
   p {
     width: $measure;
-    // min-width: 28rem;
+    @include respond-to($tablet-mid) {
+      width: 100%;
+    }
   }
+
   blockquote {
     float: right;
     max-width: $spine;
     padding-top: 12*$p;
-    // padding-left:
+    @include respond-to($tablet-mid) {
+      float: none;
+      max-width: 100%;
+      padding-bottom: 0;
+      text-align: center;
+    }
+
     p {
       @include CardoItalic;
       @include p18;
       max-width: $container-width;
       min-width: 0;
       line-height: 1.5*$baseline;
-      // padding-right: 2em;
       padding-left: 2em;
+      @include respond-to($tablet-mid) {
+        padding-left: 0;
+        // line-height:
+      }
     }
   }
 }

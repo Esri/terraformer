@@ -335,7 +335,21 @@ section {
   padding-top: 3rem;
   padding-left: 18.75%;
 }
-/* line 11, ../sass/layout/_grid.scss */
+@media screen and (max-width: 960px) {
+  /* line 6, ../sass/layout/_grid.scss */
+  section {
+    padding-left: 18.75%;
+    padding-right: 18.75%;
+  }
+}
+@media screen and (max-width: 662px) {
+  /* line 6, ../sass/layout/_grid.scss */
+  section {
+    padding-left: 9.375%;
+    padding-right: 9.375%;
+  }
+}
+/* line 18, ../sass/layout/_grid.scss */
 section h2 {
   font-size: 1.5rem;
   line-height: 1.5rem;
@@ -351,7 +365,13 @@ section h2 {
   line-height: 3rem;
   width: 62.5%;
 }
-/* line 20, ../sass/layout/_grid.scss */
+@media screen and (max-width: 960px) {
+  /* line 18, ../sass/layout/_grid.scss */
+  section h2 {
+    width: 100%;
+  }
+}
+/* line 30, ../sass/layout/_grid.scss */
 section h3 {
   font-family: 'Open Sans', sans-serif;
   font-style: normal;
@@ -366,7 +386,13 @@ section h3 {
   float: right;
   margin-right: 37.5%;
 }
-/* line 30, ../sass/layout/_grid.scss */
+@media screen and (max-width: 960px) {
+  /* line 30, ../sass/layout/_grid.scss */
+  section h3 {
+    margin-right: 0;
+  }
+}
+/* line 41, ../sass/layout/_grid.scss */
 section h4 {
   font-family: 'Open Sans', sans-serif;
   font-style: normal;
@@ -378,17 +404,32 @@ section h4 {
   padding-top: 0.375rem;
   margin-bottom: -0.375rem;
 }
-/* line 35, ../sass/layout/_grid.scss */
+/* line 46, ../sass/layout/_grid.scss */
 section p {
   width: 62.5%;
 }
-/* line 39, ../sass/layout/_grid.scss */
+@media screen and (max-width: 960px) {
+  /* line 46, ../sass/layout/_grid.scss */
+  section p {
+    width: 100%;
+  }
+}
+/* line 53, ../sass/layout/_grid.scss */
 section blockquote {
   float: right;
   max-width: 37.5%;
   padding-top: 1rem;
 }
-/* line 44, ../sass/layout/_grid.scss */
+@media screen and (max-width: 960px) {
+  /* line 53, ../sass/layout/_grid.scss */
+  section blockquote {
+    float: none;
+    max-width: 100%;
+    padding-bottom: 0;
+    text-align: center;
+  }
+}
+/* line 64, ../sass/layout/_grid.scss */
 section blockquote p {
   font-family: 'Cardo', serif;
   font-style: italic;
@@ -402,6 +443,12 @@ section blockquote p {
   min-width: 0;
   line-height: 2.25rem;
   padding-left: 2em;
+}
+@media screen and (max-width: 960px) {
+  /* line 64, ../sass/layout/_grid.scss */
+  section blockquote p {
+    padding-left: 0;
+  }
 }
 
 /* line 1, ../sass/layout/_nav.scss */

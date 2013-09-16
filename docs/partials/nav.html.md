@@ -1,3 +1,3 @@
 * [Terraformer](/)
-* [Install](/)
+* [Install](https://github.com/Esri/Terraformer)
 * [Docs](/)
