@@ -52,30 +52,17 @@ applet, canvas, embed, figure, figcaption, iframe, img, object {
   vertical-align: baseline;
 }
 
-/* line 11, ../sass/_typecabinet.scss */
-body {
-  background-image: -webkit-gradient(linear, 50% 100%, 50% 0%, color-stop(5%, #e1f0fb), color-stop(5%, rgba(225, 240, 251, 0)));
-  background-image: -webkit-linear-gradient(bottom, #e1f0fb 5%, rgba(225, 240, 251, 0) 5%);
-  background-image: -moz-linear-gradient(bottom, #e1f0fb 5%, rgba(225, 240, 251, 0) 5%);
-  background-image: -o-linear-gradient(bottom, #e1f0fb 5%, rgba(225, 240, 251, 0) 5%);
-  background-image: linear-gradient(bottom, #e1f0fb 5%, rgba(225, 240, 251, 0) 5%);
-  -webkit-background-size: 100% 1.5rem;
-  -moz-background-size: 100% 1.5rem;
-  -o-background-size: 100% 1.5rem;
-  background-size: 100% 1.5rem;
-  background-position: left top;
-}
-
 /* line 3, ../sass/_typography.scss */
 body {
-  color: #1f1f1f;
+  background-color: #eae8e5;
+  color: #333333;
   font-family: 'Lucida Grande', 'Lucida Sans Unicode', sans-serif;
   font-style: normal;
   font-weight: 400;
   text-rendering: optimizeLegibility;
 }
 
-/* line 9, ../sass/_typography.scss */
+/* line 10, ../sass/_typography.scss */
 h1 {
   font-size: 2.375rem;
   line-height: 3rem;
@@ -89,7 +76,7 @@ h1 {
   padding-bottom: 1.5rem;
 }
 
-/* line 12, ../sass/_typography.scss */
+/* line 13, ../sass/_typography.scss */
 h2 {
   font-size: 2rem;
   line-height: 3rem;
@@ -103,7 +90,7 @@ h2 {
   padding-bottom: 1.5rem;
 }
 
-/* line 15, ../sass/_typography.scss */
+/* line 16, ../sass/_typography.scss */
 h3 {
   font-size: 1.5rem;
   line-height: 1.5rem;
@@ -117,7 +104,7 @@ h3 {
   padding-bottom: 1.5rem;
 }
 
-/* line 18, ../sass/_typography.scss */
+/* line 19, ../sass/_typography.scss */
 h4 {
   font-size: 1.125rem;
   line-height: 1.5rem;
@@ -130,7 +117,7 @@ h4 {
   text-rendering: optimizeLegibility;
 }
 
-/* line 19, ../sass/_typography.scss */
+/* line 20, ../sass/_typography.scss */
 h5 {
   font-size: 1rem;
   line-height: 1.5rem;
@@ -143,7 +130,7 @@ h5 {
   text-rendering: optimizeLegibility;
 }
 
-/* line 20, ../sass/_typography.scss */
+/* line 21, ../sass/_typography.scss */
 h6 {
   font-size: 0.875rem;
   line-height: 1.5rem;
@@ -156,7 +143,7 @@ h6 {
   text-rendering: optimizeLegibility;
 }
 
-/* line 23, ../sass/_typography.scss */
+/* line 24, ../sass/_typography.scss */
 p, a {
   font-size: 1rem;
   line-height: 1.5rem;
@@ -166,7 +153,7 @@ p, a {
   padding-bottom: 1.5rem;
 }
 
-/* line 28, ../sass/_typography.scss */
+/* line 29, ../sass/_typography.scss */
 blockquote {
   font-size: 1rem;
   line-height: 1.5rem;
@@ -178,7 +165,7 @@ blockquote {
   padding-bottom: 1.5rem;
 }
 
-/* line 37, ../sass/_typography.scss */
+/* line 38, ../sass/_typography.scss */
 b, strong {
   font-family: 'Open Sans', sans-serif;
   font-style: normal;
@@ -186,7 +173,7 @@ b, strong {
   text-rendering: optimizeLegibility;
 }
 
-/* line 41, ../sass/_typography.scss */
+/* line 42, ../sass/_typography.scss */
 em, cite {
   font-family: 'Open Sans', sans-serif;
   font-style: italic;
@@ -194,13 +181,13 @@ em, cite {
   text-rendering: optimizeLegibility;
 }
 
-/* line 45, ../sass/_typography.scss */
+/* line 46, ../sass/_typography.scss */
 small {
   font-size: 0.75rem;
   line-height: 1.16667rem;
 }
 
-/* line 55, ../sass/_typography.scss */
+/* line 56, ../sass/_typography.scss */
 sub,
 sup {
   font-family: 'Open Sans', sans-serif;
@@ -215,17 +202,17 @@ sup {
   padding-right: 0.08333rem;
 }
 
-/* line 65, ../sass/_typography.scss */
+/* line 66, ../sass/_typography.scss */
 sup {
   top: -0.5em;
 }
 
-/* line 69, ../sass/_typography.scss */
+/* line 70, ../sass/_typography.scss */
 sub {
   bottom: -0.25em;
 }
 
-/* line 74, ../sass/_typography.scss */
+/* line 75, ../sass/_typography.scss */
 pre {
   font-size: 0.875rem;
   line-height: 1.5rem;
@@ -238,44 +225,44 @@ pre {
   word-wrap: break-word;
   padding-bottom: 1.5rem;
 }
-/* line 81, ../sass/_typography.scss */
+/* line 82, ../sass/_typography.scss */
 pre code {
   display: block;
   overflow: auto;
   word-wrap: normal;
 }
 
-/* line 89, ../sass/_typography.scss */
+/* line 90, ../sass/_typography.scss */
 ul, ol {
   margin-bottom: 1.16667rem;
 }
-/* line 91, ../sass/_typography.scss */
+/* line 92, ../sass/_typography.scss */
 ul li:first-child, ol li:first-child {
   margin-top: 0.33333rem;
 }
-/* line 92, ../sass/_typography.scss */
+/* line 93, ../sass/_typography.scss */
 ul ul, ul ol, ol ul, ol ol {
   margin-top: -0.5rem;
 }
-/* line 94, ../sass/_typography.scss */
+/* line 95, ../sass/_typography.scss */
 ul ul li:first-child, ul ol li:first-child, ol ul li:first-child, ol ol li:first-child {
   margin-top: 0.5rem;
 }
-/* line 96, ../sass/_typography.scss */
+/* line 97, ../sass/_typography.scss */
 ul ol, ol ol {
   list-style-type: lower-alpha;
 }
 
-/* line 100, ../sass/_typography.scss */
+/* line 101, ../sass/_typography.scss */
 nav ul li:first-child, nav ol li:first-child {
   margin-top: 0;
 }
 
-/* line 104, ../sass/_typography.scss */
+/* line 105, ../sass/_typography.scss */
 dl {
   margin-top: 0;
 }
-/* line 106, ../sass/_typography.scss */
+/* line 107, ../sass/_typography.scss */
 dl dt {
   font-family: 'Open Sans', sans-serif;
   font-style: normal;
@@ -287,7 +274,7 @@ dl dt {
   padding-top: 0.375rem;
   margin-bottom: -0.375rem;
 }
-/* line 110, ../sass/_typography.scss */
+/* line 111, ../sass/_typography.scss */
 dl dd {
   margin: 0;
   font-size: 1rem;
@@ -297,11 +284,11 @@ dl dd {
   margin-bottom: -0.33333rem;
 }
 
-/* line 117, ../sass/_typography.scss */
+/* line 118, ../sass/_typography.scss */
 dl.horizontal {
   padding-top: 0.5rem;
 }
-/* line 120, ../sass/_typography.scss */
+/* line 121, ../sass/_typography.scss */
 dl.horizontal dt {
   font-family: 'Open Sans', sans-serif;
   font-style: normal;
@@ -314,7 +301,7 @@ dl.horizontal dt {
   margin-bottom: -0.375rem;
   float: left;
 }
-/* line 125, ../sass/_typography.scss */
+/* line 126, ../sass/_typography.scss */
 dl.horizontal dd {
   margin-left: 12rem;
   font-size: 1rem;
@@ -324,32 +311,87 @@ dl.horizontal dd {
   margin-bottom: -0.33333rem;
 }
 
+@font-face {
+  font-family: 'esri-logo';
+  src: url("/fonts/esri-logo.eot");
+  src: url("/fonts/esri-logo.eot?#iefix") format("embedded-opentype"), url("fonts/esri-logo.woff") format("woff"), url("fonts/esri-logo.ttf") format("truetype"), url("fonts/esri-logo.svg#esri-Set") format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* line 9, ../sass/_icons.scss */
+.icon {
+  font-family: 'esri-logo';
+  -webkit-font-feature-settings: "liga","dlig";
+  -moz-font-feature-settings: "liga=1, dlig=1";
+  -moz-font-feature-settings: "liga","dlig";
+  -ms-font-feature-settings: "liga","dlig";
+  -o-font-feature-settings: "liga","dlig";
+  font-feature-settings: "liga","dlig";
+  text-rendering: optimizeLegibility;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  color: #6d6e71;
+}
+
+/* line 27, ../sass/_icons.scss */
+.terraformer {
+  /*color: #267a40;*/
+  color: rgba(38, 122, 64, 0.5);
+  /*opacity: 0.5;*/
+}
+
+/* line 32, ../sass/_icons.scss */
+.terraformer:after {
+  content: "terraformerfront";
+  color: #000000;
+  opacity: 0.5;
+  margin-left: -1em;
+}
+
+/* line 38, ../sass/_icons.scss */
+.terraformer:before {
+  content: "terraformerback";
+  color: #912a1d;
+  opacity: 0.7;
+  margin-right: -1em;
+}
+
 /* line 1, ../sass/layout/_grid.scss */
-main {
+.main {
   max-width: 1280px;
   margin: auto;
 }
 
 /* line 6, ../sass/layout/_grid.scss */
+.container {
+  background-color: #92bc9f;
+}
+
+/* line 10, ../sass/layout/_grid.scss */
 section {
   padding-top: 3rem;
   padding-left: 18.75%;
 }
 @media screen and (max-width: 960px) {
-  /* line 6, ../sass/layout/_grid.scss */
+  /* line 10, ../sass/layout/_grid.scss */
   section {
     padding-left: 18.75%;
     padding-right: 18.75%;
   }
 }
 @media screen and (max-width: 662px) {
-  /* line 6, ../sass/layout/_grid.scss */
+  /* line 10, ../sass/layout/_grid.scss */
   section {
     padding-left: 9.375%;
     padding-right: 9.375%;
   }
 }
-/* line 18, ../sass/layout/_grid.scss */
+/* line 21, ../sass/layout/_grid.scss */
 section h2 {
   font-size: 1.5rem;
   line-height: 1.5rem;
@@ -366,12 +408,12 @@ section h2 {
   width: 62.5%;
 }
 @media screen and (max-width: 960px) {
-  /* line 18, ../sass/layout/_grid.scss */
+  /* line 21, ../sass/layout/_grid.scss */
   section h2 {
     width: 100%;
   }
 }
-/* line 30, ../sass/layout/_grid.scss */
+/* line 33, ../sass/layout/_grid.scss */
 section h3 {
   font-family: 'Open Sans', sans-serif;
   font-style: normal;
@@ -387,12 +429,12 @@ section h3 {
   margin-right: 37.5%;
 }
 @media screen and (max-width: 960px) {
-  /* line 30, ../sass/layout/_grid.scss */
+  /* line 33, ../sass/layout/_grid.scss */
   section h3 {
     margin-right: 0;
   }
 }
-/* line 41, ../sass/layout/_grid.scss */
+/* line 44, ../sass/layout/_grid.scss */
 section h4 {
   font-family: 'Open Sans', sans-serif;
   font-style: normal;
@@ -404,24 +446,24 @@ section h4 {
   padding-top: 0.375rem;
   margin-bottom: -0.375rem;
 }
-/* line 46, ../sass/layout/_grid.scss */
+/* line 49, ../sass/layout/_grid.scss */
 section p {
   width: 62.5%;
 }
 @media screen and (max-width: 960px) {
-  /* line 46, ../sass/layout/_grid.scss */
+  /* line 49, ../sass/layout/_grid.scss */
   section p {
     width: 100%;
   }
 }
-/* line 53, ../sass/layout/_grid.scss */
+/* line 56, ../sass/layout/_grid.scss */
 section blockquote {
   float: right;
   max-width: 37.5%;
   padding-top: 1rem;
 }
 @media screen and (max-width: 960px) {
-  /* line 53, ../sass/layout/_grid.scss */
+  /* line 56, ../sass/layout/_grid.scss */
   section blockquote {
     float: none;
     max-width: 100%;
@@ -429,7 +471,7 @@ section blockquote {
     text-align: center;
   }
 }
-/* line 64, ../sass/layout/_grid.scss */
+/* line 67, ../sass/layout/_grid.scss */
 section blockquote p {
   font-family: 'Cardo', serif;
   font-style: italic;
@@ -445,7 +487,7 @@ section blockquote p {
   padding-left: 2em;
 }
 @media screen and (max-width: 960px) {
-  /* line 64, ../sass/layout/_grid.scss */
+  /* line 67, ../sass/layout/_grid.scss */
   section blockquote p {
     padding-left: 0;
   }
@@ -497,10 +539,10 @@ footer {
 
 /* line 1, ../sass/layout/_header.scss */
 header {
-  background-color: #ededed;
+  background: linear-gradient(#0d151f, #1d2d42);
   padding: 15rem;
 }
-/* line 5, ../sass/layout/_header.scss */
+/* line 6, ../sass/layout/_header.scss */
 header h1 {
   text-transform: uppercase;
   letter-spacing: 0.08333rem;

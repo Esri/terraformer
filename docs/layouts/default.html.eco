@@ -9,29 +9,35 @@
       <%- @partial('nav', false) %>
     </nav>
     <header>
-      <h1>The Terraformer Project</h1>
+      <h1><span class="icon terraformer">terraformer</span></h1>
     </header>
-    <main>
-      <section class="introduction">
-        <%- @content %>
-      </section>
-
+    <div class="container">
+      <div class="main">
+        <section class="introduction">
+          <%- @content %>
+        </section>
+      </div>
+    </div>
+    <div class="main">
       <section class="terraformer-core">
        <%- @partial('terraformer_core', false) %>
       </section>
-
+    </div>
+    <div class="main">
       <section class="arcgis-parser">
        <%- @partial('arcgis_parser', false) %>
       </section>
-
+    </div>
+    <div class="main">
       <section class="wkt-parser">
        <%- @partial('wkt_parser', false) %>
       </section>
-
+    </div>
+    <div class="main">
       <section class="geostore">
        <%- @partial('geostore', false) %>
       </section>
-    </main>
+    </div class="main">
 
     <footer>
       <%- @partial('footer', false) %>
