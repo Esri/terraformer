@@ -390,27 +390,27 @@ nav .terraformer:before {
 
 /* line 6, ../sass/layout/_grid.scss */
 .panel-one {
-  background-color: #92bc9f;
+  background-color: #eae8e5;
 }
 
 /* line 10, ../sass/layout/_grid.scss */
 .panel-two {
-  background-color: #495e50;
+  background-color: #ededed;
 }
 
 /* line 14, ../sass/layout/_grid.scss */
 .panel-three {
-  background-color: #b26a61;
+  background-color: #eae8e5;
 }
 
 /* line 18, ../sass/layout/_grid.scss */
 .panel-four {
-  background-color: #593530;
+  background-color: #ededed;
 }
 
 /* line 23, ../sass/layout/_grid.scss */
 .panel-five {
-  background-color: #39567f;
+  background-color: #eae8e5;
 }
 
 /* line 27, ../sass/layout/_grid.scss */
@@ -514,6 +514,7 @@ section blockquote {
 }
 /* line 84, ../sass/layout/_grid.scss */
 section blockquote p {
+  color: #589069;
   font-family: 'Cardo', serif;
   font-style: italic;
   font-weight: 400;
@@ -601,7 +602,7 @@ footer {
 /* line 1, ../sass/layout/_header.scss */
 header {
   background: linear-gradient(#1d2d42, #39567f);
-  padding: 7.5rem 0;
+  padding: 4.5rem 0 0 0;
 }
 /* line 6, ../sass/layout/_header.scss */
 header h1 {
@@ -609,9 +610,26 @@ header h1 {
   margin: auto;
   width: 1em;
   background-color: #ededed;
-  font-size: 24em;
+  font-size: 18em;
   text-align: center;
   border-radius: 0.5em;
+}
+/* line 15, ../sass/layout/_header.scss */
+header h2 {
+  font-size: 2.375rem;
+  line-height: 3rem;
+  margin-top: 0;
+  padding-top: 0.54167rem;
+  margin-bottom: -0.54167rem;
+  font-family: 'Cardo', serif;
+  font-style: italic;
+  font-weight: 400;
+  color: #eae8e5;
+  width: 41.25%;
+  margin: auto;
+  padding-top: 1.5rem;
+  padding-bottom: 4.5rem;
+  text-align: center;
 }
 
 /*

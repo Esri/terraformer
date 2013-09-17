@@ -2,14 +2,24 @@ header {
 
   background: linear-gradient(color-stops($darker-blue, $dark-blue));
   // height: 16*$baseline;
-  padding: 5*$baseline 0;
+  padding: 3*$baseline 0 0 0;
   h1 {
     padding: 0;
     margin: auto;
     width: 1em;
     background-color: $lightest-gray;
-    font-size: 24em;
+    font-size: 18em;
     text-align: center;
     border-radius: (0.5em);
+  }
+  h2 {
+    @include p28-5;
+    @include CardoItalic;
+    color: $cream;
+    width: 0.66*$measure;
+    margin: auto;
+    padding-top: 1*$baseline;
+    padding-bottom: 3*$baseline;
+    text-align: center;
   }
 }

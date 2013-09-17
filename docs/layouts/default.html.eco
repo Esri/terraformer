@@ -10,6 +10,7 @@
     </nav>
     <header>
       <h1><span class="icon terraformer">terraformer</span></h1>
+      <h2>A thing that does stuff to your data so you can map gooder.</h2>
     </header>
     <div class="panel-one">
       <div class="main">

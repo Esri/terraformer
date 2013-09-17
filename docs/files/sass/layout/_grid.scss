@@ -4,24 +4,24 @@
 }
 
 .panel-one {
-  background-color: $green;
+  background-color: $cream;
 }
 
 .panel-two {
-  background-color: $dark-green;
+  background-color: $lightest-gray;
 }
 
 .panel-three {
-  background-color: $red;
+  background-color: $cream;
 }
 
 .panel-four {
-  background-color: $dark-red;
+  background-color: $lightest-gray;
 }
 
 
 .panel-five {
-  background-color: $dark-blue;
+  background-color: $cream;
 }
 
 section {
@@ -82,6 +82,7 @@ section {
     }
 
     p {
+      color: darken($green, 20%);
       @include CardoItalic;
       @include p18;
       max-width: $container-width;
