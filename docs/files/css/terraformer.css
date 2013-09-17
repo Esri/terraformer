@@ -313,8 +313,8 @@ dl.horizontal dd {
 
 @font-face {
   font-family: 'esri-logo';
-  src: url("/fonts/esri-logo.eot");
-  src: url("/fonts/esri-logo.eot?#iefix") format("embedded-opentype"), url("fonts/esri-logo.woff") format("woff"), url("fonts/esri-logo.ttf") format("truetype"), url("fonts/esri-logo.svg#esri-Set") format("svg");
+  src: url("../fonts/esri-logo.eot");
+  src: url("../fonts/esri-logo.eot?#iefix") format("embedded-opentype"), url("../fonts/esri-logo.woff") format("woff"), url("../fonts/esri-logo.ttf") format("truetype"), url("../fonts/esri-logo.svg#esri-Set") format("svg");
   font-weight: normal;
   font-style: normal;
 }
@@ -361,6 +361,27 @@ dl.horizontal dd {
   margin-right: -1em;
 }
 
+/* line 46, ../sass/_icons.scss */
+nav .terraformer {
+  /*color: #267a40;*/
+  color: rgba(38, 122, 64, 0.5);
+  /*opacity: 0.5;*/
+}
+/* line 51, ../sass/_icons.scss */
+nav .terraformer:after {
+  content: "terraformerfront";
+  color: #000000;
+  opacity: 0.5;
+  margin-left: -1.04em;
+}
+/* line 57, ../sass/_icons.scss */
+nav .terraformer:before {
+  content: "terraformerback";
+  color: #912a1d;
+  opacity: 0.7;
+  margin-right: -1.04em;
+}
+
 /* line 1, ../sass/layout/_grid.scss */
 .main {
   max-width: 1280px;
@@ -368,30 +389,50 @@ dl.horizontal dd {
 }
 
 /* line 6, ../sass/layout/_grid.scss */
-.container {
+.panel-one {
   background-color: #92bc9f;
 }
 
 /* line 10, ../sass/layout/_grid.scss */
+.panel-two {
+  background-color: #495e50;
+}
+
+/* line 14, ../sass/layout/_grid.scss */
+.panel-three {
+  background-color: #b26a61;
+}
+
+/* line 18, ../sass/layout/_grid.scss */
+.panel-four {
+  background-color: #593530;
+}
+
+/* line 23, ../sass/layout/_grid.scss */
+.panel-five {
+  background-color: #39567f;
+}
+
+/* line 27, ../sass/layout/_grid.scss */
 section {
   padding-top: 3rem;
   padding-left: 18.75%;
 }
 @media screen and (max-width: 960px) {
-  /* line 10, ../sass/layout/_grid.scss */
+  /* line 27, ../sass/layout/_grid.scss */
   section {
     padding-left: 18.75%;
     padding-right: 18.75%;
   }
 }
 @media screen and (max-width: 662px) {
-  /* line 10, ../sass/layout/_grid.scss */
+  /* line 27, ../sass/layout/_grid.scss */
   section {
     padding-left: 9.375%;
     padding-right: 9.375%;
   }
 }
-/* line 21, ../sass/layout/_grid.scss */
+/* line 38, ../sass/layout/_grid.scss */
 section h2 {
   font-size: 1.5rem;
   line-height: 1.5rem;
@@ -408,12 +449,12 @@ section h2 {
   width: 62.5%;
 }
 @media screen and (max-width: 960px) {
-  /* line 21, ../sass/layout/_grid.scss */
+  /* line 38, ../sass/layout/_grid.scss */
   section h2 {
     width: 100%;
   }
 }
-/* line 33, ../sass/layout/_grid.scss */
+/* line 50, ../sass/layout/_grid.scss */
 section h3 {
   font-family: 'Open Sans', sans-serif;
   font-style: normal;
@@ -429,12 +470,12 @@ section h3 {
   margin-right: 37.5%;
 }
 @media screen and (max-width: 960px) {
-  /* line 33, ../sass/layout/_grid.scss */
+  /* line 50, ../sass/layout/_grid.scss */
   section h3 {
     margin-right: 0;
   }
 }
-/* line 44, ../sass/layout/_grid.scss */
+/* line 61, ../sass/layout/_grid.scss */
 section h4 {
   font-family: 'Open Sans', sans-serif;
   font-style: normal;
@@ -446,24 +487,24 @@ section h4 {
   padding-top: 0.375rem;
   margin-bottom: -0.375rem;
 }
-/* line 49, ../sass/layout/_grid.scss */
+/* line 66, ../sass/layout/_grid.scss */
 section p {
   width: 62.5%;
 }
 @media screen and (max-width: 960px) {
-  /* line 49, ../sass/layout/_grid.scss */
+  /* line 66, ../sass/layout/_grid.scss */
   section p {
     width: 100%;
   }
 }
-/* line 56, ../sass/layout/_grid.scss */
+/* line 73, ../sass/layout/_grid.scss */
 section blockquote {
   float: right;
   max-width: 37.5%;
   padding-top: 1rem;
 }
 @media screen and (max-width: 960px) {
-  /* line 56, ../sass/layout/_grid.scss */
+  /* line 73, ../sass/layout/_grid.scss */
   section blockquote {
     float: none;
     max-width: 100%;
@@ -471,7 +512,7 @@ section blockquote {
     text-align: center;
   }
 }
-/* line 67, ../sass/layout/_grid.scss */
+/* line 84, ../sass/layout/_grid.scss */
 section blockquote p {
   font-family: 'Cardo', serif;
   font-style: italic;
@@ -487,7 +528,7 @@ section blockquote p {
   padding-left: 2em;
 }
 @media screen and (max-width: 960px) {
-  /* line 67, ../sass/layout/_grid.scss */
+  /* line 84, ../sass/layout/_grid.scss */
   section blockquote p {
     padding-left: 0;
   }
@@ -525,10 +566,30 @@ nav ul li {
 }
 /* line 20, ../sass/layout/_nav.scss */
 nav ul li:first-child {
+  width: 1em;
+  height: 1em;
+  float: left;
+  font-size: 2em;
+  padding: 0;
+  margin-top: 0.125em;
+  background-color: #ededed;
+  border-radius: 1.5em;
+}
+/* line 29, ../sass/layout/_nav.scss */
+nav ul li:first-child a {
+  font-size: 1em;
+}
+/* line 33, ../sass/layout/_nav.scss */
+nav ul li:nth-child(2) {
   float: left;
 }
+/* line 38, ../sass/layout/_nav.scss */
+nav ul li a {
+  color: #a6a6a6;
+  text-decoration: none;
+}
 
-/* line 27, ../sass/layout/_nav.scss */
+/* line 46, ../sass/layout/_nav.scss */
 footer {
   margin: 0;
   width: 100%;
@@ -539,23 +600,18 @@ footer {
 
 /* line 1, ../sass/layout/_header.scss */
 header {
-  background: linear-gradient(#0d151f, #1d2d42);
-  padding: 15rem;
+  background: linear-gradient(#1d2d42, #39567f);
+  padding: 7.5rem 0;
 }
 /* line 6, ../sass/layout/_header.scss */
 header h1 {
-  text-transform: uppercase;
-  letter-spacing: 0.08333rem;
-  font-family: 'Open Sans', sans-serif;
-  font-style: normal;
-  font-weight: 700;
-  text-rendering: optimizeLegibility;
-  font-size: 1.5rem;
-  line-height: 1.5rem;
-  margin-top: 0;
-  padding-top: 0.25rem;
-  margin-bottom: -0.25rem;
+  padding: 0;
+  margin: auto;
+  width: 1em;
+  background-color: #ededed;
+  font-size: 24em;
   text-align: center;
+  border-radius: 0.5em;
 }
 
 /*

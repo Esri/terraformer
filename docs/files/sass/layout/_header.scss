@@ -1,0 +1,15 @@
+header {
+
+  background: linear-gradient(color-stops($darker-blue, $dark-blue));
+  // height: 16*$baseline;
+  padding: 5*$baseline 0;
+  h1 {
+    padding: 0;
+    margin: auto;
+    width: 1em;
+    background-color: $lightest-gray;
+    font-size: 24em;
+    text-align: center;
+    border-radius: (0.5em);
+  }
+}

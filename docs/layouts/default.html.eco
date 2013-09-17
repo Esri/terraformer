@@ -11,34 +11,42 @@
     <header>
       <h1><span class="icon terraformer">terraformer</span></h1>
     </header>
-    <div class="container">
+    <div class="panel-one">
       <div class="main">
         <section class="introduction">
           <%- @content %>
         </section>
       </div>
     </div>
-    <div class="main">
-      <section class="terraformer-core">
-       <%- @partial('terraformer_core', false) %>
-      </section>
     </div>
-    <div class="main">
-      <section class="arcgis-parser">
-       <%- @partial('arcgis_parser', false) %>
-      </section>
+    <div class="panel-two">
+      <div class="main">
+        <section class="terraformer-core">
+         <%- @partial('terraformer_core', false) %>
+        </section>
+      </div>
     </div>
-    <div class="main">
-      <section class="wkt-parser">
-       <%- @partial('wkt_parser', false) %>
-      </section>
+    <div class="panel-three">
+      <div class="main">
+        <section class="arcgis-parser">
+         <%- @partial('arcgis_parser', false) %>
+        </section>
+      </div>
     </div>
-    <div class="main">
-      <section class="geostore">
-       <%- @partial('geostore', false) %>
-      </section>
-    </div class="main">
-
+    <div class="panel-four">
+      <div class="main">
+        <section class="wkt-parser">
+         <%- @partial('wkt_parser', false) %>
+        </section>
+      </div>
+    </div>
+    <div class="panel-five">
+      <div class="main">
+        <section class="geostore">
+         <%- @partial('geostore', false) %>
+        </section>
+      </div>
+    </div>
     <footer>
       <%- @partial('footer', false) %>
     </footer>

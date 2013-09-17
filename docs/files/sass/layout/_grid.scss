@@ -3,8 +3,25 @@
   margin: auto;
 }
 
-.container {
+.panel-one {
   background-color: $green;
+}
+
+.panel-two {
+  background-color: $dark-green;
+}
+
+.panel-three {
+  background-color: $red;
+}
+
+.panel-four {
+  background-color: $dark-red;
+}
+
+
+.panel-five {
+  background-color: $dark-blue;
 }
 
 section {
