@@ -1,6 +1,6 @@
 header {
 
-  background: linear-gradient(color-stops($darker-blue, $dark-blue));
+  background: $dark-blue;
   // height: 16*$baseline;
   padding: 3*$baseline 0 0 0;
   h1 {
@@ -14,7 +14,7 @@ header {
   }
   h2 {
     @include p28-5;
-    @include CardoItalic;
+    @include PTMono;
     color: $cream;
     width: 0.66*$measure;
     margin: auto;

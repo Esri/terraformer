@@ -34,6 +34,7 @@ $dark-green:     #495E50;
 $blue:           #7EB3FE;
 $dark-blue:      #39567F;
 $darker-blue:    #1D2D42;
+$darkest-blue:   darken($darker-blue, 20%);
 
 $desktop:       1280px !default;
 $laptop-large:  1180px !default;

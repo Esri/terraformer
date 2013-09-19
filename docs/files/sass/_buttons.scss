@@ -1,0 +1,61 @@
+.button {
+  display: inline-block;
+  @include OpenLight;
+  @include p10-5;
+  padding: 6*$p 12*$p;
+  background-color:$dark-gray;
+  color:white;
+  border:1px solid darken($dark-gray, 10%);
+  text-decoration: none;
+  // font-size: 0.85rem;
+  &:hover {
+    color:white;
+    background-color: darken($dark-gray, 10%)
+  }
+  &.button-light {
+    background-color:$light-gray;
+    border:1px solid darken($light-gray, 10%);
+    &:hover {
+      color:white;
+      background-color: $green;
+      border:1px solid darken($green, 10%);
+    }
+  }
+  &.button-green {
+    background-color:$green;
+    border:1px solid darken($green, 10%);
+    &:hover {
+      background-color: darken($green, 10%);
+    }
+  }
+  &.button-blue {
+    background-color:$blue;
+    border:1px solid darken($blue, 10%);
+    &:hover {
+      background-color: darken($blue, 10%);
+    }
+  }
+  &.button-red {
+    background-color:$red;
+    border:1px solid darken($red, 10%);
+    &:hover {
+      background-color: darken($red, 10%);
+    }
+  }
+  &.button-disabled,
+  &.button:disabled {
+    background-color: $lightest-gray;
+    border: 1px solid darken($lightest-gray, 10%);
+    color: $light-gray;
+    &:hover {
+      background-color: $lightest-gray;
+    }
+  }
+  &.button-cancel {
+    background-color: $gray;
+    border: 1px solid darken($gray, 10%);
+    &:hover {
+      background-color: darken($gray, 10%);
+    }
+  }
+}

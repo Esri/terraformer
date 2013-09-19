@@ -18,6 +18,11 @@ $baseline: 18*$point;
 
 @mixin CardoItalic {font-family: 'Cardo', serif; font-style: italic; font-weight: 400;}
 
+// PT Mono
+@import url(http://fonts.googleapis.com/css?family=PT+Mono);
+
+@mixin PTMono {font-family: 'PT Mono', sans-serif;};
+
 // Open Sans
 @import url(http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,700italic,400,300,700);
 
@@ -40,7 +45,7 @@ $baseline: 18*$point;
 
 // Point Sizes - Reference
 // Default Point Size Conversion 1 1/3    // Half Pica Modular Scale
-// 12px = p9                // p8
+// 12px = p9                  // p8
 // 14px = p10.5               // p10.5
 // 16px = p12                 // p13
 // 18px = p13.5               // p17

@@ -1,4 +1,4 @@
-### [Get ArcGIS Parser](/)
+### <a href="/" class="button button-light">Get ArcGIS Parser</a>
 ## ArcGIS Parser
 
 <h4> Primitives </h4>

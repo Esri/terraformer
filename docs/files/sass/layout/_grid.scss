@@ -1,29 +1,3 @@
-.main {
-  max-width: $container-max;
-  margin: auto;
-}
-
-.panel-one {
-  background-color: $cream;
-}
-
-.panel-two {
-  background-color: $lightest-gray;
-}
-
-.panel-three {
-  background-color: $cream;
-}
-
-.panel-four {
-  background-color: $lightest-gray;
-}
-
-
-.panel-five {
-  background-color: $cream;
-}
-
 section {
   padding-top: 36*$point;
   padding-left: $edge;
@@ -50,7 +24,7 @@ section {
   h3 {
     @include OpenBold;
     @include p13-5;
-    margin-top: 1*$baseline;
+    margin-top: 0.5*$baseline;
     float: right;
     margin-right: $spine;
     @include respond-to($tablet-mid) {
@@ -83,7 +57,7 @@ section {
 
     p {
       color: darken($green, 20%);
-      @include CardoItalic;
+      @include PTMono;
       @include p18;
       max-width: $container-width;
       min-width: 0;
@@ -94,5 +68,21 @@ section {
         // line-height:
       }
     }
+  }
+  a {
+    color: $red;
+    border-bottom: 1px dashed $red;
+    padding-bottom: 3*$p;
+    text-decoration: none;
+    &:hover {
+      color: lighten($red, 20%);
+      border-bottom: 1px dashed lighten($red, 20%);
+    }
+  }
+  code {
+    @include PTMono;
+    @include narrowTrack;
+    padding: 1*$baseline;
+    line-height: 0.75*$baseline;
   }
 }

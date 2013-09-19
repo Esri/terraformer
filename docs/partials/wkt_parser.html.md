@@ -1,4 +1,4 @@
-### [Get WKT Parser](/)
+### <a href="/" class="button button-light">Get WKT Parser</a>
 ## Well Known Text parser
 
 <h4> Primitives </h4>

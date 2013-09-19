@@ -1,4 +1,4 @@
-### [Get GeoStore](/)
+### <a href="/" class="button button-light">Get GeoStore</a>
 ## GeoStore
 
 <h4> Primitives </h4>

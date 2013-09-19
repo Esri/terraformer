@@ -1,6 +1,6 @@
 // The Terraformer Project
 @import "reset";
-@import "compass/layout/grid-background";
+@import "compass";
 
 @import "config";
 @import "mixins";
@@ -8,6 +8,7 @@
 @import "typecabinet";
 @import "typography";
 @import "icons";
+@import "buttons";
 
 @import "layout/grid";
 @import "layout/nav";

@@ -1,4 +1,4 @@
-### [Get Core](/)
+### <a href="/" class="button button-light">Get Core</a>
 ## Terraformer Core
 
 <h4> Primitives </h4>

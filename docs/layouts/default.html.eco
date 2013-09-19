@@ -8,46 +8,22 @@
     <nav>
       <%- @partial('nav', false) %>
     </nav>
+
     <header>
       <h1><span class="icon terraformer">terraformer</span></h1>
       <h2>A thing that does stuff to your data so you can map gooder.</h2>
     </header>
-    <div class="panel-one">
-      <div class="main">
-        <section class="introduction">
-          <%- @content %>
-        </section>
-      </div>
+
+    <div class="subnav">
+      <%- @partial('subnav', false) %>
     </div>
-    </div>
-    <div class="panel-two">
-      <div class="main">
-        <section class="terraformer-core">
-         <%- @partial('terraformer_core', false) %>
-        </section>
-      </div>
-    </div>
-    <div class="panel-three">
-      <div class="main">
-        <section class="arcgis-parser">
-         <%- @partial('arcgis_parser', false) %>
-        </section>
-      </div>
-    </div>
-    <div class="panel-four">
-      <div class="main">
-        <section class="wkt-parser">
-         <%- @partial('wkt_parser', false) %>
-        </section>
-      </div>
-    </div>
-    <div class="panel-five">
-      <div class="main">
-        <section class="geostore">
-         <%- @partial('geostore', false) %>
-        </section>
-      </div>
-    </div>
+
+    <main>
+      <section class="introduction">
+        <%- @content %>
+      </section>
+    </main>
+
     <footer>
       <%- @partial('footer', false) %>
     </footer>
