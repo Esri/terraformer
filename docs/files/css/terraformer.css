@@ -599,6 +599,10 @@ section a:hover {
 section code {
   font-family: 'PT Mono', sans-serif;
   letter-spacing: 0.08333rem;
+}
+/* line 86, ../sass/layout/_grid.scss */
+section pre code {
+  width: 59.375%;
   padding: 1.5rem;
   line-height: 1.125rem;
 }
@@ -632,7 +636,7 @@ nav ul li {
   margin-bottom: -0.58333rem;
   display: inline;
   float: right;
-  padding: 0.5rem 0.25rem;
+  padding: 0.5rem 0.5rem;
 }
 /* line 19, ../sass/layout/_nav.scss */
 nav ul li:first-child {
@@ -642,7 +646,7 @@ nav ul li:first-child {
 nav ul li a {
   color: #fafafa;
   text-decoration: none;
-  padding-bottom: 0.25rem;
+  padding-bottom: 0.08333rem;
 }
 /* line 26, ../sass/layout/_nav.scss */
 nav ul li a:hover {

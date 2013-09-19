@@ -15,14 +15,14 @@ nav {
       @include p9;
       display: inline;
       float: right;
-      padding: 6*$p 3*$p;
+      padding: 6*$p 6*$p;
       &:first-child {
         float: left;
       }
       a {
         color: $off-white;
         text-decoration: none;
-        padding-bottom: 3*$p;
+        padding-bottom: 1*$p;
         &:hover {
           color: $green;
           border-bottom: 1px dashed $green;
