@@ -68,6 +68,10 @@ section {
         // line-height:
       }
     }
+    img {
+      max-width: 100%;
+      margin: auto;
+    }
   }
   a {
     color: $red;
@@ -87,5 +91,8 @@ section {
     width: .95*$measure;
     padding: 1*$baseline;
     line-height: 0.75*$baseline;
+    @include respond-to($tablet-mid) {
+      width: 93%;
+    }
   }
 }
