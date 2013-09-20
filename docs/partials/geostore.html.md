@@ -1,13 +1,18 @@
 ### <a href="/" class="button button-light">Get GeoStore</a>
 ## GeoStore
 
-<h4> Primitives </h4>
+> GeoStore:<br />
+> a lightweight API that allows you to store, index and query geographic data
+> <img src="/img/terraformer-geostore.png" />
 
-The Terraformer Primitives are classes that map directly to their GeoJSON equivalents, adding convenience methods, geometric tools such as `within`, and `intersects` and spatial reference conversion methods.
+GeoStore is a lightweight API that allows you to store, index and query geographic data with a variety of indexes and persistence methods. Each GeoStore consists of...
 
-<h4> Tools </h4>
+01. A "primary index" which is responsible for indexing and optimizing the geographic data in the store.
 
-Terraformer also exposes many generic tools for working with geographic data.
+02. A "store" which is responsible for persisting data, either holding it in memory or persisting it to a backend database.
+
+03. Any number of "secondary indexs" which index properties associted with your geographic data.
+
 
     // search for a point
     var envelope = {

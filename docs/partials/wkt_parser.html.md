@@ -1,16 +1,8 @@
 ### <a href="/" class="button button-light">Get WKT Parser</a>
 ## Well Known Text parser
 
-> Lorem ipsum dolor sit amet, cons
-> et adipiscing elit.
+[Well Known Text](http://en.wikipedia.org/wiki/Well-known_text) is a format used by databases like PostGIS. With Terraformer's WKT parser you can convert between this format and GeoJSON
 
-<h4> Primitives </h4>
-
-The Terraformer Primitives are classes that map directly to their GeoJSON equivalents, adding convenience methods, geometric tools such as `within`, and `intersects` and spatial reference conversion methods.
-
-<h4> Tools </h4>
-
-Terraformer also exposes many generic tools for working with geographic data.
 
     // search for a point
     var envelope = {

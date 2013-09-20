@@ -1,13 +1,9 @@
 ### <a href="/" class="button button-light">Get ArcGIS Parser</a>
 ## ArcGIS Parser
 
-<h4> Primitives </h4>
+> <img src="/img/terraformer-parser.png" />
 
-The Terraformer Primitives are classes that map directly to their GeoJSON equivalents, adding convenience methods, geometric tools such as `within`, and `intersects` and spatial reference conversion methods.
-
-<h4> Tools </h4>
-
-Terraformer also exposes many generic tools for working with geographic data.
+Terraformer's ArcGIS Parser library allows you to convert between [Terraformer Primitives]() or [GeoJSON](http://geojson.org/geojson-spec.html) and the [ArcGIS Geometry Objects](http://resources.arcgis.com/en/help/arcgis-rest-api/#/Geometry_Objects/02r3000000n1000000/)
 
     // search for a point
     var envelope = {
