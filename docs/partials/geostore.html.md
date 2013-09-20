@@ -1,9 +1,11 @@
-### <a href="/" class="button button-light">Get GeoStore</a>
-## GeoStore
+<header class="subhead">
+  <img src="/img/terraformer-geostore.png" alt="terraformer geostore">
+  <h2>GeoStore</h2>
+  <h3><a href="/" class="button button-light">Get GeoStore</a></h3>
+</header>
 
 > GeoStore:<br />
 > a lightweight API that allows you to store, index and query geographic data
-> <img src="/img/terraformer-geostore.png" />
 
 GeoStore is a lightweight API that allows you to store, index and query geographic data with a variety of indexes and persistence methods. Each GeoStore consists of...
 

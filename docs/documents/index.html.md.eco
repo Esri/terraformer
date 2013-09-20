@@ -2,8 +2,8 @@
 layout: default
 ---
 
-### <a href="https://github.com/Esri/Terraformer" class="button button-light">Full Project on Github</a>
 ## The Terraformer Project
+### <a href="https://github.com/Esri/Terraformer" class="button button-light">Full Project on Github</a>
 
 > Lorem ipsum dolor sit amet, cons
 > et adipiscing elit.
@@ -24,11 +24,15 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam eu venenatis tu
     });
 
 [Terraformer Project Documentation](/)
+<a id="core"></a>
 
 <%- @partial('terraformer_core', false) %>
-
-<%- @partial('arcgis_parser', false) %>
-
-<%- @partial('wkt_parser', false) %>
+<a id="geostore"></a>
 
 <%- @partial('geostore', false) %>
+<a id="arcparser"></a>
+
+<%- @partial('arcgis_parser', false) %>
+<a id="wktparser"></a>
+
+<%- @partial('wkt_parser', false) %>

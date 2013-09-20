@@ -1,6 +1,1 @@
-## Herp
-
-* Terraformer Core
-* ArcGIS Parser
-* WKT Parser
-* GeoStore
+The Terraformer Project is an Esri Project our of Esri Portland Research & Development

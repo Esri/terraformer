@@ -69,8 +69,14 @@ nav {
 
 footer {
   margin: 0;
+  padding-top: 3*$baseline;
+  padding-bottom: 0;
   width: $container-width;
   color: $white;
   background-color: $darkest-gray;
   text-align: center;
+  p {
+    @include Open;
+    @include p10-5;
+  }
 }

@@ -484,29 +484,41 @@ section {
   }
 }
 /* line 12, ../sass/layout/_grid.scss */
-section h2 {
-  font-size: 1.5rem;
-  line-height: 1.5rem;
+section .subhead {
+  overflow: hidden;
+  *zoom: 1;
+  background-color: transparent;
+  padding-top: 1.5rem;
+  padding-bottom: 3rem;
+}
+/* line 17, ../sass/layout/_grid.scss */
+section .subhead h2 {
+  font-size: 2.375rem;
+  line-height: 3rem;
   margin-top: 0;
-  padding-top: 0.25rem;
-  margin-bottom: -0.25rem;
+  padding-top: 0.54167rem;
+  margin-bottom: -0.54167rem;
   font-family: 'Open Sans', sans-serif;
   font-style: normal;
-  font-weight: 700;
+  font-weight: 300;
   text-rendering: optimizeLegibility;
-  padding-top: 0.91667rem;
+  padding-top: 6rem;
+  padding-left: 4rem;
   margin-bottom: -0.91667rem;
   line-height: 3rem;
-  width: 62.5%;
+  width: 31.25%;
+  margin-left: 31.25%;
 }
 @media screen and (max-width: 960px) {
-  /* line 12, ../sass/layout/_grid.scss */
-  section h2 {
-    width: 100%;
+  /* line 17, ../sass/layout/_grid.scss */
+  section .subhead h2 {
+    padding-top: 1.5rem;
+    width: 20.625%;
+    margin-left: 41.25%;
   }
 }
-/* line 24, ../sass/layout/_grid.scss */
-section h3 {
+/* line 33, ../sass/layout/_grid.scss */
+section .subhead h3 {
   font-family: 'Open Sans', sans-serif;
   font-style: normal;
   font-weight: 700;
@@ -516,17 +528,31 @@ section h3 {
   margin-top: 0;
   padding-top: 0.375rem;
   margin-bottom: -0.375rem;
-  margin-top: 0.75rem;
-  float: right;
-  margin-right: 37.5%;
+  padding-left: 4rem;
+  width: 31.25%;
+  margin-left: 31.25%;
 }
 @media screen and (max-width: 960px) {
-  /* line 24, ../sass/layout/_grid.scss */
-  section h3 {
-    margin-right: 0;
+  /* line 33, ../sass/layout/_grid.scss */
+  section .subhead h3 {
+    width: 20.625%;
+    margin-left: 41.25%;
   }
 }
-/* line 35, ../sass/layout/_grid.scss */
+/* line 44, ../sass/layout/_grid.scss */
+section .subhead img {
+  width: 31.25%;
+  margin: auto;
+  float: left;
+  display: inline;
+}
+@media screen and (max-width: 960px) {
+  /* line 44, ../sass/layout/_grid.scss */
+  section .subhead img {
+    width: 41.25%;
+  }
+}
+/* line 55, ../sass/layout/_grid.scss */
 section h4 {
   font-family: 'Open Sans', sans-serif;
   font-style: normal;
@@ -538,24 +564,24 @@ section h4 {
   padding-top: 0.375rem;
   margin-bottom: -0.375rem;
 }
-/* line 40, ../sass/layout/_grid.scss */
+/* line 60, ../sass/layout/_grid.scss */
 section p {
   width: 62.5%;
 }
 @media screen and (max-width: 960px) {
-  /* line 40, ../sass/layout/_grid.scss */
+  /* line 60, ../sass/layout/_grid.scss */
   section p {
     width: 100%;
   }
 }
-/* line 47, ../sass/layout/_grid.scss */
+/* line 67, ../sass/layout/_grid.scss */
 section blockquote {
   float: right;
   max-width: 37.5%;
   padding-top: 1rem;
 }
 @media screen and (max-width: 960px) {
-  /* line 47, ../sass/layout/_grid.scss */
+  /* line 67, ../sass/layout/_grid.scss */
   section blockquote {
     float: none;
     max-width: 100%;
@@ -563,7 +589,7 @@ section blockquote {
     text-align: center;
   }
 }
-/* line 58, ../sass/layout/_grid.scss */
+/* line 78, ../sass/layout/_grid.scss */
 section blockquote p {
   color: #589069;
   font-family: 'PT Mono', sans-serif;
@@ -578,44 +604,42 @@ section blockquote p {
   padding-left: 2em;
 }
 @media screen and (max-width: 960px) {
-  /* line 58, ../sass/layout/_grid.scss */
+  /* line 78, ../sass/layout/_grid.scss */
   section blockquote p {
     padding-left: 0;
   }
 }
-/* line 71, ../sass/layout/_grid.scss */
-section blockquote img {
-  max-width: 100%;
-  margin: auto;
-}
-/* line 76, ../sass/layout/_grid.scss */
+/* line 92, ../sass/layout/_grid.scss */
 section a {
   color: #b26a61;
   border-bottom: 1px dashed #b26a61;
   padding-bottom: 0.25rem;
   text-decoration: none;
 }
-/* line 81, ../sass/layout/_grid.scss */
+/* line 97, ../sass/layout/_grid.scss */
 section a:hover {
   color: #d3aba6;
   border-bottom: 1px dashed #d3aba6;
 }
-/* line 86, ../sass/layout/_grid.scss */
+/* line 102, ../sass/layout/_grid.scss */
 section code {
   font-family: 'PT Mono', sans-serif;
   letter-spacing: 0.08333rem;
 }
-/* line 90, ../sass/layout/_grid.scss */
-section pre code {
-  width: 59.375%;
-  padding: 1.5rem;
-  line-height: 1.125rem;
+/* line 106, ../sass/layout/_grid.scss */
+section pre {
+  width: 62.5%;
 }
 @media screen and (max-width: 960px) {
-  /* line 90, ../sass/layout/_grid.scss */
-  section pre code {
-    width: 93%;
+  /* line 106, ../sass/layout/_grid.scss */
+  section pre {
+    width: 100%;
   }
+}
+/* line 111, ../sass/layout/_grid.scss */
+section pre code {
+  padding: 1.5rem;
+  line-height: 1.125rem;
 }
 
 /* line 1, ../sass/layout/_nav.scss */
@@ -717,19 +741,33 @@ nav ul li a:hover {
 /* line 70, ../sass/layout/_nav.scss */
 footer {
   margin: 0;
+  padding-top: 4.5rem;
+  padding-bottom: 0;
   width: 100%;
   color: white;
   background-color: #1f1f1f;
   text-align: center;
 }
+/* line 78, ../sass/layout/_nav.scss */
+footer p {
+  font-family: 'Open Sans', sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  text-rendering: optimizeLegibility;
+  font-size: 0.875rem;
+  line-height: 1.5rem;
+  margin-top: 0;
+  padding-top: 0.45833rem;
+  margin-bottom: -0.45833rem;
+}
 
 /* line 1, ../sass/layout/_header.scss */
-header {
+header.cover {
   background: #39567f;
   padding: 4.5rem 0 0 0;
 }
-/* line 6, ../sass/layout/_header.scss */
-header h1 {
+/* line 5, ../sass/layout/_header.scss */
+header.cover h1 {
   padding: 0;
   margin: auto;
   width: 1em;
@@ -739,13 +777,13 @@ header h1 {
   border-radius: 0.5em;
 }
 @media screen and (max-width: 960px) {
-  /* line 6, ../sass/layout/_header.scss */
-  header h1 {
+  /* line 5, ../sass/layout/_header.scss */
+  header.cover h1 {
     font-size: 9em;
   }
 }
-/* line 18, ../sass/layout/_header.scss */
-header h2 {
+/* line 17, ../sass/layout/_header.scss */
+header.cover h2 {
   font-size: 2.375rem;
   line-height: 3rem;
   margin-top: 0;
@@ -760,8 +798,8 @@ header h2 {
   text-align: center;
 }
 @media screen and (max-width: 960px) {
-  /* line 18, ../sass/layout/_header.scss */
-  header h2 {
+  /* line 17, ../sass/layout/_header.scss */
+  header.cover h2 {
     font-size: 1.5rem;
     line-height: 1.5rem;
     margin-top: 0;

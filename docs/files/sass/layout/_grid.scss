@@ -9,26 +9,46 @@ section {
     padding-left: 0.5*$edge;
     padding-right: 0.5*$edge;
   }
-  h2 {
-    @include p18;
-    @include OpenBold;
-    padding-top: 11*$p;
-    margin-bottom: -11*$p;
-    line-height: 2*$baseline;
-    width: $measure;
-    @include respond-to($tablet-mid) {
-      width: 100%;
+  .subhead {
+    @include clearfix;
+    background-color: transparent;
+    padding-top: 1*$baseline;
+    padding-bottom: 2*$baseline;
+    h2 {
+      @include p28-5;
+      @include OpenLight;
+      padding-top: 4*$baseline;
+      padding-left: 4*$pica;
+      margin-bottom: -11*$p;
+      line-height: 2*$baseline;
+      width: 0.5*$measure;
+      margin-left: 0.5*$measure;
+      @include respond-to($tablet-mid) {
+        padding-top: 1*$baseline;
+        width: 0.33*$measure;
+        margin-left: 0.66*$measure;
+      }
     }
-  }
 
-  h3 {
-    @include OpenBold;
-    @include p13-5;
-    margin-top: 0.5*$baseline;
-    float: right;
-    margin-right: $spine;
-    @include respond-to($tablet-mid) {
-      margin-right: 0;
+    h3 {
+      @include OpenBold;
+      @include p13-5;
+      padding-left: 4*$pica;
+      width: 0.5*$measure;
+      margin-left: 0.5*$measure;
+      @include respond-to($tablet-mid) {
+        width: 0.33*$measure;
+        margin-left: 0.66*$measure;
+      }
+    }
+    img {
+      width: 0.5*$measure;
+      margin: auto;
+      float: left;
+      display: inline;
+      @include respond-to($tablet-mid) {
+        width: 0.66*$measure;
+      }
     }
   }
 
@@ -68,10 +88,6 @@ section {
         // line-height:
       }
     }
-    img {
-      max-width: 100%;
-      margin: auto;
-    }
   }
   a {
     color: $red;
@@ -87,12 +103,14 @@ section {
     @include PTMono;
     @include narrowTrack;
   }
-  pre code {
-    width: .95*$measure;
-    padding: 1*$baseline;
-    line-height: 0.75*$baseline;
+  pre {
+    width: $measure;
     @include respond-to($tablet-mid) {
-      width: 93%;
+      width: 100%;
+    }
+    code {
+      padding: 1*$baseline;
+      line-height: 0.75*$baseline;
     }
   }
 }
