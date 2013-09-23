@@ -1,3 +1,7 @@
+---
+layout: default
+---
+
 # Indexes
 
 Indexes are important to be able to access geo data quickly.  Terraformer provides an R-Tree index based on `RTree.js`.

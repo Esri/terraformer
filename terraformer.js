@@ -674,67 +674,70 @@
     }
   }
 
-  Primitive.prototype = {
-    toMercator: function(){
-      return toMercator(this);
-    },
-    toGeographic: function(){
-      return toGeographic(this);
-    },
-    envelope: function(){
-      return calculateEnvelope(this);
-    },
-    bbox: function(){
-      return calculateBounds(this);
-    },
-    convexHull: function(){
-      var coordinates = [ ], i, j;
-      if (this.type === 'Point') {
-        if (this.coordinates && this.coordinates.length > 0) {
-          return [ this.coordinates ];
-        } else {
-          return [ ];
-        }
-      } else if (this.type === 'LineString' || this.type === 'MultiPoint') {
-        if (this.coordinates && this.coordinates.length > 0) {
-          coordinates = this.coordinates;
-        } else {
-          return [ ];
-        }
-      } else if (this.type === 'Polygon' || this.type === 'MultiLineString') {
-        if (this.coordinates && this.coordinates.length > 0) {
-          for (i = 0; i < this.coordinates.length; i++) {
-            coordinates = coordinates.concat(this.coordinates[i]);
-          }
-        } else {
-          return [ ];
-        }
-      } else if (this.type === 'MultiPolygon') {
-        if (this.coordinates && this.coordinates.length > 0) {
-          for (i = 0; i < this.coordinates.length; i++) {
-            for (j = 0; j < this.coordinates[i].length; j++) {
-              coordinates = coordinates.concat(this.coordinates[i][j]);
-            }
-          }
-        } else {
-          return [ ];
+  Primitive.prototype.toMercator = function(){
+    return toMercator(this);
+  };
+
+  Primitive.prototype.toGeographic = function(){
+    return toGeographic(this);
+  };
+
+  Primitive.prototype.envelope = function(){
+    return calculateEnvelope(this);
+  };
+
+  Primitive.prototype.bbox = function(){
+    return calculateBounds(this);
+  };
+
+  Primitive.prototype.convexHull = function(){
+    var coordinates = [ ], i, j;
+    if (this.type === 'Point') {
+      if (this.coordinates && this.coordinates.length > 0) {
+        return [ this.coordinates ];
+      } else {
+        return [ ];
+      }
+    } else if (this.type === 'LineString' || this.type === 'MultiPoint') {
+      if (this.coordinates && this.coordinates.length > 0) {
+        coordinates = this.coordinates;
+      } else {
+        return [ ];
+      }
+    } else if (this.type === 'Polygon' || this.type === 'MultiLineString') {
+      if (this.coordinates && this.coordinates.length > 0) {
+        for (i = 0; i < this.coordinates.length; i++) {
+          coordinates = coordinates.concat(this.coordinates[i]);
         }
       } else {
-        throw new Error("Unable to get convex hull of " + this.type);
+        return [ ];
       }
-
-      return convexHull(coordinates);
-    },
-    toJSON: function(){
-      var obj = {};
-      for (var key in this) {
-        if (this.hasOwnProperty(key) && this[key] && excludeFromJSON.indexOf(key)) {
-          obj[key] = this[key];
+    } else if (this.type === 'MultiPolygon') {
+      if (this.coordinates && this.coordinates.length > 0) {
+        for (i = 0; i < this.coordinates.length; i++) {
+          for (j = 0; j < this.coordinates[i].length; j++) {
+            coordinates = coordinates.concat(this.coordinates[i][j]);
+          }
         }
+      } else {
+        return [ ];
       }
-      obj.bbox = calculateBounds(this);
-      return obj;
+    } else {
+      throw new Error("Unable to get convex hull of " + this.type);
     }
+
+    return convexHull(coordinates);
+  };
+
+  Primitive.prototype.toJSON = function(){
+    var obj = {};
+    for (var key in this) {
+      if (this.hasOwnProperty(key) && excludeFromJSON.indexOf(key) === -1) {
+        obj[key] = this[key];
+      }
+    }
+    obj.bbox = calculateBounds(this);
+    return obj;
   };
 
   Primitive.prototype.within = function(primitive) {

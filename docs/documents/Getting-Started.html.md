@@ -1,3 +1,7 @@
+---
+layout: default
+---
+
 # Terraformer
 
 Terraformer is an open source (MIT licensed) Javascript geo toolkit, built for the server and the browser.

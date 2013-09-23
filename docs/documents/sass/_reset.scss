@@ -1,0 +1,31 @@
+/* - - - - - - - - - - Basic Reset - - - - - - - - - - */
+html {
+  overflow-y: scroll;
+  font-size: 100%;
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
+}
+body {
+  margin: 0;
+}
+article, aside, details, figcaption, figure, footer, header, hgroup, nav, section { display: block; }
+audio[controls], canvas, video { display: inline-block; zoom: 1; }
+a:hover, a:active { outline: 0; }
+svg:not(:root) {
+    overflow: hidden;
+}
+a, abbr, acronym, address, b, big, cite, code, del, em, i, ins, kbd, mark, output, q,
+samp, small, strike, strong, sub, sup, time, tt, var,
+dfn, dl, dt, dd, ol, ul, li,
+blockquote, h1, h2, h3, h4, h5, h6, p, pre,
+applet, canvas, embed, figure, figcaption, iframe, img, object {
+  background: transparent;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  line-height: 1.0;
+  margin: 0;
+  padding: 0;
+  vertical-align: baseline;
+}

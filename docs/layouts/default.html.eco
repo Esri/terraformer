@@ -1,0 +1,30 @@
+<html>
+<head>
+    <title><%= @document.title %></title>
+    <%- @getBlock("meta").toHTML() %>
+    <%- @getBlock("styles").add(["/css/terraformer.css"]).toHTML() %>
+</head>
+<body>
+    <nav>
+      <%- @partial('nav', false) %>
+    </nav>
+    <header>
+      <h1>The Terraformer Project</h1>
+    </header>
+    <main>
+      <section class="introduction">
+        <%- @content %>
+      </section>
+
+      <section class="terraformer-core">
+       <%- @partial('terraformer_core', false) %>
+      </section>
+    </main>
+
+    <footer>
+      <%- @partial('footer', false) %>
+    </footer>
+
+    <%- @getBlock("scripts").toHTML() %>
+</body>
+</html>
