@@ -18,6 +18,7 @@
     "docpad-plugin-cleanurls": "~2.5.1",
     "docpad-plugin-partials": "~2.8.0",
     "docpad-plugin-nodesass": "~2.0.2"
+    "docpad": "~6.52.1"
   },
   "scripts": {
     "test": "grunt test"
