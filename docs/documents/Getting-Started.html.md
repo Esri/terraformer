@@ -20,7 +20,7 @@ Terraformer can be used in the browser with a simple browser include.
     <!-- Load the wkt parser -->
     <script src="wkt.min.js" type="text/javascript"></script>
 
-    <!-- Load the arcgis parser -->
+    <!-- Load the arcgis parserindex -->
     <script src="arcgis.min.js" type="text/javascript"></script>
 
     <!-- Load the rtree index -->
