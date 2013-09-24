@@ -1,0 +1,170 @@
+/////
+// CONFIG
+////
+
+// Baseline and Pica Measures
+$pica: 1rem;
+$point: $pica/12;
+$p: $point;
+$baseline: 18*$point;
+// $baseline = $base-line-height = 24px = 18*$point = 1.71429rem
+// body {@include baseline-grid-background($baseline, #E1F0FB)};
+// #header {display: none;}
+// .navigation-bar {display:none;}
+// Double Stranded Modular Scale
+
+// Typefaces - Cardo Family
+@import url(http://fonts.googleapis.com/css?family=Cardo:700,400italic);
+
+@mixin CardoItalic {font-family: 'Cardo', serif; font-style: italic; font-weight: 400;}
+
+// PT Mono
+@import url(http://fonts.googleapis.com/css?family=PT+Mono);
+
+@mixin PTMono {font-family: 'PT Mono', sans-serif;};
+
+// Open Sans
+@import url(http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,700italic,400,300,700);
+
+@mixin OpenLight {font-family:'Open Sans', sans-serif; font-style: normal; font-weight: 300; text-rendering: optimizeLegibility;}
+@mixin OpenLightItalic {font-family:'Open Sans', sans-serif; font-style: italic; font-weight: 300; text-rendering: optimizeLegibility;}
+
+@mixin Open {font-family:'Open Sans', sans-serif; font-style: normal; font-weight: 400; text-rendering: optimizeLegibility;}
+@mixin OpenItalic {font-family:'Open Sans', sans-serif; font-style: italic; font-weight: 400; text-rendering: optimizeLegibility;}
+
+@mixin OpenBold {font-family:'Open Sans', sans-serif; font-style: normal; font-weight: 700; text-rendering: optimizeLegibility;}
+@mixin OpenBoldItalic {font-family:'Open Sans', sans-serif; font-style: italic; font-weight: 700; text-rendering: optimizeLegibility;}
+
+// Lucida Grande
+
+@mixin Lucida {font-family: 'Lucida Grande', 'Lucida Sans Unicode', sans-serif; font-style: normal; font-weight: 400; text-rendering: optimizeLegibility;}
+@mixin LucidaItalic {font-family: 'Lucida Grande', 'Lucida Sans Unicode', sans-serif; font-style: italic; font-weight: 400; text-rendering: optimizeLegibility;}
+
+@mixin LucidaBold {font-family: 'Lucida Grande', 'Lucida Sans Unicode', sans-serif; font-style: normal; font-weight: 700; text-rendering: optimizeLegibility;}
+@mixin LucidaBoldItalic {font-family: 'Lucida Grande', 'Lucida Sans Unicode', sans-serif; font-style: italic; font-weight: 700; text-rendering: optimizeLegibility;}
+
+// Point Sizes - Reference
+// Default Point Size Conversion 1 1/3    // Half Pica Modular Scale
+// 12px = p9                  // p8
+// 14px = p10.5               // p10.5
+// 16px = p12                 // p13
+// 18px = p13.5               // p17
+// 24px = p18                 // p21
+// 32px = p24                 // p27.5
+// 38px = p28.5               // p34
+
+//  Convert font-size from point to rem with px fallback
+//  @param $size - the value in points you want to convert
+//  e.g. p {@include fontSize(12);}
+
+// Function for converting a point based font-size to rem.
+@function calculateRem($size) {
+  $remSize: $size / 12;
+  //Default font size on html element is 100%, equivalent to 16px, or 12 point.;
+  @return $remSize*1rem;
+}
+
+// Mixin that will include the fall back px declaration as well as the calculated rem value.
+@mixin fontSize($size) {
+  font-size: $size*1px;
+  font-size: calculateRem($size);
+}
+
+
+// Mixin for Base Font Sizes with Baseline Normalization
+@mixin p9 {
+  font-size: 9*$point;
+  line-height: 1*$baseline;
+  // line-height: 18*$p;
+  // 7p stable - 18p
+  margin-top: 0;
+  padding-top: 7*$p;
+  margin-bottom: -7*$p;}
+@mixin p10-5 {
+  font-size:10.5*$point;
+  line-height: 1*$baseline;
+  // 5.5p stable - 16p
+  margin-top: 0;
+  padding-top: 5.5*$p;
+  margin-bottom: -5.5*$p;}
+@mixin p12 {
+  font-size:12*$point;
+  line-height: 1*$baseline;
+  // 4p stable - 16p
+  margin-top: 0;
+  padding-top: 4*$p;
+  margin-bottom: -4*$p;}
+@mixin p13-5 {
+  font-size:13.5*$point;
+    line-height: 1*$baseline;
+    // 4.5p stable - 18p
+  margin-top: 0;
+  padding-top: 4.5*$p;
+  margin-bottom: -4.5*$p;}
+@mixin p18 {
+  font-size:18*$point;
+    line-height: 1*$baseline;
+    // 3p stable - 21p
+  margin-top: 0;
+  padding-top: 3*$p;
+  margin-bottom:  -3*$p;}
+@mixin p24 {
+  font-size:24*$point;
+  line-height: 2*$baseline;
+  // 9p stable - 33p
+  margin-top: 0;
+  padding-top: 8*$p;
+  margin-bottom: -8*$p;}
+@mixin p28-5 {
+  font-size:28.5*$point;
+    line-height: 2*$baseline;
+    // 9p stable - 37.5pq
+  margin-top: 0;
+  padding-top: 6.5*$p;
+  margin-bottom: -6.5*$p;}
+
+// Tracking and Kerning
+@mixin wideTrack {
+  letter-spacing: 3*$point;
+}
+
+@mixin narrowTrack {
+  letter-spacing: 1*$point;
+}
+
+// Casing
+@mixin upperCase {
+  text-transform: uppercase;
+}
+
+@mixin lowerCase {
+  text-transform: lowercase;
+}
+
+// Proportions
+$octave: 1/2;
+$major7th: 1/1.875;
+$minor7th: 1/1.778;
+$major6th: 1/1.667;
+$minor6th: 1/1.6;
+$fifth: 1/1.5;
+$dim5th: 1/1.414;
+$aug4th: 1/1.414;
+$fourth: 1/1.33;
+$major3rd: 1/1.25;
+$minor3rd: 1/1.2;
+$major2nd: 1/1.125;
+$minor2nd: 1/1.067;
+$unison: 1/1;
+
+
+// Two Sets of proporions set up relationships
+$proportion: $minor6th;
+$tonal: $octave;
+
+// Set of proportions, turned into usable numbers. Create realtionships with them.
+$measure: $proportion*100%;
+$edge: $tonal*(100%-$measure);
+$spine: 100%-$measure;
+
+
