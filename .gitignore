@@ -10,6 +10,9 @@ complexity.xml
 # Ignore environment variables set on this machine
 .env
 
+# Ignore the docpad output
+out
+
 # Mac
 .DS_Store
 Icon

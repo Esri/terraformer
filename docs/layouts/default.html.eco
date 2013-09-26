@@ -1,0 +1,33 @@
+<html>
+<head>
+    <title><%= @document.title %></title>
+    <%- @getBlock("meta").toHTML() %>
+    <%- @getBlock("styles").add(["/css/terraformer.css"]).toHTML() %>
+</head>
+<body>
+    <nav>
+      <%- @partial('nav', false) %>
+    </nav>
+
+    <header class="cover">
+      <h1><span class="icon terraformer">terraformer</span></h1>
+      <h2>A thing that does stuff to your data so you can map gooder.</h2>
+    </header>
+
+    <div class="subnav">
+      <%- @partial('subnav', false) %>
+    </div>
+
+    <main>
+      <section class="introduction">
+        <%- @content %>
+      </section>
+    </main>
+
+    <footer>
+      <%- @partial('footer', false) %>
+    </footer>
+
+    <%- @getBlock("scripts").toHTML() %>
+</body>
+</html>
