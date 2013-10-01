@@ -8,6 +8,7 @@ nav {
     margin: auto;
     max-width: $container-max;
     padding-bottom: 3*$p;
+    padding-right: 0.5*$edge;
     li {
       @include OpenLight;
       @include upperCase;
@@ -18,6 +19,10 @@ nav {
       padding: 6*$p 6*$p;
       &:first-child {
         float: left;
+        padding-left: $edge;
+        @include respond-to($phone-large) {
+          padding-left: 0.5*$edge;
+        }
       }
       a {
         color: $off-white;

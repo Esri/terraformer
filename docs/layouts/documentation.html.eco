@@ -9,16 +9,11 @@
       <%- @partial('nav', false) %>
     </nav>
 
-    <header class="cover">
-      <h1><span class="icon terraformer">terraformer</span></h1>
-      <h2>A thing that does stuff to your data so you can map gooder.</h2>
-    </header>
+    <aside class="docs">
+      <h3>doc toc goes here</h3>
+    </aside>
 
-    <div class="subnav">
-      <%- @partial('subnav', false) %>
-    </div>
-
-    <main class="index">
+    <main class="docs">
       <section>
         <%- @content %>
       </section>
