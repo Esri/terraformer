@@ -57,38 +57,40 @@
   Public: Calculate an bounding box for a geojson object
   */
   function calculateBounds (geojson) {
+    if(geojson.type){
+      switch (geojson.type) {
+        case 'Point':
+          return [ geojson.coordinates[0], geojson.coordinates[1], geojson.coordinates[0], geojson.coordinates[1]];
 
-    switch (geojson.type) {
-      case 'Point':
-        return [ geojson.coordinates[0], geojson.coordinates[1], geojson.coordinates[0], geojson.coordinates[1]];
+        case 'MultiPoint':
+          return calculateBoundsFromArray(geojson.coordinates);
 
-      case 'MultiPoint':
-        return calculateBoundsFromArray(geojson.coordinates);
+        case 'LineString':
+          return calculateBoundsFromArray(geojson.coordinates);
 
-      case 'LineString':
-        return calculateBoundsFromArray(geojson.coordinates);
+        case 'MultiLineString':
+          return calculateBoundsFromNestedArrays(geojson.coordinates);
 
-      case 'MultiLineString':
-        return calculateBoundsFromNestedArrays(geojson.coordinates);
+        case 'Polygon':
+          return calculateBoundsFromNestedArrays(geojson.coordinates);
 
-      case 'Polygon':
-        return calculateBoundsFromNestedArrays(geojson.coordinates);
+        case 'MultiPolygon':
+          return calculateBoundsFromNestedArrayOfArrays(geojson.coordinates);
 
-      case 'MultiPolygon':
-        return calculateBoundsFromNestedArrayOfArrays(geojson.coordinates);
+        case 'Feature':
+          return geojson.geometry? calculateBounds(geojson.geometry) : null;
 
-      case 'Feature':
-        return calculateBounds(geojson.geometry);
+        case 'FeatureCollection':
+          return calculateBoundsForFeatureCollection(geojson);
 
-      case 'FeatureCollection':
-        return calculateBoundsForFeatureCollection(geojson);
+        case 'GeometryCollection':
+          return calculateBoundsForGeometryCollection(geojson);
 
-      case 'GeometryCollection':
-        return calculateBoundsForGeometryCollection(geojson);
-
-      default:
-        throw new Error("Unknown type: " + geojson.type);
+        default:
+          throw new Error("Unknown type: " + geojson.type);
+      }
     }
+    return null;
   }
 
   /*
