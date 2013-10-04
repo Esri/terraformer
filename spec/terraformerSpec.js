@@ -362,10 +362,7 @@ describe("Primitives", function(){
     it("should calculate envelope", function(){
       expect(multiPoint.envelope()).toEqual({ x : -45, y : 0, w : 145, h : 122 });
     });
-
   });
-
-
 
   describe("MultiPolygon", function(){
     beforeEach(function(){
@@ -951,6 +948,11 @@ describe("Intersection", function(){
       expect(function(){
         Terraformer.Tools.calculateBounds({type: "foobar"});
       }).toThrow("Unknown type: foobar");
+    });
+
+    it("should return null when there is no geometry in a Feature in calculateBounds", function(){
+      var bounds = Terraformer.Tools.calculateBounds({type: "Feature", geomertry: null});
+      expect(bounds).toEqual(null);
     });
 
     it("should return false when polygonContainsPoint is passed an empty polygon", function() {
