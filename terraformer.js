@@ -31,6 +31,13 @@
       };
 
   /*
+  Internal: isArray function
+  */
+  isArray = function (obj) {
+    return Object.prototype.toString.call(obj) === "[object Array]";
+  };
+
+  /*
   Internal: safe warning
   */
   function warn() {
@@ -1027,7 +1034,7 @@
   function MultiPoint(input){
     if(input && input.type === "MultiPoint" && input.coordinates){
       extend(this, input);
-    } else if(Array.isArray(input)) {
+    } else if(isArray(input)) {
       this.coordinates = input;
     } else {
       throw "Terraformer: invalid input for Terraformer.MultiPoint";
@@ -1076,7 +1083,7 @@
   function LineString(input){
     if(input && input.type === "LineString" && input.coordinates){
       extend(this, input);
-    } else if(Array.isArray(input)) {
+    } else if(isArray(input)) {
       this.coordinates = input;
     } else {
       throw "Terraformer: invalid input for Terraformer.LineString";
@@ -1112,7 +1119,7 @@
   function MultiLineString(input){
     if(input && input.type === "MultiLineString" && input.coordinates){
       extend(this, input);
-    } else if(Array.isArray(input)) {
+    } else if(isArray(input)) {
       this.coordinates = input;
     } else {
       throw "Terraformer: invalid input for Terraformer.MultiLineString";
@@ -1144,7 +1151,7 @@
   function Polygon(input){
     if(input && input.type === "Polygon" && input.coordinates){
       extend(this, input);
-    } else if(Array.isArray(input)) {
+    } else if(isArray(input)) {
       this.coordinates = input;
     } else {
       throw "Terraformer: invalid input for Terraformer.Polygon";
@@ -1184,7 +1191,7 @@
   function MultiPolygon(input){
     if(input && input.type === "MultiPolygon" && input.coordinates){
       extend(this, input);
-    } else if(Array.isArray(input)) {
+    } else if(isArray(input)) {
       this.coordinates = input;
     } else {
       throw "Terraformer: invalid input for Terraformer.MultiPolygon";
@@ -1220,7 +1227,7 @@
       });
   */
   function Feature(input){
-    if(input && input.type === "Feature" && input.geometry){
+    if(input && input.type === "Feature"){
       extend(this, input);
     } else if(input && input.type && input.coordinates) {
       this.geometry = input;
@@ -1246,7 +1253,7 @@
   function FeatureCollection(input){
     if(input && input.type === "FeatureCollection" && input.features){
       extend(this, input);
-    } else if(Array.isArray(input)) {
+    } else if(isArray(input)) {
       this.features = input;
     } else {
       throw "Terraformer: invalid input for Terraformer.FeatureCollection";
@@ -1284,7 +1291,7 @@
   function GeometryCollection(input){
     if(input && input.type === "GeometryCollection" && input.geometries){
       extend(this, input);
-    } else if(Array.isArray(input)) {
+    } else if(isArray(input)) {
       this.geometries = input;
     } else if(input.coordinates && input.type){
       this.type = "GeometryCollection";
