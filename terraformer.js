@@ -1220,7 +1220,7 @@
       });
   */
   function Feature(input){
-    if(input && input.type === "Feature" && input.geometry){
+    if(input && input.type === "Feature"){
       extend(this, input);
     } else if(input && input.type && input.coordinates) {
       this.geometry = input;
