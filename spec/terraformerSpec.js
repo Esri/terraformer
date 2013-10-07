@@ -61,6 +61,19 @@ describe("Primitives", function(){
     expect(feature.geometry.type).toEqual("Polygon");
   });
 
+  it("should create a Feature from GeoJSON with null geometry and properties", function(){
+    var feature = new Terraformer.Primitive({
+      type: "Feature",
+      geometry: null,
+      properties: null
+    });
+
+    expect(feature).toBeInstanceOfClass(Terraformer.Feature);
+    expect(feature.geometry).toEqual(null);
+    expect(feature.properties).toEqual(null);
+    expect(feature.type).toEqual("Feature");
+  });
+
   it("should create a FeatureCollection from GeoJSON", function(){
     var featureCollection = new Terraformer.Primitive(GeoJSON.featureCollections[0]);
 
