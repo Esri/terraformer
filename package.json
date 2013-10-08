@@ -34,5 +34,6 @@
   ],
   "license": "MIT",
   "dependencies": {
+    "docpad-plugin-cleanurls": "~2.5.1"
   }
 }
