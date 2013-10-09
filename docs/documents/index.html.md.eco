@@ -32,7 +32,7 @@ index.search(envelope, function (err, results) {
 <a id="geostore"></a>
 
 <%- @partial('geostore', false) %>
-<a href="/arcgis-parser.html" id="arcparser"></a>
+<a href="/arcgis-parser" id="arcparser"></a>
 
 <%- @partial('arcgis_parser', false) %>
 <a id="wktparser"></a>
