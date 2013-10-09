@@ -735,7 +735,7 @@
       throw new Error("Unable to get convex hull of " + this.type);
     }
 
-    return convexHull(coordinates);
+    return new Polygon(convexHull(coordinates));
   };
 
   Primitive.prototype.toJSON = function(){
@@ -748,6 +748,10 @@
     obj.bbox = calculateBounds(this);
     return obj;
   };
+
+  Primitive.prototype.contains = function(primitive){
+    return new Primitive(primitive).within(this);
+  }
 
   Primitive.prototype.within = function(primitive) {
     var coordinates, i, contains;
@@ -1008,7 +1012,7 @@
 
     if(input && input.type === "Point" && input.coordinates){
       extend(this, input);
-    } else if(input && Object.prototype.toString.call(input) === "[object Array]") {
+    } else if(input && isArray(input)) {
       this.coordinates = input;
     } else if(args.length >= 2) {
       this.coordinates = args;
@@ -1328,19 +1332,19 @@
     return toGeographic(polygon);
   }
 
-  function Circle (center, rad, interpolate) {
+  function Circle (center, radius, interpolate) {
     var steps = interpolate || 64;
-    var radius = rad || 250;
+    var rad = radius || 250;
 
-    if(!center || center.length < 2 || !radius || !steps) {
+    if(!center || center.length < 2 || !rad || !steps) {
       throw new Error("Terraformer: missing parameter for Terraformer.Circle");
     }
 
     extend(this, new Feature({
       type: "Feature",
-      geometry: createCircle(center, radius, steps),
+      geometry: createCircle(center, rad, steps),
       properties: {
-        radius: radius,
+        radius: rad,
         center: center,
         steps: steps
       }
