@@ -10,7 +10,7 @@
     </nav>
 
     <aside class="docs">
-      <h3>doc toc goes here</h3>
+      <%- @partial('doctoc', false) %>
     </aside>
 
     <main class="docs">

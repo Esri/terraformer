@@ -1,5 +1,5 @@
 ---
-layout: default
+layout: documentation
 ---
 
 # Indexes
@@ -21,7 +21,7 @@ It is important to note that the index will return `envelopes` that match, and d
 ### Node.js
 
     var rtree = require('terraformer-rtree');
-    
+
     var index = new rtree.RTree();
 
 ## Instance Methods
@@ -37,9 +37,9 @@ Inserting adds an entry to the index for searching later.  An `envelope` and `da
       w: 20,
       h: 10
     };
-    
+
     var data = { rowId: 23 };
-    
+
     index.insert(envelope, data);
 
 ### Search
@@ -53,7 +53,7 @@ Searching an index will return any matching `envelope` in `envelope` as an `arra
       h: 0,
       w: 0
     };
-    
+
     // should call the callback with results of [ { rowId: 23 } ]
     index.search(envelope, function (err, results) {
       // results [ { rowId: 23 } ]
