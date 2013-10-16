@@ -33,7 +33,7 @@ Terraformer has the ability to switch between Web Mercator and Geographic (WGS84
 
 ### Bounding Box
 
-All primitives have the posibility of a bounding box.  A bounding box returns an array 4 points: `x1`, `x2`, `y1`, and `y2` denoting a `square` that encapsulates all points.
+All primitives have the possibility of a bounding box.  A bounding box returns an array 4 points: `x1`, `x2`, `y1`, and `y2` denoting a `square` that encapsulates all points.
 
     // create a Polygon
     var poly = new Terraformer.Primitive({

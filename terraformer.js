@@ -31,6 +31,13 @@
       };
 
   /*
+  Internal: isArray function
+  */
+  isArray = function (obj) {
+    return Object.prototype.toString.call(obj) === "[object Array]";
+  };
+
+  /*
   Internal: safe warning
   */
   function warn() {
@@ -57,38 +64,40 @@
   Public: Calculate an bounding box for a geojson object
   */
   function calculateBounds (geojson) {
+    if(geojson.type){
+      switch (geojson.type) {
+        case 'Point':
+          return [ geojson.coordinates[0], geojson.coordinates[1], geojson.coordinates[0], geojson.coordinates[1]];
 
-    switch (geojson.type) {
-      case 'Point':
-        return [ geojson.coordinates[0], geojson.coordinates[1], geojson.coordinates[0], geojson.coordinates[1]];
+        case 'MultiPoint':
+          return calculateBoundsFromArray(geojson.coordinates);
 
-      case 'MultiPoint':
-        return calculateBoundsFromArray(geojson.coordinates);
+        case 'LineString':
+          return calculateBoundsFromArray(geojson.coordinates);
 
-      case 'LineString':
-        return calculateBoundsFromArray(geojson.coordinates);
+        case 'MultiLineString':
+          return calculateBoundsFromNestedArrays(geojson.coordinates);
 
-      case 'MultiLineString':
-        return calculateBoundsFromNestedArrays(geojson.coordinates);
+        case 'Polygon':
+          return calculateBoundsFromNestedArrays(geojson.coordinates);
 
-      case 'Polygon':
-        return calculateBoundsFromNestedArrays(geojson.coordinates);
+        case 'MultiPolygon':
+          return calculateBoundsFromNestedArrayOfArrays(geojson.coordinates);
 
-      case 'MultiPolygon':
-        return calculateBoundsFromNestedArrayOfArrays(geojson.coordinates);
+        case 'Feature':
+          return geojson.geometry? calculateBounds(geojson.geometry) : null;
 
-      case 'Feature':
-        return calculateBounds(geojson.geometry);
+        case 'FeatureCollection':
+          return calculateBoundsForFeatureCollection(geojson);
 
-      case 'FeatureCollection':
-        return calculateBoundsForFeatureCollection(geojson);
+        case 'GeometryCollection':
+          return calculateBoundsForGeometryCollection(geojson);
 
-      case 'GeometryCollection':
-        return calculateBoundsForGeometryCollection(geojson);
-
-      default:
-        throw new Error("Unknown type: " + geojson.type);
+        default:
+          throw new Error("Unknown type: " + geojson.type);
+      }
     }
+    return null;
   }
 
   /*
@@ -726,7 +735,7 @@
       throw new Error("Unable to get convex hull of " + this.type);
     }
 
-    return convexHull(coordinates);
+    return new Polygon(convexHull(coordinates));
   };
 
   Primitive.prototype.toJSON = function(){
@@ -739,6 +748,10 @@
     obj.bbox = calculateBounds(this);
     return obj;
   };
+
+  Primitive.prototype.contains = function(primitive){
+    return new Primitive(primitive).within(this);
+  }
 
   Primitive.prototype.within = function(primitive) {
     var coordinates, i, contains;
@@ -999,7 +1012,7 @@
 
     if(input && input.type === "Point" && input.coordinates){
       extend(this, input);
-    } else if(input && Object.prototype.toString.call(input) === "[object Array]") {
+    } else if(input && isArray(input)) {
       this.coordinates = input;
     } else if(args.length >= 2) {
       this.coordinates = args;
@@ -1025,7 +1038,7 @@
   function MultiPoint(input){
     if(input && input.type === "MultiPoint" && input.coordinates){
       extend(this, input);
-    } else if(Array.isArray(input)) {
+    } else if(isArray(input)) {
       this.coordinates = input;
     } else {
       throw "Terraformer: invalid input for Terraformer.MultiPoint";
@@ -1074,7 +1087,7 @@
   function LineString(input){
     if(input && input.type === "LineString" && input.coordinates){
       extend(this, input);
-    } else if(Array.isArray(input)) {
+    } else if(isArray(input)) {
       this.coordinates = input;
     } else {
       throw "Terraformer: invalid input for Terraformer.LineString";
@@ -1110,7 +1123,7 @@
   function MultiLineString(input){
     if(input && input.type === "MultiLineString" && input.coordinates){
       extend(this, input);
-    } else if(Array.isArray(input)) {
+    } else if(isArray(input)) {
       this.coordinates = input;
     } else {
       throw "Terraformer: invalid input for Terraformer.MultiLineString";
@@ -1142,7 +1155,7 @@
   function Polygon(input){
     if(input && input.type === "Polygon" && input.coordinates){
       extend(this, input);
-    } else if(Array.isArray(input)) {
+    } else if(isArray(input)) {
       this.coordinates = input;
     } else {
       throw "Terraformer: invalid input for Terraformer.Polygon";
@@ -1182,7 +1195,7 @@
   function MultiPolygon(input){
     if(input && input.type === "MultiPolygon" && input.coordinates){
       extend(this, input);
-    } else if(Array.isArray(input)) {
+    } else if(isArray(input)) {
       this.coordinates = input;
     } else {
       throw "Terraformer: invalid input for Terraformer.MultiPolygon";
@@ -1218,7 +1231,7 @@
       });
   */
   function Feature(input){
-    if(input && input.type === "Feature" && input.geometry){
+    if(input && input.type === "Feature"){
       extend(this, input);
     } else if(input && input.type && input.coordinates) {
       this.geometry = input;
@@ -1244,7 +1257,7 @@
   function FeatureCollection(input){
     if(input && input.type === "FeatureCollection" && input.features){
       extend(this, input);
-    } else if(Array.isArray(input)) {
+    } else if(isArray(input)) {
       this.features = input;
     } else {
       throw "Terraformer: invalid input for Terraformer.FeatureCollection";
@@ -1282,7 +1295,7 @@
   function GeometryCollection(input){
     if(input && input.type === "GeometryCollection" && input.geometries){
       extend(this, input);
-    } else if(Array.isArray(input)) {
+    } else if(isArray(input)) {
       this.geometries = input;
     } else if(input.coordinates && input.type){
       this.type = "GeometryCollection";
@@ -1319,19 +1332,19 @@
     return toGeographic(polygon);
   }
 
-  function Circle (center, rad, interpolate) {
+  function Circle (center, radius, interpolate) {
     var steps = interpolate || 64;
-    var radius = rad || 250;
+    var rad = radius || 250;
 
-    if(!center || center.length < 2 || !radius || !steps) {
+    if(!center || center.length < 2 || !rad || !steps) {
       throw new Error("Terraformer: missing parameter for Terraformer.Circle");
     }
 
     extend(this, new Feature({
       type: "Feature",
-      geometry: createCircle(center, radius, steps),
+      geometry: createCircle(center, rad, steps),
       properties: {
-        radius: radius,
+        radius: rad,
         center: center,
         steps: steps
       }
