@@ -61,6 +61,19 @@ describe("Primitives", function(){
     expect(feature.geometry.type).toEqual("Polygon");
   });
 
+  it("should create a Feature from GeoJSON with null geometry and properties", function(){
+    var feature = new Terraformer.Primitive({
+      type: "Feature",
+      geometry: null,
+      properties: null
+    });
+
+    expect(feature).toBeInstanceOfClass(Terraformer.Feature);
+    expect(feature.geometry).toEqual(null);
+    expect(feature.properties).toEqual(null);
+    expect(feature.type).toEqual("Feature");
+  });
+
   it("should create a FeatureCollection from GeoJSON", function(){
     var featureCollection = new Terraformer.Primitive(GeoJSON.featureCollections[0]);
 
@@ -362,10 +375,7 @@ describe("Primitives", function(){
     it("should calculate envelope", function(){
       expect(multiPoint.envelope()).toEqual({ x : -45, y : 0, w : 145, h : 122 });
     });
-
   });
-
-
 
   describe("MultiPolygon", function(){
     beforeEach(function(){
@@ -951,6 +961,11 @@ describe("Intersection", function(){
       expect(function(){
         Terraformer.Tools.calculateBounds({type: "foobar"});
       }).toThrow("Unknown type: foobar");
+    });
+
+    it("should return null when there is no geometry in a Feature in calculateBounds", function(){
+      var bounds = Terraformer.Tools.calculateBounds({type: "Feature", geomertry: null});
+      expect(bounds).toEqual(null);
     });
 
     it("should return false when polygonContainsPoint is passed an empty polygon", function() {
