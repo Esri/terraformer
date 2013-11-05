@@ -16,9 +16,15 @@ h2 {@include p24; @include Open;
 h3 {@include p18; @include Open;
   padding-bottom: 1*$baseline;
 }
-h4 {@include p13-5; @include Open;}
-h5 {@include p12; @include Open;}
-h6 {@include p10-5; @include Open;}
+h4 {@include p13-5; @include Open;
+  padding-bottom: 1*$baseline;
+}
+h5 {@include p13-5; @include Open;
+  padding-bottom: 1*$baseline;
+}
+h6 {@include p12; @include OpenBold;
+  padding-bottom: 1*$baseline;
+}
 
 // Basic Copy ------------
 p, a {
@@ -28,9 +34,7 @@ p, a {
 
 blockquote {
   @include p12;
-  // @include apply-side-rhythm-border(left, 5px, 1, 14px);
   margin-left: 0;
-  // border-color: $lighter-gray;
   padding-top: 1*$baseline;
   padding-bottom: 1*$baseline;
 }
@@ -46,9 +50,6 @@ em, cite {
 small {
   font-size: 9*$point;
   line-height: 14*$point;
-  //@include p9;
-  //padding-bottom: 1*$baseline;
-  // color: $gray;
 }
 
 // Superscript and Subscript ---------------------------------------------------

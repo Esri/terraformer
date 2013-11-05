@@ -1,116 +1,129 @@
-section {
-  padding-top: 36*$point;
-  padding-left: $edge;
-  @include respond-to($tablet-mid) {
+.index {
+  max-width: $container-max;
+  margin: auto;
+
+  section {
+    padding-top: 36*$point;
     padding-left: $edge;
-    padding-right: $edge;
-  }
-  @include respond-to($phone-large) {
-    padding-left: 0.5*$edge;
-    padding-right: 0.5*$edge;
-  }
-  .subhead {
-    @include clearfix;
-    background-color: transparent;
-    padding-top: 1*$baseline;
-    padding-bottom: 2*$baseline;
-    h2 {
-      @include p28-5;
-      @include OpenLight;
-      padding-top: 4*$baseline;
-      padding-left: 4*$pica;
-      margin-bottom: -11*$p;
-      line-height: 2*$baseline;
-      width: 0.5*$measure;
-      margin-left: 0.5*$measure;
-      @include respond-to($tablet-mid) {
-        padding-top: 1*$baseline;
-        width: 0.33*$measure;
-        margin-left: 0.66*$measure;
-      }
-    }
-
-    h3 {
-      @include OpenBold;
-      @include p13-5;
-      padding-left: 4*$pica;
-      width: 0.5*$measure;
-      margin-left: 0.5*$measure;
-      @include respond-to($tablet-mid) {
-        width: 0.33*$measure;
-        margin-left: 0.66*$measure;
-      }
-    }
-    img {
-      width: 0.5*$measure;
-      margin: auto;
-      float: left;
-      display: inline;
-      @include respond-to($tablet-mid) {
-        width: 0.66*$measure;
-      }
-    }
-  }
-
-  h4 {
-    @include OpenBold;
-    @include p13-5;
-  }
-
-  p {
     width: $measure;
     @include respond-to($tablet-mid) {
-      width: 100%;
+      padding-left: $edge;
+      padding-right: $edge;
     }
-  }
+    @include respond-to($phone-large) {
+      padding-left: 0.5*$edge;
+      padding-right: 0.5*$edge;
+    }
 
-  blockquote {
-    float: right;
-    max-width: $spine;
-    padding-top: 12*$p;
-    @include respond-to($tablet-mid) {
-      float: none;
-      max-width: 100%;
-      padding-bottom: 0;
-      text-align: center;
+    .subhead {
+      @include clearfix;
+      background-color: transparent;
+      padding-top: 1*$baseline;
+      padding-bottom: 2*$baseline;
+      h2 {
+        @include p28-5;
+        @include OpenLight;
+        padding-top: 4*$baseline;
+        padding-left: 4*$pica;
+        margin-bottom: -11*$p;
+        line-height: 2*$baseline;
+        width: 0.5*$measure;
+        margin-left: 0.5*$measure;
+        @include respond-to($tablet-mid) {
+          padding-top: 1*$baseline;
+          width: 0.33*$measure;
+          margin-left: 0.66*$measure;
+        }
+      }
+
+      h3 {
+        @include OpenBold;
+        @include p13-5;
+        padding-left: 4*$pica;
+        width: 0.5*$measure;
+        margin-left: 0.5*$measure;
+        @include respond-to($tablet-mid) {
+          width: 0.33*$measure;
+          margin-left: 0.66*$measure;
+        }
+      }
+      img {
+        width: 0.5*$measure;
+        margin: auto;
+        float: left;
+        display: inline;
+        @include respond-to($tablet-mid) {
+          width: 0.66*$measure;
+        }
+      }
+    }
+
+    h4 {
+      @include OpenBold;
+      @include p13-5;
     }
 
     p {
-      color: darken($green, 20%);
-      @include PTMono;
-      @include p18;
-      max-width: $container-width;
-      min-width: 0;
-      line-height: 1.5*$baseline;
-      padding-left: 2em;
+      width: $measure;
       @include respond-to($tablet-mid) {
-        padding-left: 0;
-        // line-height:
+        width: 100%;
       }
     }
-  }
-  a {
-    color: $red;
-    border-bottom: 1px dashed $red;
-    padding-bottom: 3*$p;
-    text-decoration: none;
-    &:hover {
-      color: lighten($red, 20%);
-      border-bottom: 1px dashed lighten($red, 20%);
+
+    blockquote {
+      float: right;
+      max-width: $spine;
+      padding-top: 12*$p;
+      @include respond-to($tablet-mid) {
+        float: none;
+        max-width: 100%;
+        padding-bottom: 0;
+        text-align: center;
+      }
+
+      p {
+        color: darken($green, 20%);
+        @include PTMono;
+        @include p18;
+        max-width: $container-width;
+        min-width: 0;
+        line-height: 1.5*$baseline;
+        padding-left: 2em;
+        @include respond-to($tablet-mid) {
+          padding-left: 0;
+          // line-height:
+        }
+      }
     }
-  }
-  code {
-    @include PTMono;
-    @include narrowTrack;
-  }
-  pre {
-    width: $measure;
-    @include respond-to($tablet-mid) {
-      width: 100%;
+    a {
+      color: $red;
+      border-bottom: 1px dashed $red;
+      padding-bottom: 3*$p;
+      text-decoration: none;
+      &:hover {
+        color: lighten($red, 20%);
+        border-bottom: 1px dashed lighten($red, 20%);
+      }
+    }
+    .button-light {
+      color: white;
     }
     code {
-      padding: 1*$baseline;
-      line-height: 0.75*$baseline;
+      @include PTMono;
+      @include narrowTrack;
+    }
+    pre {
+      width: $measure;
+      @include respond-to($tablet-mid) {
+        width: 100%;
+      }
+      code {
+        padding: 1*$baseline;
+        line-height: 0.75*$baseline;
+      }
+    }
+    aside {
+      width: $edge;
     }
   }
 }
