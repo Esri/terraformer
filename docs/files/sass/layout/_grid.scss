@@ -1,9 +1,11 @@
 .index {
   max-width: $container-max;
   margin: auto;
+
   section {
     padding-top: 36*$point;
     padding-left: $edge;
+    width: $measure;
     @include respond-to($tablet-mid) {
       padding-left: $edge;
       padding-right: $edge;
@@ -12,6 +14,7 @@
       padding-left: 0.5*$edge;
       padding-right: 0.5*$edge;
     }
+
     .subhead {
       @include clearfix;
       background-color: transparent;
@@ -61,7 +64,7 @@
     }
 
     p {
-      width: $measure;
+      // width: $measure;
       @include respond-to($tablet-mid) {
         width: 100%;
       }
