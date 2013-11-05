@@ -116,10 +116,25 @@ h4 {
   font-style: normal;
   font-weight: 400;
   text-rendering: optimizeLegibility;
+  padding-bottom: 1.5rem;
 }
 
-/* line 20, ../sass/_typography.scss */
+/* line 22, ../sass/_typography.scss */
 h5 {
+  font-size: 1.125rem;
+  line-height: 1.5rem;
+  margin-top: 0;
+  padding-top: 0.375rem;
+  margin-bottom: -0.375rem;
+  font-family: 'Open Sans', sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  text-rendering: optimizeLegibility;
+  padding-bottom: 1.5rem;
+}
+
+/* line 25, ../sass/_typography.scss */
+h6 {
   font-size: 1rem;
   line-height: 1.5rem;
   margin-top: 0;
@@ -127,24 +142,12 @@ h5 {
   margin-bottom: -0.33333rem;
   font-family: 'Open Sans', sans-serif;
   font-style: normal;
-  font-weight: 400;
+  font-weight: 700;
   text-rendering: optimizeLegibility;
+  padding-bottom: 1.5rem;
 }
 
-/* line 21, ../sass/_typography.scss */
-h6 {
-  font-size: 0.875rem;
-  line-height: 1.5rem;
-  margin-top: 0;
-  padding-top: 0.45833rem;
-  margin-bottom: -0.45833rem;
-  font-family: 'Open Sans', sans-serif;
-  font-style: normal;
-  font-weight: 400;
-  text-rendering: optimizeLegibility;
-}
-
-/* line 24, ../sass/_typography.scss */
+/* line 30, ../sass/_typography.scss */
 p, a {
   font-size: 1rem;
   line-height: 1.5rem;
@@ -154,7 +157,7 @@ p, a {
   padding-bottom: 1.5rem;
 }
 
-/* line 29, ../sass/_typography.scss */
+/* line 35, ../sass/_typography.scss */
 blockquote {
   font-size: 1rem;
   line-height: 1.5rem;
@@ -166,7 +169,7 @@ blockquote {
   padding-bottom: 1.5rem;
 }
 
-/* line 38, ../sass/_typography.scss */
+/* line 42, ../sass/_typography.scss */
 b, strong {
   font-family: 'Open Sans', sans-serif;
   font-style: normal;
@@ -174,7 +177,7 @@ b, strong {
   text-rendering: optimizeLegibility;
 }
 
-/* line 42, ../sass/_typography.scss */
+/* line 46, ../sass/_typography.scss */
 em, cite {
   font-family: 'Open Sans', sans-serif;
   font-style: italic;
@@ -182,13 +185,13 @@ em, cite {
   text-rendering: optimizeLegibility;
 }
 
-/* line 46, ../sass/_typography.scss */
+/* line 50, ../sass/_typography.scss */
 small {
   font-size: 0.75rem;
   line-height: 1.16667rem;
 }
 
-/* line 56, ../sass/_typography.scss */
+/* line 57, ../sass/_typography.scss */
 sub,
 sup {
   font-family: 'Open Sans', sans-serif;
@@ -203,17 +206,17 @@ sup {
   padding-right: 0.08333rem;
 }
 
-/* line 66, ../sass/_typography.scss */
+/* line 67, ../sass/_typography.scss */
 sup {
   top: -0.5em;
 }
 
-/* line 70, ../sass/_typography.scss */
+/* line 71, ../sass/_typography.scss */
 sub {
   bottom: -0.25em;
 }
 
-/* line 75, ../sass/_typography.scss */
+/* line 76, ../sass/_typography.scss */
 pre {
   font-size: 0.875rem;
   line-height: 1.5rem;
@@ -226,44 +229,44 @@ pre {
   word-wrap: break-word;
   padding-bottom: 1.5rem;
 }
-/* line 82, ../sass/_typography.scss */
+/* line 83, ../sass/_typography.scss */
 pre code {
   display: block;
   overflow: auto;
   word-wrap: normal;
 }
 
-/* line 90, ../sass/_typography.scss */
+/* line 91, ../sass/_typography.scss */
 ul, ol {
   margin-bottom: 1.16667rem;
 }
-/* line 92, ../sass/_typography.scss */
+/* line 93, ../sass/_typography.scss */
 ul li:first-child, ol li:first-child {
   margin-top: 0.33333rem;
 }
-/* line 93, ../sass/_typography.scss */
+/* line 94, ../sass/_typography.scss */
 ul ul, ul ol, ol ul, ol ol {
   margin-top: -0.5rem;
 }
-/* line 95, ../sass/_typography.scss */
+/* line 96, ../sass/_typography.scss */
 ul ul li:first-child, ul ol li:first-child, ol ul li:first-child, ol ol li:first-child {
   margin-top: 0.5rem;
 }
-/* line 97, ../sass/_typography.scss */
+/* line 98, ../sass/_typography.scss */
 ul ol, ol ol {
   list-style-type: lower-alpha;
 }
 
-/* line 101, ../sass/_typography.scss */
+/* line 102, ../sass/_typography.scss */
 nav ul li:first-child, nav ol li:first-child {
   margin-top: 0;
 }
 
-/* line 105, ../sass/_typography.scss */
+/* line 106, ../sass/_typography.scss */
 dl {
   margin-top: 0;
 }
-/* line 107, ../sass/_typography.scss */
+/* line 108, ../sass/_typography.scss */
 dl dt {
   font-family: 'Open Sans', sans-serif;
   font-style: normal;
@@ -275,7 +278,7 @@ dl dt {
   padding-top: 0.375rem;
   margin-bottom: -0.375rem;
 }
-/* line 111, ../sass/_typography.scss */
+/* line 112, ../sass/_typography.scss */
 dl dd {
   margin: 0;
   font-size: 1rem;
@@ -285,11 +288,11 @@ dl dd {
   margin-bottom: -0.33333rem;
 }
 
-/* line 118, ../sass/_typography.scss */
+/* line 119, ../sass/_typography.scss */
 dl.horizontal {
   padding-top: 0.5rem;
 }
-/* line 121, ../sass/_typography.scss */
+/* line 122, ../sass/_typography.scss */
 dl.horizontal dt {
   font-family: 'Open Sans', sans-serif;
   font-style: normal;
@@ -302,7 +305,7 @@ dl.horizontal dt {
   margin-bottom: -0.375rem;
   float: left;
 }
-/* line 126, ../sass/_typography.scss */
+/* line 127, ../sass/_typography.scss */
 dl.horizontal dd {
   margin-left: 12rem;
   font-size: 1rem;
@@ -465,34 +468,40 @@ nav .terraformer:before {
 }
 
 /* line 1, ../sass/layout/_grid.scss */
-section {
+.index {
+  max-width: 1280px;
+  margin: auto;
+}
+/* line 5, ../sass/layout/_grid.scss */
+.index section {
   padding-top: 3rem;
   padding-left: 18.75%;
+  width: 62.5%;
 }
 @media screen and (max-width: 960px) {
-  /* line 1, ../sass/layout/_grid.scss */
-  section {
+  /* line 5, ../sass/layout/_grid.scss */
+  .index section {
     padding-left: 18.75%;
     padding-right: 18.75%;
   }
 }
 @media screen and (max-width: 662px) {
-  /* line 1, ../sass/layout/_grid.scss */
-  section {
+  /* line 5, ../sass/layout/_grid.scss */
+  .index section {
     padding-left: 9.375%;
     padding-right: 9.375%;
   }
 }
-/* line 12, ../sass/layout/_grid.scss */
-section .subhead {
+/* line 18, ../sass/layout/_grid.scss */
+.index section .subhead {
   overflow: hidden;
   *zoom: 1;
   background-color: transparent;
   padding-top: 1.5rem;
   padding-bottom: 3rem;
 }
-/* line 17, ../sass/layout/_grid.scss */
-section .subhead h2 {
+/* line 23, ../sass/layout/_grid.scss */
+.index section .subhead h2 {
   font-size: 2.375rem;
   line-height: 3rem;
   margin-top: 0;
@@ -510,15 +519,15 @@ section .subhead h2 {
   margin-left: 31.25%;
 }
 @media screen and (max-width: 960px) {
-  /* line 17, ../sass/layout/_grid.scss */
-  section .subhead h2 {
+  /* line 23, ../sass/layout/_grid.scss */
+  .index section .subhead h2 {
     padding-top: 1.5rem;
     width: 20.625%;
     margin-left: 41.25%;
   }
 }
-/* line 33, ../sass/layout/_grid.scss */
-section .subhead h3 {
+/* line 39, ../sass/layout/_grid.scss */
+.index section .subhead h3 {
   font-family: 'Open Sans', sans-serif;
   font-style: normal;
   font-weight: 700;
@@ -533,27 +542,27 @@ section .subhead h3 {
   margin-left: 31.25%;
 }
 @media screen and (max-width: 960px) {
-  /* line 33, ../sass/layout/_grid.scss */
-  section .subhead h3 {
+  /* line 39, ../sass/layout/_grid.scss */
+  .index section .subhead h3 {
     width: 20.625%;
     margin-left: 41.25%;
   }
 }
-/* line 44, ../sass/layout/_grid.scss */
-section .subhead img {
+/* line 50, ../sass/layout/_grid.scss */
+.index section .subhead img {
   width: 31.25%;
   margin: auto;
   float: left;
   display: inline;
 }
 @media screen and (max-width: 960px) {
-  /* line 44, ../sass/layout/_grid.scss */
-  section .subhead img {
+  /* line 50, ../sass/layout/_grid.scss */
+  .index section .subhead img {
     width: 41.25%;
   }
 }
-/* line 55, ../sass/layout/_grid.scss */
-section h4 {
+/* line 61, ../sass/layout/_grid.scss */
+.index section h4 {
   font-family: 'Open Sans', sans-serif;
   font-style: normal;
   font-weight: 700;
@@ -564,33 +573,33 @@ section h4 {
   padding-top: 0.375rem;
   margin-bottom: -0.375rem;
 }
-/* line 60, ../sass/layout/_grid.scss */
-section p {
+/* line 66, ../sass/layout/_grid.scss */
+.index section p {
   width: 62.5%;
 }
 @media screen and (max-width: 960px) {
-  /* line 60, ../sass/layout/_grid.scss */
-  section p {
+  /* line 66, ../sass/layout/_grid.scss */
+  .index section p {
     width: 100%;
   }
 }
-/* line 67, ../sass/layout/_grid.scss */
-section blockquote {
+/* line 73, ../sass/layout/_grid.scss */
+.index section blockquote {
   float: right;
   max-width: 37.5%;
   padding-top: 1rem;
 }
 @media screen and (max-width: 960px) {
-  /* line 67, ../sass/layout/_grid.scss */
-  section blockquote {
+  /* line 73, ../sass/layout/_grid.scss */
+  .index section blockquote {
     float: none;
     max-width: 100%;
     padding-bottom: 0;
     text-align: center;
   }
 }
-/* line 78, ../sass/layout/_grid.scss */
-section blockquote p {
+/* line 84, ../sass/layout/_grid.scss */
+.index section blockquote p {
   color: #589069;
   font-family: 'PT Mono', sans-serif;
   font-size: 1.5rem;
@@ -604,42 +613,50 @@ section blockquote p {
   padding-left: 2em;
 }
 @media screen and (max-width: 960px) {
-  /* line 78, ../sass/layout/_grid.scss */
-  section blockquote p {
+  /* line 84, ../sass/layout/_grid.scss */
+  .index section blockquote p {
     padding-left: 0;
   }
 }
-/* line 92, ../sass/layout/_grid.scss */
-section a {
+/* line 98, ../sass/layout/_grid.scss */
+.index section a {
   color: #b26a61;
   border-bottom: 1px dashed #b26a61;
   padding-bottom: 0.25rem;
   text-decoration: none;
 }
-/* line 97, ../sass/layout/_grid.scss */
-section a:hover {
+/* line 103, ../sass/layout/_grid.scss */
+.index section a:hover {
   color: #d3aba6;
   border-bottom: 1px dashed #d3aba6;
 }
-/* line 102, ../sass/layout/_grid.scss */
-section code {
+/* line 108, ../sass/layout/_grid.scss */
+.index section .button-light {
+  color: white;
+}
+/* line 111, ../sass/layout/_grid.scss */
+.index section code {
   font-family: 'PT Mono', sans-serif;
   letter-spacing: 0.08333rem;
 }
-/* line 106, ../sass/layout/_grid.scss */
-section pre {
+/* line 115, ../sass/layout/_grid.scss */
+.index section pre {
   width: 62.5%;
 }
 @media screen and (max-width: 960px) {
-  /* line 106, ../sass/layout/_grid.scss */
-  section pre {
+  /* line 115, ../sass/layout/_grid.scss */
+  .index section pre {
     width: 100%;
   }
 }
-/* line 111, ../sass/layout/_grid.scss */
-section pre code {
+/* line 120, ../sass/layout/_grid.scss */
+.index section pre code {
   padding: 1.5rem;
   line-height: 1.125rem;
+}
+/* line 125, ../sass/layout/_grid.scss */
+.index section aside {
+  width: 18.75%;
 }
 
 /* line 1, ../sass/layout/_nav.scss */
@@ -655,8 +672,9 @@ nav ul {
   margin: auto;
   max-width: 1280px;
   padding-bottom: 0.25rem;
+  padding-right: 9.375%;
 }
-/* line 11, ../sass/layout/_nav.scss */
+/* line 12, ../sass/layout/_nav.scss */
 nav ul li {
   font-family: 'Open Sans', sans-serif;
   font-style: normal;
@@ -673,34 +691,41 @@ nav ul li {
   float: right;
   padding: 0.5rem 0.5rem;
 }
-/* line 19, ../sass/layout/_nav.scss */
+/* line 20, ../sass/layout/_nav.scss */
 nav ul li:first-child {
   float: left;
+  padding-left: 18.75%;
 }
-/* line 22, ../sass/layout/_nav.scss */
+@media screen and (max-width: 662px) {
+  /* line 20, ../sass/layout/_nav.scss */
+  nav ul li:first-child {
+    padding-left: 9.375%;
+  }
+}
+/* line 27, ../sass/layout/_nav.scss */
 nav ul li a {
   color: #fafafa;
   text-decoration: none;
   padding-bottom: 0.08333rem;
 }
-/* line 26, ../sass/layout/_nav.scss */
+/* line 31, ../sass/layout/_nav.scss */
 nav ul li a:hover {
   color: #92bc9f;
   border-bottom: 1px dashed #92bc9f;
 }
 
-/* line 35, ../sass/layout/_nav.scss */
+/* line 40, ../sass/layout/_nav.scss */
 .subnav {
   background-color: #1d2d42;
   overflow: hidden;
   *zoom: 1;
 }
-/* line 38, ../sass/layout/_nav.scss */
+/* line 43, ../sass/layout/_nav.scss */
 .subnav .container {
   max-width: 1280px;
   margin: auto;
 }
-/* line 42, ../sass/layout/_nav.scss */
+/* line 47, ../sass/layout/_nav.scss */
 .subnav section {
   text-align: center;
   float: left;
@@ -708,7 +733,7 @@ nav ul li a:hover {
   padding: 0;
   margin: 0;
 }
-/* line 49, ../sass/layout/_nav.scss */
+/* line 54, ../sass/layout/_nav.scss */
 .subnav h4 {
   font-family: 'Open Sans', sans-serif;
   font-style: normal;
@@ -721,24 +746,24 @@ nav ul li a:hover {
   margin-bottom: -0.33333rem;
   padding: 0.75rem 0 1.125rem 0;
 }
-/* line 53, ../sass/layout/_nav.scss */
+/* line 58, ../sass/layout/_nav.scss */
 .subnav h4:hover {
   background-color: #0d151f;
 }
-/* line 57, ../sass/layout/_nav.scss */
+/* line 62, ../sass/layout/_nav.scss */
 .subnav a {
   width: 100%;
   margin: 0.75rem 0;
   color: #ededed;
   text-decoration: none;
 }
-/* line 63, ../sass/layout/_nav.scss */
+/* line 68, ../sass/layout/_nav.scss */
 .subnav a:hover {
   color: #ededed;
   background-color: #0d151f;
 }
 
-/* line 70, ../sass/layout/_nav.scss */
+/* line 75, ../sass/layout/_nav.scss */
 footer {
   margin: 0;
   padding-top: 4.5rem;
@@ -748,7 +773,7 @@ footer {
   background-color: #1f1f1f;
   text-align: center;
 }
-/* line 78, ../sass/layout/_nav.scss */
+/* line 83, ../sass/layout/_nav.scss */
 footer p {
   font-family: 'Open Sans', sans-serif;
   font-style: normal;
@@ -807,6 +832,25 @@ header.cover h2 {
     margin-bottom: -0.25rem;
     padding-top: 1.5rem;
   }
+}
+
+/* line 1, ../sass/layout/_docs.scss */
+.container {
+  max-width: 1280px;
+}
+
+/* line 6, ../sass/layout/_docs.scss */
+main.docs section {
+  padding-left: 0;
+  padding-right: 18.75%;
+}
+
+/* line 12, ../sass/layout/_docs.scss */
+aside.docs {
+  float: left;
+  width: 18.75%;
+  margin-right: 18.75%;
+  margin-top: 9rem;
 }
 
 /*
