@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset=utf-8 />
+    <title>Quick App</title>
+    <script src="../../dist/terraformer.js" type="text/javascript"></script>
+    <script src="../../dist/terraformer-arcgis-parser.js" type="text/javascript"></script>
+    <link rel="stylesheet" href="http://js.arcgis.com/3.7/js/esri/css/esri.css" />
+    <script src="http://js.arcgis.com/3.7/" type="text/javascript"></script>
+    <script src="viewer.js"></script>
+    <style>
+      #map {
+        float: left;
+        width: 600px;
+        height: 400px;
+      }
+      #input {
+        width: 400px;
+        height: 200px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="map"></div>
+    <textarea id="input" placeholder="GeoJSON Object">{ "type": "FeatureCollection",
+  "features": [
+    { "type": "Feature",
+      "geometry": {"type": "Point", "coordinates": [102.0, 0.5]},
+      "properties": {"prop0": "value0"}
+      },
+    { "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [102.0, 0.0], [103.0, 1.0], [104.0, 0.0], [105.0, 1.0]
+          ]
+        },
+      "properties": {
+        "prop0": "value0",
+        "prop1": 0.0
+        }
+      },
+    { "type": "Feature",
+       "geometry": {
+         "type": "Polygon",
+         "coordinates": [
+           [ [100.0, 0.0], [101.0, 0.0], [101.0, 1.0],
+             [100.0, 1.0], [100.0, 0.0] ]
+           ]
+       },
+       "properties": {
+         "prop0": "value0",
+         "prop1": {"this": "that"}
+         }
+       }
+     ]
+   }</textarea>
+    <button id="submit">Show On Map</button>
+  </body>
+</html>
