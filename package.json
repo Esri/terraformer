@@ -1,5 +1,5 @@
 {
-  "name": "Terraformer",
+  "name": "terraformer",
   "version": "1.0.0",
   "description": "A Geo-toolkit built in Javascript.",
   "main": "terraformer.js",
