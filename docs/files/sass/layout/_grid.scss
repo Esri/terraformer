@@ -64,7 +64,7 @@
     }
 
     p {
-      // width: $measure;
+      width: $measure;
       @include respond-to($tablet-mid) {
         width: 100%;
       }
