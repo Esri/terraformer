@@ -236,37 +236,59 @@ pre code {
   word-wrap: normal;
 }
 
-/* line 91, ../sass/_typography.scss */
+/* line 90, ../sass/_typography.scss */
+code {
+  font-family: 'PT Mono', sans-serif;
+  letter-spacing: 0.08333rem;
+}
+
+/* line 95, ../sass/_typography.scss */
+pre {
+  width: 62.5%;
+}
+@media screen and (max-width: 960px) {
+  /* line 95, ../sass/_typography.scss */
+  pre {
+    width: 100%;
+  }
+}
+/* line 100, ../sass/_typography.scss */
+pre code {
+  padding: 1.5rem;
+  line-height: 1.125rem;
+}
+
+/* line 107, ../sass/_typography.scss */
 ul, ol {
   margin-bottom: 1.16667rem;
 }
-/* line 93, ../sass/_typography.scss */
+/* line 109, ../sass/_typography.scss */
 ul li:first-child, ol li:first-child {
   margin-top: 0.33333rem;
 }
-/* line 94, ../sass/_typography.scss */
+/* line 110, ../sass/_typography.scss */
 ul ul, ul ol, ol ul, ol ol {
   margin-top: -0.5rem;
 }
-/* line 96, ../sass/_typography.scss */
+/* line 112, ../sass/_typography.scss */
 ul ul li:first-child, ul ol li:first-child, ol ul li:first-child, ol ol li:first-child {
   margin-top: 0.5rem;
 }
-/* line 98, ../sass/_typography.scss */
+/* line 114, ../sass/_typography.scss */
 ul ol, ol ol {
   list-style-type: lower-alpha;
 }
 
-/* line 102, ../sass/_typography.scss */
+/* line 118, ../sass/_typography.scss */
 nav ul li:first-child, nav ol li:first-child {
   margin-top: 0;
 }
 
-/* line 106, ../sass/_typography.scss */
+/* line 122, ../sass/_typography.scss */
 dl {
   margin-top: 0;
 }
-/* line 108, ../sass/_typography.scss */
+/* line 124, ../sass/_typography.scss */
 dl dt {
   font-family: 'Open Sans', sans-serif;
   font-style: normal;
@@ -278,7 +300,7 @@ dl dt {
   padding-top: 0.375rem;
   margin-bottom: -0.375rem;
 }
-/* line 112, ../sass/_typography.scss */
+/* line 128, ../sass/_typography.scss */
 dl dd {
   margin: 0;
   font-size: 1rem;
@@ -288,11 +310,11 @@ dl dd {
   margin-bottom: -0.33333rem;
 }
 
-/* line 119, ../sass/_typography.scss */
+/* line 135, ../sass/_typography.scss */
 dl.horizontal {
   padding-top: 0.5rem;
 }
-/* line 122, ../sass/_typography.scss */
+/* line 138, ../sass/_typography.scss */
 dl.horizontal dt {
   font-family: 'Open Sans', sans-serif;
   font-style: normal;
@@ -305,7 +327,7 @@ dl.horizontal dt {
   margin-bottom: -0.375rem;
   float: left;
 }
-/* line 127, ../sass/_typography.scss */
+/* line 143, ../sass/_typography.scss */
 dl.horizontal dd {
   margin-left: 12rem;
   font-size: 1rem;
@@ -468,32 +490,32 @@ nav .terraformer:before {
 }
 
 /* line 1, ../sass/layout/_grid.scss */
-.index {
+.index, .docs {
   max-width: 1280px;
   margin: auto;
 }
 /* line 5, ../sass/layout/_grid.scss */
-.index section {
+.index section, .docs section {
   padding-top: 3rem;
   padding-left: 18.75%;
   width: 62.5%;
 }
 @media screen and (max-width: 960px) {
   /* line 5, ../sass/layout/_grid.scss */
-  .index section {
+  .index section, .docs section {
     padding-left: 18.75%;
     padding-right: 18.75%;
   }
 }
 @media screen and (max-width: 662px) {
   /* line 5, ../sass/layout/_grid.scss */
-  .index section {
+  .index section, .docs section {
     padding-left: 9.375%;
     padding-right: 9.375%;
   }
 }
 /* line 18, ../sass/layout/_grid.scss */
-.index section .subhead {
+.index section .subhead, .docs section .subhead {
   overflow: hidden;
   *zoom: 1;
   background-color: transparent;
@@ -501,7 +523,7 @@ nav .terraformer:before {
   padding-bottom: 3rem;
 }
 /* line 23, ../sass/layout/_grid.scss */
-.index section .subhead h2 {
+.index section .subhead h2, .docs section .subhead h2 {
   font-size: 2.375rem;
   line-height: 3rem;
   margin-top: 0;
@@ -520,14 +542,14 @@ nav .terraformer:before {
 }
 @media screen and (max-width: 960px) {
   /* line 23, ../sass/layout/_grid.scss */
-  .index section .subhead h2 {
+  .index section .subhead h2, .docs section .subhead h2 {
     padding-top: 1.5rem;
     width: 20.625%;
     margin-left: 41.25%;
   }
 }
 /* line 39, ../sass/layout/_grid.scss */
-.index section .subhead h3 {
+.index section .subhead h3, .docs section .subhead h3 {
   font-family: 'Open Sans', sans-serif;
   font-style: normal;
   font-weight: 700;
@@ -543,13 +565,13 @@ nav .terraformer:before {
 }
 @media screen and (max-width: 960px) {
   /* line 39, ../sass/layout/_grid.scss */
-  .index section .subhead h3 {
+  .index section .subhead h3, .docs section .subhead h3 {
     width: 20.625%;
     margin-left: 41.25%;
   }
 }
 /* line 50, ../sass/layout/_grid.scss */
-.index section .subhead img {
+.index section .subhead img, .docs section .subhead img {
   width: 31.25%;
   margin: auto;
   float: left;
@@ -557,12 +579,12 @@ nav .terraformer:before {
 }
 @media screen and (max-width: 960px) {
   /* line 50, ../sass/layout/_grid.scss */
-  .index section .subhead img {
+  .index section .subhead img, .docs section .subhead img {
     width: 41.25%;
   }
 }
 /* line 61, ../sass/layout/_grid.scss */
-.index section h4 {
+.index section h4, .docs section h4 {
   font-family: 'Open Sans', sans-serif;
   font-style: normal;
   font-weight: 700;
@@ -574,24 +596,24 @@ nav .terraformer:before {
   margin-bottom: -0.375rem;
 }
 /* line 66, ../sass/layout/_grid.scss */
-.index section p {
+.index section p, .docs section p {
   width: 62.5%;
 }
 @media screen and (max-width: 960px) {
   /* line 66, ../sass/layout/_grid.scss */
-  .index section p {
+  .index section p, .docs section p {
     width: 100%;
   }
 }
 /* line 73, ../sass/layout/_grid.scss */
-.index section blockquote {
+.index section blockquote, .docs section blockquote {
   float: right;
   max-width: 37.5%;
   padding-top: 1rem;
 }
 @media screen and (max-width: 960px) {
   /* line 73, ../sass/layout/_grid.scss */
-  .index section blockquote {
+  .index section blockquote, .docs section blockquote {
     float: none;
     max-width: 100%;
     padding-bottom: 0;
@@ -599,7 +621,7 @@ nav .terraformer:before {
   }
 }
 /* line 84, ../sass/layout/_grid.scss */
-.index section blockquote p {
+.index section blockquote p, .docs section blockquote p {
   color: #589069;
   font-family: 'PT Mono', sans-serif;
   font-size: 1.5rem;
@@ -614,49 +636,61 @@ nav .terraformer:before {
 }
 @media screen and (max-width: 960px) {
   /* line 84, ../sass/layout/_grid.scss */
-  .index section blockquote p {
+  .index section blockquote p, .docs section blockquote p {
     padding-left: 0;
   }
 }
 /* line 98, ../sass/layout/_grid.scss */
-.index section a {
+.index section a, .docs section a {
   color: #b26a61;
   border-bottom: 1px dashed #b26a61;
   padding-bottom: 0.25rem;
   text-decoration: none;
 }
 /* line 103, ../sass/layout/_grid.scss */
-.index section a:hover {
+.index section a:hover, .docs section a:hover {
   color: #d3aba6;
   border-bottom: 1px dashed #d3aba6;
 }
 /* line 108, ../sass/layout/_grid.scss */
-.index section .button-light {
+.index section .button-light, .docs section .button-light {
   color: white;
 }
-/* line 111, ../sass/layout/_grid.scss */
-.index section code {
-  font-family: 'PT Mono', sans-serif;
-  letter-spacing: 0.08333rem;
+/* line 112, ../sass/layout/_grid.scss */
+.index section aside, .docs section aside {
+  width: 18.75%;
 }
-/* line 115, ../sass/layout/_grid.scss */
-.index section pre {
+
+/* line 119, ../sass/layout/_grid.scss */
+.docs aside {
+  width: 18.75%;
+  padding-left: 18.75%;
+  float: left;
+  padding-top: 4.5rem;
+}
+/* line 126, ../sass/layout/_grid.scss */
+.docs main {
+  overflow: hidden;
+  *zoom: 1;
+  width: 62.5%;
+  padding-top: 4.5rem;
+}
+/* line 133, ../sass/layout/_grid.scss */
+.docs p {
   width: 62.5%;
 }
+/* line 137, ../sass/layout/_grid.scss */
+.docs img {
+  width: 31.25%;
+  margin-left: 18.75%;
+  display: block;
+  padding-bottom: 1.5rem;
+}
 @media screen and (max-width: 960px) {
-  /* line 115, ../sass/layout/_grid.scss */
-  .index section pre {
-    width: 100%;
+  /* line 137, ../sass/layout/_grid.scss */
+  .docs img {
+    width: 41.25%;
   }
-}
-/* line 120, ../sass/layout/_grid.scss */
-.index section pre code {
-  padding: 1.5rem;
-  line-height: 1.125rem;
-}
-/* line 125, ../sass/layout/_grid.scss */
-.index section aside {
-  width: 18.75%;
 }
 
 /* line 1, ../sass/layout/_nav.scss */
@@ -861,7 +895,6 @@ Orginal Style from ethanschoonover.com/solarized (c) Jeremy Hull <sourdrums@gmai
 /* line 7, ../sass/_solarized-dark.scss */
 pre code {
   display: block;
-  padding: 0.5em;
   background: #002b36;
   color: #839496;
 }

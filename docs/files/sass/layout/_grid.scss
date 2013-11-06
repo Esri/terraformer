@@ -1,4 +1,4 @@
-.index {
+.index, .docs {
   max-width: $container-max;
   margin: auto;
 
@@ -108,22 +108,40 @@
     .button-light {
       color: white;
     }
-    code {
-      @include PTMono;
-      @include narrowTrack;
-    }
-    pre {
-      width: $measure;
-      @include respond-to($tablet-mid) {
-        width: 100%;
-      }
-      code {
-        padding: 1*$baseline;
-        line-height: 0.75*$baseline;
-      }
-    }
+
     aside {
       width: $edge;
+    }
+  }
+}
+
+.docs {
+  aside {
+    width: $edge;
+    padding-left: $edge;
+    float: left;
+    padding-top: 3*$baseline;
+  }
+
+  main {
+    @include clearfix;
+    width: $measure;
+
+    padding-top: 3*$baseline;
+  }
+
+  p {
+    width: $measure;
+  }
+
+  img {
+    width: 0.5*$measure;
+    margin-left: $edge;
+    // float: left;
+    display: block;
+    padding-bottom: 1*$baseline;
+    @include respond-to($tablet-mid) {
+      width: 0.66*$measure;
     }
   }
 }

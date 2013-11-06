@@ -4,19 +4,17 @@
     <%- @getBlock("meta").toHTML() %>
     <%- @getBlock("styles").add(["/css/terraformer.css"]).toHTML() %>
 </head>
-<body>
+<body class="docs">
     <nav>
       <%- @partial('nav', false) %>
     </nav>
 
-    <aside class="docs">
+    <aside>
       <%- @partial('doctoc', false) %>
     </aside>
 
-    <main class="docs">
-      <section>
+    <main>
         <%- @content %>
-      </section>
     </main>
 
     <footer>
