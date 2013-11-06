@@ -191,11 +191,15 @@ Terraformer also has numerous helper methods for working with GeoJSON and geogra
 | `positionToGeographic(coordinate)` | `Coordinate` | ... |
 
 ### Calculations
+| Method | Returns | Description |
+| --- | --- | --- |
 | `calculateBounds` | `Array` | ... |
 | `calculateEnvelope` | `Object` | ... |
 | `convexHull` | `Polygon` | ... |
 
 ### Comparisons
+| Method | Returns | Description |
+| --- | --- | --- |
 | `coordinatesContainPoint` | `Boolean` | ... |
 | `polygonContainsPoint` | `Boolean` | ... |
 | `arrayIntersectsArray` | `Boolean` | ... |
