@@ -6,17 +6,19 @@
 
 Terraformer's ArcGIS Parser library allows you to convert between [Terraformer Primitives]() or [GeoJSON](http://geojson.org/geojson-spec.html) and the [ArcGIS Geometry Objects](http://resources.arcgis.com/en/help/arcgis-rest-api/#/Geometry_Objects/02r3000000n1000000/)
 
-    // search for a point
-    var envelope = {
-      x: 101,
-      y: 11,
-      h: 0,
-      w: 0
-    };
+    // parse ArcGIS JSON, convert it to a Terraformer.Primitive
+    var primitive = ArcGIS.parse({
+      x:"-122.6764",
+      y:"45.5165",
+      spatialReference: {
+        wkid: 4326
+      }
+    });
 
-    // should call the callback with results of [ { rowId: 23 } ]
-    index.search(envelope, function (err, results) {
-      // results [ { rowId: 23 } ]
+    // take a Terraformer.Primitive or GeoJSON and convert it to ArcGIS JSON
+    var point = ArcGIS.convert({
+      "type": "Point",
+      "coordinates": [45.5165, -122.6764]
     });
 
 [ArcGIS Parser Documentation](/)

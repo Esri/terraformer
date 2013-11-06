@@ -7,17 +7,18 @@
 [Well Known Text](http://en.wikipedia.org/wiki/Well-known_text) is a format used by databases like PostGIS. With Terraformer's WKT parser you can convert between this format and GeoJSON
 
 
-    // search for a point
-    var envelope = {
-      x: 101,
-      y: 11,
-      h: 0,
-      w: 0
-    };
+    // parse a WKT file, convert it into a primitive
+    var primitive = wkt.parse('LINESTRING (30 10, 10 30, 40 40)');
 
-    // should call the callback with results of [ { rowId: 23 } ]
-    index.search(envelope, function (err, results) {
-      // results [ { rowId: 23 } ]
-    });
+    // take a primitive and convert it into a WKT representation
+    var polygon = wkt.convert(
+      {
+        "type": "Polygon",
+        "coordinates": [
+          [ [100.0, 0.0], [101.0, 0.0], [101.0, 1.0], [100.0, 1.0], [100.0, 0.0] ],
+          [ [100.2, 0.2], [100.8, 0.2], [100.8, 0.8], [100.2, 0.8], [100.2, 0.2] ]
+        ]
+      }
+    );
 
 [WKT Parser Documentation](/)
