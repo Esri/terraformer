@@ -5,25 +5,25 @@ layout: default
 # Terraformer Core
 
 ### Primitive
-Terraformer Primitives are Javascript objects that map directly to their GeoJSON components. Converting a GeoJSON object into a Terraformer Primitive will allow you use convenience methods like `point.within(polygon)`.
+Terraformer Primitives are Javascript objects that map directly to their GeoJSON couterparts. Converting a GeoJSON object into a Terraformer Primitive will allow you use convenience methods like `point.within(polygon)`.
 
-Every `Terraformer.Primitive` inherits from this base class, thus all other Primitives share all the `Terraformer.Primitive` methods.
+Every `Terraformer.Primitive` inherits from the `Terraformer.Primitive` base class, thus all other Primitives share the `Terraformer.Primitive` methods.
 
 There is a Primitive for every type of GeoJSON object.
 
-* [Point]()
-* [LineString]()
-* [Polygon]()
-* [MultiPoint]()
-* [MultiLineString]()
-* [MultiPolygon]()
-* [Feature]()
-* [FeatureCollection]()
-* [GeometryCollection]()
-* [Circle]()
+* [Point](#point)
+* [LineString](#linestring)
+* [Polygon](#polygon)
+* [MultiPoint](#multipoint)
+* [MultiLineString](#multilinestring)
+* [MultiPolygon](#multipolygon)
+* [Feature](#feature)
+* [FeatureCollection](#featurecollection)
+* [GeometryCollection](#geometrycollection)
+* [Circle](#circle)
 
 #### Constructor
-You create new `Terraformer.Primitive` objects by passing it a valid [GeoJSON Point](). This will return the a `Terraformer.Primitive` of the type that cooresponds with type of your GeoJSON object.
+You create new `Terraformer.Primitive` objects by passing it a valid [GeoJSON Object](). This will return the a `Terraformer.Primitive` of the type that corresponds with type of your GeoJSON object.
 
 ```js
 var point = new Terraformer.Primitive({
@@ -40,8 +40,8 @@ point.within(polygon) //-> true or false
 
 | Method | Returns | Description
 | --- | --- | --- |
-| `toMercator` | `this` | ... |
-| `toGeographic` | `this` | ... |
+| `toMercator` | `this` | Converts this GeoJSON objects coordinates to the [web mercator spatial reference](http://spatialreference.org/ref/sr-org/6928/). |
+| `toGeographic` | `this` | Converts this GeoJSON objects coordinates to [geographic coordinates](http://spatialreference.org/ref/epsg/4326/). |
 | `envelope` | `Object` | ... |
 | `bbox` | `Array` | ... |
 | `convexHull` | `Polygon` | ... |
@@ -53,7 +53,7 @@ point.within(polygon) //-> true or false
 A JavaScript object representing a (GeoJSON Point)[].
 
 #### Constructor
-`Terraformer.Point` can be created by passing a [GeoJSON Coordinate]() like `[longitude, latitude]`, with plain `x,y`, or a valid [GeoJSON Point]().
+`Terraformer.Point` can be created by passing a [GeoJSON Coordinate Pair]() like `[longitude, latitude]`, with plain `x,y`, or a valid [GeoJSON Point]().
 
 ```js
 var point1 = new Terraformer.Point({
