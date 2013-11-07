@@ -1,0 +1,18 @@
+{
+  "author": "Aaron Parecki (http://aaronparecki.com)",
+  "name": "terraformer-timezone-api",
+  "description": "Timezone API built using Terraformer",
+  "version": "0.0.1",
+  "homepage": "https://github.com/esri/Terraformer/tree/master/examples/timezone",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/esri/terraformer.git"
+  },
+  "dependencies": {
+    "terraformer": "*",
+     "terraformer-rtree": "*"
+  },
+  "engines": {
+    "node": "*"
+  }
+}
