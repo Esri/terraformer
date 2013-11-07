@@ -1,0 +1,19 @@
+{
+  "name": "terraformer-convert-example",
+  "version": "0.0.1",
+  "description": "Command line tool to convert geometry formats with Terraformer",
+  "main": "convert.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "terraformer"
+  ],
+  "author": "Al Laframboise",
+  "license": "Apache",
+  "dependencies": {
+    "optimist": "~0.6.0",
+    "terraformer-arcgis-parser": "~1.0.0",
+    "terraformer-wkt-parser": "~1.0.0"
+  }
+}
