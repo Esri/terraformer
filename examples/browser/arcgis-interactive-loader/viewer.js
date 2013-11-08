@@ -1,7 +1,10 @@
 require([
   "dojo/query",
-  "esri/map"
-], function (query) {
+  "esri/map",
+  "esri/symbols/SimpleFillSymbol", 
+  "esri/symbols/SimpleLineSymbol",
+  "dojo/_base/Color"
+], function (query, Map, SimpleFillSymbol, SimpleLineSymbol, Color) {
 
   var map = new esri.Map("map", {
     basemap: "topo",
@@ -16,40 +19,57 @@ require([
 
   var currentPrimitive;
   var shape;
-  function showArcGIS(arcgis){
-    currentPrimitive = Terraformer.ArcGIS.parse(arcgis);
-    addGraphic(arcgis);
-  }
-
-  function showWKT(wkt){
-    currentPrimitive = Terraformer.WKT.parse(wkt);
-    var arcgis = Terraformer.ArcGIS.convert(currentPrimitive);
-    addGraphic(arcgis);
-  }
 
   function showGeoJSON(geojson){
     // convert the geojson object to a arcgis json representation
     currentPrimitive = new Terraformer.Primitive(geojson);
     var arcgis = Terraformer.ArcGIS.convert(currentPrimitive);
-    addGraphic(arcgis);
+    for (var i=0; i < arcgis.length; i++){
+      addGraphic(arcgis[i], new Color([255,255,0,0.25]));
+    }
   }
 
-  function addGraphic(arcgis){
+  function showWKT(wkt){
+    currentPrimitive = Terraformer.WKT.parse(wkt);
+    var arcgis = Terraformer.ArcGIS.convert(currentPrimitive);
+    addGraphic(arcgis, new Color([255,0,255,0.25]));
+  }
+
+  function showArcGIS(arcgis){
+    currentPrimitive = Terraformer.ArcGIS.parse(arcgis);
+    addGraphic(arcgis, new Color([0,255,255,0.25]));
+  }
+
+  function getSymbol(color) {
+    var sfs = new SimpleFillSymbol(SimpleFillSymbol.STYLE_SOLID,
+    new SimpleLineSymbol(SimpleLineSymbol.STYLE_SOLID,
+    new Color([255,0,0, .5]), 2), color);
+    return sfs;
+  }
+
+  function addLastPoint(geometry) {
+    var pt = geometry.rings[0][0];
+    geometry.rings[0].push(pt);
+  }
+
+  function addGraphic(arcgis,color){
     // if arcgis.geometry is set we have a graphic json
     // else we can create our own json and set the symbol on it.
     if(arcgis.geometry){
-      shape = new esri.Graphic(arcgis).setSymbol(new esri.symbol.SimpleFillSymbol());
+      addLastPoint(arcgis.geometry);
+      shape = new esri.Graphic(arcgis).setSymbol(getSymbol(color));
     } else {
+      addLastPoint(arcgis);
       shape = new esri.Graphic({
         geometry: arcgis
-      }).setSymbol(new esri.symbol.SimpleFillSymbol());
+      }).setSymbol(getSymbol(color));
     }
 
     // add the graphic to the map
     map.graphics.add(shape);
 
     // center the map on the graphic
-    map.setExtent(shape.geometry.getExtent());
+    map.setExtent(shape.geometry.getExtent().expand(1.2));
   }
 
   function showOnMap(){

@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset=utf-8 />
-    <title>Omni-viewer</title>
+    <title>ArcGIS Data Loader</title>
  
     <script src="../../../terraformer.js" type="text/javascript"></script>
     <script src="../../lib/terraformer-wkt-parser.js" type="text/javascript"></script>
@@ -30,30 +30,34 @@
         box-sizing: border-box;
         width: 100%;
       }
+      .nav-pills {
+        padding: 10px 10px 0;
+      }
+
     </style>
   </head>
   <body>
         <div id="map"></div>
         <div id="inputs">
           <ul id="tabs" class="nav nav-pills">
-            <li class="active">
-              <a href="#wkt">WKT</a>
-            </li>
-            <li><a href="#geojson">GeoJSON</a></li>
+            <li class="active"><a href="#geojson">GeoJSON</a></li>
+            <li><a href="#wkt">WKT</a></li>
             <li><a href="#arcgis">ArcGIS</a></li>
           </ul>
           <div class="tab-content">
-            <div id="wkt" class="tab-pane active">
-              <textarea placeholder="WKT" data-type="wkt"></textarea>
+
+            <div id="geojson" class="tab-pane active">
+              <textarea placeholder="GeoJSON" data-type="geojson">{"type":"FeatureCollection","properties":{"kind":"state","state":"OR"},"features":[ {"type":"Feature","properties":{"kind":"county","name":"Washington","state":"OR"},"geometry":{"type":"MultiPolygon","coordinates":[[[[-123.1347,45.7798],[-123.0306,45.7798],[-123.0306,45.7524],[-122.9265,45.7250],[-122.9265,45.6319],[-122.7458,45.5169],[-122.7458,45.4348],[-122.7458,45.3307],[-122.8444,45.3471],[-122.8663,45.3197],[-123.0635,45.4019],[-123.1347,45.4348],[-123.4633,45.4348],[-123.4852,45.4457],[-123.4414,45.5224],[-123.2990,45.5936],[-123.4852,45.6812],[-123.4852,45.7086],[-123.3592,45.7086],[-123.3592,45.7798]]]]}} ]}</textarea>
             </div>
 
-            <div id="geojson" class="tab-pane">
-              <textarea placeholder="GeoJSON" data-type="geojson"></textarea>
+            <div id="wkt" class="tab-pane">
+              <textarea placeholder="WKT" data-type="wkt">MULTIPOLYGON (((-122.9265 45.725, -122.7622 45.7305, -122.7622 45.6593, -122.6746 45.6155, -122.2474 45.5498, -121.9243 45.6484, -121.9024 45.5552, -121.9243 45.5443, -121.8202 45.4621, -122.3569 45.4621, -122.7458 45.4348, -122.7458 45.5169, -122.9265 45.6319)))</textarea>
             </div>
 
             <div id="arcgis" class="tab-pane">
-              <textarea placeholder="ArcGIS" data-type="arcgis"></textarea>
+              <textarea placeholder="ArcGIS" data-type="arcgis">{"geometry":{"rings":[[[-122.7458,45.4348],[-122.7458,45.3307],[-122.8444,45.3471],[-122.8663,45.3197],[-122.8499,45.2595],[-122.7403,45.2595],[-122.7896,45.128],[-122.5979,45.0185],[-122.5048,44.9199],[-122.3953,44.8871],[-121.7326,44.8871],[-121.7161,44.9035],[-121.7983,44.9363],[-121.8038,45.013],[-121.6614,45.0678],[-121.6669,45.1171],[-121.6997,45.1226],[-121.749,45.1992],[-121.6833,45.2266],[-121.6942,45.2595],[-121.6997,45.38],[-121.7764,45.4019],[-121.8202,45.4621],[-122.3569,45.4621]]],"spatialReference":{"wkid":4326}},"attributes":{"kind":"county","name":"Clackamas","state":"OR"}}</textarea>
             </div>
+
             <br>
             <button id="submit" class="btn btn-small">Show On Map</button>
             <button id="bounding" class="btn btn-small">Bounding Box</button>
