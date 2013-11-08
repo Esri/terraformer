@@ -24,9 +24,9 @@ var envelope = {
   w: 0
 };
 
-// should call the callback with results of [ { rowId: 23 } ]
-index.search(envelope, function (err, results) {
-  // results [ { rowId: 23 } ]
+// should call the callback with results of any features inside the envelope
+index.within(envelope, function (err, results) {
+  // results [  ]
 });
 ```
 

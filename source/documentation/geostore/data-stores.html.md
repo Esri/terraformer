@@ -30,22 +30,25 @@ You can pass any needed arguments while instantiating.
 
 _Example:_
 
-    var ds = new DataStore({
-      "path": "some_path",
-      "username": "me",
-      "password": "mypass"
-    });
-
+```js
+var ds = new DataStore({
+  "path": "some_path",
+  "username": "me",
+  "password": "mypass"
+});
+```
 
 #### DataStore.add(geostore, callback)
 
 Add a `geojson` object to a DataStore.  In the case of a `Feature`, the `id` should be used as the primary key for storage and retrieval:
 
-    // get the id
-    var id = geojson.id;
-    
-    // store the data
-    this.magicdb.put(geojson.id, JSON.stringify(geojson));
+```js
+// get the id
+var id = geojson.id;
+
+// store the data
+this.magicdb.put(geojson.id, JSON.stringify(geojson));
+```
 
 If a `FeatureCollection` is passed in instead, each `Feature` inside of the `FeatureCollection` needs to be added before the `callback` is called.
 
@@ -56,9 +59,11 @@ If a `FeatureCollection` is passed in instead, each `Feature` inside of the `Fea
 
 _Example:_
 
-    ds.add(geojson, function (err, res) {
-      // Node.js style callback
-    });
+```js
+ds.add(geojson, function (err, res) {
+  // Node.js style callback
+});
+```
 
 #### DataStore.update(geostore, callback)
 
@@ -71,9 +76,11 @@ Update a `geojson` object already in a DataStore.  Only a `Feature` should be ab
 
 _Example:_
 
-    ds.update(geojson, function (err, res) {
-      // Node.js style callback
-    });
+```js
+ds.update(geojson, function (err, res) {
+  // Node.js style callback
+});
+```
 
 #### DataStore.remove(id, callback)
 
@@ -86,9 +93,11 @@ Remove a `geojson` object from the DataStore by `id`.
 
 _Example:_
 
-    ds.remove(id, function (err, res) {
-      // Node.js style callback
-    });
+```js
+ds.remove(id, function (err, res) {
+  // Node.js style callback
+});
+```
 
 #### DataStore.get(id, callback)
 
@@ -101,6 +110,8 @@ Retrieves a `geojson` object from the DataStore by `id`.
 
 _Example:_
 
-    ds.get(id, function (err, res) {
-      // Node.js style callback
-    });
+```js
+ds.get(id, function (err, res) {
+  // Node.js style callback
+});
+```
