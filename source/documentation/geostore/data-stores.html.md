@@ -16,7 +16,7 @@ There are a couple of existing Data Stores that help you get started storing dat
 * [Memory](https://github.com/Esri/terraformer-geostore-memory) - works in both the browser and Node.js
 * [LevelDB](https://github.com/JerrySievert/terraformer-geostore-leveldb) - works in Node.js
 
-## Writing a GeoStore
+## Writing a DataStore
 
 Since Data Stores are simply `key/value` stores, it is very easy to write additional Data Stores as long as the method signatures are correct.
 
