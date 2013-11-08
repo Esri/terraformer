@@ -26,6 +26,15 @@ h6 {@include p12; @include OpenBold;
   padding-bottom: 1*$baseline;
 }
 
+h1, h2, h3, h4,h5, h6 {
+  position: relative;
+  &:hover {
+    .header-link {
+      display: block;
+    }
+  }
+}
+
 // Basic Copy ------------
 p, a {
   @include p12;
@@ -73,40 +82,32 @@ sub {
 }
 
 // Code Block ------------
-pre {;
-  @include p10-5;
-  padding-top: 0;
-  white-space: pre;
-  white-space: pre-wrap;
-  word-wrap: break-word;
-  padding-bottom: 1*$baseline;
-  code {
-    display: block;
-    overflow: auto;
-    word-wrap: normal;
-  }
-}
-
 code {
   @include PTMono;
   @include narrowTrack;
   padding: 3px;
   color: darken($green, 10);
 }
+
 pre {
   @include PTMono;
   @include narrowTrack;
+  @include p10-5;
   line-height: 1*$baseline;
   margin-bottom: 1*$baseline;
-  overflow: scroll;
+  overflow-x: auto;
   display: block;
   padding: 1em;
   background: #002b36;
   color: #839496;
+  padding-bottom: 1*$baseline;
   @include respond-to($tablet-mid) {
     width: 100%;
   }
   code {
+    display: block;
+    overflow: auto;
+    word-wrap: normal;
     padding: 1*$baseline;
     line-height: 0.75*$baseline;
   }
