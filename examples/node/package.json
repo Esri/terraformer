@@ -1,0 +1,21 @@
+{
+  "name": "terraformer-node-examples",
+  "version": "0.0.0",
+  "description": "Examples of how to use Terraformer.js in Node.js",
+  "main": "",
+  "dependencies": {
+    "terraformer": "~1.0.0",
+    "terraformer-arcgis-parser": "~1.0.0",
+    "terraformer-wkt-parser": "~1.0.0",
+    "terraformer-geostore": "~1.0.1",
+    "terraformer-geostore-localstorage": "~1.0.0",
+    "terraformer-geostore-memory": "~1.0.0",
+    "terraformer-geostore-rtree": "~1.0.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Al Laframboise",
+  "license": "Apache"
+}
