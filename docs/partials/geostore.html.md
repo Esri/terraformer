@@ -29,4 +29,4 @@ GeoStore is a lightweight API that allows you to store, index and query geograph
       // results [ { rowId: 23 } ]
     });
 
-[GeoStore Documentation](/)
+[GeoStore Documentation](/GeoStore)
