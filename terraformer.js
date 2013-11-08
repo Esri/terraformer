@@ -1409,6 +1409,7 @@
 
   exports.Tools.calculateBounds = calculateBounds;
   exports.Tools.calculateEnvelope = calculateEnvelope;
+
   exports.Tools.coordinatesContainPoint = coordinatesContainPoint;
   exports.Tools.polygonContainsPoint = polygonContainsPoint;
   exports.Tools.arrayIntersectsArray = arrayIntersectsArray;
