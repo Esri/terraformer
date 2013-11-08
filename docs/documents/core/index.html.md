@@ -1,17 +1,16 @@
-<header class="subhead">
-  <img src="/img/terraformer-core.png" alt="terraformer core">
-  <h2>Terraformer Core</h2>
-  <h3><a href="/" class="button button-light">Get Core</a></h3>
-</header>
+---
+layout: documentation
+---
+# Terraformer Core
 
-#### Primitives
+## Primitives
 
 The Terraformer Primitives are classes that map directly to their GeoJSON equivalents, adding convenience methods, geometric tools such as `within`, and `intersects` and spatial reference conversion methods.
 `Terraformer.Primitive` is the base class for all primitives.  As such, it can perform most actions that every other primitive can.  All other primitives inherit from `Terraformer.Primitive`, and thus all methods on `Terraformer.Primitive` are available on those primitives.
 
 When a `GeoJSON` object is passed in at instantiation, it will create an `object` of that type of `GeoJSON`.
 
-##### Instantiation
+### Instantiation
 
     // create an empty primitive
     var primitive = new Terraformer.Primitive();
@@ -20,7 +19,7 @@ When a `GeoJSON` object is passed in at instantiation, it will create an `object
     // this will create an object of type Point
     var point = new Terraformer.Primitive({ "type": "Point", "coordinates": [ 100, 1 ] });
 
-##### Coordinate Systems
+### Coordinate Systems
 
 Terraformer has the ability to switch between Web Mercator and Geographic (WGS84) coordinate systems.  This is an in-place modification to the `object`.
 
@@ -30,7 +29,7 @@ Terraformer has the ability to switch between Web Mercator and Geographic (WGS84
     // to WGS84
     primitive.toGeographic();
 
-##### Bounding Box
+### Bounding Box
 
 All primitives have the possibility of a bounding box.  A bounding box returns an array 4 points: `x1`, `x2`, `y1`, and `y2` denoting a `square` that encapsulates all points.
 
@@ -43,23 +42,23 @@ All primitives have the possibility of a bounding box.  A bounding box returns a
     // should return [ 10, 10, 40, 40 ]
     var box = poly.bbox;
 
-##### Geographic Tools
+### Geographic Tools
 
 All primitives have a set of geographic tools available.
 
-###### Convex Hull
+### Convex Hull
 
     // returns the convex hull of the polygon
     var ch = polygon.convexHull();
 
-###### Envelope
+### Envelope
 
 This will return an envelope suitible for use with `Terraformer.RTree` of `x, y, width, height`.
 
     // returns the convex hull of the polygon
     var ev = polygon.envelope();
 
-##### Within
+### Within
 
 This will return true if the `primitive` is contained or equal to the `primitive` passed.
 
@@ -72,7 +71,7 @@ This will return true if the `primitive` is contained or equal to the `primitive
     // false
     polygon2.within(polygon1);
 
-<h4> Tools </h4>
+### Tools
 
 Terraformer also exposes many generic tools for working with geographic data.
 
@@ -88,5 +87,3 @@ Terraformer also exposes many generic tools for working with geographic data.
     index.search(envelope, function (err, results) {
       // results [ { rowId: 23 } ]
     });
-
-[Terraformer Core Documentation](/)

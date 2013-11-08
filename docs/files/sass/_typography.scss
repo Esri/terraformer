@@ -87,6 +87,22 @@ pre {;
   }
 }
 
+code {
+  @include PTMono;
+  @include narrowTrack;
+  // padding: 1*$baseline;
+}
+pre {
+  width: $measure;
+  @include respond-to($tablet-mid) {
+    width: 100%;
+  }
+  code {
+    padding: 1*$baseline;
+    line-height: 0.75*$baseline;
+  }
+}
+
 // Lists --------------
 ul, ol {
   margin-bottom: 14*$p;
