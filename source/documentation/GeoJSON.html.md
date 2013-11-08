@@ -1,4 +1,5 @@
 ---
+title: GeoJSON
 layout: documentation
 ---
 

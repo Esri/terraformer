@@ -1,4 +1,5 @@
 ---
+title: Primitives
 layout: documentation
 ---
 

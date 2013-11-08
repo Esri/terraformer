@@ -1,11 +1,9 @@
 <aside class="docs">
-  doctoc
   <ul>
-    <li>thing</li>
-    <li>thing</li>
-    <li>thing</li>
-    <li>thing</li>
-    <li>thing</li>
-    <li>thing</li>
+    <% @pages.each do |page, i| %>
+      <li>
+        <a href="<%= page.url %>"><%= page.data.title %></a>
+      </li>
+    <% end %>
   </ul>
 </aside>

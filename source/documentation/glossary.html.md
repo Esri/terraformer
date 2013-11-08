@@ -1,4 +1,5 @@
 ---
+title: Glossary
 layout: documentation
 ---
 

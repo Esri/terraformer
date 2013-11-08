@@ -1,4 +1,5 @@
 ---
+title: Indexes
 layout: documentation
 ---
 

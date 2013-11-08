@@ -1,4 +1,5 @@
 ---
+title: Terraformer Core
 layout: documentation
 ---
 
