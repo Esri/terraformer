@@ -1,5 +1,5 @@
 ---
-layout: default
+layout: documentation
 ---
 
 # Terraformer ArcGIS JSON Parser
@@ -78,10 +78,10 @@ var point = ArcGIS.convert({
 ```html
   <!-- Load the main Terraformer library -->
   <script src="terraformer.min.js" type="text/javascript"></script>
-  
+
   <!-- Load the ArcGIS Parser -->
   <script src="terraformer-arcgis-parser.min.js" type="text/javascript"></script>
-  
+
   <!-- Use it! -->
   <script>
     var primitive = Terraformer.ArcGIS.parse({

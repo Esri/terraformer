@@ -1,5 +1,5 @@
 ---
-layout: default
+layout: documentation
 ---
 
 # Terraformer Primitives
@@ -66,10 +66,10 @@ This will return true if the `primitive` is contained or equal to the `primitive
 
     var polygon1 = new Terraformer.Polygon([ [ [ 2, 2 ], [ 2, 3 ], [ 3, 3 ], [ 3, 2 ], [ 2, 2 ] ] ]);
     var polygon2 = new Terraformer.Polygon([ [ [ 1, 1 ], [ 1, 5 ], [ 5, 5 ], [ 5, 1 ], [ 1, 1 ] ] ]);
-    
+
     // true
     polygon1.within(polygon2);
-    
+
     // false
     polygon2.within(polygon1);
 

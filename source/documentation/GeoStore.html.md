@@ -1,5 +1,5 @@
 ---
-layout: default
+layout: documentation
 ---
 
 # GeoStore
@@ -158,7 +158,7 @@ _Example:_
     store.contains(geojson, function (err, res) {
       // Node.js style callback
     });
-    
+
     store.contains(
       geojson,
       {
@@ -187,7 +187,7 @@ _Example:_
     store.within(geojson, function (err, res) {
       // Node.js style callback
     });
-    
+
     store.within(
       geojson,
       {
