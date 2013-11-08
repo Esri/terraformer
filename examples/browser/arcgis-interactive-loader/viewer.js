@@ -47,19 +47,12 @@ require([
     return sfs;
   }
 
-  function addLastPoint(geometry) {
-    var pt = geometry.rings[0][0];
-    geometry.rings[0].push(pt);
-  }
-
   function addGraphic(arcgis,color){
     // if arcgis.geometry is set we have a graphic json
     // else we can create our own json and set the symbol on it.
     if(arcgis.geometry){
-      addLastPoint(arcgis.geometry);
       shape = new esri.Graphic(arcgis).setSymbol(getSymbol(color));
     } else {
-      addLastPoint(arcgis);
       shape = new esri.Graphic({
         geometry: arcgis
       }).setSymbol(getSymbol(color));
