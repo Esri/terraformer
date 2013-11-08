@@ -4,7 +4,7 @@
   <h3><a href="/" class="button button-light">Get Core</a></h3>
 </header>
 
-<h4> Primitives </h4>
+#### Primitives
 
 The Terraformer Primitives are classes that map directly to their GeoJSON equivalents, adding convenience methods, geometric tools such as `within`, and `intersects` and spatial reference conversion methods.
 `Terraformer.Primitive` is the base class for all primitives.  As such, it can perform most actions that every other primitive can.  All other primitives inherit from `Terraformer.Primitive`, and thus all methods on `Terraformer.Primitive` are available on those primitives.

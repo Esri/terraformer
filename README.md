@@ -8,6 +8,8 @@ Terraformer
 * Respresent circles as GeoJSON Features
 * Convert to and from [Geographic Coordinates](http://spatialreference.org/ref/epsg/4326/) and [Esri Web Mercator](http://spatialreference.org/ref/sr-org/6928/) spatial references
 
+[View browser examples here](http://esri.github.com/Terraformer/examples/browser/index.html)
+
 Gizipped and minified all Terraformer modules comes to about 9.6kb. The core library is 2.8kb and includes GeoJSON parsing, helper methods, bounding boxes and spatial reference conversions. Other features are available as add-in modules as needed.
 
 ## Using
@@ -36,53 +38,6 @@ Terraformer can be used in the browser with a simple browser include.
     <!-- Load the rtree index -->
     <script src="rtree.min.js" type="text/javascript"></script>
 
-### AMD (Require.js and Dojo)
-
-Terraformer also works with AMD loaders like [RequireJS](http://requirejs.org/) and [Dojo](http://dojotoolkit.org/).
-
-##### RequireJS
-
-First you should register the Terraformer modules with RequireJS
-
-    requirejs.config({
-      //In order for proper loading of depenencies in Terraformer modules set the path up in requirejs.config
-      paths: {
-        terraformer: "/the/path/to/terraformer"
-      }
-    });
-
-Then you can load Terraformer modules in your `require` statements.
-
-    requirejs([
-      "terraformer/terraformer",
-      "terraformer/wkt",
-      "terraformer/rtree",
-    ], function (Terraformer, TerraformerWKT, RTree) {
-      // Do stuff with terraformer core, wkt parser, and rtree
-    };
-
-##### Dojo
-
-Dojo includes a built in AMD loader. To use Terraformer with Dojo setup the path to Terraformer in your `dojoConfig`.
-
-    dojoConfig= {
-      async: true,
-      packages: [{
-        name: "terraformer",
-        location: "/the/path/to/terraformer"
-      }]
-    }
-
-You can then include Terraformer in your Dojo code
-
-    require([
-      "terraformer/terraformer",
-      "terraformer/arcgis",
-      "terraformer/rtree",
-    ], function (Terraformer, TerraformerArcGIS, RTree) {
-      // Do stuff with terraformer core, arcgis parser, and rtree
-    });
-
 ### WebWorkers
 
 Sample code and examples coming soon...
@@ -109,12 +64,12 @@ Sample code and examples coming soon...
 * [Geostore](docs/documents/GeoStore.html.md)
 
 ## Examples
-* [Visualize and search US County data with the ArcGIS Javascript API and `Terraformer.GeoStore`](https://github.com/Esri/Terraformer/tree/master/examples/counties)
-* [View GeoJSON on and ArcGIS map with Terraformer](https://github.com/Esri/Terraformer/tree/master/examples/geojson-viewer)
-* [Visualize Well Known text on a Google map](https://github.com/Esri/Terraformer/tree/master/examples/googlemaps-wkt)
-* [Use Terraformer with Require JS and Leaflet](https://github.com/Esri/Terraformer/tree/master/examples/require-js-leaflet)
+* [Visualize and search US County data with the ArcGIS Javascript API and `Terraformer.GeoStore`](http://esri.github.com/Terraformer/examples/browser/index.html)
+* [View GeoJSON on and ArcGIS map with Terraformer](http://esri.github.com/Terraformer/examples/browser/index.html)
+* [Visualize Well Known text on a Google map](http://esri.github.com/Terraformer/examples/browser/index.html)
+* [Use Terraformer with Leaflet](http://esri.github.com/Terraformer/examples/browser/index.html)
+* [Visualize Well Known Text with the ArcGIS Javascript API and `Terraformer.RTree`](http://esri.github.com/Terraformer/examples/browser/index.html)
 * [Create a simple timezone API with Terraformer and Node JS](https://github.com/Esri/Terraformer/tree/master/examples/timezone)
-* [Visualize Well Known Text with the ArcGIS Javascript API and `Terraformer.RTree`](https://github.com/Esri/Terraformer/tree/master/examples/wkt-viewer)
 
 ## Testing
 Tests are written in Jasmine and can be run through `$ grunt` or `$ npm install` then `$ npm test`. To run the tests run the following commands to setup PhantomJS and Grunt...

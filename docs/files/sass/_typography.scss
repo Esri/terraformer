@@ -87,6 +87,22 @@ pre {;
   }
 }
 
+code {
+  @include PTMono;
+  @include narrowTrack;
+  // padding: 1*$baseline;
+}
+pre {
+  width: $measure;
+  @include respond-to($tablet-mid) {
+    width: 100%;
+  }
+  code {
+    padding: 1*$baseline;
+    line-height: 0.75*$baseline;
+  }
+}
+
 // Lists --------------
 ul, ol {
   margin-bottom: 14*$p;
@@ -127,5 +143,27 @@ dl.horizontal {
   dd {
     margin-left: 12*$pica;
     @include p12;
+  }
+}
+
+// Tables --------------
+table {
+  @include p10-5;
+  border-spacing: 0;
+  border-collapse: collapse;
+  border: 1px solid darken($cream, 15);
+  thead {
+    background: darken($cream, 10);
+    th {
+      @include p12; @include OpenBold;
+      text-align: left;
+    }
+  }
+  th, td {
+    padding: 6*$p;
+    border-bottom: 1px solid darken($cream, 15);
+  }
+  tbody tr:nth-child(even) {
+    background: darken($cream, 5);
   }
 }
