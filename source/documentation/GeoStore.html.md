@@ -201,3 +201,22 @@ _Example:_
       }
     );
 
+#### GeoStore.createReadStream()
+
+GeoStore supports readable streams in both the browser and Nodejs.  Currently only `flowing` streams are supported.  Streams can be created with the `createReadStream()` method.  When a stream has been created, the next `within` or `contains` request uses that stream in place of a callback.  It is important to note that the stream only lasts for the duration of a *single* search via `within` or `contains`.
+
+The stream will emit `data` on any data, and `end` with the final entry found.
+
+Since streams are not reentrant in the GeoStore, it is recommended to create a new GeoStore for each stream. Streams are destroyed after the `end` event has been called.
+
+_Example:_
+
+    var stream = store.createReadStream();
+    
+    stream.on("data", function (geojson) {
+      // found geojson
+    });
+    
+    stream.on("end", function (geojson) {
+      // final geojson object
+    });
