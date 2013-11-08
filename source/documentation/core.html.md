@@ -4,6 +4,8 @@ layout: documentation
 
 # Terraformer Core
 
+<!-- table_of_contents -->
+
 ### Primitive
 Terraformer Primitives are Javascript objects that map directly to their GeoJSON couterparts. Converting a GeoJSON object into a Terraformer Primitive will allow you use convenience methods like `point.within(polygon)`.
 
