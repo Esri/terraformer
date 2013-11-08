@@ -1,0 +1,25 @@
+@mixin respond-to($type, $m: max-width) {
+  @if $type == handheld {
+    @media screen and (max-width: 767px) {
+      @content;
+    }
+  } @else if $type == webkit {
+    @media screen and (-webkit-min-device-pixel-ratio: 0) {
+      @content;
+    }
+  } @else if $type == nonhandheld {
+    @media screen and (min-width: 769px) {
+      @content;
+    }
+  } @else {
+    @media screen and ($m: $type) {
+      @content;
+    }
+  }
+}
+
+@mixin retina-display() {
+  @media screen and (-webkit-min-device-pixel-ratio : 1.5), screen and (min-device-pixel-ratio : 1.5) {
+    @content;
+  }
+}

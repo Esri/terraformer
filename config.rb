@@ -45,11 +45,23 @@
 #   end
 # end
 
-set :css_dir, 'stylesheets'
+activate :directory_indexes
 
-set :js_dir, 'javascripts'
+set :css_dir, 'assets/css'
 
-set :images_dir, 'images'
+set :js_dir, 'assets/javascripts'
+
+set :images_dir, 'assets/images'
+
+###
+# Markdown
+###
+
+set :markdown_engine, :redcarpet
+set :markdown, :fenced_code_blocks => true, :smartypants => true, :no_intra_emphasis => true, :strikethrough => true, :superscript => true, :highlight => true, :footnotes => true
+
+activate :rouge_syntax
+
 
 # Build-specific configuration
 configure :build do

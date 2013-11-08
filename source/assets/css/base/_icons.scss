@@ -1,0 +1,63 @@
+@font-face {
+  font-family: 'esri-logo';
+  src: url("../fonts/esri-logo.eot");
+  src: url("../fonts/esri-logo.eot?#iefix") format("embedded-opentype"), url("../fonts/esri-logo.woff") format("woff"), url("../fonts/esri-logo.ttf") format("truetype"), url("../fonts/esri-logo.svg#esri-Set") format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+
+.icon {
+  font-family: 'esri-logo';
+  -webkit-font-feature-settings: "liga","dlig";
+  -moz-font-feature-settings: "liga=1, dlig=1";
+  -moz-font-feature-settings: "liga","dlig";
+  -ms-font-feature-settings: "liga","dlig";
+  -o-font-feature-settings: "liga","dlig";
+  font-feature-settings: "liga","dlig";
+  text-rendering: optimizeLegibility;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  color: #6d6e71;
+}
+
+.terraformer {
+  /*color: #267a40;*/
+  color: rgba(38,122,64, 0.5);
+  /*opacity: 0.5;*/
+}
+.terraformer:after {
+  content: "terraformerfront";
+  color: #000000;
+  opacity: 0.5;
+  margin-left: -1em;
+}
+.terraformer:before {
+  content: "terraformerback";
+  color: #912a1d;
+  opacity: 0.7;
+  margin-right: -1em;
+}
+
+nav {
+  .terraformer {
+  /*color: #267a40;*/
+  color: rgba(38,122,64, 0.5);
+  /*opacity: 0.5;*/
+}
+.terraformer:after {
+  content: "terraformerfront";
+  color: #000000;
+  opacity: 0.5;
+  margin-left: -1.04em;
+}
+.terraformer:before {
+  content: "terraformerback";
+  color: #912a1d;
+  opacity: 0.7;
+  margin-right: -1.04em;
+}
+}
