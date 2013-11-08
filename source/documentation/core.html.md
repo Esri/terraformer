@@ -157,6 +157,7 @@ var polygon2 = new Terraformer.Polygon([
 ```
 
 #### Methods
+Method | Returns | Description
 --- | --- | --- |
 `addVertex([<Coordinate>]())` | `this` | Adds a new coordinate to the end of the coordinate array. Equivalent to `polygon.coordinates.push([3,4])`.
 `insertVertex([<Coordinate>](), <Integer> index)` | `this` | Inserts the passed coordinate at the passed index. Equivalent to `polygon.coordinates.splice(index, 0, point)`
