@@ -1,6 +1,6 @@
 ---
 title: Project Home
-layout: layout
+layout: default
 ---
 
 ## The Terraformer Project

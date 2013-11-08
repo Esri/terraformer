@@ -53,6 +53,11 @@ set :js_dir, 'assets/javascripts'
 
 set :images_dir, 'assets/images'
 
+set :fonts_dir,'assets/fonts'
+
+set :index_file, "documentation/index.html"
+
+# set :http_prefix, 'documentation/'
 ###
 # Markdown
 ###

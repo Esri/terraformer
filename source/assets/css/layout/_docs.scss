@@ -2,16 +2,17 @@
   max-width: $container-max;
 }
 
-main.docs {
-  section {
-    padding-left: 0;
-    padding-right: $edge;
+aside.docs {
+  float: left;
+  width: $spine;
+  padding-left: 0;
+  // margin-right: $edge;
+  margin-top: 6*$baseline;
+}
+
+.docs {
+  h1, h2, h3, h4, h5, h6, p, {
+    margin-right: 0;
   }
 }
 
-aside.docs {
-  float: left;
-  width: $edge;
-  margin-right: $edge;
-  margin-top: 6*$baseline;
-}
