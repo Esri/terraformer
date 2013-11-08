@@ -1,0 +1,47 @@
+$total-columns:     24 !default;
+$container-width:   100% !default;
+$container-max:     1680px !default;
+$container-min:     0 !default;
+$column-gutter:     1em !default;
+$container-gutter:  1em !default;
+$footer-height:     262px !default;
+$generate-grid:     true !default;
+
+$white:                 hsl(0, 0, 100); //#FFFFFF
+$off-white:             hsl(0, 0, 98); //#F9F9F9
+$lightest-gray:         hsl(0, 0, 93); //#EDEDED
+$lighter-gray:          hsl(0, 0, 80); //#CCCCCC
+$light-gray:            hsl(0, 0, 65); //#A6A6A6
+$gray:                  hsl(0, 0, 50); //#808080
+$dark-gray:             hsl(0, 0, 35); //#595959
+$darker-gray:           hsl(0, 0, 20); //#333333
+$darkest-gray:          hsl(0, 0, 12); //#1F1F1F
+$off-black:             hsl(0, 0, 2);  //#050505
+$black:                 hsl(0, 0, 0);  //#000000
+
+// Terraformer Colors
+
+$cream:          #EAE8E5;
+$saturated-grey: #B26A61;
+$brown:          #492B22;
+
+$red:            #B26A61;
+$dark-red:       #593530;
+
+$green:          #92BC9F;
+$dark-green:     #495E50;
+
+$blue:           #7EB3FE;
+$dark-blue:      #39567F;
+$darker-blue:    #1D2D42;
+$darkest-blue:   darken($darker-blue, 20%);
+
+$desktop:       1280px !default;
+$laptop-large:  1180px !default;
+$laptop:        1080px !default;
+$tablet-wide:   1024px !default;
+$tablet-mid:    960px  !default;
+$tablet-tall:   768px  !default;
+$phone-large:   662px  !default;
+$phone:         480px  !default;
+$phone-tall:    320px  !default;
