@@ -312,6 +312,44 @@ dl.horizontal dd {
   margin-bottom: -0.33333rem;
 }
 
+/* line 133, ../sass/_typography.scss */
+table {
+  font-size: 0.875rem;
+  line-height: 1.5rem;
+  margin-top: 0;
+  padding-top: 0.45833rem;
+  margin-bottom: -0.45833rem;
+  border-spacing: 0;
+  border-collapse: collapse;
+  border: 1px solid #c8c3bb;
+}
+/* line 138, ../sass/_typography.scss */
+table thead {
+  background: #d3cfc9;
+}
+/* line 140, ../sass/_typography.scss */
+table thead th {
+  font-size: 1rem;
+  line-height: 1.5rem;
+  margin-top: 0;
+  padding-top: 0.33333rem;
+  margin-bottom: -0.33333rem;
+  font-family: 'Open Sans', sans-serif;
+  font-style: normal;
+  font-weight: 700;
+  text-rendering: optimizeLegibility;
+  text-align: left;
+}
+/* line 145, ../sass/_typography.scss */
+table th, table td {
+  padding: 0.5rem;
+  border-bottom: 1px solid #c8c3bb;
+}
+/* line 149, ../sass/_typography.scss */
+table tbody tr:nth-child(even) {
+  background: #dfdcd7;
+}
+
 @font-face {
   font-family: 'esri-logo';
   src: url("../fonts/esri-logo.eot");

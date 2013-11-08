@@ -128,3 +128,25 @@ dl.horizontal {
     @include p12;
   }
 }
+
+// Tables --------------
+table {
+  @include p10-5;
+  border-spacing: 0;
+  border-collapse: collapse;
+  border: 1px solid darken($cream, 15);
+  thead {
+    background: darken($cream, 10);
+    th {
+      @include p12; @include OpenBold;
+      text-align: left;
+    }
+  }
+  th, td {
+    padding: 6*$p;
+    border-bottom: 1px solid darken($cream, 15);
+  }
+  tbody tr:nth-child(even) {
+    background: darken($cream, 5);
+  }
+}
