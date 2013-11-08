@@ -1,5 +1,5 @@
 ---
-layout: documentation
+layout: default
 ---
 
 # Terraformer Core
@@ -27,7 +27,7 @@ You create new `Terraformer.Primitive` objects by passing it a valid [GeoJSON Ob
 
 ```js
 var point = new Terraformer.Primitive({
-  type:"Point",
+  type:"Point", 
   coordinates:[1,2]
 });
 
@@ -57,7 +57,7 @@ A JavaScript object representing a (GeoJSON Point)[].
 
 ```js
 var point1 = new Terraformer.Point({
-  type:"Point",
+  type:"Point", 
   coordinates:[1,2]
 });
 
@@ -75,7 +75,7 @@ A JavaScript object representing a (GeoJSON MultiPoint)[].
 
 ```js
 var multipoint1 = new Terraformer.MultiPoint({
-  type:"MultiPoint",
+  type:"MultiPoint", 
   coordinates:[ [1,2],[2,1] ]
 });
 
@@ -100,7 +100,7 @@ A JavaScript object representing a (GeoJSON LineString)[].
 
 ```js
 var linestring = new Terraformer.LineString({
-  type:"LineString",
+  type:"LineString", 
   coordinates:[ [1,2],[2,1] ]
 });
 
@@ -122,7 +122,7 @@ A JavaScript object representing a (GeoJSON MultiLineString)[].
 
 ```js
 var multilinestring = new Terraformer.MultiLineString({
-  type:"LineString",
+  type:"LineString", 
   coordinates:[ [1,2],[2,1] ]
 });
 
@@ -142,7 +142,7 @@ A JavaScript object representing a (GeoJSON Polygon)[].
 `Terraformer.Polygon` can be created by passing in a valid [GeoJSON Polygon](), or an array that is a valid coordinate array for [GeoJSON Polygon]().
 
 ```js
-var polygon1 = new Terraformer.Polygon({
+var polygon1 = new Terraformer.Polygon({ 
   "type": "Polygon",
   "coordinates": [
     [ [100.0, 0.0], [101.0, 0.0], [101.0, 1.0], [100.0, 1.0], [100.0, 0.0] ],
@@ -170,7 +170,7 @@ A JavaScript object representing a (GeoJSON MultiPolygon)[].
 `Terraformer.MultiPolygon` can be created by passing in a valid [GeoJSON MultiPolygon](), or an array that is a valid coordinate array for [GeoJSON MultiPolygon]().
 
 ```js
-var multipolygon1 = new Terraformer.MultiPolygon({
+var multipolygon1 = new Terraformer.MultiPolygon({ 
   "type": "MultiPolygon",
   "coordinates": [
     [ [100.0, 0.0], [101.0, 0.0], [101.0, 1.0], [100.0, 1.0], [100.0, 0.0] ],
@@ -199,7 +199,7 @@ A JavaScript object representing a (GeoJSON Feature)[].
 ```js
 var feature1 = new Terraformer.Feature(
   type: "Feature",
-  "geometry: {
+  "geometry: { 
     "type": "Polygon",
     "coordinates": [
       [ [100.0, 0.0], [101.0, 0.0], [101.0, 1.0], [100.0, 1.0], [100.0, 0.0] ],
@@ -208,7 +208,7 @@ var feature1 = new Terraformer.Feature(
  }
 });
 
-var feature2 = new Terraformer.Feature({
+var feature2 = new Terraformer.Feature({ 
   "type": "Polygon",
   "coordinates": [
     [ [100.0, 0.0], [101.0, 0.0], [101.0, 1.0], [100.0, 1.0], [100.0, 0.0] ],
@@ -279,7 +279,7 @@ circle.contains(point);
 #### Methods
 Method | Returns | Description
 --- | --- | ---
-`recalculate()` | this | Recalculates the
+`recalculate()` | this | Recalculates the 
 `steps(<Integer> steps)` | `Integer` | The number of steps to produce the Polygon representing the circle.
 `radius(<Integer> radius)` | `Integer` | The radius of the circle in meters.
 `center(<[`Coordinates`]()> center)` | [`Coordinates`]() | Sets a new center to the circle and recalculate the polygon.

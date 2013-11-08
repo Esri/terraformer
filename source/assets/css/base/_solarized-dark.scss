@@ -5,18 +5,6 @@ Orginal Style from ethanschoonover.com/solarized (c) Jeremy Hull <sourdrums@gmai
 */
 
 
-pre {
-  @include PTMono;
-  letter-spacing: 1px;
-  line-height: 1*$baseline;
-  margin-bottom: 1*$baseline;
-  overflow: scroll;
-  display: block;
-  padding: 1em;
-  background: #002b36;
-  color: #839496;
-}
-
 .c{color:#586e75;}
 .cm{color:#586e75;}
 .cp{color:#586e75;}

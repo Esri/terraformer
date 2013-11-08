@@ -58,7 +58,7 @@ set :images_dir, 'assets/images'
 ###
 
 set :markdown_engine, :redcarpet
-set :markdown, :fenced_code_blocks => true, :smartypants => true, :no_intra_emphasis => true, :strikethrough => true, :superscript => true, :highlight => true, :footnotes => true
+set :markdown, :fenced_code_blocks => true, :smartypants => true, :tables => true, :no_intra_emphasis => true, :strikethrough => true, :superscript => true, :highlight => true, :footnotes => true
 
 activate :rouge_syntax
 

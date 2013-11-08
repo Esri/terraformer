@@ -3,7 +3,8 @@
   margin: auto;
   padding-top: 36*$point;
   padding-left: $edge;
-  width: $measure;
+  width: 1.125*$measure;
+
   @include respond-to($tablet-mid) {
     padding-left: $edge;
     padding-right: $edge;
