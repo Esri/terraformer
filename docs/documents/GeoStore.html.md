@@ -19,33 +19,35 @@ The GeoStore uses Node.js style callbacks, so most method signatures require a `
 
 The GeoStore manages data that is made available as either a `Feature` or a `FeatureCollection`.  In order to work, there must be an `id` field.
 
-    {
-      "type": "Feature",
-      "properties": {},
-      "id": "my id",
-      "geometry": {
-        "type": "Polygon",
-        "coordinates": [
-          [
-            [
-              -111.09374, 41.50857
-            ],
-            [
-              -111.09374, 45.08903
-            ],
-            [
-              -105.11718, 45.08903
-            ],
-            [
-              -105.11718, 41.50857
-            ],
-            [
-              -111.09374, 41.50857
-            ]
-          ]
+```js
+{
+  "type": "Feature",
+  "properties": {},
+  "id": "my id",
+  "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+      [
+        [
+          -111.09374, 41.50857
+        ],
+        [
+          -111.09374, 45.08903
+        ],
+        [
+          -105.11718, 45.08903
+        ],
+        [
+          -105.11718, 41.50857
+        ],
+        [
+          -111.09374, 41.50857
         ]
-      }
-    }
+      ]
+    ]
+  }
+}
+```
 
 ### Using in the Browser
 
@@ -56,11 +58,13 @@ Using the GeoStore in the browser requires including both Terraformer and the Ge
 
 Once those are included, you can create a new `Store`.  You will need to include both a Data Store and a Spatial Index to instantiate a GeoStore.
 
-    // create a new GeoStore using Memory and an RTree Index
-    var store = new Terraformer.GeoStore({
-      store: new Terraformer.Store.Memory(),
-      index: new Terraformer.RTree()
-    });
+```js
+// create a new GeoStore using Memory and an RTree Index
+var store = new Terraformer.GeoStore({
+  store: new Terraformer.Store.Memory(),
+  index: new Terraformer.RTree()
+});
+```
 
 Once the store has been created, you can start using it right away.
 
@@ -68,17 +72,21 @@ Once the store has been created, you can start using it right away.
 
 In Node.js, the components are available via `require()`.
 
-    // require geostore, an RTree index, and a LevelDB data store
-    var GeoStore = require('terraformer-geostore').GeoStore;
-    var RTree = require('terraformer-geostore-rtree').RTree;
-    var LevelStore = require('terraformer-geostore-leveldb').LevelStore;
+```js
+// require geostore, an RTree index, and a LevelDB data store
+var GeoStore = require('terraformer-geostore').GeoStore;
+var RTree = require('terraformer-geostore-rtree').RTree;
+var LevelStore = require('terraformer-geostore-leveldb').LevelStore;
+```
 
 Once the packages are in scope, it is very similar as using the GeoStore in the browser.
 
-    var store = new GeoStore({
-      store: new LevelStore(),
-      index: new RTree()
-    });
+```js
+var store = new GeoStore({
+  store: new LevelStore(),
+  index: new RTree()
+});
+```
 
 ### Methods
 
@@ -93,9 +101,11 @@ Add a `geojson` object to the GeoStore.
 
 _Example:_
 
-    store.add(geojson, function (err, res) {
-      // Node.js style callback
-    });
+```js
+store.add(geojson, function (err, res) {
+  // Node.js style callback
+});
+```
 
 #### GeoStore.update(geojson, callback)
 
@@ -108,10 +118,11 @@ Update a single `geojson` `Feature` in the GeoStore.
 
 _Example:_
 
-    store.update(geojson, function (err, res) {
-      // Node.js style callback
-    });
-
+```js
+store.update(geojson, function (err, res) {
+  // Node.js style callback
+});
+```
 
 #### GeoStore.remove(id, callback)
 
@@ -124,9 +135,11 @@ Removes a single `geojson` `Feature` by `id`.
 
 _Example:_
 
-    store.remove(id, function (err, res) {
-      // Node.js style callback
-    });
+```js
+store.remove(id, function (err, res) {
+  // Node.js style callback
+});
+```
 
 #### GeoStore.get(id, callback)
 
@@ -139,9 +152,11 @@ Retrieves a single `geojson` `Feature` by `id`.
 
 _Example:_
 
-    store.get(id, function (err, res) {
-      // Node.js style callback
-    });
+```js
+store.get(id, function (err, res) {
+  // Node.js style callback
+});
+```
 
 #### GeoStore.contains(geojson, search, callback)
 
@@ -155,22 +170,24 @@ Find all `Features` that contain the `geojson primitive` passed in.  `contains` 
 
 _Example:_
 
-    store.contains(geojson, function (err, res) {
-      // Node.js style callback
-    });
-    
-    store.contains(
-      geojson,
-      {
-        "name":
-        {
-          "equals": "Multnomah"
-        }
-      },
-      function (err, res) {
-        // Node.js style callback
-      }
-    );
+```js
+store.contains(geojson, function (err, res) {
+  // Node.js style callback
+});
+
+store.contains(
+  geojson,
+  {
+    "name":
+    {
+      "equals": "Multnomah"
+    }
+  },
+  function (err, res) {
+    // Node.js style callback
+  }
+);
+```
 
 #### GeoStore.within(geojson, search, callback)
 
@@ -184,20 +201,43 @@ Find all `Features` that are within the `geojson primitive` passed in.  `within`
 
 _Example:_
 
-    store.within(geojson, function (err, res) {
-      // Node.js style callback
-    });
-    
-    store.within(
-      geojson,
-      {
-        "name":
-        {
-          "equals": "Multnomah"
-        }
-      },
-      function (err, res) {
-        // Node.js style callback
-      }
-    );
+```js
+store.within(geojson, function (err, res) {
+  // Node.js style callback
+});
 
+store.within(
+  geojson,
+  {
+    "name":
+    {
+      "equals": "Multnomah"
+    }
+  },
+  function (err, res) {
+    // Node.js style callback
+  }
+);
+```
+
+#### GeoStore.createReadStream()
+
+GeoStore supports readable streams in both the browser and Nodejs.  Currently only `flowing` streams are supported.  Streams can be created with the `createReadStream()` method.  When a stream has been created, the next `within` or `contains` request uses that stream in place of a callback.  It is important to note that the stream only lasts for the duration of a *single* search via `within` or `contains`.
+
+The stream will emit `data` on any data, and `end` with the final entry found.
+
+Since streams are not reentrant in the GeoStore, it is recommended to create a new GeoStore for each stream. Streams are destroyed after the `end` event has been called.
+
+_Example:_
+
+```js
+var stream = store.createReadStream();
+
+stream.on("data", function (geojson) {
+  // found geojson
+});
+
+stream.on("end", function (geojson) {
+  // final geojson object
+});
+```
