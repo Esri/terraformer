@@ -101,11 +101,16 @@ module CustomRenderers
     end
 
     def header text, level
-      "<h#{level} id='#{text.downcase.strip.gsub(' ', '-').gsub(/[^\w-]/, '')}'>
+      if level > 1
+      "<h#{level}>
+        <a id='#{text.downcase.strip.gsub(' ', '-').gsub(/[^\w-]/, '')}' class='section-link'></a>
         <a href='##{text.downcase.strip.gsub(' ', '-').gsub(/[^\w-]/, '')}' class='header-link'>Link</a>
         #{text}
         <a href='#' class='back-to-top-link'>Back to Top</a>
       </h#{level}>"
+      else
+        "<h#{level}>#{text}</h#{level}>"
+      end
     end
 
   end

@@ -89,10 +89,10 @@ var multipoint2 = new Terraformer.MultiPoint([ [1,2],[2,1] ]);
 Method | Returns | Description
 --- | --- | --- |
 `forEach(<Function> function)`| `null` | Iterates over each point. Equivalent to `multipoint.coordinates.forEach(function)`. The function will be called with `point`, `index` and `coordinates`.
-`get(<Integer> index)` | [`Point`]() | Returns a [`Terraformer.Point`]() for the point at `index` in the coordinates array.
-`addPoint([<Coordinate>]())` | `this` | Adds a new coordinate to the end of the coordinate array. Equivalent to `multipoint.coordinates.push([3,4])`.
-`insertPoint([<Coordinate>](), <Integer> index)` | `this` | Inserts the passed coordinate at the passed index. Equivalent to `multipoint.coordinates.splice(index, 0, point)`
-`removePoint(<Integer> index / [<Coordinate>]())` | `this` | Removes the coordinate at `index` or the passed Coordinate depending on the type of object passed in.
+`get(<Integer> index)` | [`Point`]() | Returns a [`Terraformer.Point`](/glossary/#point-primitive) for the point at `index` in the coordinates array.
+<code>addPoint(<Integer> index | <a href="/glossary/#coordinate">&lt;Coordinate&gt;</a> <i>coordinate</i>)</code> | `this` | Adds a new coordinate to the end of the coordinate array. Equivalent to `multipoint.coordinates.push([3,4])`.
+<code>insertPoint(<a href="/glossary/#coordinate">&lt;Coordinate&gt;</a> <i>coordinate</i>, <Integer> index)</code> | `this` | Inserts the passed coordinate at the passed index. Equivalent to `multipoint.coordinates.splice(index, 0, point)`
+<code>removePoint(<Integer> index | <a href="/glossary/#coordinate">&lt;Coordinate&gt;</a> <i>coordinate</i>)</code> | `this` | Removes the coordinate at `index` or the passed Coordinate depending on the type of object passed in.
 
 ### LineString
 A JavaScript object representing a (GeoJSON LineString)[].
@@ -113,8 +113,8 @@ var linestring = new Terraformer.LineString([ [1,2],[2,1] ]);
 #### Methods
 Method | Returns | Description
 --- | --- | ---
-`addVertex([<Coordinate>]())` | this | Adds a new coordinate to the end of the coordinate array. Equivalent to `linestring.coordinates.push([3,4])`.
-`insertVertex([<Coordinate>](), <Integer> index)` | this | Inserts the passed coordinate at the passed index. Equivalent to `linestring.coordinates.splice(index, 0, point)`
+<code>addVertex(<a href="/glossary/#coordinate">&lt;Coordinate&gt;</a> <i>coordinate</i>)</code> | this | Adds a new coordinate to the end of the coordinate array. Equivalent to `linestring.coordinates.push([3,4])`.
+</code>insertVertex(<a href="/glossary/#coordinate">&lt;Coordinate&gt;</a> <i>coordinate</i>, <Integer> index)</code> | this | Inserts the passed coordinate at the passed index. Equivalent to `linestring.coordinates.splice(index, 0, point)`
 `removeVertex(<Integer> index)` | this | Removes the coordinate at `index`. Equivalent to calling `linestring.coordinates.splice(remove, 1)`
 
 ### MultiLineString
@@ -162,8 +162,8 @@ var polygon2 = new Terraformer.Polygon([
 #### Methods
 Method | Returns | Description
 --- | --- | --- |
-`addVertex([<Coordinate>]())` | `this` | Adds a new coordinate to the end of the coordinate array. Equivalent to `polygon.coordinates.push([3,4])`.
-`insertVertex([<Coordinate>](), <Integer> index)` | `this` | Inserts the passed coordinate at the passed index. Equivalent to `polygon.coordinates.splice(index, 0, point)`
+<code>addVertex(<a href="/glossary/#coordinate">&lt;Coordinate&gt;</a> <i>coordinate</i>)</code> | `this` | Adds a new coordinate to the end of the coordinate array. Equivalent to `polygon.coordinates.push([3,4])`.
+<code>insertVertex(<a href="/glossary/#coordinate">&lt;Coordinate&gt;</a> <i>coordinate</i>, <Integer> index)</code> | `this` | Inserts the passed coordinate at the passed index. Equivalent to `polygon.coordinates.splice(index, 0, point)`
 `removeVertex(<Integer> index)` | `this` | Removes the coordinate at `index`. Equivalent to calling `polygon.coordinates.splice(remove, 1)`
 `close()` | `this` | Ensures that the first and last vertex of the polygon are equal to each other.
 
@@ -192,13 +192,13 @@ var multipolygon2 = new Terraformer.MultiPolygon([
 Method | Returns | Description
 --- | --- | --- |
 `forEach(<Function> function)`| `null` | Iterates over each LineString. Equivalent to `multipolygon.coordinates.forEach(function)`. The function will be called with `polygon`, `index` and `coordinates`.
-`get(<Integer> index)` | [`Polygon`]() | Returns a [`Terraformer.Polygon`]() for the Polygon at `index` in the coordinates array.
+`get(<Integer> index)` | [`Polygon`](/glossary/#polygon-primitive) | Returns a [`Terraformer.Polygon`](/glossary/#polygon-primitive) for the Polygon at `index` in the coordinates array.
 
 ### Feature
 A JavaScript object representing a (GeoJSON Feature)[].
 
 #### Constructor
-`Terraformer.Feature` can be created by passing in a valid [GeoJSON Feature]() or [GeoJSON Geometry]().
+`Terraformer.Feature` can be created by passing in a valid [GeoJSON Feature](/glossary/#feature) or [GeoJSON Geometry](/glossary/#geometry).
 
 ```js
 var feature1 = new Terraformer.Feature(
@@ -222,10 +222,10 @@ var feature2 = new Terraformer.Feature({
 ```
 
 ### FeatureCollection
-A JavaScript object representing a (GeoJSON FeatureCollection)[].
+A JavaScript object representing a [GeoJSON FeatureCollection](/glossary/#featurecollection).
 
 #### Constructor
-`Terraformer.FeatureCollection` can be created by passing a valid [GeoJSON Feature Collection]() or an array of [GeoJSON Features]().
+`Terraformer.FeatureCollection` can be created by passing a valid [GeoJSON Feature Collection](/glossary/#featurecollection) or an array of [GeoJSON Features](/glossary/#feature).
 
 ```js
 var featurecollection1 = new Terraformer.FeatureCollection(
@@ -239,14 +239,14 @@ var featurecollection2 = new Terraformer.FeatureCollection([feature1, feature2])
 #### Methods
 Method | Returns | Description
 --- | --- | ---
-`forEach(<Function> function)`| `null` | Iterates over each Feature. Equivalent to `featurecollection.features.forEach(function)`. The function will be called with `featyre`, `index` and `coordinates`.
-`get(<Integer> index)` | [`Primitive`]() | Returns a [`Terraformer.Primitive`]() for the Feature at `index` in the features array.
+`forEach(<Function> function)`| `null` | Iterates over each Feature. Equivalent to `featurecollection.features.forEach(function)`. The function will be called with `feature`, `index` and `coordinates`.
+`get(<Integer> index)` | [`Feature`](/glossary/#feature) | Returns a [`Terraformer.Feature`](/glossary/#feature) for the Feature at `index` in the features array.
 
 ### GeometryCollection
-A JavaScript object representing a (GeoJSON GeometryCollection)[].
+A JavaScript object representing a (GeoJSON GeometryCollection)[/glossary/#Geometrycollection].
 
 #### Constructor
-`Terraformer.GeometryCollection` can be created by passing a valid [GeoJSON Geometry Collection]() or an array of [GeoJSON Geometries]().
+`Terraformer.GeometryCollection` can be created by passing a valid [GeoJSON Geometry Collection](/glossary/#geometrycollection) or an array of [GeoJSON Geometries](/glossary/#geometry).
 
 ```js
 var geometrycollection1 = new Terraformer.GeometryCollection(
@@ -261,7 +261,7 @@ var geometrycollection2 = new Terraformer.GeometryCollection([geometry1, geometr
 Method | Returns | Description
 --- | --- | ---
 `forEach(<Function> function)`| `null` | Iterates over each LineString. Equivalent to `geometrycollection.coordinates.forEach(function)`. The function will be called with `geometry`, `index` and `coordinates`.
-`get(<Integer> index)` | [`Primitive`]() | Returns a [`Terraformer.Primitive`]() for the Geometry at `index` in the coordinates array.
+`get(<Integer> index)` | [`Primitive`](/glossary/#feature-primitive) | Returns a [`Terraformer.Primitive`](/glossary/#feature-primitive) for the Geometry at `index` in the coordinates array.
 
 ### Circle
 The GeoJSON spec does not provide a way to visualize circles. `Terraformer.Circle` is actual a [GeoJSON Feature]() object that contains a Polygon representing a circle with a certain number of sides.
@@ -271,9 +271,9 @@ The GeoJSON spec does not provide a way to visualize circles. `Terraformer.Circl
 
 Option | Type | Default | Description
 --- | --- | --- | --- |
-`center` | [`Coordinate`]() | null | **Required** A [GeoJSON Coordinate]() in `[x,y]` format.
-`radius` | `Integer` | 250 | The radius of the circle in meters.
-`interpolate` | `Integer` | 32 | How many steps will be used to create the polygon that represents the circle.
+`center` | [`Coordinate`](/glossary/#coordinate) | `null` | **Required** A [GeoJSON Coordinate](/glossary/#coordinate) in `[x,y]` format.
+`radius` | `Integer` | `250` | The radius of the circle in meters.
+`steps` | `Integer` | `32` | How many steps will be used to create the polygon that represents the circle.
 
 ```js
 circle = new Terraformer.Circle([45.65, -122.27], 500, 64);
@@ -284,10 +284,10 @@ circle.contains(point);
 #### Methods
 Method | Returns | Description
 --- | --- | ---
-`recalculate()` | this | Recalculates the
+`recalculate()` | this | Recalculates the circle
 `steps(<Integer> steps)` | `Integer` | The number of steps to produce the Polygon representing the circle.
 `radius(<Integer> radius)` | `Integer` | The radius of the circle in meters.
-`center(<[`Coordinates`]()> center)` | [`Coordinates`]() | Sets a new center to the circle and recalculate the polygon.
+`center(<a href="/glossary/#coordinate">&lt;Coordinate&gt;</a> <i>coordinate</i>)` | [`Coordinates`]() | Sets a new center to the circle and recalculate the polygon.
 
 ### Tools
 Terraformer also has numerous helper methods for working with GeoJSON and geographic data.
@@ -295,19 +295,18 @@ Terraformer also has numerous helper methods for working with GeoJSON and geogra
 #### Spatial Reference Conversions
 Method | Returns | Description
 --- | --- | ---
-`toMercator(geojson)` | `GeoJSON` | Converts this GeoJSON objects coordinates to the [web mercator spatial reference](http://spatialreference.org/ref/sr-org/6928/). This is an in place modification of the passed object.
-`toGeographic(geojson)` | `GeoJSON` | Converts this GeoJSON objects coordinates to [geographic coordinates](http://spatialreference.org/ref/epsg/4326/). This is an in place modification of the passed object.
-`applyConverter(geojson, function)` | `GeoJSON` | runs the passed `function`against every [`Coordinate`]() in the `geojson` object. Your `function` will be passed a [`Coordinate`]() and will be expected to return a [`Coordinate`]().
-`positionToMercator(coordinate)` | `Coordinate` | Converts the passed [`Coordinate`]() to [web mercator spatial reference](http://spatialreference.org/ref/sr-org/6928/).
-`positionToGeographic(coordinate)` | [`Coordinate`]() | Converts the passed [`Coordinate`]() to to [geographic coordinates](http://spatialreference.org/ref/epsg/4326/).
+<code>toMercator(<a href="/glossary/#geojson">&lt;GeoJSON&gt;</a> <i>geojson</i>)</code>` | `GeoJSON` | Converts this GeoJSON objects coordinates to the [web mercator spatial reference](http://spatialreference.org/ref/sr-org/6928/). This is an in place modification of the passed object.
+<code>toGeographic(<a href="/glossary/#geojson">&lt;GeoJSON&gt;</a> <i>geojson</i>)</code>` | `GeoJSON` | Converts this GeoJSON objects coordinates to [geographic coordinates](http://spatialreference.org/ref/epsg/4326/). This is an in place modification of the passed object.
+<code>applyConverter(<a href="/glossary/#geojson">&lt;GeoJSON&gt;</a> <i>geojson</i>), function)` | `GeoJSON` | runs the passed `function`against every [`Coordinate`]() in the `geojson` object. Your `function` will be passed a [`Coordinate`]() and will be expected to return a [`Coordinate`]().
+<code>positionToMercator(<a href="/glossary/#coordinate">&lt;Coordinate&gt;</a> <i>coordinate</i>)` | [`Coordinate`](/glossary/#coordinate) | Converts the passed [`Coordinate`]() to [web mercator spatial reference](http://spatialreference.org/ref/sr-org/6928/).
+<code>positionToGeographic(<a href="/glossary/#coordinate">&lt;Coordinate&gt;</a> <i>coordinate</i>)` | [`Coordinate`](/glossary/#coordinate) | Converts the passed [`Coordinate`]() to to [geographic coordinates](http://spatialreference.org/ref/epsg/4326/).
 
 #### Calculations
 Method | Returns | Description
 --- | --- | ---
-<code>coordinatesContainPoint(<a href="/glossary/#coordinates">&lt;Coordinates&gt;</a> <i>coordinates</i>)</code>
-`calculateBounds(geojson)` | [`BBox`](/glossary#bbox) | Returns a [`GeoJSON bounding box`](/glossary#bbox) for the passed geojson.
-`calculateEnvelope(geojson)` | [`Envelope`](/glossary#envelope) | Return an object with `x`, `y`, `w`, `h`. Suitable for passing to most indexes.
-`convexHull(geojson)` | [`Coordinates`](/glossary#geojson-coordinates) | Returns an array of [`coordinates`](/glossary#geojson-coordinates) representing the [convex hull](http://en.wikipedia.org/wiki/Convex_hull) the the passed geojson.
+<code>calculateBounds(<a href="/glossary/#geojson">&lt;GeoJSON&gt;</a> <i>geojson</i>)</code> | [`BBox`](/glossary#bbox) | Returns a [`GeoJSON bounding box`](/glossary#bbox) for the passed geojson.
+<code>calculateEnvelope(<a href="/glossary/#geojson">&lt;GeoJSON&gt;</a> <i>geojson</i>)</code> | [`Envelope`](/glossary#envelope) | Return an object with `x`, `y`, `w`, `h`. Suitable for passing to most indexes.
+<code>convexHull(<a href="/glossary/#geojson">&lt;GeoJSON&gt;</a> <i>geojson</i>)</code> | [`Coordinates`](/glossary#geojson-coordinates) | Returns an array of [`coordinates`](/glossary#geojson-coordinates) representing the [convex hull](http://en.wikipedia.org/wiki/Convex_hull) the the passed geojson.
 
 #### Comparisons
 Method | Returns | Description
