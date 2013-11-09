@@ -11,7 +11,9 @@ This package is part of the [Terraformer](https://github.com/Esri/Terraformer) p
 
 ### Node.js
 
-    $ npm install terraformer-arcgis-parser
+```
+$ npm install terraformer-arcgis-parser
+```
 
 ### Browser
 
@@ -77,26 +79,25 @@ var point = ArcGIS.convert({
 ### Browser Example
 
 ```html
-  <!-- Load the main Terraformer library -->
-  <script src="terraformer.min.js" type="text/javascript"></script>
+<!-- Load the main Terraformer library -->
+<script src="terraformer.min.js" type="text/javascript"></script>
 
-  <!-- Load the ArcGIS Parser -->
-  <script src="terraformer-arcgis-parser.min.js" type="text/javascript"></script>
+<!-- Load the ArcGIS Parser -->
+<script src="terraformer-arcgis-parser.min.js" type="text/javascript"></script>
 
-  <!-- Use it! -->
-  <script>
-    var primitive = Terraformer.ArcGIS.parse({
-      x:"-122.6764",
-      y:"45.5165",
-      spatialReference: {
-        wkid: 4326
-      }
-    });
+<!-- Use it! -->
+<script>
+var primitive = Terraformer.ArcGIS.parse({
+  x:"-122.6764",
+  y:"45.5165",
+  spatialReference: {
+    wkid: 4326
+  }
+});
 
-    // take a Terraformer.Primitive or GeoJSON and convert it to ArcGIS JSON
-    var point = Terraformer.ArcGIS.convert({
-      "type": "Point",
-      "coordinates": [45.5165, -122.6764]
-    });
-  </script>
-  ```
+// take a Terraformer.Primitive or GeoJSON and convert it to ArcGIS JSON
+var point = Terraformer.ArcGIS.convert({
+  "type": "Point",
+  "coordinates": [45.5165, -122.6764]
+});
+```
