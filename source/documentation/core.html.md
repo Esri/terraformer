@@ -40,16 +40,16 @@ point.within(polygon) //-> true or false
 
 #### Methods
 
-Method | Returns | Description
---- | --- | ---
-`toMercator()` | `this` | Converts this GeoJSON objects coordinates to the [web mercator spatial reference](http://spatialreference.org/ref/sr-org/6928/).
-`toGeographic()` | `this` | Converts this GeoJSON objects coordinates to [geographic coordinates](http://spatialreference.org/ref/epsg/4326/).
-`envelope()` | [`Envelope`]() | Return an object with `x`, `y`, `w`, `h`. Suitable for passing to most indexes.
-`bbox()` | [`BBox`]() | Returns the GeoJSON Bounding Box](http://www.geojson.org/geojson-spec.html#bounding-boxes) for this primitive.
-`convexHull()` | [`Polygon`]() | Returns the [convex hull](primitive) of this primitive.
-`contains([<GeoJSON>]() geojson)` | `Boolean` | Returns `true` if the passed GeoJSON object is completely contains this primitive.
-`within([<GeoJSON>]() geojson)` | `Boolean` | Returns `true` if the passed GeoJSON object is completely within this primitive.
-`intersects([<GeoJSON>]() geojson)` | `Boolean` | Returns `true` if the passed GeoJSON intersects this primitive.
+Method | Signature | Returns | Description
+--- | --- | --- | ---
+`toMercator()` | ... | `this` | Converts this GeoJSON objects coordinates to the [web mercator spatial reference](http://spatialreference.org/ref/sr-org/6928/).
+`toGeographic()` | ... | `this` | Converts this GeoJSON objects coordinates to [geographic coordinates](http://spatialreference.org/ref/epsg/4326/).
+`envelope()` | ... | [`Envelope`]() | Return an object with `x`, `y`, `w`, `h`. Suitable for passing to most indexes.
+`bbox()` | ... | [`BBox`]() | Returns the GeoJSON Bounding Box](http://www.geojson.org/geojson-spec.html#bounding-boxes) for this primitive.
+`convexHull()` | ... | [`Polygon`]() | Returns the [convex hull](primitive) of this primitive.
+`contains(geojson)` | [`GeoJSON`](/glossary/#geojson) | `Boolean` | Returns `true` if the passed GeoJSON object is completely contains this primitive.
+`within([<GeoJSON>]() geojson)` | [`GeoJSON`](/glossary/#geojson) | `Boolean` | Returns `true` if the passed GeoJSON object is completely within this primitive.
+`intersects([<GeoJSON>]() geojson)` | [`GeoJSON`](/glossary/#geojson) | `Boolean` | Returns `true` if the passed GeoJSON intersects this primitive.
 
 ### Point
 A JavaScript object representing a (GeoJSON Point)[].
@@ -254,6 +254,7 @@ var geometrycollection1 = new Terraformer.GeometryCollection(
 });
 
 var geometrycollection2 = new Terraformer.GeometryCollection([geometry1, geometry2]);
+```
 
 #### Methods
 Method | Returns | Description
@@ -302,6 +303,7 @@ Method | Returns | Description
 ### Calculations
 Method | Returns | Description
 --- | --- | ---
+<code>coordinatesContainPoint(<a href="/glossary/#coordinates">&lt;Coordinates&gt;</a> <i>coordinates</i>)</code>
 `calculateBounds(geojson)` | [`BBox`](/glossary#bbox) | Returns a [`GeoJSON bounding box`](/glossary#bbox) for the passed geojson.
 `calculateEnvelope(geojson)` | [`Envelope`](/glossary#envelope) | Return an object with `x`, `y`, `w`, `h`. Suitable for passing to most indexes.
 `convexHull(geojson)` | [`Coordinates`](/glossary#geojson-coordinates) | Returns an array of [`coordinates`](/glossary#geojson-coordinates) representing the [convex hull](http://en.wikipedia.org/wiki/Convex_hull) the the passed geojson.
@@ -309,7 +311,7 @@ Method | Returns | Description
 ### Comparisons
 Method | Returns | Description
 --- | --- | ---
-`coordinatesContainPoint(coordinates, coordinates)` | `Boolean` |  Accepts a [`coordinate`](/glossary#geojson-coordinates) array and a [`coordinate`](/glossary#geojson-coordinate) and returns `true` if the point falls within the coordinate array.
-`polygonContainsPoint(polygon, coordinate)` | `Boolean` | Accepts a [Polygon](/glossary#geojson-polygon) and a [`coordinate`](/glossary#geojson-coordinate) and returns `true` if the point falls within the polygon.
-`arrayIntersectsArray(coordinates, coordinates)` | `Boolean` | Accepts two arrays of [`coordinates`](/glossary#geojson-coordinates) and returns true if they cross each other at any point.
-`coordinatesEqual(coordinate, coordinate)` | `Boolean` | Accepts two [`coordinates`](/glossary#geojson-coordinate) and returns `true` if the passed coordinates are equal to each other.
+<code>coordinatesContainPoint(<a href="/glossary/#coordinates">&lt;Coordinates&gt;</a> <i>coordinates</i>, <a href="/glossary/#coordinate">&lt;Coordinate&gt;</a> <i>coordinate</i>)</code> | `Boolean` |  Accepts a [`coordinate`](/glossary#geojson-coordinates) array and a [`coordinate`](/glossary#geojson-coordinate) and returns `true` if the point falls within the coordinate array.
+<code>polygonContainsPoint(<a href="/glossary/#polygon">&lt;Polygon&gt;</a> <i>polygon</i>, <a href="/glossary/#coordinate">&lt;Coordinate&gt;</a> <i>coordinate</i>)</code> | `Boolean` | Accepts a [Polygon](/glossary#geojson-polygon) and a [`coordinate`](/glossary#geojson-coordinate) and returns `true` if the point falls within the polygon.
+<code>arrayIntersectsArray(<a href="/glossary/#coordinates">&lt;Coordinates&gt;</a> <i>coordinates</i>, <a href="/glossary/#coordinates">&lt;Coordinates&gt;</a> <i>coordinates</i>)</code> | `Boolean` | Accepts two arrays of [`coordinates`](/glossary#geojson-coordinates) and returns true if they cross each other at any point.
+<code>arrayIntersectsArray(<a href="/glossary/#coordinate">&lt;Coordinate&gt;</a> <i>coordinate</i>, <a href="/glossary/#coordinate">&lt;Coordinate&gt;</a> <i>coordinate</i>)</code> | `Boolean` | Accepts two [`coordinates`](/glossary#geojson-coordinate) and returns `true` if the passed coordinates are equal to each other.

@@ -10,6 +10,7 @@ GeoStores are broken into three parts: [Data Stores](/geostore/data-stores), [Sp
 
 More in-depth information can be found in [Core Concepts](/geostore/core-concepts).
 
+<!-- table_of_contents -->
 
 ## Using the GeoStore
 
