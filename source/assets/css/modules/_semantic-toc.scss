@@ -1,0 +1,49 @@
+.semantic-toc {
+  ol {
+    li {
+      padding-left: 0;
+      &:first-child {
+        margin-top: 1*$baseline;
+      }
+      ol {
+        padding-left: 2*$baseline;
+        margin-bottom: 0;
+      }
+    }
+  }
+}
+
+.header-link, .back-to-top-link {
+  @include p9;
+  @include OpenLight;
+  border: none;
+  display: inline-block;
+  position: absolute;
+  margin-top: -4*$p;
+  margin-left: -3em;
+  margin-right: 0.5em;
+  color: darken($cream, 15);
+  z-index: 10;
+  &:hover {
+    color: darken($cream, 30);
+    border: none;
+  }
+}
+
+.back-to-top-link {
+  right: 0;
+  float: right;
+  margin-left: 0;
+  margin-right: 0;
+}
+
+h1 {
+  .header-link, .back-to-top-link {
+    display: none;
+    margin-left: 0;
+    margin-right: 0;
+    &:hover {
+      display: none;
+    }
+  }
+}

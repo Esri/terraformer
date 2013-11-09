@@ -94,16 +94,6 @@
       }
     }
   }
-  a {
-    color: $red;
-    border-bottom: 1px dashed $red;
-    padding-bottom: 3*$p;
-    text-decoration: none;
-    &:hover {
-      color: lighten($red, 20%);
-      border-bottom: 1px dashed lighten($red, 20%);
-    }
-  }
   .button-light {
     color: white;
   }
@@ -120,7 +110,7 @@
     width: $edge;
     padding-left: $edge;
     float: left;
-    padding-top: 3*$baseline;
+    // padding-top: 3*$baseline;
   }
 
   main {

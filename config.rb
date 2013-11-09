@@ -143,6 +143,16 @@ set :markdown,
 
 activate :rouge_syntax
 
+# Documentation TOC
+def get_pages
+  @pages = sitemap.resources.find_all { |page| page.url.match(/\/documentation\/.*/) }
+  # Sort by date of project
+  # @projects.sort! { |a,b| a.data['order'].to_i <=> b.data['order'].to_i }
+end
+
+ready do
+  get_pages
+end
 
 # Build-specific configuration
 configure :build do

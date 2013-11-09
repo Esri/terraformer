@@ -15,21 +15,5 @@
 @import "modules/nav";
 @import "modules/header";
 @import "modules/icons";
+@import "modules/semantic-toc";
 
-.index a, .docs a.back-to-top-link {
-  @include p9;
-  border: none;
-  color: darken($cream, 15);
-  &:hover {
-    color: darken($cream, 15);
-  }
-}
-
-.index a, .docs a.header-link {
-  @include p9;
-  border: none;
-  color: darken($cream, 15);
-  &:hover {
-    color: darken($cream, 15);
-  }
-}
