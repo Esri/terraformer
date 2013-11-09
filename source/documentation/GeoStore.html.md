@@ -1,6 +1,10 @@
 ---
+<<<<<<< HEAD
 title: GeoStore
 layout: documentation
+=======
+layout: default
+>>>>>>> 4876e72f7453185b4f0f7dff5924322eff0af160
 ---
 
 # GeoStore
@@ -50,6 +54,10 @@ The GeoStore manages data that is made available as either a `Feature` or a `Fea
   }
 }
 ```
+<<<<<<< HEAD
+=======
+
+>>>>>>> 4876e72f7453185b4f0f7dff5924322eff0af160
 ### Using in the Browser
 
 Using the GeoStore in the browser requires including both Terraformer and the GeoStore:
@@ -209,6 +217,20 @@ store.within(geojson, function (err, res) {
   // Node.js style callback
 });
 
+store.within(
+  geojson,
+  {
+    "name":
+    {
+      "equals": "Multnomah"
+    }
+  },
+  function (err, res) {
+    // Node.js style callback
+  }
+);
+```
+
 #### GeoStore.createReadStream()
 
 GeoStore supports readable streams in both the browser and Nodejs.  Currently only `flowing` streams are supported.  Streams can be created with the `createReadStream()` method.  When a stream has been created, the next `within` or `contains` request uses that stream in place of a callback.  It is important to note that the stream only lasts for the duration of a *single* search via `within` or `contains`.
@@ -219,12 +241,14 @@ Since streams are not reentrant in the GeoStore, it is recommended to create a n
 
 _Example:_
 
-    var stream = store.createReadStream();
-    
-    stream.on("data", function (geojson) {
-      // found geojson
-    });
-    
-    stream.on("end", function (geojson) {
-      // final geojson object
-    });
+```js
+var stream = store.createReadStream();
+
+stream.on("data", function (geojson) {
+  // found geojson
+});
+
+stream.on("end", function (geojson) {
+  // final geojson object
+});
+```
