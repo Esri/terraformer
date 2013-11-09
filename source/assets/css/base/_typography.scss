@@ -36,9 +36,27 @@ h1, h2, h3, h4,h5, h6 {
 }
 
 // Basic Copy ------------
-p, a {
+p {
   @include p12;
   padding-bottom: 1*$baseline;
+}
+
+a {
+  color: $red;
+  border-bottom: 1px dashed;
+  padding-bottom: 3*$p;
+  text-decoration: none;
+  &:hover {
+    color: lighten($red, 20%);
+    border-bottom: 1px dashed;
+  }
+  code {
+    color: $red;
+  }
+}
+
+li {
+  padding-bottom: 0.5*$baseline;
 }
 
 blockquote {

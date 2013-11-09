@@ -288,10 +288,10 @@ Method | Returns | Description
 `radius(<Integer> radius)` | `Integer` | The radius of the circle in meters.
 `center(<[`Coordinates`]()> center)` | [`Coordinates`]() | Sets a new center to the circle and recalculate the polygon.
 
-## Tools
+### Tools
 Terraformer also has numerous helper methods for working with GeoJSON and geographic data.
 
-### Spatial Reference Conversions
+#### Spatial Reference Conversions
 Method | Returns | Description
 --- | --- | ---
 `toMercator(geojson)` | `GeoJSON` | Converts this GeoJSON objects coordinates to the [web mercator spatial reference](http://spatialreference.org/ref/sr-org/6928/). This is an in place modification of the passed object.
@@ -300,14 +300,14 @@ Method | Returns | Description
 `positionToMercator(coordinate)` | `Coordinate` | Converts the passed [`Coordinate`]() to [web mercator spatial reference](http://spatialreference.org/ref/sr-org/6928/).
 `positionToGeographic(coordinate)` | [`Coordinate`]() | Converts the passed [`Coordinate`]() to to [geographic coordinates](http://spatialreference.org/ref/epsg/4326/).
 
-### Calculations
+#### Calculations
 Method | Returns | Description
 --- | --- | ---
 `calculateBounds(geojson)` | [`BBox`](/glossary#bbox) | Returns a [`GeoJSON bounding box`](/glossary#bbox) for the passed geojson.
 `calculateEnvelope(geojson)` | [`Envelope`](/glossary#envelope) | Return an object with `x`, `y`, `w`, `h`. Suitable for passing to most indexes.
 `convexHull(geojson)` | [`Coordinates`](/glossary#geojson-coordinates) | Returns an array of [`coordinates`](/glossary#geojson-coordinates) representing the [convex hull](http://en.wikipedia.org/wiki/Convex_hull) the the passed geojson.
 
-### Comparisons
+#### Comparisons
 Method | Returns | Description
 --- | --- | ---
 `coordinatesContainPoint(coordinates, coordinates)` | `Boolean` |  Accepts a [`coordinate`](/glossary#geojson-coordinates) array and a [`coordinate`](/glossary#geojson-coordinate) and returns `true` if the point falls within the coordinate array.
