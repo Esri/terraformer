@@ -94,16 +94,6 @@
       }
     }
   }
-  a {
-    color: $red;
-    border-bottom: 1px dashed $red;
-    padding-bottom: 3*$p;
-    text-decoration: none;
-    &:hover {
-      color: lighten($red, 20%);
-      border-bottom: 1px dashed lighten($red, 20%);
-    }
-  }
   .button-light {
     color: white;
   }
@@ -116,11 +106,21 @@
 .docs {
   padding-left: 0;
 
+  pre {
+    padding-left: 0.5*$spine;
+    margin-left: 0.5*$spine;
+  }
+
+  table {
+    margin-left: 0.5*$spine;
+    width: 82%;
+  }
+
   aside {
     width: $edge;
     padding-left: $edge;
     float: left;
-    padding-top: 3*$baseline;
+    // padding-top: 3*$baseline;
   }
 
   main {
@@ -131,6 +131,7 @@
 
   p {
     width: $measure;
+    padding-left: 18.75%;
   }
 
   img {

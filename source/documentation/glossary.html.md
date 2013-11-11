@@ -1,59 +1,61 @@
 ---
+title: Glossary
 layout: documentation
 ---
+# Glossary
 
-# GeoJSON
+<!-- table_of_contents -->
 
-## Coordinate
+## GeoJSON
 
-## Coordinates
+### Coordinate
 
-## Bounding Box
+### Coordinates
 
-## Point
+### Bounding Box
 
-## MultiPoint
+### Geometry
 
-## LineString
+### Point
 
-## MultiLineString
+### MultiPoint
 
-## Polygon
+### LineString
 
-## MultiPolygon
+### MultiLineString
 
-## Feature
+### Polygon
 
-## FeatureCollection
+### MultiPolygon
 
-## GeometryCollection
+### Feature
+
+### FeatureCollection
+
+### GeometryCollection
 
 
 
-# Terraformer Primitives
+## Terraformer Primitive
 
-## Coordinate
+### Point Primitive
 
-## Coordinates
+### MultiPoint Primitive
 
-## Point
+### LineString Primitive
 
-## MultiPoint
+### MultiLineString Primitive
 
-## LineString
+### Polygon Primitive
 
-## MultiLineString
+### MultiPolygon Primitive
 
-## Polygon
+### Feature Primitive
 
-## MultiPolygon
+### FeatureCollection Primitive
 
-## Feature
+### GeometryCollection Primitive
 
-## FeatureCollection
+## Misc
 
-## GeometryCollection
-
-# Misc
-
-## Envelope
+### Envelope

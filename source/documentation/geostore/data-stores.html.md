@@ -1,12 +1,15 @@
 ---
+title: Datastores
 layout: documentation
 ---
 
 # GeoStore Data Stores
-
+<!-- table_of_contents -->
 Data stores are the foundation of the GeoStore.  They are `key/value` storage devices that allow for creating entries, updating, deleting, and retrieving single `Feature` objects in GeoJSON.
 
 Data Stores are designed to be asyncronous, using Node.js style callbacks.  In syncronough stores, like `Terraformer.Store.Memory` and `Terraformer.Store.LocalStorage` callbacks are executed immediately, but in truly asyncronous stores they behave as expected.
+
+<!-- table_of_contents -->
 
 ## Existing Data Stores
 
