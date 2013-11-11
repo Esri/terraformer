@@ -1,10 +1,7 @@
 ---
-<<<<<<< HEAD
+
 title: GeoStore
 layout: documentation
-=======
-layout: default
->>>>>>> 4876e72f7453185b4f0f7dff5924322eff0af160
 ---
 
 # GeoStore
@@ -54,10 +51,7 @@ The GeoStore manages data that is made available as either a `Feature` or a `Fea
   }
 }
 ```
-<<<<<<< HEAD
-=======
 
->>>>>>> 4876e72f7453185b4f0f7dff5924322eff0af160
 ### Using in the Browser
 
 Using the GeoStore in the browser requires including both Terraformer and the GeoStore:
