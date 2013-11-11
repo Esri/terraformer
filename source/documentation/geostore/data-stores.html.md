@@ -57,7 +57,7 @@ If a `FeatureCollection` is passed in instead, each `Feature` inside of the `Fea
 
 | Option | Value | Description |
 | --- | --- | --- |
-| geojson | `object` | Must be either a `Feature` or `FeatureCollection` and contain an `id` |
+| [`GeoJSON`](/glossary/#geojson) | `object` | Must be either a `Feature` or `FeatureCollection` and contain an `id` |
 | callback | `function` | Callback to be fired when the `add` has been completed |
 
 _Example:_
@@ -74,7 +74,7 @@ Update a `geojson` object already in a DataStore.  Only a `Feature` should be ab
 
 | Option | Value | Description |
 | --- | --- | --- |
-| geojson | `object` | Must be a `Feature` and contain an `id` |
+| [`GeoJSON`](/glossary/#geojson) | `object` | Must be a `Feature` and contain an `id` |
 | callback | `function` | Callback to be fired when the `update` has been completed |
 
 _Example:_
