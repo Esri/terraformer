@@ -177,6 +177,7 @@ dl.horizontal {
 
 // Tables --------------
 table {
+  width: 100%;
   @include p10-5;
   border-spacing: 0;
   border-collapse: collapse;

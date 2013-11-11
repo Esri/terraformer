@@ -21,7 +21,7 @@ nav {
       padding: 6*$p 6*$p;
       &:first-child {
         float: left;
-        padding-left: $edge;
+        // padding-left: $edge;
         @include respond-to($phone-large) {
           padding-left: 0.5*$edge;
         }
@@ -35,6 +35,15 @@ nav {
           border-bottom: 1px dashed $green;
         }
       }
+    }
+  }
+}
+
+.documentation {
+  .subnav {
+    margin-top: 1.6*$baseline;
+    section {
+      width: 10%;
     }
   }
 }

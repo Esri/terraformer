@@ -1,5 +1,4 @@
 ---
-
 title: GeoStore
 layout: documentation
 ---

@@ -106,6 +106,16 @@
 .docs {
   padding-left: 0;
 
+  pre {
+    padding-left: 0.5*$spine;
+    margin-left: 0.5*$spine;
+  }
+
+  table {
+    margin-left: 0.5*$spine;
+    width: 82%;
+  }
+
   aside {
     width: $edge;
     padding-left: $edge;
@@ -121,6 +131,7 @@
 
   p {
     width: $measure;
+    padding-left: 18.75%;
   }
 
   img {
