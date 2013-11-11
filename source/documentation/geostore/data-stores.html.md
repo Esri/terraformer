@@ -9,6 +9,8 @@ Data stores are the foundation of the GeoStore.  They are `key/value` storage de
 
 Data Stores are designed to be asyncronous, using Node.js style callbacks.  In syncronough stores, like `Terraformer.Store.Memory` and `Terraformer.Store.LocalStorage` callbacks are executed immediately, but in truly asyncronous stores they behave as expected.
 
+<!-- table_of_contents -->
+
 ## Existing Data Stores
 
 There are a couple of existing Data Stores that help you get started storing data immediately.
