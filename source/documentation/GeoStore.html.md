@@ -49,10 +49,7 @@ The GeoStore manages data that is made available as either a `Feature` or a `Fea
   }
 }
 ```
-<<<<<<< HEAD
-=======
 
->>>>>>> 4876e72f7453185b4f0f7dff5924322eff0af160
 ### Using in the Browser
 
 Using the GeoStore in the browser requires including both Terraformer and the GeoStore:
@@ -211,21 +208,6 @@ _Example:_
 store.within(geojson, function (err, res) {
   // Node.js style callback
 });
-<<<<<<< HEAD
-
-store.within(
-  geojson,
-  {
-    "name":
-    {
-      "equals": "Multnomah"
-    }
-  },
-  function (err, res) {
-    // Node.js style callback
-  }
-);
-=======
 
 store.within(
   geojson,
@@ -261,5 +243,4 @@ stream.on("data", function (geojson) {
 stream.on("end", function (geojson) {
   // final geojson object
 });
->>>>>>> 4876e72f7453185b4f0f7dff5924322eff0af160
 ```
