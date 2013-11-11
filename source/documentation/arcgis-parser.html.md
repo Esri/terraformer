@@ -2,9 +2,8 @@
 title: Arcgis Parser
 layout: documentation
 ---
-
 # Terraformer ArcGIS JSON Parser
-
+<!-- table_of_contents -->
 This plugin handles 2 way conversion between [GeoJSON](http://geojson.org/geojson-spec.html) and the [ArcGIS Geometry](http://help.arcgis.com/en/arcgisserver/10.0/apis/rest/geometry.html) format used by Esri.
 
 This package is part of the [Terraformer](https://github.com/Esri/Terraformer) project.

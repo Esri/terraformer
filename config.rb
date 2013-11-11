@@ -143,6 +143,21 @@ set :markdown,
 
 activate :rouge_syntax
 
+helpers do
+  def get_doc_title(file_name)
+    arr = sitemap.resources.find_all { |p| p.source_file.match(file_name + '.md') }
+    if arr[0].nil?
+      puts "!!! ERROR Source file #{file_name} does not exist"
+    else
+      arr[0].data.title
+    end
+  end
+
+  def menu_item(title, path, test=nil, options={})
+    "<li>#{link_to 'hey', path}</li>"
+  end
+end
+
 # Documentation TOC
 def get_pages
   @pages = sitemap.resources.find_all { |page| page.url.match(/\/documentation\/.*/) }

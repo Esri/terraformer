@@ -1,9 +1,8 @@
 ---
 layout: documentation
 ---
-
 # GeoStore Spatial Indexes
-
+<!-- table_of_contents -->
 Spatial Indexes are an extremely important part of the GeoStore.  Spatial Indexes allow for very quick elimination of `Features` and are part of the core of the GeoStore.
 
 Spatial Indexes are asyncronous and use Node.js style callbacks.
@@ -55,7 +54,7 @@ si.insert(geojson, id, function (err, res) {
 
 #### SpatialIndex.remove(geojson | envelope, id, callback)
 
-Remove a `geojson` or `envelope` object already in a SpatialIndex.  
+Remove a `geojson` or `envelope` object already in a SpatialIndex.
 
 | Option | Value | Description |
 | --- | --- | --- |

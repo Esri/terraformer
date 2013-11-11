@@ -2,7 +2,6 @@
 title: GeoStore
 layout: documentation
 ---
-
 # GeoStore
 <!-- table_of_contents -->
 The Terraformer GeoStore is a set of building blocks for managing spatial data as a GeoJSON `Feature` or `FeatureCollection`.  It includes functionality for storing and querying data in primarily a spatial manner.

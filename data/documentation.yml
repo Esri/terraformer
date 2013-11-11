@@ -1,0 +1,15 @@
+indexed:
+  - title: Getting-Started
+  - title: Primitives
+  - title: core
+  - title: tools
+  - title: GeoStore
+    sections:
+      - index
+      - data-stores
+      - spatial-indexes
+  - title: Parsers
+    sections:
+      - arcgis-parser
+      - wkt-parser
+  - title: glossary
