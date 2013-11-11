@@ -79,7 +79,7 @@ module CustomRenderers
           buf << "</li><li>"
         end
 
-        buf << "<a href='##{text.downcase.strip.gsub(' ', '-').gsub(/[^\w-]/, '')}'>#{text}</a>"
+        buf << "<a href='##{text.downcase.strip.gsub(' ', '-').gsub(/\(.+\)/, '').gsub(/[^\w-]/, '')}'>#{text}</a>"
       end
     end
 
@@ -101,11 +101,18 @@ module CustomRenderers
     end
 
     def header text, level
-      "<h#{level} id='#{text.downcase.strip.gsub(' ', '-').gsub(/[^\w-]/, '')}'>
-        <a href='##{text.downcase.strip.gsub(' ', '-').gsub(/[^\w-]/, '')}' class='header-link'>Link</a>
-        #{text}
-        <a href='#' class='back-to-top-link'>Back to Top</a>
-      </h#{level}>"
+      if level > 1
+        id = text.downcase.strip.gsub(' ', '-').gsub(/\(.+\)/, '').gsub(/[^\w-]/, '')
+        puts id
+        "<h#{level}>
+          <a id='#{id}' class='section-link'></a>
+          <a href='##{id}' class='header-link'>Link</a>
+          #{text}
+          <a href='#' class='back-to-top-link'>Back to Top</a>
+        </h#{level}>"
+      else
+        "<h#{level}>#{text}</h#{level}>"
+      end
     end
 
   end
