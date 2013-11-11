@@ -2,9 +2,7 @@
 title: ArcGIS Parser
 layout: documentation
 ---
-
 # ArcGIS JSON Parser
-
 <!-- table_of_contents -->
 
 This plugin handles 2 way conversion between [GeoJSON](http://geojson.org/geojson-spec.html) and the [ArcGIS Geometry](http://help.arcgis.com/en/arcgisserver/10.0/apis/rest/geometry.html) format used by Esri.
@@ -24,7 +22,7 @@ var geojsonPoint = Terraformer.ArcGIS.parse({
 });
 
 // convert a GeoJSON object into an ArcGIS geometry
-var arcgisPoint = Terraformer.ArcGIS.convert(point) 
+var arcgisPoint = Terraformer.ArcGIS.convert(point)
 ```
 
 ### Using in the Browser

@@ -2,7 +2,6 @@
 title: Primitives
 layout: documentation
 ---
-
 # Terraformer Primitives
 <!-- table_of_contents -->
 Terraformer includes a lightweight wrapper to `GeoJSON` allowing for a number of methods to be used on them.

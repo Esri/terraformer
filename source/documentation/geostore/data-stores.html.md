@@ -2,7 +2,6 @@
 title: Datastores
 layout: documentation
 ---
-
 # GeoStore Data Stores
 <!-- table_of_contents -->
 Data stores are the foundation of the GeoStore.  They are `key/value` storage devices that allow for creating entries, updating, deleting, and retrieving single `Feature` objects in GeoJSON.
