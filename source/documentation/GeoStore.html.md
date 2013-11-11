@@ -1,9 +1,10 @@
 ---
-layout: default
+title: GeoStore
+layout: documentation
 ---
 
 # GeoStore
-
+<!-- table_of_contents -->
 The Terraformer GeoStore is a set of building blocks for managing spatial data as a GeoJSON `Feature` or `FeatureCollection`.  It includes functionality for storing and querying data in primarily a spatial manner.
 
 GeoStores are broken into three parts: [Data Stores](/documentation/geostore/data-stores), [Spatial Indexes](/documentation/geostore/spatial-indexes), and [Alternate Indexes](/documentation/geostore/alternate-indexes).
@@ -53,8 +54,10 @@ The GeoStore manages data that is made available as either a `Feature` or a `Fea
 
 Using the GeoStore in the browser requires including both Terraformer and the GeoStore:
 
-    <script src="terraformer.min.js"></script>
-    <script src="terraformer-geostore.min.js"></script>
+```html
+<script src="terraformer.min.js"></script>
+<script src="terraformer-geostore.min.js"></script>
+```
 
 Once those are included, you can create a new `Store`.  You will need to include both a Data Store and a Spatial Index to instantiate a GeoStore.
 

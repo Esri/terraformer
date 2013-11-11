@@ -1,11 +1,11 @@
-<aside class="docs">
-  doctoc
-  <ul>
-    <li>thing</li>
-    <li>thing</li>
-    <li>thing</li>
-    <li>thing</li>
-    <li>thing</li>
-    <li>thing</li>
-  </ul>
-</aside>
+<div class="subnav">
+  <div class="container">
+    <% @pages.each do |page, i| %>
+      <section>
+        <a href="<%= page.url %>">
+          <h4><%= page.data.title %></h4>
+        </a>
+      </section>
+    <% end %>
+  </div>
+</div>
