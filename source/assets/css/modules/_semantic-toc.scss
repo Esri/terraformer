@@ -37,6 +37,7 @@
   }
 }
 
+
 .back-to-top-link {
   right: 0;
   float: right;
@@ -53,6 +54,18 @@
   display: block;
   z-index: -100;
   opacity: 0;
+}
+
+h2 {
+  .header-link, .back-to-top-link {
+    margin-top: 10px;
+  }
+}
+
+h4 {
+  .header-link, .back-to-top-link {
+    margin-top: -7px;
+  }
 }
 
 h2, h3, h4, h5, h6 {

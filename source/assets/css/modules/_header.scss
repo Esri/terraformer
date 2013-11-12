@@ -1,8 +1,11 @@
 .cover {
   background: $dark-blue;
   // height: 16*$baseline;
-  padding: 3*$baseline 0 0 0;
+  padding: 3*$baseline 0;
   width: 100%;
+  @include respond-to($tablet-mid) {
+    padding-bottom: 0;
+  }
   section {
     width: 50%;
     margin: auto;
@@ -19,6 +22,9 @@
     margin-top: 0;
     @include respond-to($tablet-mid) {
       font-size: 9em;
+      margin: auto;
+      text-align: center;
+      float: none;
     }
   }
   h2 {
@@ -33,6 +39,10 @@
     @include respond-to($tablet-mid) {
       @include p18;
       padding-top: 1*$baseline;
+      margin: auto;
+      text-align: center;
+      width: 100%;
+      padding-left: 0;
     }
   }
 }

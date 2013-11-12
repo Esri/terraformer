@@ -121,7 +121,7 @@ pre {
   color: #839496;
   padding-bottom: 1*$baseline;
   @include respond-to($tablet-mid) {
-    width: 100%;
+    width: 90%;
   }
   code {
     display: block;
