@@ -107,19 +107,21 @@
   padding-left: 0;
 
   pre {
-    padding-left: 0.5*$spine;
-    margin-left: 0.5*$spine;
+    padding-left: 1em;
+    margin-left: 1*$spine;
+    width: 63%;
   }
 
   table {
-    margin-left: 0.5*$spine;
-    width: 82%;
+    margin-left: $spine;
+    width: 66%;
   }
 
   aside {
     width: $edge;
-    padding-left: $edge;
+    padding-left: 0;
     float: left;
+    z-index: 150;
     // padding-top: 3*$baseline;
   }
 
@@ -137,7 +139,6 @@
   img {
     width: 0.5*$measure;
     margin-left: $edge;
-    // float: left;
     display: block;
     padding-bottom: 1*$baseline;
     @include respond-to($tablet-mid) {

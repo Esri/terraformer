@@ -2,7 +2,6 @@
 title: Getting Started
 layout: documentation
 ---
-
 # Terraformer
 <!-- table_of_contents -->
 Terraformer is an open source (MIT licensed) Javascript geo toolkit, built for the server and the browser.

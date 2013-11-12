@@ -1,11 +1,24 @@
-<div class="subnav">
-  <div class="container">
-    <% @pages.each do |page, i| %>
-      <section>
-        <a href="<%= page.url %>">
-          <h4><%= page.data.title %></h4>
-        </a>
-      </section>
-    <% end %>
+<div class="drawer" id="drawer">
+  <div class="doctoc drawer-nav drawer-top">
+    <div class="container">
+      <ul>
+        <h3>Terraformer Documentation</h3>
+        <li><%= link_to 'Getting Started', '/documentation/Getting-Started' %></li>
+
+        <li><%= link_to 'Primitives', '/documentation/Primitives' %></li>
+        <li><%= link_to 'Terraformer Core', '/documentation/core' %></li>
+        <li><%= link_to 'Tools', '/documentation/Tools' %></li>
+
+        <li><%= link_to 'GeoStores', '/documentation/GeoStore' %></li>
+        <li class="indent"><%= link_to 'DataStores', '/documentation/geostore/data-stores' %></li>
+        <li class="indent"><%= link_to 'Spatial Indexes', '/documentation/geostore/spatial-indexes' %></li>
+
+        <li><%= link_to 'ArcGIS Parser', '/documentation/arcgis-parser' %></li>
+        <li><%= link_to 'WKT Parser', '/documentation/wkt-parser' %></li>
+
+        <li><%= link_to 'Glossary', '/documentation/glossary' %></li>
+      </ul>
+    </div>
   </div>
 </div>
+conf
