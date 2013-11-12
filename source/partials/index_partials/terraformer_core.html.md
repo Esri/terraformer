@@ -1,7 +1,7 @@
 <header class="subhead">
   <img src="assets/images/terraformer-core.png" alt="terraformer core">
   <h2>Terraformer Core</h2>
-  <h3><a href="/" class="button button-light">Get Core</a></h3>
+  <h3><a href="/" class="button button-light">Documentation</a> <a href="/" class="button button-light">Get Core</a></h3>
 </header>
 
 #### Primitives

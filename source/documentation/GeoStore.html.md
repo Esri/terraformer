@@ -10,8 +10,6 @@ GeoStores are broken into three parts: [Data Stores](/documentation/geostore/dat
 
 More in-depth information can be found in [Core Concepts](/documentation/geostore/core-concepts).
 
-<!-- table_of_contents -->
-
 ## Using the GeoStore
 
 The GeoStore can be used in both the browser and server-side via Node.js.  Functionally, they behave the same, but some Data Stores and Indexes will only work in one environment.  For instance, LocalStorage will not work by default in Node.js.
