@@ -751,7 +751,7 @@
 
   Primitive.prototype.contains = function(primitive){
     return new Primitive(primitive).within(this);
-  }
+  };
 
   Primitive.prototype.within = function(primitive) {
     var coordinates, i, contains;
