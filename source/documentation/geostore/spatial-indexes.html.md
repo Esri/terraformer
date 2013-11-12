@@ -40,7 +40,7 @@ Add a `geojson` object or `envelope` to a `SpatialIndex`.  It is important to in
 
 | Option | Value | Description |
 | --- | --- | --- |
-| geojson _or_ envelope | `object` | Must be either `GeoJSON` or `Envelope` |
+| [`GeoJSON`](/glossary/#geojson) _or_ [`Envelope`](/glossary/#envelope) | `object` | Must be either `GeoJSON` or `Envelope` |
 | id | `String` _or_ `Number` | The `id` of the spatial area |
 | callback | `function` | Callback to be fired when the `insert` has been completed |
 
@@ -58,7 +58,7 @@ Remove a `geojson` or `envelope` object already in a SpatialIndex.
 
 | Option | Value | Description |
 | --- | --- | --- |
-| geojson _or_ envelope | `object` | Must be either `GeoJSON` or `Envelope` |
+| [`GeoJSON`](/glossary/#geojson) _or_ [`Envelope`](/glossary/#envelope) | `object` | Must be either `GeoJSON` or `Envelope` |
 | id | `String` _or_ `Number` | The `id` of the spatial area |
 | callback | `function` | Callback to be fired when the `remove` has been completed |
 
@@ -76,7 +76,7 @@ Searches for any `id`'s that can contain the `geojson` or `envelope` passed in. 
 
 | Option | Value | Description |
 | --- | --- | --- |
-| geojson _or_ envelope | `object` | Must be either `GeoJSON` or `Envelope` |
+| [`GeoJSON`](/glossary/#geojson) _or_ [`Envelope`](/glossary/#envelope) | `object` | Must be either `GeoJSON` or `Envelope` |
 | callback | `function` | Callback to be fired when the `search` has been completed |
 
 _Example:_
@@ -93,7 +93,7 @@ Searches for any `id`'s that are within the `geojson` or `envelope` passed in.  
 
 | Option | Value | Description |
 | --- | --- | --- |
-| geojson _or_ envelope | `object` | Must be either `GeoJSON` or `Envelope` |
+| [`GeoJSON`](/glossary/#geojson) _or_ [`Envelope`](/glossary/#envelope) | `object` | Must be either `GeoJSON` or `Envelope` |
 | callback | `function` | Callback to be fired when the `search` has been completed |
 
 _Example:_

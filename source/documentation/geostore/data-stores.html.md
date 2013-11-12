@@ -8,8 +8,6 @@ Data stores are the foundation of the GeoStore.  They are `key/value` storage de
 
 Data Stores are designed to be asyncronous, using Node.js style callbacks.  In syncronough stores, like `Terraformer.Store.Memory` and `Terraformer.Store.LocalStorage` callbacks are executed immediately, but in truly asyncronous stores they behave as expected.
 
-<!-- table_of_contents -->
-
 ## Existing Data Stores
 
 There are a couple of existing Data Stores that help you get started storing data immediately.
@@ -56,7 +54,7 @@ If a `FeatureCollection` is passed in instead, each `Feature` inside of the `Fea
 
 | Option | Value | Description |
 | --- | --- | --- |
-| geojson | `object` | Must be either a `Feature` or `FeatureCollection` and contain an `id` |
+| [`GeoJSON`](/glossary/#geojson) | `object` | Must be either a `Feature` or `FeatureCollection` and contain an `id` |
 | callback | `function` | Callback to be fired when the `add` has been completed |
 
 _Example:_
@@ -73,7 +71,7 @@ Update a `geojson` object already in a DataStore.  Only a `Feature` should be ab
 
 | Option | Value | Description |
 | --- | --- | --- |
-| geojson | `object` | Must be a `Feature` and contain an `id` |
+| [`GeoJSON`](/glossary/#geojson) | `object` | Must be a `Feature` and contain an `id` |
 | callback | `function` | Callback to be fired when the `update` has been completed |
 
 _Example:_

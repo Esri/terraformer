@@ -2,6 +2,7 @@
 title: GeoStore
 layout: documentation
 ---
+
 # GeoStore
 
 <!-- table_of_contents -->
@@ -99,7 +100,7 @@ Add a `geojson` object to the GeoStore.
 
 | Option | Value | Description |
 | --- | --- | --- |
-| geojson | `object` | Must be either a `Feature` or `FeatureCollection` and contain an `id` |
+| [`GeoJSON`](/glossary/#geojson) | `object` | Must be either a `Feature` or `FeatureCollection` and contain an `id` |
 | callback | `function` | Callback to be fired when the `add` has been completed |
 
 _Example:_
@@ -116,7 +117,7 @@ Update a single `geojson` `Feature` in the GeoStore.
 
 | Option | Value | Description |
 | --- | --- | --- |
-| geojson | `object` | Must be a `Feature` and contain an `id` |
+| [`GeoJSON`](/glossary/#geojson) | `object` | Must be a `Feature` and contain an `id` |
 | callback | `function` | Callback to be fired when the `update` has been completed |
 
 _Example:_
@@ -167,8 +168,8 @@ Find all `Features` that contain the `geojson primitive` passed in.  `contains` 
 
 | Option | Value | Description |
 | --- | --- | --- |
-| geojson | GeoJSON Primitive | A GeoJSON primitive to search with |
-| search (optional) | object | The second argument is optional.  If provided it contains additional search criteria for set elimination |
+| [`GeoJSON`](/glossary/#geojson) | `object` | A GeoJSON primitive to search with |
+| search (optional) | `object` | The second argument is optional.  If provided it contains additional search criteria for set elimination |
 | callback | `function` | Callback to be fired when the `contains` has been completed |
 
 _Example:_
@@ -198,8 +199,8 @@ Find all `Features` that are within the `geojson primitive` passed in.  `within`
 
 | Option | Value | Description |
 | --- | --- | --- |
-| geojson | GeoJSON Primitive | A GeoJSON primitive to search with |
-| search (optional) | object | The second argument is optional.  If provided it contains additional search criteria for set elimination |
+| [`GeoJSON`](/glossary/#geojson) | `object` | A GeoJSON primitive to search with |
+| search (optional) | `object` | The second argument is optional.  If provided it contains additional search criteria for set elimination |
 | callback | `function` | Callback to be fired when the `within` has been completed |
 
 _Example:_

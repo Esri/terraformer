@@ -128,7 +128,7 @@ set :images_dir, 'assets/images'
 
 set :fonts_dir,'assets/fonts'
 
-set :index_file, "documentation/index.html"
+set :index_file, "index.html"
 
 # set :http_prefix, 'documentation/'
 ###
