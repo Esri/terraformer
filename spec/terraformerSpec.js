@@ -222,7 +222,8 @@ describe("Primitives", function(){
     });
 
     it("should calculate convex hull", function(){
-      expect(multiPoint.convexHull()).toEqual([[-45, 122], [100, 0]]);
+      expect(multiPoint.convexHull().coordinates).toEqual([[-45, 122], [100, 0]]);
+      expect(multiPoint.convexHull().type).toEqual("Polygon");
     });
 
     it("should calculate envelope", function(){
@@ -271,7 +272,8 @@ describe("Primitives", function(){
     });
 
     it("should calculate convex hull", function(){
-      expect(lineString.convexHull()).toEqual([ [-45, 122], [100, 0]]);
+      expect(lineString.convexHull().coordinates).toEqual([ [-45, 122], [100, 0]]);
+      expect(lineString.convexHull().type).toEqual("Polygon");
     });
 
     it("should calculate envelope", function(){
@@ -310,7 +312,8 @@ describe("Primitives", function(){
     });
 
     it("should calculate convex hull", function(){
-      expect(multiLineString.convexHull()).toEqual([ [ -115, 55 ], [ -110, 45 ], [ -105, 40 ], [ -100, 40 ], [ -110, 55 ] ]);
+      expect(multiLineString.convexHull().coordinates).toEqual([ [ -115, 55 ], [ -110, 45 ], [ -105, 40 ], [ -100, 40 ], [ -110, 55 ] ]);
+      expect(multiLineString.convexHull().type).toEqual("Polygon");
     });
 
     it("should calculate envelope", function(){
@@ -369,7 +372,8 @@ describe("Primitives", function(){
     });
 
     it("should calculate convex hull", function(){
-      expect(polygon.convexHull()).toEqual([ [ 100, 1 ], [ 100, 0 ], [ 101, 0 ], [ 101, 1 ] ]);
+      expect(polygon.convexHull().coordinates).toEqual([ [ 100, 1 ], [ 100, 0 ], [ 101, 0 ], [ 101, 1 ] ]);
+      expect(polygon.convexHull().type).toEqual("Polygon");
     });
 
     it("should calculate envelope", function(){
@@ -415,7 +419,8 @@ describe("Primitives", function(){
     });
 
     it("should calculate convex hull", function (){
-      expect(multiPolygon.convexHull()).toEqual([ [ 102, 3 ], [ 100, 1 ], [ 100, 0 ], [ 101, 0 ], [ 103, 2 ], [ 103, 3 ] ]);
+      expect(multiPolygon.convexHull().coordinates).toEqual([ [ 102, 3 ], [ 100, 1 ], [ 100, 0 ], [ 101, 0 ], [ 103, 2 ], [ 103, 3 ] ]);
+      expect(multiPolygon.convexHull().type).toEqual("Polygon");
     });
 
     it("should calculate envelope", function(){
