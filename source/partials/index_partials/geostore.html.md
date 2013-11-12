@@ -16,4 +16,4 @@ GeoStore is a lightweight API that allows you to store, index and query geograph
 03. Any number of _secondary indexes_ which index properties associated with your geographic data.
 
 
-[GeoStore Documentation](/documentation/GeoStore)
+[GeoStore Documentation](/documentation/geostore.html)
