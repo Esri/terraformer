@@ -1,0 +1,424 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+
+    <!-- Always force latest IE rendering engine or request Chrome Frame -->
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+
+    <!-- Use title if it's in the page YAML frontmatter -->
+    <title>Terraformer</title>
+
+    <!-- Assets -->
+    <link href="/assets/css/terraformer.css" media="screen" rel="stylesheet" type="text/css" />
+  </head>
+
+  <body class="documentation documentation_glossary documentation_glossary_index" id="wrap">
+    <nav>
+  <ul>
+    <li>
+      <a href="/" class="">Terraformer</a>
+    </li>
+    <li>
+      <a href="https://github.com/Esri/Terraformer" class="">Install</a>
+    </li>
+    <li>
+      <a href="/"  data-direction="active-top" class="toggle" id="close-drawer">Docs</a>
+    </li>
+  </ul>
+</nav>
+    <div class="drawer" id="drawer">
+  <div class="doctoc drawer-nav drawer-top">
+    <div class="container">
+      <ul>
+        <h3>Terraformer Documentation</h3>
+        <li><a href="/documentation/Getting-Started">Getting Started</a></li>
+
+        <li><a href="/documentation/Primitives">Primitives</a></li>
+        <li><a href="/documentation/core">Terraformer Core</a></li>
+        <li><a href="/documentation/Tools">Tools</a></li>
+
+        <li><a href="/documentation/GeoStore">GeoStores</a></li>
+        <li class="indent"><a href="/documentation/geostore/data-stores">DataStores</a></li>
+        <li class="indent"><a href="/documentation/geostore/spatial-indexes">Spatial Indexes</a></li>
+
+        <li><a href="/documentation/arcgis-parser">ArcGIS Parser</a></li>
+        <li><a href="/documentation/wkt-parser">WKT Parser</a></li>
+
+        <li><a href="/documentation/glossary">Glossary</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+conf
+
+    <main class="docs main-content" id="main-content">
+      <h1>Glossary</h1>
+<div class='semantic-toc'><ol><li><a href='#geojson'>GeoJSON</a><ol><li><a href='#coordinate'>Coordinate</a></li><li><a href='#coordinates'>Coordinates</a></li><li><a href='#bounding-box'>Bounding Box</a></li><li><a href='#geometry'>Geometry</a></li><li><a href='#point'>Point</a></li><li><a href='#multipoint'>MultiPoint</a></li><li><a href='#linestring'>LineString</a></li><li><a href='#multilinestring'>MultiLineString</a></li><li><a href='#polygon'>Polygon</a></li><li><a href='#multipolygon'>MultiPolygon</a></li><li><a href='#feature'>Feature</a></li><li><a href='#featurecollection'>FeatureCollection</a></li><li><a href='#geometrycollection'>GeometryCollection</a></li></ol></li><li><a href='#terraformer-primitive'>Terraformer Primitive</a><ol><li><a href='#point-primitive'>Point Primitive</a></li><li><a href='#multipoint-primitive'>MultiPoint Primitive</a></li><li><a href='#linestring-primitive'>LineString Primitive</a></li><li><a href='#multilinestring-primitive'>MultiLineString Primitive</a></li><li><a href='#polygon-primitive'>Polygon Primitive</a></li><li><a href='#multipolygon-primitive'>MultiPolygon Primitive</a></li><li><a href='#feature-primitive'>Feature Primitive</a></li><li><a href='#featurecollection-primitive'>FeatureCollection Primitive</a></li><li><a href='#geometrycollection-primitive'>GeometryCollection Primitive</a></li><li><a href='#circle-primitive'>Circle Primitive</a></li></ol></li><li><a href='#misc'>Misc</a><ol><li><a href='#envelope'>Envelope</a></div>
+<h2>
+          <a id='geojson' class='section-link'></a>
+          <a href='#geojson' class='header-link'>Link</a>
+          GeoJSON
+          <a href='#' class='back-to-top-link'>Back to Top</a>
+        </h2>
+<p>Terraformer uses the <a href="http://geojson.org/geojson-spec.html">GeoJSON specification</a> as a guide on how to format all representation of geographical data.</p>
+<h3>
+          <a id='coordinate' class='section-link'></a>
+          <a href='#coordinate' class='header-link'>Link</a>
+          Coordinate
+          <a href='#' class='back-to-top-link'>Back to Top</a>
+        </h3>
+<p>A coordinate is the building block for the rest of the GeoJSON specification. It is repestented by an array of <code>x</code>, <code>y</code> integers. The ordering of <code>x</code> and <code>y</code> are important, this means that when representing latitude and longitiude the order is <code>[longitude, latitude]</code>.</p>
+<pre class="highlight javascript"><span class="p">[</span><span class="o">-</span><span class="mf">122.680</span><span class="p">,</span> <span class="mf">45.528</span><span class="p">]</span>
+</pre>
+<p><a href="http://geojson.org/geojson-spec.html#positions">GeoJSON Coordinate</a></p>
+<h3>
+          <a id='coordinates' class='section-link'></a>
+          <a href='#coordinates' class='header-link'>Link</a>
+          Coordinates
+          <a href='#' class='back-to-top-link'>Back to Top</a>
+        </h3>
+<p>A series of <a href="#coordinate">Coordinate</a> objects that are used to define a line or polygon.</p>
+<pre class="highlight javascript"><span class="p">[</span> 
+  <span class="p">[</span><span class="o">-</span><span class="mf">122.680</span><span class="p">,</span> <span class="mf">45.58</span><span class="p">]</span> 
+  <span class="p">[</span><span class="o">-</span><span class="mf">123.230</span><span class="p">,</span> <span class="mf">45.62</span><span class="p">]</span> 
+  <span class="p">[</span><span class="o">-</span><span class="mf">122.80</span><span class="p">,</span> <span class="mf">45.22</span><span class="p">]</span> 
+<span class="p">]</span>
+</pre>
+<p><a href="http://geojson.org/geojson-spec.html#positions">GeoJSON Coordinate</a></p>
+<h3>
+          <a id='bounding-box' class='section-link'></a>
+          <a href='#bounding-box' class='header-link'>Link</a>
+          Bounding Box
+          <a href='#' class='back-to-top-link'>Back to Top</a>
+        </h3>
+<p>A GeoJSON bounding box is usuaally a 4 item array representing the rectangle that will contain the GeoJSON object.</p>
+<pre class="highlight javascript"><span class="p">[</span><span class="o">-</span><span class="mf">122.70</span><span class="p">,</span> <span class="mf">45.51</span><span class="p">,</span> <span class="o">-</span><span class="mf">122.64</span><span class="p">,</span> <span class="mf">45.53</span><span class="p">]</span>
+</pre>
+<p><a href="http://geojson.org/geojson-spec.html#bounding-boxes">GeoJSON BBox</a></p>
+<h3>
+          <a id='geometry' class='section-link'></a>
+          <a href='#geometry' class='header-link'>Link</a>
+          Geometry
+          <a href='#' class='back-to-top-link'>Back to Top</a>
+        </h3>
+<p>&ldquo;GeoJSON Geometry&rdquo; refers to any of the single geometry objects from the geojson specification like <a href="#point">Point</a>, <a href="#multiPoint">MultiPoint</a>, <a href="#linestring">LineString</a>, <a href="#multilinestring">MultiLineString</a>, <a href="#polygon">Polygon</a>, or <a href="#multipolygon">MultiPolygon</a>.</p>
+
+<p><a href="http://geojson.org/geojson-spec.html#geometry-objects">GeoJSON Geometry</a></p>
+<h3>
+          <a id='point' class='section-link'></a>
+          <a href='#point' class='header-link'>Link</a>
+          Point
+          <a href='#' class='back-to-top-link'>Back to Top</a>
+        </h3>
+<p>An object representing a single point.</p>
+<pre class="highlight json"><span class="p">{</span><span class="w">
+  </span><span class="s2">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Point&quot;</span><span class="p">,</span><span class="w">
+  </span><span class="s2">&quot;coordinates&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">-105.01621</span><span class="p">,</span><span class="mf">39.57422</span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></pre>
+<p><a href="http://geojson.org/geojson-spec.html#point">GeoJSON Point</a></p>
+<h3>
+          <a id='multipoint' class='section-link'></a>
+          <a href='#multipoint' class='header-link'>Link</a>
+          MultiPoint
+          <a href='#' class='back-to-top-link'>Back to Top</a>
+        </h3>
+<p>An object represeneting multiple points as a single coordinate array.</p>
+<pre class="highlight json"><span class="p">{</span><span class="w">
+  </span><span class="s2">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;MultiPoint&quot;</span><span class="p">,</span><span class="w">
+  </span><span class="s2">&quot;coordinates&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="p">[</span><span class="mf">-105.01</span><span class="p">,</span><span class="mf">39.57</span><span class="p">],[</span><span class="mf">-80.66</span><span class="p">,</span><span class="mf">35.05</span><span class="p">]</span><span class="w"> </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></pre>
+<p><a href="http://geojson.org/geojson-spec.html#multipoint">GeoJSON MultiPoint</a></p>
+<h3>
+          <a id='linestring' class='section-link'></a>
+          <a href='#linestring' class='header-link'>Link</a>
+          LineString
+          <a href='#' class='back-to-top-link'>Back to Top</a>
+        </h3>
+<p>A series of coordinates that form a line.</p>
+<pre class="highlight json"><span class="p">{</span><span class="w">
+  </span><span class="s2">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;LineString&quot;</span><span class="p">,</span><span class="w">
+  </span><span class="s2">&quot;coordinates&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> 
+    </span><span class="p">[</span><span class="mf">-101.5</span><span class="p">,</span><span class="mf">39.662</span><span class="p">],</span><span class="w">
+    </span><span class="p">[</span><span class="mf">-101.75</span><span class="p">,</span><span class="mf">39.2415</span><span class="p">],</span><span class="w">
+    </span><span class="p">[</span><span class="mi">-101</span><span class="err">.</span><span class="p">,</span><span class="mf">39.2415</span><span class="p">],</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></pre>
+<p><a href="http://geojson.org/geojson-spec.html#linestring">GeoJSON LineString</a></p>
+<h3>
+          <a id='multilinestring' class='section-link'></a>
+          <a href='#multilinestring' class='header-link'>Link</a>
+          MultiLineString
+          <a href='#' class='back-to-top-link'>Back to Top</a>
+        </h3>
+<p>An object that represents multiple linestrings in a single object.</p>
+<pre class="highlight json"><span class="p">{</span><span class="w">
+  </span><span class="s2">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;MultiLineString&quot;</span><span class="p">,</span><span class="w">
+  </span><span class="s2">&quot;coordinates&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> 
+    </span><span class="p">[</span><span class="w">
+      </span><span class="p">[</span><span class="mf">-101.5</span><span class="p">,</span><span class="mf">39.662</span><span class="p">],</span><span class="w">
+      </span><span class="p">[</span><span class="mf">-101.75</span><span class="p">,</span><span class="mf">39.2415</span><span class="p">],</span><span class="w">
+      </span><span class="p">[</span><span class="mf">-101.23</span><span class="p">,</span><span class="mf">39.2415</span><span class="p">],</span><span class="w">
+      </span><span class="p">[</span><span class="mf">-101.749</span><span class="p">,</span><span class="mf">39.7984</span><span class="p">],</span><span class="w">
+      </span><span class="p">[</span><span class="mf">-101.5</span><span class="p">,</span><span class="mf">39.011</span><span class="p">]</span><span class="w">
+    </span><span class="p">],[</span><span class="w">
+      </span><span class="p">[</span><span class="mf">-99.23</span><span class="p">,</span><span class="mf">38.6605</span><span class="p">],</span><span class="w">
+      </span><span class="p">[</span><span class="mf">-99.56</span><span class="p">,</span><span class="mf">38.727</span><span class="p">],</span><span class="w">
+      </span><span class="p">[</span><span class="mf">-99.25</span><span class="p">,</span><span class="mf">38.018</span><span class="p">]</span><span class="w">
+    </span><span class="p">],[</span><span class="w">
+      </span><span class="p">[</span><span class="mf">-98.499</span><span class="p">,</span><span class="mf">38.913</span><span class="p">],</span><span class="w">
+      </span><span class="p">[</span><span class="mf">-98.499</span><span class="p">,</span><span class="mf">38.913</span><span class="p">],</span><span class="w">
+      </span><span class="p">[</span><span class="mf">-98.38</span><span class="err">.</span><span class="p">,</span><span class="mf">38.15</span><span class="p">],</span><span class="w">
+      </span><span class="p">[</span><span class="mf">-97.5</span><span class="p">,</span><span class="mf">38.629</span><span class="p">]</span><span class="w"> 
+    </span><span class="p">]</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></pre>
+<p><a href="http://geojson.org/geojson-spec.html#multilinestring">GeoJSON MultiLineString</a></p>
+<h3>
+          <a id='polygon' class='section-link'></a>
+          <a href='#polygon' class='header-link'>Link</a>
+          Polygon
+          <a href='#' class='back-to-top-link'>Back to Top</a>
+        </h3>
+<p>An array of coordinates defining a polygon.</p>
+<pre class="highlight json"><span class="p">{</span><span class="w">
+  </span><span class="s2">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Polygon&quot;</span><span class="p">,</span><span class="w">
+  </span><span class="s2">&quot;coordinates&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">[</span><span class="w"> </span><span class="p">[</span><span class="mf">41.83</span><span class="p">,</span><span class="mf">71.01</span><span class="p">],[</span><span class="mf">56.95</span><span class="p">,</span><span class="mf">33.75</span><span class="p">],[</span><span class="mf">21.79</span><span class="p">,</span><span class="mf">36.56</span><span class="p">],[</span><span class="mf">41.83</span><span class="p">,</span><span class="mf">71.01</span><span class="p">]</span><span class="w"> </span><span class="p">]</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></pre>
+<p><a href="http://geojson.org/geojson-spec.html#polygon">GeoJSON Polygon</a></p>
+<h3>
+          <a id='multipolygon' class='section-link'></a>
+          <a href='#multipolygon' class='header-link'>Link</a>
+          MultiPolygon
+          <a href='#' class='back-to-top-link'>Back to Top</a>
+        </h3>
+<p>An object that represents multiple polygons in a single object.</p>
+<pre class="highlight json"><span class="p">{</span><span class="w">
+  </span><span class="s2">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;MultiPolygon&quot;</span><span class="p">,</span><span class="w">
+  </span><span class="s2">&quot;coordinates&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">[</span><span class="w">
+      </span><span class="p">[</span><span class="w"> </span><span class="p">[</span><span class="mf">102.0</span><span class="p">,</span><span class="w"> </span><span class="mf">2.0</span><span class="p">],</span><span class="w"> </span><span class="p">[</span><span class="mf">103.0</span><span class="p">,</span><span class="w"> </span><span class="mf">2.0</span><span class="p">],</span><span class="w"> </span><span class="p">[</span><span class="mf">103.0</span><span class="p">,</span><span class="w"> </span><span class="mf">3.0</span><span class="p">],</span><span class="w"> </span><span class="p">[</span><span class="mf">102.0</span><span class="p">,</span><span class="w"> </span><span class="mf">3.0</span><span class="p">],</span><span class="w"> </span><span class="p">[</span><span class="mf">102.0</span><span class="p">,</span><span class="w"> </span><span class="mf">2.0</span><span class="p">]</span><span class="w"> </span><span class="p">]</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="p">[</span><span class="w">
+      </span><span class="p">[</span><span class="w"> </span><span class="p">[</span><span class="mf">100.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">],</span><span class="w"> </span><span class="p">[</span><span class="mf">101.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">],</span><span class="w"> </span><span class="p">[</span><span class="mf">101.0</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">],</span><span class="w"> </span><span class="p">[</span><span class="mf">100.0</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">],</span><span class="w"> </span><span class="p">[</span><span class="mf">100.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">]</span><span class="w"> </span><span class="p">]</span><span class="w">
+    </span><span class="p">]</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></pre>
+<p><a href="http://geojson.org/geojson-spec.html#multipolygon">GeoJSON MultiPolygon</a></p>
+<h3>
+          <a id='feature' class='section-link'></a>
+          <a href='#feature' class='header-link'>Link</a>
+          Feature
+          <a href='#' class='back-to-top-link'>Back to Top</a>
+        </h3>
+<p>GeoJSON Features combine a <a href="#geometry">Geometry</a> object with a unique identifier and set of metadata.</p>
+<pre class="highlight json"><span class="p">{</span><span class="w">
+  </span><span class="s2">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Feature&quot;</span><span class="p">,</span><span class="w">
+  </span><span class="s2">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;stadium&quot;</span><span class="p">,</span><span class="w">
+  </span><span class="s2">&quot;geometry&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Point&quot;</span><span class="p">,</span><span class="w">
+    </span><span class="s2">&quot;coordinates&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">-104.99404</span><span class="p">,</span><span class="w"> </span><span class="mf">39.75621</span><span class="p">]</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="s2">&quot;properties&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Coors Field&quot;</span><span class="p">,</span><span class="w">
+    </span><span class="s2">&quot;amenity&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Baseball Stadium&quot;</span><span class="p">,</span><span class="w">
+    </span><span class="s2">&quot;popupContent&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;This is where the Rockies play!&quot;</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></pre>
+<p><a href="http://geojson.org/geojson-spec.html#feature-objects">Feature</a></p>
+<h3>
+          <a id='featurecollection' class='section-link'></a>
+          <a href='#featurecollection' class='header-link'>Link</a>
+          FeatureCollection
+          <a href='#' class='back-to-top-link'>Back to Top</a>
+        </h3>
+<p>Contains multiple <a href="#feature">Features</a> objects in a single obejct.</p>
+<pre class="highlight json"><span class="p">{</span><span class="w">
+  </span><span class="s2">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;FeatureCollection&quot;</span><span class="p">,</span><span class="w">
+  </span><span class="s2">&quot;features&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Feature&quot;</span><span class="p">,</span><span class="w">
+      </span><span class="s2">&quot;geometry&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="s2">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Point&quot;</span><span class="p">,</span><span class="w">
+        </span><span class="s2">&quot;coordinates&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">-80.83775386582222</span><span class="p">,</span><span class="mf">35.24980190252168</span><span class="p">]</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="s2">&quot;properties&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="s2">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;DOUBLE OAKS CENTER&quot;</span><span class="p">,</span><span class="w">
+        </span><span class="s2">&quot;address&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;1326 WOODWARD AV&quot;</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Feature&quot;</span><span class="p">,</span><span class="w">
+      </span><span class="s2">&quot;geometry&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="s2">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Point&quot;</span><span class="p">,</span><span class="w">
+        </span><span class="s2">&quot;coordinates&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">-80.83827000459532</span><span class="p">,</span><span class="mf">35.25674709224663</span><span class="p">]</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="s2">&quot;properties&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="s2">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;DOUBLE OAKS NEIGHBORHOOD PARK&quot;</span><span class="p">,</span><span class="w">
+        </span><span class="s2">&quot;address&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2605  DOUBLE OAKS RD&quot;</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></pre>
+<p><a href="http://geojson.org/geojson-spec.html#feature-collection-objects">FeatureCollection</a></p>
+<h3>
+          <a id='geometrycollection' class='section-link'></a>
+          <a href='#geometrycollection' class='header-link'>Link</a>
+          GeometryCollection
+          <a href='#' class='back-to-top-link'>Back to Top</a>
+        </h3>
+<p>Contains multiple <a href="#geometry">Geometry</a> objects in a single obejct.</p>
+<pre class="highlight json"><span class="p">{</span><span class="w">
+  </span><span class="s2">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;GeometryCollection&quot;</span><span class="p">,</span><span class="w">
+  </span><span class="s2">&quot;geometries&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="w">
+    </span><span class="s2">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Polygon&quot;</span><span class="p">,</span><span class="w">
+    </span><span class="s2">&quot;coordinates&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+      </span><span class="p">[</span><span class="w"> </span><span class="p">[</span><span class="mf">41.83</span><span class="p">,</span><span class="mf">71.01</span><span class="p">],[</span><span class="mf">56.95</span><span class="p">,</span><span class="mf">33.75</span><span class="p">],[</span><span class="mf">21.79</span><span class="p">,</span><span class="mf">36.56</span><span class="p">],[</span><span class="mf">41.83</span><span class="p">,</span><span class="mf">71.01</span><span class="p">]</span><span class="w"> </span><span class="p">]</span><span class="w">
+    </span><span class="p">]</span><span class="w">
+    </span><span class="p">},{</span><span class="w">
+      </span><span class="s2">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;MultiPoint&quot;</span><span class="p">,</span><span class="w">
+      </span><span class="s2">&quot;coordinates&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="p">[</span><span class="mi">100</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">],[</span><span class="mi">45</span><span class="p">,</span><span class="w"> </span><span class="mi">-122</span><span class="p">]</span><span class="w"> </span><span class="p">]</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></pre>
+<p><a href="http://geojson.org/geojson-spec.html#geometry-collection">GeometryCollection</a></p>
+<h2>
+          <a id='terraformer-primitive' class='section-link'></a>
+          <a href='#terraformer-primitive' class='header-link'>Link</a>
+          Terraformer Primitive
+          <a href='#' class='back-to-top-link'>Back to Top</a>
+        </h2>
+<p><a href="/documentation/core/#Primitive">Terraformer Primitives</a> wrap their <a href="#geojson">GeoJSON</a> counterparts to provide extra functionality.</p>
+<h3>
+          <a id='point-primitive' class='section-link'></a>
+          <a href='#point-primitive' class='header-link'>Link</a>
+          Point Primitive
+          <a href='#' class='back-to-top-link'>Back to Top</a>
+        </h3>
+<p>An object respresenting a <a href="#point">GeoJSON Point</a></p>
+
+<p><a href="/documentation/core/#point">Point</a></p>
+<h3>
+          <a id='multipoint-primitive' class='section-link'></a>
+          <a href='#multipoint-primitive' class='header-link'>Link</a>
+          MultiPoint Primitive
+          <a href='#' class='back-to-top-link'>Back to Top</a>
+        </h3>
+<p>An object respresenting a <a href="#multipoint">GeoJSON MultiPoint</a></p>
+
+<p><a href="/documentation/core/#multipoint">MultiPoint</a></p>
+<h3>
+          <a id='linestring-primitive' class='section-link'></a>
+          <a href='#linestring-primitive' class='header-link'>Link</a>
+          LineString Primitive
+          <a href='#' class='back-to-top-link'>Back to Top</a>
+        </h3>
+<p>An object respresenting a <a href="#lineString">GeoJSON LineString</a></p>
+
+<p><a href="/documentation/core/#linestring">LineString</a></p>
+<h3>
+          <a id='multilinestring-primitive' class='section-link'></a>
+          <a href='#multilinestring-primitive' class='header-link'>Link</a>
+          MultiLineString Primitive
+          <a href='#' class='back-to-top-link'>Back to Top</a>
+        </h3>
+<p>An object respresenting a <a href="#multilinestring">GeoJSON MultiLineString</a></p>
+
+<p><a href="/documentation/core/#multilinestring">MultiLineString</a></p>
+<h3>
+          <a id='polygon-primitive' class='section-link'></a>
+          <a href='#polygon-primitive' class='header-link'>Link</a>
+          Polygon Primitive
+          <a href='#' class='back-to-top-link'>Back to Top</a>
+        </h3>
+<p>An object respresenting a <a href="#polygon">GeoJSON Polygon</a></p>
+
+<p><a href="/documentation/core/#polygon">Polygon</a></p>
+<h3>
+          <a id='multipolygon-primitive' class='section-link'></a>
+          <a href='#multipolygon-primitive' class='header-link'>Link</a>
+          MultiPolygon Primitive
+          <a href='#' class='back-to-top-link'>Back to Top</a>
+        </h3>
+<p>An object respresenting a <a href="#multipolygon">GeoJSON MultiPolygon</a></p>
+
+<p><a href="/documentation/core/#multipolygon">MultiPolygon</a></p>
+<h3>
+          <a id='feature-primitive' class='section-link'></a>
+          <a href='#feature-primitive' class='header-link'>Link</a>
+          Feature Primitive
+          <a href='#' class='back-to-top-link'>Back to Top</a>
+        </h3>
+<p>An object respresenting a <a href="#feature">GeoJSON Feature</a></p>
+
+<p><a href="/documentation/core/#feature">Feature</a></p>
+<h3>
+          <a id='featurecollection-primitive' class='section-link'></a>
+          <a href='#featurecollection-primitive' class='header-link'>Link</a>
+          FeatureCollection Primitive
+          <a href='#' class='back-to-top-link'>Back to Top</a>
+        </h3>
+<p>An object respresenting a <a href="#featurecollection">GeoJSON FeatureCollection</a></p>
+
+<p><a href="/documentation/core/#featurecollection">FeatureCollection</a></p>
+<h3>
+          <a id='geometrycollection-primitive' class='section-link'></a>
+          <a href='#geometrycollection-primitive' class='header-link'>Link</a>
+          GeometryCollection Primitive
+          <a href='#' class='back-to-top-link'>Back to Top</a>
+        </h3>
+<p>An object respresenting a <a href="#geometrycollection">GeoJSON GeometryCollection</a></p>
+
+<p><a href="/documentation/core/#geometrycollection">GeometryCollection</a></p>
+<h3>
+          <a id='circle-primitive' class='section-link'></a>
+          <a href='#circle-primitive' class='header-link'>Link</a>
+          Circle Primitive
+          <a href='#' class='back-to-top-link'>Back to Top</a>
+        </h3>
+<p>An object representing a <a href="#feature">GeoJSON Feature</a> which contains a polygonal representation of a circle.</p>
+
+<p><a href="/documentation/core/#circle">Circle</a></p>
+<h2>
+          <a id='misc' class='section-link'></a>
+          <a href='#misc' class='header-link'>Link</a>
+          Misc
+          <a href='#' class='back-to-top-link'>Back to Top</a>
+        </h2><h3>
+          <a id='envelope' class='section-link'></a>
+          <a href='#envelope' class='header-link'>Link</a>
+          Envelope
+          <a href='#' class='back-to-top-link'>Back to Top</a>
+        </h3>
+<p>Envelopes are a common structure for indexes like Terraformer.RTree.</p>
+<pre class="highlight javascript"><span class="p">{</span>
+  <span class="na">x</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+  <span class="na">y</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+  <span class="na">w</span><span class="p">:</span> <span class="mi">15</span>
+  <span class="na">h</span><span class="p">:</span> <span class="mi">15</span>
+<span class="p">}</span>
+</pre>
+    </main>
+
+    <footer>
+  <p>
+    The Terraformer Project is an Esri Project out of Esri Portland Research & Development
+  </p>
+</footer>
+  </body>
+
+    <script src="/assets/javascripts/modernizer.custom.js" type="text/javascript"></script>
+    <script src="/assets/javascripts/classie.js" type="text/javascript"></script>
+    <script src="/assets/javascripts/drawer.js" type="text/javascript"></script>
+</html>

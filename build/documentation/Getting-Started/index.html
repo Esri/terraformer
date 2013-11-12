@@ -1,0 +1,194 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+
+    <!-- Always force latest IE rendering engine or request Chrome Frame -->
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+
+    <!-- Use title if it's in the page YAML frontmatter -->
+    <title>Terraformer</title>
+
+    <!-- Assets -->
+    <link href="/assets/css/terraformer.css" media="screen" rel="stylesheet" type="text/css" />
+  </head>
+
+  <body class="documentation documentation_Getting-Started documentation_Getting-Started_index" id="wrap">
+    <nav>
+  <ul>
+    <li>
+      <a href="/" class="">Terraformer</a>
+    </li>
+    <li>
+      <a href="https://github.com/Esri/Terraformer" class="">Install</a>
+    </li>
+    <li>
+      <a href="/"  data-direction="active-top" class="toggle" id="close-drawer">Docs</a>
+    </li>
+  </ul>
+</nav>
+    <div class="drawer" id="drawer">
+  <div class="doctoc drawer-nav drawer-top">
+    <div class="container">
+      <ul>
+        <h3>Terraformer Documentation</h3>
+        <li><a href="/documentation/Getting-Started">Getting Started</a></li>
+
+        <li><a href="/documentation/Primitives">Primitives</a></li>
+        <li><a href="/documentation/core">Terraformer Core</a></li>
+        <li><a href="/documentation/Tools">Tools</a></li>
+
+        <li><a href="/documentation/GeoStore">GeoStores</a></li>
+        <li class="indent"><a href="/documentation/geostore/data-stores">DataStores</a></li>
+        <li class="indent"><a href="/documentation/geostore/spatial-indexes">Spatial Indexes</a></li>
+
+        <li><a href="/documentation/arcgis-parser">ArcGIS Parser</a></li>
+        <li><a href="/documentation/wkt-parser">WKT Parser</a></li>
+
+        <li><a href="/documentation/glossary">Glossary</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+conf
+
+    <main class="docs main-content" id="main-content">
+      <h1>Terraformer</h1>
+<div class='semantic-toc'><ol><li><a href='#getting-started'>Getting Started</a><ol><li><a href='#browser'>Browser</a></li><li><a href='#amd-'>AMD (Require.js and Dojo)</a><ol><li><ol><li><a href='#requirejs'>RequireJS</a></li></ol></li></ol></li><li><a href='#nodejs'>Node.js</a></li><li><a href='#webworkers'>WebWorkers</a></li></ol></li><li><a href='#specifics'>Specifics</a><ol><li><a href='#basics'>Basics</a></li><li><a href='#parsers'>Parsers</a></li><li><a href='#indexes'>Indexes</a></li><li><a href='#tools'>Tools</a></div>
+
+<p>Terraformer is an open source (MIT licensed) Javascript geo toolkit, built for the server and the browser.</p>
+<h2>
+          <a id='getting-started' class='section-link'></a>
+          <a href='#getting-started' class='header-link'>Link</a>
+          Getting Started
+          <a href='#' class='back-to-top-link'>Back to Top</a>
+        </h2>
+<p>Terraformer is broken into multiple small packages to give you the functionality that you need while still remaining extremely lightweight.</p>
+<h3>
+          <a id='browser' class='section-link'></a>
+          <a href='#browser' class='header-link'>Link</a>
+          Browser
+          <a href='#' class='back-to-top-link'>Back to Top</a>
+        </h3>
+<p>Terraformer can be used in the browser with a simple browser include.</p>
+<pre class="highlight html"><span class="c">&lt;!-- Load the main terraformer library --&gt;</span>
+<span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;terraformer.min.js&quot;</span> <span class="na">type=</span><span class="s">&quot;text/javascript&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
+
+<span class="c">&lt;!-- Load the wkt parser --&gt;</span>
+<span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;wkt.min.js&quot;</span> <span class="na">type=</span><span class="s">&quot;text/javascript&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
+
+<span class="c">&lt;!-- Load the arcgis parserindex --&gt;</span>
+<span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;arcgis.min.js&quot;</span> <span class="na">type=</span><span class="s">&quot;text/javascript&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
+
+<span class="c">&lt;!-- Load the rtree index --&gt;</span>
+<span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;rtree.min.js&quot;</span> <span class="na">type=</span><span class="s">&quot;text/javascript&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
+</pre><h3>
+          <a id='amd-' class='section-link'></a>
+          <a href='#amd-' class='header-link'>Link</a>
+          AMD (Require.js and Dojo)
+          <a href='#' class='back-to-top-link'>Back to Top</a>
+        </h3>
+<p>Terraformer also works with AMD loaders like <a href="http://requirejs.org/">RequireJS</a> and <a href="http://dojotoolkit.org/">Dojo</a>.</p>
+<h5>
+          <a id='requirejs' class='section-link'></a>
+          <a href='#requirejs' class='header-link'>Link</a>
+          RequireJS
+          <a href='#' class='back-to-top-link'>Back to Top</a>
+        </h5>
+<p>First you should register the Terraformer modules with RequireJS</p>
+<pre class="highlight javascript"><span class="nx">requirejs</span><span class="p">.</span><span class="nx">config</span><span class="p">({</span>
+  <span class="c1">//In order for proper loading of depenencies in Terraformer modules set the path up in requirejs.config
+</span>  <span class="nl">paths</span><span class="p">:</span> <span class="p">{</span>
+    <span class="na">terraformer</span><span class="p">:</span> <span class="s2">&quot;the/path/to/terraformer&quot;</span>
+  <span class="p">}</span>
+<span class="p">});</span>
+</pre>
+<p>Then you can load Terraformer modules in your <code>require</code> statements.</p>
+<pre class="highlight javascript"><span class="nx">requirejs</span><span class="p">([</span>
+  <span class="s2">&quot;terraformer/terraformer&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;terraformer/wkt&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;terraformer/rtree&quot;</span><span class="p">,</span>
+<span class="p">],</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">Terraformer</span><span class="p">,</span> <span class="nx">TerraformerWKT</span><span class="p">,</span> <span class="nx">RTree</span><span class="p">)</span> <span class="p">{</span>
+  <span class="c1">// Do stuff with terraformer core, wkt parser, and rtree
+</span><span class="p">};</span>
+</pre><h3>
+          <a id='nodejs' class='section-link'></a>
+          <a href='#nodejs' class='header-link'>Link</a>
+          Node.js
+          <a href='#' class='back-to-top-link'>Back to Top</a>
+        </h3>
+<p>Using Terraformer in Node.js is easy.</p>
+<pre class="highlight text">$ npm install terraformer
+$ npm install terraformer-wkt-parser
+$ npm install terraformer-arcgis-parser
+$ npm install terraformer-rtree
+</pre>
+<p>Writing code is easy too:</p>
+<pre class="highlight javascript"><span class="kd">var</span> <span class="nx">Terraformer</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'terraformer'</span><span class="p">);</span>
+
+<span class="kd">var</span> <span class="nx">Polygon</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Terraformer</span><span class="p">.</span><span class="nx">Polygon</span><span class="p">();</span>
+</pre><h3>
+          <a id='webworkers' class='section-link'></a>
+          <a href='#webworkers' class='header-link'>Link</a>
+          WebWorkers
+          <a href='#' class='back-to-top-link'>Back to Top</a>
+        </h3>
+<p>Documentation Coming Soon&hellip;</p>
+<h2>
+          <a id='specifics' class='section-link'></a>
+          <a href='#specifics' class='header-link'>Link</a>
+          Specifics
+          <a href='#' class='back-to-top-link'>Back to Top</a>
+        </h2><h3>
+          <a id='basics' class='section-link'></a>
+          <a href='#basics' class='header-link'>Link</a>
+          Basics
+          <a href='#' class='back-to-top-link'>Back to Top</a>
+        </h3>
+<ul>
+<li><a href="Primitives.md">Primitives</a></li>
+</ul>
+<h3>
+          <a id='parsers' class='section-link'></a>
+          <a href='#parsers' class='header-link'>Link</a>
+          Parsers
+          <a href='#' class='back-to-top-link'>Back to Top</a>
+        </h3>
+<ul>
+<li><a href="ArcGIS.md">ArcGIS</a></li>
+<li><a href="https://github.com/esri/terraformer-wkt-parser">Well Known Text</a></li>
+<li><a href="GeoJSON.md">GeoJSON</a></li>
+</ul>
+<h3>
+          <a id='indexes' class='section-link'></a>
+          <a href='#indexes' class='header-link'>Link</a>
+          Indexes
+          <a href='#' class='back-to-top-link'>Back to Top</a>
+        </h3>
+<ul>
+<li><a href="Indexes.md">Indexes</a></li>
+</ul>
+<h3>
+          <a id='tools' class='section-link'></a>
+          <a href='#tools' class='header-link'>Link</a>
+          Tools
+          <a href='#' class='back-to-top-link'>Back to Top</a>
+        </h3>
+<ul>
+<li><a href="Tools.md">Tools</a></li>
+<li><a href="GeoStore.md">Geostore</a></li>
+</ul>
+
+    </main>
+
+    <footer>
+  <p>
+    The Terraformer Project is an Esri Project out of Esri Portland Research & Development
+  </p>
+</footer>
+  </body>
+
+    <script src="/assets/javascripts/modernizer.custom.js" type="text/javascript"></script>
+    <script src="/assets/javascripts/classie.js" type="text/javascript"></script>
+    <script src="/assets/javascripts/drawer.js" type="text/javascript"></script>
+</html>
