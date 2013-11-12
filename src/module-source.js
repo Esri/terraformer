@@ -7,7 +7,7 @@
 
   // Browser Global.
   if(typeof navigator === "object") {
-    if (typeof root.Terraformer === "undefined"){
+    if (!root.Terraformer){
       throw new Error("Terraformer.WKT requires the core Terraformer library. http://github.com/esri/terraformer")
     }
     root.Terraformer.WKT = factory(root.Terraformer);

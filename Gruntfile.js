@@ -3,11 +3,11 @@ var jison = require('jison');
 
 module.exports = function (grunt) {
   grunt.initConfig({
+    aws: grunt.file.readJSON(process.env.HOME + '/terraformer-s3.json'),
     pkg:   grunt.file.readJSON('package.json'),
 
     meta: {
-      version: '0.0.1',
-      banner: '/*! Terraformer JS - <%= meta.version %> - <%= grunt.template.today("yyyy-mm-dd") %>\n' +
+      banner: '/*! Terraformer JS - <%= pkg.version %> - <%= grunt.template.today("yyyy-mm-dd") %>\n' +
         '*   https://github.com/esri/terraformer-wkt-parser\n' +
         '*   Copyright (c) <%= grunt.template.today("yyyy") %> Esri, Inc.\n' +
         '*   Licensed MIT */'
@@ -20,6 +20,10 @@ module.exports = function (grunt) {
       wkt: {
         src: ["terraformer-wkt-parser.js"],
         dest: 'terraformer-wkt-parser.min.js'
+      },
+      versioned: {
+        src: ["terraformer-wkt-parser.js"],
+        dest: 'versions/terraformer-wkt-parser-<%= pkg.version %>.min.js'
       }
     },
 
@@ -53,10 +57,10 @@ module.exports = function (grunt) {
             report: './coverage',
             // due to the generated aspects of the parser, thresholds are much lower
             thresholds: {
-              lines: 80,
-              statements: 80,
+              lines: 70,
+              statements: 70,
               branches: 70,
-              functions: 80
+              functions: 70
             }
           }
         }
@@ -73,6 +77,28 @@ module.exports = function (grunt) {
         helperNameMatcher: 'Helpers'
       },
       all: ['spec/']
+    },
+
+    s3: {
+      options: {
+        key: '<%= aws.key %>',
+        secret: '<%= aws.secret %>',
+        bucket: '<%= aws.bucket %>',
+        access: 'public-read',
+        headers: {
+          // 1 Year cache policy (1000 * 60 * 60 * 24 * 365)
+          "Cache-Control": "max-age=630720000, public",
+          "Expires": new Date(Date.now() + 63072000000).toUTCString()
+        }
+      },
+      dev: {
+        upload: [
+          {
+            src: 'versions/terraformer-wkt-parser-<%= pkg.version %>.min.js',
+            dest: 'terraformer-wkt-parser/<%= pkg.version %>/terraformer-wkt-parser.min.js'
+          }
+        ]
+      },
     }
   });
 
@@ -98,7 +124,9 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks("grunt-vows");
   grunt.loadNpmTasks('grunt-contrib-jasmine');
   grunt.loadNpmTasks('grunt-jasmine-node');
+  grunt.loadNpmTasks('grunt-s3');
 
   grunt.registerTask('test', [ 'wkt-parser', 'vows', 'jasmine', 'jasmine_node' ]);
-  grunt.registerTask('default', [ 'wkt-parser', 'vows', 'jasmine', 'jasmine_node', 'uglify' ]);
+  grunt.registerTask('default', [ 'test' ]);
+  grunt.registerTask('version', [ 'test', 'uglify', 's3' ]);
 };
