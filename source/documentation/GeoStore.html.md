@@ -2,6 +2,7 @@
 title: GeoStore
 layout: documentation
 ---
+
 # GeoStore
 <!-- table_of_contents -->
 The Terraformer GeoStore is a set of building blocks for managing spatial data as a GeoJSON `Feature` or `FeatureCollection`.  It includes functionality for storing and querying data in primarily a spatial manner.
@@ -9,6 +10,8 @@ The Terraformer GeoStore is a set of building blocks for managing spatial data a
 GeoStores are broken into three parts: [Data Stores](/documentation/geostore/data-stores), [Spatial Indexes](/documentation/geostore/spatial-indexes), and [Alternate Indexes](/documentation/geostore/alternate-indexes).
 
 More in-depth information can be found in [Core Concepts](/documentation/geostore/core-concepts).
+
+<!-- table_of_contents -->
 
 ## Using the GeoStore
 
@@ -97,7 +100,7 @@ Add a `geojson` object to the GeoStore.
 
 | Option | Value | Description |
 | --- | --- | --- |
-| geojson | `object` | Must be either a `Feature` or `FeatureCollection` and contain an `id` |
+| [`GeoJSON`](/glossary/#geojson) | `object` | Must be either a `Feature` or `FeatureCollection` and contain an `id` |
 | callback | `function` | Callback to be fired when the `add` has been completed |
 
 _Example:_
@@ -114,7 +117,7 @@ Update a single `geojson` `Feature` in the GeoStore.
 
 | Option | Value | Description |
 | --- | --- | --- |
-| geojson | `object` | Must be a `Feature` and contain an `id` |
+| [`GeoJSON`](/glossary/#geojson) | `object` | Must be a `Feature` and contain an `id` |
 | callback | `function` | Callback to be fired when the `update` has been completed |
 
 _Example:_
@@ -165,8 +168,8 @@ Find all `Features` that contain the `geojson primitive` passed in.  `contains` 
 
 | Option | Value | Description |
 | --- | --- | --- |
-| geojson | GeoJSON Primitive | A GeoJSON primitive to search with |
-| search (optional) | object | The second argument is optional.  If provided it contains additional search criteria for set elimination |
+| [`GeoJSON`](/glossary/#geojson) | `object` | A GeoJSON primitive to search with |
+| search (optional) | `object` | The second argument is optional.  If provided it contains additional search criteria for set elimination |
 | callback | `function` | Callback to be fired when the `contains` has been completed |
 
 _Example:_
@@ -196,8 +199,8 @@ Find all `Features` that are within the `geojson primitive` passed in.  `within`
 
 | Option | Value | Description |
 | --- | --- | --- |
-| geojson | GeoJSON Primitive | A GeoJSON primitive to search with |
-| search (optional) | object | The second argument is optional.  If provided it contains additional search criteria for set elimination |
+| [`GeoJSON`](/glossary/#geojson) | `object` | A GeoJSON primitive to search with |
+| search (optional) | `object` | The second argument is optional.  If provided it contains additional search criteria for set elimination |
 | callback | `function` | Callback to be fired when the `within` has been completed |
 
 _Example:_
