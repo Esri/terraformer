@@ -65,7 +65,7 @@ You can grab the latest released version of all Terraformer modules from the
 <script src="//cdn.webgeo.io/terraformer-wkt-parser/1.0.0/terraformer-wkt-parser.min.js"></script>
 
 <!-- GeoStore -->
-<script src="//cdn.webgeo.io/terraformer-geostore/1.0.0/terraformer-geostore.min.js"></script>
+<script src="//cdn.webgeo.io/terraformer-geostore/1.0.1/terraformer-geostore.min.js"></script>
 
 <!-- RTree index for GeoStore -->
 <script src="//cdn.webgeo.io/terraformer-rtree/1.0.0/terraformer-rtree.min.js"></script>
