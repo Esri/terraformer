@@ -11,15 +11,20 @@
 
     <!-- Assets -->
     <%= stylesheet_link_tag "terraformer" %>
-    <%= javascript_include_tag  "all" %>
   </head>
 
-  <body class="<%= page_classes %>">
+  <body class="<%= page_classes %>" id="wrap">
     <%= partial "partials/nav" %>
-    <main class="docs">
-      <%= partial "partials/doctoc" %>
+    <%= partial "partials/doctoc" %>
+
+    <main class="docs main-content" id="main-content">
       <%= yield %>
     </main>
+
     <%= partial "partials/footer" %>
   </body>
+
+    <%= javascript_include_tag  "modernizer.custom" %>
+    <%= javascript_include_tag  "classie" %>
+    <%= javascript_include_tag  "drawer" %>
 </html>

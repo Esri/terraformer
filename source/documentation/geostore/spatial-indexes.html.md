@@ -1,9 +1,8 @@
 ---
 layout: documentation
 ---
-
 # GeoStore Spatial Indexes
-
+<!-- table_of_contents -->
 Spatial Indexes are an extremely important part of the GeoStore.  Spatial Indexes allow for very quick elimination of `Features` and are part of the core of the GeoStore.
 
 Spatial Indexes are asyncronous and use Node.js style callbacks.
@@ -29,7 +28,7 @@ You can pass any needed arguments while instantiating.
 _Example:_
 
 ```js
-var ds = new SpatialIndex({
+var si = new SpatialIndex({
   "width": 45,
   "dateline": false
 });
@@ -37,70 +36,70 @@ var ds = new SpatialIndex({
 
 #### SpatialIndex.insert(geojson | envelope, id, callback)
 
-Add a `geojson` object or `envelope` to a DataStore.  In the case of a `Feature`, the `id` should be used as the primary key for storage and retrieval:
-
-If a `FeatureCollection` is passed in instead, each `Feature` inside of the `FeatureCollection` needs to be added before the `callback` is called.
+Add a `geojson` object or `envelope` to a `SpatialIndex`.  It is important to include an `id`, as this is the key that is returned from searches.
 
 | Option | Value | Description |
 | --- | --- | --- |
-| geojson | `object` | Must be either a `Feature` or `FeatureCollection` and contain an `id` |
-| callback | `function` | Callback to be fired when the `add` has been completed |
+| [`GeoJSON`](/glossary/#geojson) _or_ [`Envelope`](/glossary/#envelope) | `object` | Must be either `GeoJSON` or `Envelope` |
+| id | `String` _or_ `Number` | The `id` of the spatial area |
+| callback | `function` | Callback to be fired when the `insert` has been completed |
 
 _Example:_
 
 ```js
-ds.add(geojson, function (err, res) {
+si.insert(geojson, id, function (err, res) {
   // Node.js style callback
 });
 ```
 
-#### DataStore.update(geostore, callback)
+#### SpatialIndex.remove(geojson | envelope, id, callback)
 
-Update a `geojson` object already in a DataStore.  Only a `Feature` should be able to be updated, the `id` should be used as the primary key for update:
-
-| Option | Value | Description |
-| --- | --- | --- |
-| geojson | `object` | Must be a `Feature` and contain an `id` |
-| callback | `function` | Callback to be fired when the `update` has been completed |
-
-_Example:_
-
-```js
-ds.update(geojson, function (err, res) {
-  // Node.js style callback
-});
-```
-
-#### DataStore.remove(id, callback)
-
-Remove a `geojson` object from the DataStore by `id`.
+Remove a `geojson` or `envelope` object already in a SpatialIndex.
 
 | Option | Value | Description |
 | --- | --- | --- |
-| id | `String` _or_ `Number` | The `id` of the `Feature` to be removed |
+| [`GeoJSON`](/glossary/#geojson) _or_ [`Envelope`](/glossary/#envelope) | `object` | Must be either `GeoJSON` or `Envelope` |
+| id | `String` _or_ `Number` | The `id` of the spatial area |
 | callback | `function` | Callback to be fired when the `remove` has been completed |
 
 _Example:_
 
 ```js
-ds.remove(id, function (err, res) {
+si.remove(geojson, id, function (err, res) {
   // Node.js style callback
 });
 ```
 
-#### DataStore.get(id, callback)
+#### SpatialIndex.search(geojson | envelope, callback)
 
-Retrieves a `geojson` object from the DataStore by `id`.
+Searches for any `id`'s that can contain the `geojson` or `envelope` passed in.  These are returned as an `Array`.
 
 | Option | Value | Description |
 | --- | --- | --- |
-| id | `String` _or_ `Number` | The `id` of the `Feature` to be retrieved |
-| callback | `function` | Callback to be fired when the `remove` has been completed |
+| [`GeoJSON`](/glossary/#geojson) _or_ [`Envelope`](/glossary/#envelope) | `object` | Must be either `GeoJSON` or `Envelope` |
+| callback | `function` | Callback to be fired when the `search` has been completed |
 
 _Example:_
 
 ```js
-ds.get(id, function (err, res) {
+si.search(geojson, function (err, res) {
+  // Node.js style callback
+});
+```
+
+#### SpatialIndex.within(geojson | envelope, callback)
+
+Searches for any `id`'s that are within the `geojson` or `envelope` passed in.  These are returned as an `Array`.
+
+| Option | Value | Description |
+| --- | --- | --- |
+| [`GeoJSON`](/glossary/#geojson) _or_ [`Envelope`](/glossary/#envelope) | `object` | Must be either `GeoJSON` or `Envelope` |
+| callback | `function` | Callback to be fired when the `search` has been completed |
+
+_Example:_
+
+```js
+si.within(geojson, function (err, res) {
   // Node.js style callback
 });
 ```
