@@ -16,6 +16,7 @@
     font-size: 18em;
     // text-align: center;
     border-radius: (0.5em);
+    margin-top: 0;
     @include respond-to($tablet-mid) {
       font-size: 9em;
     }
@@ -25,6 +26,7 @@
     @include PTMono;
     color: $cream;
     padding-left: 9em;
+    margin-top: 0;
     width: 45%;
     padding-top: 1*$baseline;
     padding-bottom: 3*$baseline;
