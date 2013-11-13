@@ -52,29 +52,29 @@ npm install terraformer-geostore-leveldb
 
 ## CDN 
 
-You can grab the latest released version of all Terraformer modules from the 
+You can grab the latest released version of all Terraformer modules from webgeo.io CDN. If you need https support replace `http://cdn.webgeo.io` with `https://cdn-geoweb.s3.amazonaws.com`.
 
 ```html
 <!-- Core Terraformer Module -->
-<script src="//cdn.pdx.esri.com/terraformer/1.0.1/terraformer.min.js"></script>
+<script src="http://cdn.webgeo.io/terraformer/1.0.1/terraformer.min.js"></script>
 
 <!-- ArcGIS Parser -->
-<script src="//cdn.pdx.esri.com/terraformer-arcgis-parser/1.0.0/terraformer-arcgis-parser.min.js"></script>
+<script src="http://cdn.webgeo.io/terraformer-arcgis-parser/1.0.0/terraformer-arcgis-parser.min.js"></script>
 
 <!-- WKT Parser -->
-<script src="//cdn.webgeo.io/terraformer-wkt-parser/1.0.0/terraformer-wkt-parser.min.js"></script>
+<script src="http://cdn.webgeo.io/terraformer-wkt-parser/1.0.0/terraformer-wkt-parser.min.js"></script>
 
 <!-- GeoStore -->
-<script src="//cdn.webgeo.io/terraformer-geostore/1.0.1/terraformer-geostore.min.js"></script>
+<script src="http://cdn.webgeo.io/terraformer-geostore/1.0.1/terraformer-geostore.min.js"></script>
 
 <!-- RTree index for GeoStore -->
-<script src="//cdn.webgeo.io/terraformer-rtree/1.0.0/terraformer-rtree.min.js"></script>
+<script src="http://cdn.webgeo.io/terraformer-rtree/1.0.0/terraformer-rtree.min.js"></script>
 
 <!-- In memory backing for GeoStore -->
-<script src="//cdn.webgeo.io/terraformer-geostore-memory/1.0.0/terraformer-geostore-memory.min.js"></script>
+<script src="http://cdn.webgeo.io/terraformer-geostore-memory/1.0.0/terraformer-geostore-memory.min.js"></script>
 
 <!-- Localstorage backing for GeoStore -->
-<script src="//cdn.webgeo.io/terraformer-geostore-localstorage/1.0.0/terraformer-geostore-localstorage.min.js"></script>
+<script src="http://cdn.webgeo.io/terraformer-geostore-localstorage/1.0.0/terraformer-geostore-localstorage.min.js"></script>
 ```
 
 ## Bower

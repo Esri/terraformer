@@ -3,100 +3,95 @@ title: Getting Started
 layout: documentation
 ---
 # Terraformer
+
 <!-- table_of_contents -->
+
 Terraformer is an open source (MIT licensed) Javascript geo toolkit, built for the server and the browser.
 
 ## Getting Started
 
 Terraformer is broken into multiple small packages to give you the functionality that you need while still remaining extremely lightweight.
 
+There are currently several packages in the Terraformer ecosystem.
+
+* [Terraformer](/documentation/core) - The core library for manipilating GeoJSON and performaing calculations. Most other modules rely on `terraformer`.
+* [ArcGIS Parser](/documentation/arcgis-parser) - Parses ArcGIS geometry objects to GeoJSON and vica-versa.
+* [WKT Parser](/documentation/wkt-parser) - Parses basic WKT strings to and from GeoJSON.
+* [GeoStore](/documentation/geostore) - A JavaScript database for storing and querying collections of GeoJSON Features. GeoStores also need an index module and a backing store which are distributed as seperate modules.
+
 ### Browser
 
-Terraformer can be used in the browser with a simple browser include.
+Include the core Terraformer library with a `<script>` tag.
 
 ```html
-<!-- Load the main terraformer library -->
-<script src="terraformer.min.js" type="text/javascript"></script>
-
-<!-- Load the wkt parser -->
-<script src="wkt.min.js" type="text/javascript"></script>
-
-<!-- Load the arcgis parserindex -->
-<script src="arcgis.min.js" type="text/javascript"></script>
-
-<!-- Load the rtree index -->
-<script src="rtree.min.js" type="text/javascript"></script>
-```
-
-### AMD (Require.js and Dojo)
-
-Terraformer also works with AMD loaders like [RequireJS](http://requirejs.org/) and [Dojo](http://dojotoolkit.org/).
-
-##### RequireJS
-
-First you should register the Terraformer modules with RequireJS
-
-```js
-requirejs.config({
-  //In order for proper loading of depenencies in Terraformer modules set the path up in requirejs.config
-  paths: {
-    terraformer: "the/path/to/terraformer"
-  }
-});
-```
-
-Then you can load Terraformer modules in your `require` statements.
-
-```js
-requirejs([
-  "terraformer/terraformer",
-  "terraformer/wkt",
-  "terraformer/rtree",
-], function (Terraformer, TerraformerWKT, RTree) {
-  // Do stuff with terraformer core, wkt parser, and rtree
-};
+<script src="http://cdn.webgeo.io/terraformer/1.0.1/terraformer.min.js"></script>
 ```
 
 ### Node.js
 
-Using Terraformer in Node.js is easy.
+Install the core module with NPM and then require it in your Node program.
 
 ```
 $ npm install terraformer
-$ npm install terraformer-wkt-parser
-$ npm install terraformer-arcgis-parser
-$ npm install terraformer-rtree
 ```
-
-Writing code is easy too:
 
 ```js
 var Terraformer = require('terraformer');
-
-var Polygon = new Terraformer.Polygon();
 ```
 
-### WebWorkers
+## Working with Primitives
 
-Documentation Coming Soon...
+Most of the core Terraformer libray centers around using [`Primitives`](/documentation/core#primitive) which wrap GeoJSON objects and provide additonal functionality.
 
-## Specifics
+You can create a new [Terraformer.Primitive](/documentation/core#primitive) with any GeoJSON object.
 
-### Basics
+```js
 
-* [Primitives](Primitives.md)
+var polygon = new Terraformer.Primitive({
+  "type": "Polygon",
+  "coordinates": [
+    [
+      [-122.66589403152467, 45.52290150862236],
+      [-122.66926288604736, 45.52291654238294],
+      [-122.67115116119385, 45.518406234030586],
+      [-122.67325401306151, 45.514000817199715],
+      [-122.6684260368347, 45.5127377671934],
+      [-122.66765356063841, 45.51694782364431],
+      [-122.66589403152467, 45.52290150862236 ]
+    ]
+  ]
+});
 
-### Parsers
+var point = new Terraformer.Primitive({
+  "type": "Point",
+  "coordinates": [-122.66947746276854, 45.51775972687403]
+});
+```
 
-* [ArcGIS](ArcGIS.md)
-* [Well Known Text](https://github.com/esri/terraformer-wkt-parser)
-* [GeoJSON](GeoJSON.md)
+Now that you have a point and a polygon primitive you can use many of the primitive helper methods
 
-### Indexes
+```js
+// add a new vertex to our polygon
+polygon.insertVertex([-122.6708507537842, 45.513188859735436], 2);
 
-* [Indexes](Indexes.md)
+// figure out if our point is within our polygon
+point.within(polygon); // returns true
+```
 
-### Tools
+You can also have Terraformer perform many geometric operations like convex hulls and bounding boxes.
 
-* [Tools](Tools.md)
-* [Geostore](GeoStore.md)
+```js
+var convexHull = polygon.convexHull();
+
+point.within(convexHull); // returns true
+
+var boundingBox = polygon.bbox(); // returns the geojson bounding box for this object.
+```
+
+## Whats Next?
+
+Start exploring all the options you have working with [Primitives]() and the core library then start exploring other modules.
+
+[Terraformer GeoStore](/documentation/geostore) is a JavaScript database for indexing and querying large amounds of GeoJSON. You can use multuile types of spatial indexes and backing stores for your data.
+
+You can also convert data between different formats like [ArcGIS Geometries](/documentation/arcgis-parser) and [Well Known Text](/documentation/wkt-parser). Remember Terraformer is a modular framework use only the pieces you need to complete your applicaiton. 

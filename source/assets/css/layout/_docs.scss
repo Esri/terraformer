@@ -8,6 +8,9 @@
     padding-left: $spine;
     z-index: 1;
   }
+  li {
+    @include p12;
+  }
 }
 
 aside.docs {

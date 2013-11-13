@@ -40,7 +40,6 @@ In the browser, the core [Terraformer](http://github.com/esri/terraformer) libra
 You can also use [Bower](http://bower.io/) to install the components if you like or download them and host them yourself.
 
 ```
-$ bower install terraformer
 $ bower install terraformer-arcgis-parser
 ```
 
@@ -56,7 +55,7 @@ var ArcGIS = require('terraformer-arcgis-parser');
 
 ### Methods
 
-#### parse(json, options)
+#### ArcGIS.parse(json, options)
 
 `Terraformer.ArcGIS.convert(json, options)` - Converts a GeoJSON or a [Terraformer.Primitive]() into the ArdGIS JSON format.
 
@@ -66,6 +65,7 @@ var ArcGIS = require('terraformer-arcgis-parser');
 | `idAttribute` | String | "OBJECTID" |  When converting GeoJSON Features the `id` key of your feature will be set on the `OBJECTID` field in your output. If you want to assign your id to a different key you should set this to the string of the key your wish to assign the `id` to. |
 
 _Notes_
+
 Terraformer will also handle converting `FeatureCollection` and `GeometryCollection` objects to arrays of ArcGIS geometries or features. However it will **Not** do this in reverse as there is no official structure for arrays of features and geometries in ArcGIS and all the output features will not have `id` properties. See [this issue](https://github.com/Esri/Terraformer/issues/104) for more details.
 
 _Example_
@@ -81,7 +81,7 @@ var point = Terraformer.ArcGIS.parse({
 });
 ```
 
-#### convert(geojson, options)
+#### ArcGIS.convert(geojson, options)
 `Terraformer.ArcGIS.convert(geoJSON, options)` will convert GeoJSON or a Terraformer Primitive to ArcGIS JSON.
 
 | Option | Type | Default | Description |

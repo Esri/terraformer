@@ -237,7 +237,7 @@ Contains multiple [Geometry](#geometry) objects in a single obejct.
 
 [GeometryCollection](http://geojson.org/geojson-spec.html#geometry-collection)
 
-## Terraformer Primitive
+## Terraformer Primitives
 
 [Terraformer Primitives](/documentation/core/#Primitive) wrap their [GeoJSON](#geojson) counterparts to provide extra functionality.
 
