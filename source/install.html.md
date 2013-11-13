@@ -56,7 +56,7 @@ You can grab the latest released version of all Terraformer modules from the
 
 ```html
 <!-- Core Terraformer Module -->
-<script src="//cdn.pdx.esri.com/terraformer/1.0.0/terraformer.min.js"></script>
+<script src="//cdn.pdx.esri.com/terraformer/1.0.1/terraformer.min.js"></script>
 
 <!-- ArcGIS Parser -->
 <script src="//cdn.pdx.esri.com/terraformer-arcgis-parser/1.0.0/terraformer-arcgis-parser.min.js"></script>
@@ -79,7 +79,7 @@ You can grab the latest released version of all Terraformer modules from the
 
 ## Bower
 
-All the parts of the Terraformer project are published on Bower. [Terraformer on Bower](https://npmjs.org/search?q=terraformer-*)
+All the parts of the Terraformer project are published on Bower. [Terraformer on Bower](http://sindresorhus.com/bower-components/#!/search/terraformer)
 
 **Core Terraformer Module**
 
