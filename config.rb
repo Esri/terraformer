@@ -1,13 +1,37 @@
 module CustomRenderers
   class SemanticTOC < Redcarpet::Render::HTML_TOC
+
+
     def preprocess text
       @current_level = 0
+      @headers = []
       text
     end
 
     def header text, level
-      if level > 1
-        buf = ""
+
+      id = text.downcase.strip.gsub(' ', '-').gsub(/\(.+\)/, '').gsub(/[^\w-]/, '')
+
+      if(@headers.include?(id))
+        while @headers.include?(id) do
+          if id[-1].to_i.zero?
+            id = id + "-1"
+          else
+            id[-1] = (id[-1].to_i + 1).to_s
+          end
+
+          if !@headers.include?(id)
+            @headers.push(id)
+            break
+          end
+        end
+      else
+        @headers.push(id)
+      end
+
+      buf = ""
+
+      if level > 1 && level < 5
 
         if (@current_level == 0)
           @level_offset = level - 1;
@@ -31,8 +55,9 @@ module CustomRenderers
           buf << "</li><li>"
         end
 
-        buf << "<a href='##{text.downcase.strip.gsub(' ', '-').gsub(/\(.+\)/, '').gsub(/[^\w-]/, '')}'>#{text}</a>"
+        buf << "<a href='##{id}'>#{text}</a>"
       end
+      buf
     end
 
     def postprocess text
@@ -42,19 +67,39 @@ module CustomRenderers
 
   class Markdown < Redcarpet::Render::HTML
 
+
     TableOfContentsRenderer = ::Redcarpet::Markdown.new(CustomRenderers::SemanticTOC)
 
     include Redcarpet::Render::SmartyPants
 
     def preprocess text
+      @headers = []
       toc = TableOfContentsRenderer.render text
       text.gsub!("<!-- table_of_contents -->", toc)
       return text
     end
 
     def header text, level
-      if level > 1
+      if level > 1 && level < 5
         id = text.downcase.strip.gsub(' ', '-').gsub(/\(.+\)/, '').gsub(/[^\w-]/, '')
+
+        if(@headers.include?(id))
+          while @headers.include?(id) do
+            if id[-1].to_i.zero?
+              id = id + "-1"
+            else
+              id[-1] = (id[-1].to_i + 1).to_s
+            end
+
+            if !@headers.include?(id)
+              @headers.push(id)
+              break
+            end
+          end
+        else
+          @headers.push(id)
+        end
+
         "<h#{level}>
           <a id='#{id}' class='section-link'></a>
           <a href='##{id}' class='header-link'>Link</a>
@@ -79,9 +124,13 @@ set :images_dir, 'assets/images'
 
 set :fonts_dir,'assets/fonts'
 
-set :index_file, "index.html"
+set :index_file, 'index.html'
 
 set :markdown_engine, :redcarpet
+
+set :source, 'docs'
+
+set :build_dir, 'docs-build'
 
 set :markdown,
     :renderer => CustomRenderers::Markdown,
@@ -96,17 +145,6 @@ set :markdown,
     :with_toc_data => true
 
 activate :rouge_syntax
-
-# Documentation TOC
-def get_pages
-  @pages = sitemap.resources.find_all { |page| page.url.match(/\/documentation\/.*/) }
-  # Sort by date of project
-  # @projects.sort! { |a,b| a.data['order'].to_i <=> b.data['order'].to_i }
-end
-
-ready do
-  get_pages
-end
 
 # Build-specific configuration
 configure :build do
