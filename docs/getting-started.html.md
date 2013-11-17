@@ -14,10 +14,10 @@ Terraformer is broken into multiple small packages to give you the functionality
 
 There are currently several packages in the Terraformer ecosystem.
 
-* [Terraformer](/documentation/core) - The core library for manipilating GeoJSON and performaing calculations. Most other modules rely on `terraformer`.
-* [ArcGIS Parser](/documentation/arcgis-parser) - Parses ArcGIS geometry objects to GeoJSON and vica-versa.
-* [WKT Parser](/documentation/wkt-parser) - Parses basic WKT strings to and from GeoJSON.
-* [GeoStore](/documentation/geostore) - A JavaScript database for storing and querying collections of GeoJSON Features. GeoStores also need an index module and a backing store which are distributed as seperate modules.
+* [Terraformer](/core/) - The core library for manipilating GeoJSON and performaing calculations. Most other modules rely on `terraformer`.
+* [ArcGIS Parser](/arcgis-parser/) - Parses ArcGIS geometry objects to GeoJSON and vica-versa.
+* [WKT Parser](/wkt-parser/) - Parses basic WKT strings to and from GeoJSON.
+* [GeoStore](/geostore/) - A JavaScript database for storing and querying collections of GeoJSON Features. GeoStores also need an index module and a backing store which are distributed as seperate modules.
 
 ### Browser
 
@@ -41,9 +41,9 @@ var Terraformer = require('terraformer');
 
 ## Working with Primitives
 
-Most of the core Terraformer libray centers around using [`Primitives`](/documentation/core#primitive) which wrap GeoJSON objects and provide additonal functionality.
+Most of the core Terraformer libray centers around using [`Primitives`](/core/#terraformerprimitive) which wrap GeoJSON objects and provide additonal functionality.
 
-You can create a new [Terraformer.Primitive](/documentation/core#primitive) with any GeoJSON object.
+You can create a new [Terraformer.Primitive](/core/#terraformerprimitive) with any GeoJSON object.
 
 ```js
 
@@ -90,8 +90,8 @@ var boundingBox = polygon.bbox(); // returns the geojson bounding box for this o
 
 ## Whats Next?
 
-Start exploring all the options you have working with [Primitives]() and the core library then start exploring other modules.
+Start exploring all the options you have working with [Primitives](/core/#terraformerprimitive) and the core library then start exploring other modules.
 
-[Terraformer GeoStore](/documentation/geostore) is a JavaScript database for indexing and querying large amounds of GeoJSON. You can use multuile types of spatial indexes and backing stores for your data.
+[Terraformer GeoStore](/geostore/) is a JavaScript database for indexing and querying large amounds of GeoJSON. You can use multuile types of spatial indexes and backing stores for your data.
 
-You can also convert data between different formats like [ArcGIS Geometries](/documentation/arcgis-parser) and [Well Known Text](/documentation/wkt-parser). Remember Terraformer is a modular framework use only the pieces you need to complete your applicaiton. 
+You can also convert data between different formats like [ArcGIS Geometries](/arcgis-parser/) and [Well Known Text](/wkt-parser/). Remember Terraformer is a modular framework use only the pieces you need to complete your applicaiton. 

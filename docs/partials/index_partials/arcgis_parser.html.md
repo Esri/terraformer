@@ -7,7 +7,7 @@
   </h3>
 </header>
 
-Allows you to convert between [Terraformer Primitives](/core/#primitive) or [GeoJSON](http://geojson.org/geojson-spec.html) and the [ArcGIS Geometry Objects](http://resources.arcgis.com/en/help/arcgis-rest-api/#/Geometry_Objects/02r3000000n1000000/).
+Allows you to convert between [Terraformer Primitives](/core/#terraformerprimitive) or [GeoJSON](http://geojson.org/geojson-spec.html) and the [ArcGIS Geometry Objects](http://resources.arcgis.com/en/help/arcgis-rest-api/#/Geometry_Objects/02r3000000n1000000/).
 
 ```js
 // parse ArcGIS JSON, convert it to a Terraformer.Primitive
