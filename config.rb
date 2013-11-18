@@ -1,61 +1,37 @@
-###
-# Compass
-###
-
-# Change Compass configuration
-# compass_config do |config|
-#   config.output_style = :compact
-# end
-
-###
-# Page options, layouts, aliases and proxies
-###
-
-# Per-page layout changes:
-#
-# With no layout
-# page "/path/to/file.html", :layout => false
-#
-# With alternative layout
-# page "/path/to/file.html", :layout => :otherlayout
-#
-# A path which all have the same layout
-# with_layout :admin do
-#   page "/admin/*"
-# end
-
-# Proxy pages (http://middlemanapp.com/dynamic-pages/)
-# proxy "/this-page-has-no-template.html", "/template-file.html", :locals => {
-#  :which_fake_page => "Rendering a fake page with a local variable" }
-
-###
-# Helpers
-###
-
-# Automatic image dimensions on image_tag helper
-# activate :automatic_image_sizes
-
-# Reload the browser automatically whenever files change
-# activate :livereload
-
-# Methods defined in the helpers block are available in templates
-# helpers do
-#   def table_of_contents
-#     TableOfContentsRenderer
-#     current_page.soruce.render()
-#   end
-# end
-
 module CustomRenderers
   class SemanticTOC < Redcarpet::Render::HTML_TOC
+
+
     def preprocess text
       @current_level = 0
+      @headers = []
       text
     end
 
     def header text, level
-      if level > 1
-        buf = ""
+
+      id = text.downcase.strip.gsub(' ', '-').gsub(/\(.+\)/, '').gsub(/[^\w-]/, '')
+
+      if(@headers.include?(id))
+        while @headers.include?(id) do
+          if id[-1].to_i.zero?
+            id = id + "-1"
+          else
+            id[-1] = (id[-1].to_i + 1).to_s
+          end
+
+          if !@headers.include?(id)
+            @headers.push(id)
+            break
+          end
+        end
+      else
+        @headers.push(id)
+      end
+
+      buf = ""
+
+      if level > 1 && level < 5
 
         if (@current_level == 0)
           @level_offset = level - 1;
@@ -79,8 +55,9 @@ module CustomRenderers
           buf << "</li><li>"
         end
 
-        buf << "<a href='##{text.downcase.strip.gsub(' ', '-').gsub(/\(.+\)/, '').gsub(/[^\w-]/, '')}'>#{text}</a>"
+        buf << "<a href='##{id}'>#{text}</a>"
       end
+      buf
     end
 
     def postprocess text
@@ -90,20 +67,39 @@ module CustomRenderers
 
   class Markdown < Redcarpet::Render::HTML
 
+
     TableOfContentsRenderer = ::Redcarpet::Markdown.new(CustomRenderers::SemanticTOC)
 
     include Redcarpet::Render::SmartyPants
 
     def preprocess text
+      @headers = []
       toc = TableOfContentsRenderer.render text
       text.gsub!("<!-- table_of_contents -->", toc)
       return text
     end
 
     def header text, level
-      if level > 1
+      if level > 1 && level < 5
         id = text.downcase.strip.gsub(' ', '-').gsub(/\(.+\)/, '').gsub(/[^\w-]/, '')
-        puts id
+
+        if(@headers.include?(id))
+          while @headers.include?(id) do
+            if id[-1].to_i.zero?
+              id = id + "-1"
+            else
+              id[-1] = (id[-1].to_i + 1).to_s
+            end
+
+            if !@headers.include?(id)
+              @headers.push(id)
+              break
+            end
+          end
+        else
+          @headers.push(id)
+        end
+
         "<h#{level}>
           <a id='#{id}' class='section-link'></a>
           <a href='##{id}' class='header-link'>Link</a>
@@ -128,14 +124,14 @@ set :images_dir, 'assets/images'
 
 set :fonts_dir,'assets/fonts'
 
-set :index_file, "index.html"
-
-# set :http_prefix, 'documentation/'
-###
-# Markdown
-###
+set :index_file, 'index.html'
 
 set :markdown_engine, :redcarpet
+
+set :source, 'docs'
+
+set :build_dir, 'docs-build'
+
 set :markdown,
     :renderer => CustomRenderers::Markdown,
     :fenced_code_blocks => true,
@@ -150,31 +146,11 @@ set :markdown,
 
 activate :rouge_syntax
 
-# Documentation TOC
-def get_pages
-  @pages = sitemap.resources.find_all { |page| page.url.match(/\/documentation\/.*/) }
-  # Sort by date of project
-  # @projects.sort! { |a,b| a.data['order'].to_i <=> b.data['order'].to_i }
-end
-
-ready do
-  get_pages
-end
-
 # Build-specific configuration
 configure :build do
-  # For example, change the Compass output style for deployment
-  # activate :minify_css
+  activate :minify_css
 
-  # Minify Javascript on build
-  # activate :minify_javascript
+  activate :minify_javascript
 
-  # Enable cache buster
-  # activate :asset_hash
-
-  # Use relative URLs
-  # activate :relative_assets
-
-  # Or use a different image path
-  # set :http_prefix, "/Content/images/"
+  activate :asset_hash
 end

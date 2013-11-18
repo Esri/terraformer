@@ -99,7 +99,17 @@ module.exports = function (grunt) {
           }
         ]
       },
+    },
+
+    'gh-pages': {
+      options: {
+        base: 'docs-build',
+        repo: 'git@github.com:Esri/Terraformer.git',
+        branch: 'gh-pages'
+      },
+      src: ['**']
     }
+
   });
 
   grunt.loadNpmTasks('grunt-contrib-jshint');
@@ -108,6 +118,7 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-contrib-jasmine');
   grunt.loadNpmTasks('grunt-jasmine-node');
   grunt.loadNpmTasks('grunt-s3');
+  grunt.loadNpmTasks('grunt-gh-pages');
 
   grunt.registerTask('test', ['jshint', 'jasmine_node', 'jasmine']);
   grunt.registerTask('version', ['test', 'uglify', 's3']);
