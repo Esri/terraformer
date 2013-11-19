@@ -1,0 +1,116 @@
+nav {
+  top: 0;
+  left: 0;
+  right: 0;
+  background: $darker-blue;
+  position: fixed;
+  padding-bottom: 6*$p;
+  display: block;
+  z-index: 250;
+  ul {
+    margin: auto;
+    max-width: $container-max;
+    padding-bottom: 3*$p;
+    padding-right: 0.5*$edge;
+    li {
+      @include OpenLight;
+      @include upperCase;
+      @include narrowTrack;
+      @include p10-5;
+      display: inline;
+      float: right;
+      padding: 6*$p 6*$p;
+      &:first-child {
+        float: left;
+        padding-left: 0.5*$edge;
+        @include respond-to($phone-large) {
+          padding-left: 0.5*$edge;
+        }
+      }
+      a {
+        color: $off-white;
+        text-decoration: none;
+        padding-bottom: 1*$p;
+        &:hover {
+          color: $green;
+          border-bottom: 1px dashed $green;
+        }
+      }
+    }
+  }
+}
+
+.doctoc {
+  .container {
+    padding-left: 2*$edge;
+  }
+  ul {
+    padding-top: 2*$baseline;
+    // width: 12.5%;
+    float: left;
+    list-style-type: none;
+  }
+  li {
+    margin-bottom: 0.25*$baseline;
+  }
+  .indent {
+    padding-left: 2em;
+  }
+  a {
+    color: $lightest-gray;
+    &:hover {
+      color: $red;
+      background-color: transparent;
+    }
+  }
+}
+
+
+.subnav {
+  background-color: $darker-blue;
+  @include clearfix;
+  .container {
+    max-width: $container-max;
+    margin: auto;
+  }
+  section {
+    text-align: center;
+    float: left;
+    width: 25%;
+    padding: 0;
+    margin: 0;
+  }
+  h4{
+    @include OpenLight;
+    @include p12;
+    padding: 0.5*$baseline 0 0.75*$baseline 0;
+    &:hover {
+      background-color: darken($darker-blue, 10%);
+    }
+  }
+  a {
+    width: 100%;
+    margin: 0.5*$baseline 0;
+    color: $lightest-gray;
+    text-decoration: none;
+    // padding: 0 3*$p;
+    &:hover {
+      color: $lightest-gray;
+      background-color: darken($darker-blue, 10%);
+    }
+  }
+}
+
+footer {
+  margin: 0;
+  padding-top: 1*$baseline;
+  padding-bottom: 0;
+  width: $container-width;
+  color: $white;
+  background-color: $darker-gray;
+  text-align: center;
+  p {
+    @include Open;
+    @include p10-5;
+  }
+}

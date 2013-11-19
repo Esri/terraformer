@@ -1,0 +1,35 @@
+.container {
+  max-width: $container-max;
+}
+
+.docs {
+  // display: absolute;
+  h1, h2, h3, h4, h5, h6, ol, ul, p {
+    padding-left: $spine;
+    z-index: 1;
+  }
+  li {
+    @include p12;
+  }
+}
+
+aside.docs {
+  position: absolute;
+  float: left;
+  // width: $spine;
+  padding-left: 0;
+  // margin-right: $edge;
+  margin-top: 1*$baseline;
+  z-index: 100;
+  ul {
+    padding-left: $edge;
+    list-style-type: none;
+  }
+  li {
+    z-index: 2;
+    padding-bottom: 0.5*$baseline;
+  }
+  a:hover {
+    color: darken($green, 10);
+  }
+}

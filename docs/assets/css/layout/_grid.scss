@@ -1,0 +1,142 @@
+#wrap {
+  overflow: hidden;
+}
+
+.index, .docs {
+  max-width: $container-max;
+  margin: auto;
+  padding-top: 36*$point;
+  padding-bottom: 36*$point;
+  padding-left: $edge;
+  width: 80%;
+
+  @include respond-to($tablet-mid) {
+    padding-left: $edge;
+    padding-right: $edge;
+  }
+  @include respond-to($phone-large) {
+    padding-left: 0.5*$edge;
+    padding-right: 0.5*$edge;
+  }
+
+  .subhead {
+    position: relative;
+    background-color: transparent;
+    padding-top: 1*$baseline;
+    clear: both;
+    h2 {
+      @include p28-5;
+      @include OpenLight;
+      margin-bottom: -11*$p;
+      line-height: 2*$baseline;
+    }
+
+    h3 {
+      @include OpenBold;
+      @include p13-5;
+    }
+    img {
+      margin: auto;
+      position: absolute;
+      margin-left: -0.5*$measure;
+      width: 0.4*$measure;
+      @include respond-to($tablet-mid) {
+        display: none;
+      }
+    }
+  }
+
+  h4 {
+    @include OpenBold;
+    @include p13-5;
+  }
+
+  p {
+    width: $measure;
+    @include respond-to($tablet-mid) {
+      width: 100%;
+    }
+  }
+
+  blockquote {
+    float: right;
+    max-width: $spine;
+    padding-top: 12*$p;
+    @include respond-to($tablet-mid) {
+      float: none;
+      max-width: 100%;
+      padding-bottom: 0;
+      text-align: center;
+    }
+
+    p {
+      color: darken($green, 20%);
+      @include PTMono;
+      @include p18;
+      max-width: $container-width;
+      min-width: 0;
+      line-height: 1.5*$baseline;
+      padding-left: 2em;
+      @include respond-to($tablet-mid) {
+        padding-left: 0;
+        // line-height:
+      }
+    }
+  }
+  .button-light {
+    color: white;
+  }
+
+  aside {
+    width: $edge;
+  }
+}
+
+.docs {
+  padding-left: 0;
+
+  pre {
+    padding-left: 1em;
+    margin-left: 1*$spine;
+    width: 63%;
+  }
+
+  table {
+    margin-left: $spine;
+    width: 62.5%;
+  }
+
+  aside {
+    width: $edge;
+    padding-left: 0;
+    float: left;
+    z-index: 150;
+    // padding-top: 3*$baseline;
+  }
+
+  main {
+    @include clearfix;
+    width: $measure;
+    padding-top: 3*$baseline;
+  }
+
+  p {
+    width: $measure;
+    padding-left: 18.75%;
+  }
+
+  img {
+    width: 0.5*$measure;
+    margin-left: $edge;
+    display: block;
+    padding-bottom: 1*$baseline;
+    @include respond-to($tablet-mid) {
+      width: 0.66*$measure;
+    }
+  }
+}
+
+.index {
+  padding-left: $edge;
+  width: 60%;
+}

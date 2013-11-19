@@ -1,0 +1,93 @@
+.semantic-toc {
+  position: absolute;
+  z-index: 100;
+
+  ol {
+    float: left;
+    padding-left: 0;
+    li {
+      line-height: 1*$baseline;
+      padding-left: 0;
+      list-style-type: lower-roman;
+      &:first-child {
+        margin-top: 1*$baseline;
+      }
+      ol {
+        padding-left: 1*$baseline;
+        margin-bottom: 0;
+        float: none;
+      }
+    }
+  }
+}
+
+.header-link, .back-to-top-link {
+  @include p9;
+  @include OpenLight;
+  border: none;
+  display: none;
+  position: absolute;
+  margin-left: -3em;
+  margin-right: 0.5em;
+  color: darken($cream, 15);
+  z-index: 10;
+  &:hover {
+    color: darken($cream, 30);
+    border: none;
+  }
+}
+
+h2 {
+  .header-link, .back-to-top-link {
+    margin-top: 8*$p;
+  }
+}
+
+h3 {
+  .header-link, .back-to-top-link {
+    margin-top: -3*$p;
+  }
+}
+
+h4 {
+  .header-link, .back-to-top-link {
+    margin-top: -4*$p;
+  }
+}
+
+.back-to-top-link {
+  right: 0;
+  float: right;
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.section-link {
+  border: none;
+  position: absolute;
+  height: 40px;
+  top: -40px;
+  display: block;
+  z-index: -100;
+  opacity: 0;
+}
+
+h2 {
+  .header-link, .back-to-top-link {
+    margin-top: 10px;
+  }
+}
+
+h4 {
+  .header-link, .back-to-top-link {
+    margin-top: -7px;
+  }
+}
+
+h2, h3, h4, h5, h6 {
+  &:hover {
+    .header-link, .back-to-top-link {
+      display: inline-block;
+    }
+  }
+}

@@ -1,0 +1,204 @@
+// Baseline -----------
+
+body {
+  background-color: $cream;
+  color: $darker-gray;
+  @include Lucida;
+}
+
+// Headers ------------
+h1 {@include p28-5; @include Open;
+  padding-bottom: 1*$baseline;
+}
+h2 {@include p24; @include Open;
+  padding-bottom: 1*$baseline;
+}
+h3 {@include p18; @include Open;
+  padding-bottom: 1*$baseline;
+}
+h4 {@include p13-5; @include Open;
+  padding-bottom: 1*$baseline;
+}
+h5 {@include p13-5; @include Open;
+  padding-bottom: 1*$baseline;
+}
+h6 {@include p12; @include OpenBold;
+  padding-bottom: 1*$baseline;
+}
+
+h1, h2, h3, h4,h5, h6 {
+  margin-top: 2rem;
+  position: relative;
+  &:hover {
+    .header-link {
+      display: block;
+    }
+  }
+}
+
+// Basic Copy ------------
+p {
+  @include p12;
+  padding-bottom: 1*$baseline;
+}
+
+a {
+  color: $red;
+  border-bottom: 1px dashed;
+  padding-bottom: 3*$p;
+  text-decoration: none;
+  &:hover {
+    color: lighten($red, 20%);
+    border-bottom: 1px dashed;
+  }
+  code {
+    color: $red;
+  }
+}
+
+li {
+  padding-bottom: 0.5*$baseline;
+}
+
+blockquote {
+  @include p12;
+  margin-left: 0;
+  padding-top: 1*$baseline;
+  padding-bottom: 1*$baseline;
+}
+
+b, strong {
+  @include OpenBold;
+}
+
+em, cite {
+  @include OpenItalic;
+}
+
+small {
+  font-size: 9*$point;
+  line-height: 14*$point;
+}
+
+// Superscript and Subscript ---------------------------------------------------
+sub,
+sup {
+  @include OpenBold;
+  font-size: 75%;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+  padding-left: 1*$point;
+  padding-right: 1*$point;
+}
+
+sup {
+  top: -0.5em;
+}
+
+sub {
+  bottom: -0.25em;
+}
+
+// Code Block ------------
+code {
+  @include PTMono;
+  @include narrowTrack;
+  padding: 3px;
+  color: darken($green, 10);
+  em {
+    color: $gray;
+  }
+}
+
+pre {
+  @include PTMono;
+  @include narrowTrack;
+  @include p10-5;
+  line-height: 1*$baseline;
+  margin-bottom: 1*$baseline;
+  overflow-x: auto;
+  display: block;
+  padding: 1rem;
+  background: #002b36;
+  color: #839496;
+  @include respond-to($tablet-mid) {
+    width: 90%;
+  }
+  code {
+    display: block;
+    overflow: auto;
+    word-wrap: normal;
+    padding: 1*$baseline;
+    line-height: 0.75*$baseline;
+  }
+}
+
+// Lists --------------
+ul, ol {
+  margin-bottom: 14*$p;
+  li:first-child{margin-top: 4*$point;}
+  ul, ol {
+    margin-top: -6*$point;
+    li:first-child{margin-top: 6*$point;}
+  }
+  ol {list-style-type:lower-alpha}
+}
+nav {
+  ul, ol {
+    li:first-child{margin-top: 0;}
+  }
+}
+
+dl {
+  margin-top: 0;
+  dt {
+    @include Open;
+    @include p13-5;
+  }
+  dd {
+    margin: 0;
+    @include p12;
+
+  }
+}
+
+dl.horizontal {
+  // @include clearfix;
+  padding-top: 6*$p;
+  dt {
+    @include Open;
+    @include p13-5;
+    float: left;
+  }
+  dd {
+    margin-left: 12*$pica;
+    @include p12;
+  }
+}
+
+
+// Tables --------------
+table {
+  width: 100%;
+  @include p10-5;
+  border-spacing: 0;
+  border-collapse: collapse;
+  border: 1px solid darken($cream, 15);
+  margin-bottom: 1*$baseline;
+
+  thead {
+    background: darken($cream, 10);
+    th {
+      @include p12; @include OpenBold;
+      text-align: left;
+    }
+  }
+  th, td {
+    padding: 6*$p;
+    border-bottom: 1px solid darken($cream, 15);
+  }
+  tbody tr:nth-child(even) {
+    background: darken($cream, 5);
+  }
+}

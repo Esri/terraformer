@@ -1,1 +1,0 @@
-The Terraformer Project is an Esri Project out of Esri Portland Research & Development
