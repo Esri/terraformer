@@ -1,11 +1,8 @@
 
 module.exports = function (grunt) {
   grunt.initConfig({
-    pkg:   grunt.file.readJSON('package.json'),
-
-    meta: {
-      version: '0.0.1'
-    },
+    aws: grunt.file.readJSON(process.env.HOME + '/terraformer-s3.json'),
+    pkg: grunt.file.readJSON('package.json'),
 
     jshint: {
       files: [ 'gruntfile.js', 'terraformer.js' ],
@@ -17,7 +14,7 @@ module.exports = function (grunt) {
     uglify: {
       options: {
         report: 'gzip',
-        banner: '/*! Terraformer JS - <%= meta.version %> - <%= grunt.template.today("yyyy-mm-dd") %>\n' +
+        banner: '/*! Terraformer JS - <%= pkg.version %> - <%= grunt.template.today("yyyy-mm-dd") %>\n' +
         '*   https://github.com/esri/Terraformer\n' +
         '*   Copyright (c) <%= grunt.template.today("yyyy") %> Environmental Systems Research Institute, Inc.\n' +
         '*   Licensed MIT */'
@@ -25,6 +22,10 @@ module.exports = function (grunt) {
       terraformer: {
         src: ['terraformer.js'],
         dest: 'terraformer.min.js'
+      },
+      versioned: {
+        src: ['terraformer.js'],
+        dest: 'versions/terraformer-<%= pkg.version %>.min.js'
       }
     },
 
@@ -76,16 +77,50 @@ module.exports = function (grunt) {
           maintainability: 65
         }
       }
-    }
-  });
+    },
 
+    s3: {
+      options: {
+        key: '<%= aws.key %>',
+        secret: '<%= aws.secret %>',
+        bucket: '<%= aws.bucket %>',
+        access: 'public-read',
+        headers: {
+          // 1 Year cache policy (1000 * 60 * 60 * 24 * 365)
+          "Cache-Control": "max-age=630720000, public",
+          "Expires": new Date(Date.now() + 63072000000).toUTCString()
+        }
+      },
+      dev: {
+        upload: [
+          {
+            src: 'versions/terraformer-<%= pkg.version %>.min.js',
+            dest: 'terraformer/<%= pkg.version %>/terraformer.min.js'
+          }
+        ]
+      },
+    },
+
+    'gh-pages': {
+      options: {
+        base: 'docs-build',
+        repo: 'git@github.com:Esri/Terraformer.git',
+        branch: 'gh-pages'
+      },
+      src: ['**']
+    }
+
+  });
 
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-complexity');
   grunt.loadNpmTasks('grunt-contrib-jasmine');
   grunt.loadNpmTasks('grunt-jasmine-node');
+  grunt.loadNpmTasks('grunt-s3');
+  grunt.loadNpmTasks('grunt-gh-pages');
 
   grunt.registerTask('test', ['jshint', 'jasmine_node', 'jasmine']);
-  grunt.registerTask('default', ['test', 'uglify', 'complexity' ]);
+  grunt.registerTask('version', ['test', 'uglify', 's3']);
+  grunt.registerTask('default', ['test']);
 };

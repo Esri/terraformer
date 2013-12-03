@@ -10,8 +10,8 @@ complexity.xml
 # Ignore environment variables set on this machine
 .env
 
-# Ignore the docpad output
-out
+# Ignore the doc output
+docs-build
 
 # Mac
 .DS_Store

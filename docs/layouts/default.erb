@@ -1,0 +1,29 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+
+    <!-- Always force latest IE rendering engine or request Chrome Frame -->
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+
+    <!-- Use title if it's in the page YAML frontmatter -->
+    <title><%= "Terraformer" || current_page.data.title %></title>
+
+    <!-- Assets -->
+    <%= stylesheet_link_tag "terraformer" %>
+  </head>
+
+  <body id="wrap">
+    <%= partial "partials/nav" %>
+    <%= partial "partials/doctoc" %>
+    <%= partial "partials/cover" %>
+
+    <main class="index main-content" id="main-content">
+      <%= yield %>
+    </main>
+    <%= partial "partials/footer" %>
+  </body>
+    <%= javascript_include_tag  "modernizer.custom" %>
+    <%= javascript_include_tag  "classie" %>
+    <%= javascript_include_tag  "drawer" %>
+</html>
