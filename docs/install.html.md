@@ -54,7 +54,7 @@ We make Terraformer available via a number of distribution methods including NPM
 **Bower** `bower install terraformer-rtree`
 
 <a href="https://github.com/Esri/terraformer-geostore-rtree/releases" class="button button-light">Download</a>
-<a href="http://cdn-geoweb.s3.amazonaws.com/terraformer-geostore-rtree/1.0.0/terraformer-rtree.min.js
+<a href="http://cdn-geoweb.s3.amazonaws.com/terraformer-geostore-rtree/1.0.0/terraformer-geostore-rtree.min.js
 " class="button button-light">Cloudfront CDN</a>
 
 ### Memory Store
