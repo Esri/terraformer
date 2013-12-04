@@ -108,6 +108,22 @@ module.exports = function (grunt) {
         branch: 'gh-pages'
       },
       src: ['**']
+    },
+
+
+    middleman: {
+      server: {
+        options: {
+          useBundle: true
+        }
+      },
+      build: {
+        options: {
+          useBundle: true,
+          server: false,
+          command: "build"
+        }
+      }
     }
 
   });
@@ -119,8 +135,10 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-jasmine-node');
   grunt.loadNpmTasks('grunt-s3');
   grunt.loadNpmTasks('grunt-gh-pages');
+  grunt.loadNpmTasks('grunt-middleman');
 
   grunt.registerTask('test', ['jshint', 'jasmine_node', 'jasmine']);
   grunt.registerTask('version', ['test', 'uglify', 's3']);
   grunt.registerTask('default', ['test']);
+  grunt.registerTask('deploy-docs', ['middleman:build', 'gh-pages']);
 };

@@ -12,7 +12,8 @@
     "grunt-jasmine-node": "https://github.com/magicmoose/grunt-jasmine-node/tarball/master",
     "grunt-template-jasmine-istanbul": "~0.2.4",
     "grunt-s3": "~0.2.0-alpha.3",
-    "grunt-gh-pages": "~0.8.1"
+    "grunt-gh-pages": "~0.8.1",
+    "grunt-middleman": "~0.1.0"
   },
   "scripts": {
     "test": "grunt test"
