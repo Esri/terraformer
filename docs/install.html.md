@@ -45,7 +45,7 @@ We make Terraformer available via a number of distribution methods including NPM
 **Bower** `bower install terraformer-geostore`
 
 <a href="https://github.com/Esri/terraformer-geostore/releases" class="button button-light">Download</a>
-<a href="http://cdn-geoweb.s3.amazonaws.com/terraformer-geostore/1.0.0/terraformer-geostore.min.js" class="button button-light">Cloudfront CDN</a>
+<a href="http://cdn-geoweb.s3.amazonaws.com/terraformer-geostore/1.0.2/terraformer-geostore.min.js" class="button button-light">Cloudfront CDN</a>
 
 ### RTree Index
 
@@ -53,8 +53,8 @@ We make Terraformer available via a number of distribution methods including NPM
 
 **Bower** `bower install terraformer-rtree`
 
-<a href="https://github.com/Esri/terraformer-rtree/releases" class="button button-light">Download</a>
-<a href="http://cdn-geoweb.s3.amazonaws.com/terraformer-rtree/1.0.0/terraformer-rtree.min.js
+<a href="https://github.com/Esri/terraformer-geostore-rtree/releases" class="button button-light">Download</a>
+<a href="http://cdn-geoweb.s3.amazonaws.com/terraformer-geostore-rtree/1.0.0/terraformer-rtree.min.js
 " class="button button-light">Cloudfront CDN</a>
 
 ### Memory Store
@@ -72,7 +72,5 @@ We make Terraformer available via a number of distribution methods including NPM
 
 **Bower** `bower install terraformer-geostore-localstorage`
 
-**CDN** [`http://cdn-geoweb.s3.amazonaws.com/terraformer-geostore-localstorage/1.0.0/terraformer-geostore-localstorage.min.js`](http://cdn-geoweb.s3.amazonaws.com/terraformer-geostore-localstorage/1.0.0/terraformer-geostore-localstorage.min.js)
-
 <a href="https://github.com/Esri/terraformer-geostore-localstorage/releases" class="button button-light">Download</a>
-<a href="http://cdn-geoweb.s3.amazonaws.com/terraformer-geostore-memory/1.0.0/terraformer-geostore-memory.min.js" class="button button-light">Cloudfront CDN</a>
+<a href="http://cdn-geoweb.s3.amazonaws.com/terraformer-geostore-localstorage/1.0.0/terraformer-geostore-localstorage.min.js" class="button button-light">Cloudfront CDN</a>
