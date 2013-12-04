@@ -1,3 +1,7 @@
+#wrap {
+  overflow: hidden;
+}
+
 .index, .docs {
   max-width: $container-max;
   margin: auto;
@@ -99,7 +103,7 @@
 
   table {
     margin-left: $spine;
-    width: 66%;
+    width: 62.5%;
   }
 
   aside {
