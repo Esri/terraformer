@@ -1,0 +1,249 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+
+    <!-- Always force latest IE rendering engine or request Chrome Frame -->
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+
+    <!-- Use title if it's in the page YAML frontmatter -->
+    <title>Terraformer</title>
+
+    <!-- Assets -->
+    <link href="/assets/css/terraformer-c49376d8.css" media="screen" rel="stylesheet" type="text/css" />
+  </head>
+
+  <body class="geostore geostore_data-stores geostore_data-stores_index" id="wrap">
+    <nav>
+  <ul>
+    <li>
+      <a href="/" class="">Terraformer</a>
+    </li>
+    <li>
+      <a href="https://github.com/search?q=%40Esri+terraformer" class="">GitHub</a>
+    </li>
+    <li>
+      <a href="/install" class="">Install</a>
+    </li>
+    <li>
+      <a href="/"  data-direction="active-top" class="toggle" id="close-drawer">Docs</a>
+    </li>
+  </ul>
+</nav>
+    <div class="drawer" id="drawer">
+  <div class="doctoc drawer-nav drawer-top">
+    <div class="container">
+      <ul>
+        <h3>Terraformer Documentation</h3>
+        <li><a href="/getting-started/">Getting Started</a></li>
+
+        <li><a href="/core/">Terraformer Core</a></li>
+        <li class="indent"><a href="/core/#terraformerprimitive">Primitives</a></li>
+        <li class="indent"><a href="/core/#terraformertools">Tools</a></li>
+
+        <li><a href="/geostore/">GeoStores</a></li>
+        <li class="indent"><a href="/geostore/data-stores/">DataStores</a></li>
+        <li class="indent"><a href="/geostore/spatial-indexes/">Spatial Indexes</a></li>
+
+        <li><a href="/arcgis-parser/">ArcGIS Parser</a></li>
+        <li><a href="/wkt-parser/">WKT Parser</a></li>
+
+        <li><a href="/glossary/">Glossary</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+    <main class="docs main-content" id="main-content">
+      <h1>GeoStore Data Stores</h1>
+<div class='semantic-toc'><ol><li><a href='#existing-data-stores'>Existing Data Stores</a></li><li><a href='#writing-a-datastore'>Writing a DataStore</a><ol><li><a href='#methods'>Methods</a><ol><li><a href='#new-datastore'>new DataStore()</a></li><li><a href='#datastoreadd'>DataStore.add(geostore, callback)</a></li><li><a href='#datastoreupdate'>DataStore.update(geostore, callback)</a></li><li><a href='#datastoreremove'>DataStore.remove(id, callback)</a></li><li><a href='#datastoreget'>DataStore.get(id, callback)</a></div>
+
+<p>Data stores are the foundation of the GeoStore.  They are <code>key/value</code> storage devices that allow for creating entries, updating, deleting, and retrieving single <code>Feature</code> objects in GeoJSON.</p>
+
+<p>Data Stores are designed to be asyncronous, using Node.js style callbacks.  In syncronough stores, like <code>Terraformer.Store.Memory</code> and <code>Terraformer.Store.LocalStorage</code> callbacks are executed immediately, but in truly asyncronous stores they behave as expected.</p>
+<h2>
+          <a id='existing-data-stores' class='section-link'></a>
+          <a href='#existing-data-stores' class='header-link'>Link</a>
+          Existing Data Stores
+          <a href='#' class='back-to-top-link'>Back to Top</a>
+        </h2>
+<p>There are a couple of existing Data Stores that help you get started storing data immediately.</p>
+
+<ul>
+<li><a href="https://github.com/Esri/terraformer-geostore-localstorage">LocalStorage</a> - works in the browser only</li>
+<li><a href="https://github.com/Esri/terraformer-geostore-memory">Memory</a> - works in both the browser and Node.js</li>
+<li><a href="https://github.com/JerrySievert/terraformer-geostore-leveldb">LevelDB</a> - works in Node.js</li>
+</ul>
+<h2>
+          <a id='writing-a-datastore' class='section-link'></a>
+          <a href='#writing-a-datastore' class='header-link'>Link</a>
+          Writing a DataStore
+          <a href='#' class='back-to-top-link'>Back to Top</a>
+        </h2>
+<p>Since Data Stores are simply <code>key/value</code> stores, it is very easy to write additional Data Stores as long as the method signatures are correct.</p>
+<h3>
+          <a id='methods' class='section-link'></a>
+          <a href='#methods' class='header-link'>Link</a>
+          Methods
+          <a href='#' class='back-to-top-link'>Back to Top</a>
+        </h3><h4>
+          <a id='new-datastore' class='section-link'></a>
+          <a href='#new-datastore' class='header-link'>Link</a>
+          new DataStore()
+          <a href='#' class='back-to-top-link'>Back to Top</a>
+        </h4>
+<p>Instantiating a <code>DataStore</code> should return a new object containing method signatures conforming to the <code>DataStore</code> interface.</p>
+
+<p>You can pass any needed arguments while instantiating.</p>
+
+<p><em>Example:</em></p>
+<pre class="highlight javascript"><span class="kd">var</span> <span class="nx">ds</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">DataStore</span><span class="p">({</span>
+  <span class="s2">&quot;path&quot;</span><span class="p">:</span> <span class="s2">&quot;some_path&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;username&quot;</span><span class="p">:</span> <span class="s2">&quot;me&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;password&quot;</span><span class="p">:</span> <span class="s2">&quot;mypass&quot;</span>
+<span class="p">});</span>
+</pre><h4>
+          <a id='datastoreadd' class='section-link'></a>
+          <a href='#datastoreadd' class='header-link'>Link</a>
+          DataStore.add(geostore, callback)
+          <a href='#' class='back-to-top-link'>Back to Top</a>
+        </h4>
+<p>Add a <code>geojson</code> object to a DataStore.  In the case of a <code>Feature</code>, the <code>id</code> should be used as the primary key for storage and retrieval:</p>
+<pre class="highlight javascript"><span class="c1">// get the id
+</span><span class="kd">var</span> <span class="nx">id</span> <span class="o">=</span> <span class="nx">geojson</span><span class="p">.</span><span class="nx">id</span><span class="p">;</span>
+
+<span class="c1">// store the data
+</span><span class="k">this</span><span class="p">.</span><span class="nx">magicdb</span><span class="p">.</span><span class="nx">put</span><span class="p">(</span><span class="nx">geojson</span><span class="p">.</span><span class="nx">id</span><span class="p">,</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">geojson</span><span class="p">));</span>
+</pre>
+<p>If a <code>FeatureCollection</code> is passed in instead, each <code>Feature</code> inside of the <code>FeatureCollection</code> needs to be added before the <code>callback</code> is called.</p>
+
+<table><thead>
+<tr>
+<th>Option</th>
+<th>Value</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><a href="/glossary/#geojson"><code>GeoJSON</code></a></td>
+<td><code>object</code></td>
+<td>Must be either a <code>Feature</code> or <code>FeatureCollection</code> and contain an <code>id</code></td>
+</tr>
+<tr>
+<td>callback</td>
+<td><code>function</code></td>
+<td>Callback to be fired when the <code>add</code> has been completed</td>
+</tr>
+</tbody></table>
+
+<p><em>Example:</em></p>
+<pre class="highlight javascript"><span class="nx">ds</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="nx">geojson</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
+  <span class="c1">// Node.js style callback
+</span><span class="p">});</span>
+</pre><h4>
+          <a id='datastoreupdate' class='section-link'></a>
+          <a href='#datastoreupdate' class='header-link'>Link</a>
+          DataStore.update(geostore, callback)
+          <a href='#' class='back-to-top-link'>Back to Top</a>
+        </h4>
+<p>Update a <code>geojson</code> object already in a DataStore.  Only a <code>Feature</code> should be able to be updated, the <code>id</code> should be used as the primary key for update:</p>
+
+<table><thead>
+<tr>
+<th>Option</th>
+<th>Value</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><a href="/glossary/#geojson"><code>GeoJSON</code></a></td>
+<td><code>object</code></td>
+<td>Must be a <code>Feature</code> and contain an <code>id</code></td>
+</tr>
+<tr>
+<td>callback</td>
+<td><code>function</code></td>
+<td>Callback to be fired when the <code>update</code> has been completed</td>
+</tr>
+</tbody></table>
+
+<p><em>Example:</em></p>
+<pre class="highlight javascript"><span class="nx">ds</span><span class="p">.</span><span class="nx">update</span><span class="p">(</span><span class="nx">geojson</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
+  <span class="c1">// Node.js style callback
+</span><span class="p">});</span>
+</pre><h4>
+          <a id='datastoreremove' class='section-link'></a>
+          <a href='#datastoreremove' class='header-link'>Link</a>
+          DataStore.remove(id, callback)
+          <a href='#' class='back-to-top-link'>Back to Top</a>
+        </h4>
+<p>Remove a <code>geojson</code> object from the DataStore by <code>id</code>.</p>
+
+<table><thead>
+<tr>
+<th>Option</th>
+<th>Value</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>id</td>
+<td><code>String</code> <em>or</em> <code>Number</code></td>
+<td>The <code>id</code> of the <code>Feature</code> to be removed</td>
+</tr>
+<tr>
+<td>callback</td>
+<td><code>function</code></td>
+<td>Callback to be fired when the <code>remove</code> has been completed</td>
+</tr>
+</tbody></table>
+
+<p><em>Example:</em></p>
+<pre class="highlight javascript"><span class="nx">ds</span><span class="p">.</span><span class="nx">remove</span><span class="p">(</span><span class="nx">id</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
+  <span class="c1">// Node.js style callback
+</span><span class="p">});</span>
+</pre><h4>
+          <a id='datastoreget' class='section-link'></a>
+          <a href='#datastoreget' class='header-link'>Link</a>
+          DataStore.get(id, callback)
+          <a href='#' class='back-to-top-link'>Back to Top</a>
+        </h4>
+<p>Retrieves a <code>geojson</code> object from the DataStore by <code>id</code>.</p>
+
+<table><thead>
+<tr>
+<th>Option</th>
+<th>Value</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>id</td>
+<td><code>String</code> <em>or</em> <code>Number</code></td>
+<td>The <code>id</code> of the <code>Feature</code> to be retrieved</td>
+</tr>
+<tr>
+<td>callback</td>
+<td><code>function</code></td>
+<td>Callback to be fired when the <code>remove</code> has been completed</td>
+</tr>
+</tbody></table>
+
+<p><em>Example:</em></p>
+<pre class="highlight javascript"><span class="nx">ds</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">id</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
+  <span class="c1">// Node.js style callback
+</span><span class="p">});</span>
+</pre>
+    </main>
+
+    <footer>
+  <p>
+    The Terraformer is an open source project from the <a href="http://pdx.esri.com/">Esri Portland R&D Center</a>
+  </p>
+</footer>
+  </body>
+
+    <script src="/assets/javascripts/modernizer.custom.js" type="text/javascript"></script>
+    <script src="/assets/javascripts/classie-b6db1f70.js" type="text/javascript"></script>
+    <script src="/assets/javascripts/drawer-cc39b530.js" type="text/javascript"></script>
+</html>

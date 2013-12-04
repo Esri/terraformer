@@ -1,0 +1,192 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+
+    <!-- Always force latest IE rendering engine or request Chrome Frame -->
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+
+    <!-- Use title if it's in the page YAML frontmatter -->
+    <title>Terraformer</title>
+
+    <!-- Assets -->
+    <link href="/assets/css/terraformer-c49376d8.css" media="screen" rel="stylesheet" type="text/css" />
+  </head>
+
+  <body class="arcgis-parser arcgis-parser_index" id="wrap">
+    <nav>
+  <ul>
+    <li>
+      <a href="/" class="">Terraformer</a>
+    </li>
+    <li>
+      <a href="https://github.com/search?q=%40Esri+terraformer" class="">GitHub</a>
+    </li>
+    <li>
+      <a href="/install" class="">Install</a>
+    </li>
+    <li>
+      <a href="/"  data-direction="active-top" class="toggle" id="close-drawer">Docs</a>
+    </li>
+  </ul>
+</nav>
+    <div class="drawer" id="drawer">
+  <div class="doctoc drawer-nav drawer-top">
+    <div class="container">
+      <ul>
+        <h3>Terraformer Documentation</h3>
+        <li><a href="/getting-started/">Getting Started</a></li>
+
+        <li><a href="/core/">Terraformer Core</a></li>
+        <li class="indent"><a href="/core/#terraformerprimitive">Primitives</a></li>
+        <li class="indent"><a href="/core/#terraformertools">Tools</a></li>
+
+        <li><a href="/geostore/">GeoStores</a></li>
+        <li class="indent"><a href="/geostore/data-stores/">DataStores</a></li>
+        <li class="indent"><a href="/geostore/spatial-indexes/">Spatial Indexes</a></li>
+
+        <li><a href="/arcgis-parser/">ArcGIS Parser</a></li>
+        <li><a href="/wkt-parser/">WKT Parser</a></li>
+
+        <li><a href="/glossary/">Glossary</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+    <main class="docs main-content" id="main-content">
+      <h1>ArcGIS JSON Parser</h1>
+<div class='semantic-toc'><ol><li><a href='#using-the-arcgis-json-parser'>Using the ArcGIS JSON Parser</a><ol><li><a href='#using-in-the-browser'>Using in the Browser</a></li><li><a href='#using-in-nodejs'>Using in Node.js</a></li><li><a href='#methods'>Methods</a><ol><li><a href='#arcgisparse'>ArcGIS.parse(json, options)</a></li><li><a href='#arcgisconvert'>ArcGIS.convert(geojson, options)</a></div>
+
+<p>This plugin handles 2 way conversion between <a href="http://geojson.org/geojson-spec.html">GeoJSON</a> and the <a href="http://help.arcgis.com/en/arcgisserver/10.0/apis/rest/geometry.html">ArcGIS Geometry</a> format used by Esri.</p>
+<h2>
+          <a id='using-the-arcgis-json-parser' class='section-link'></a>
+          <a href='#using-the-arcgis-json-parser' class='header-link'>Link</a>
+          Using the ArcGIS JSON Parser
+          <a href='#' class='back-to-top-link'>Back to Top</a>
+        </h2>
+<p>The ArcGIS parser can be used client-side in a browser and server-side via Node.js.</p>
+<pre class="highlight javascript"><span class="c1">//parse an ArcGIS Geometry to GeoJSON
+</span><span class="kd">var</span> <span class="nx">geojsonPoint</span> <span class="o">=</span> <span class="nx">Terraformer</span><span class="p">.</span><span class="nx">ArcGIS</span><span class="p">.</span><span class="nx">parse</span><span class="p">({</span>
+  <span class="na">x</span><span class="p">:</span><span class="s2">&quot;-122.6764&quot;</span><span class="p">,</span>
+  <span class="na">y</span><span class="p">:</span><span class="s2">&quot;45.5165&quot;</span><span class="p">,</span>
+  <span class="na">spatialReference</span><span class="p">:</span> <span class="p">{</span>
+    <span class="na">wkid</span><span class="p">:</span> <span class="mi">4326</span>
+  <span class="p">}</span>
+<span class="p">});</span>
+
+<span class="c1">// convert a GeoJSON object into an ArcGIS geometry
+</span><span class="kd">var</span> <span class="nx">arcgisPoint</span> <span class="o">=</span> <span class="nx">Terraformer</span><span class="p">.</span><span class="nx">ArcGIS</span><span class="p">.</span><span class="nx">convert</span><span class="p">(</span><span class="nx">point</span><span class="p">)</span>
+</pre><h3>
+          <a id='using-in-the-browser' class='section-link'></a>
+          <a href='#using-in-the-browser' class='header-link'>Link</a>
+          Using in the Browser
+          <a href='#' class='back-to-top-link'>Back to Top</a>
+        </h3>
+<p>In the browser, the core <a href="http://github.com/esri/terraformer">Terraformer</a> library is required.</p>
+<pre class="highlight html"><span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;terraformer.min.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
+<span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;terraformer-arcgis-parser.min.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
+<span class="nt">&lt;script&gt;</span>
+  <span class="c1">//Terraformer and Terraformer.ArcGIS will be defined.
+</span><span class="nt">&lt;/script&gt;</span>
+</pre>
+<p>You can also use <a href="http://bower.io/">Bower</a> to install the components if you like or download them and host them yourself.</p>
+<pre class="highlight plaintext">$ bower install terraformer-arcgis-parser
+</pre><h3>
+          <a id='using-in-nodejs' class='section-link'></a>
+          <a href='#using-in-nodejs' class='header-link'>Link</a>
+          Using in Node.js
+          <a href='#' class='back-to-top-link'>Back to Top</a>
+        </h3>
+<p>Just install the package from NPM with <code>$ npm install terraformer-arcgis-parser</code> Then include it in your application</p>
+<pre class="highlight javascript"><span class="kd">var</span> <span class="nx">ArcGIS</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'terraformer-arcgis-parser'</span><span class="p">);</span>
+
+<span class="c1">// Start using the parse and convert methods!
+</span></pre><h3>
+          <a id='methods' class='section-link'></a>
+          <a href='#methods' class='header-link'>Link</a>
+          Methods
+          <a href='#' class='back-to-top-link'>Back to Top</a>
+        </h3><h4>
+          <a id='arcgisparse' class='section-link'></a>
+          <a href='#arcgisparse' class='header-link'>Link</a>
+          ArcGIS.parse(json, options)
+          <a href='#' class='back-to-top-link'>Back to Top</a>
+        </h4>
+<p><code>Terraformer.ArcGIS.prase(json, options)</code> - Converts a GeoJSON or a <a href="">Terraformer.Primitive</a> into the ArdGIS JSON format.</p>
+
+<table><thead>
+<tr>
+<th>Option</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>sr</code></td>
+<td><code>Number</code></td>
+<td><code>4236</code></td>
+<td>This is used to set the value of <code>spatialReference.wkid</code> on the output. By default this will use 4326.</td>
+</tr>
+<tr>
+<td><code>idAttribute</code></td>
+<td><code>String</code></td>
+<td><code>&quot;OBJECTID&quot;</code></td>
+<td>When converting GeoJSON Features the <code>id</code> key of your feature will be set on the <code>OBJECTID</code> field in your output. If you want to assign your id to a different key you should set this to the string of the key your wish to assign the <code>id</code> to.</td>
+</tr>
+</tbody></table>
+<h5>Notes</h5>
+<p>Terraformer will also handle converting <code>FeatureCollection</code> and <code>GeometryCollection</code> objects to arrays of ArcGIS geometries or features. However it will <strong>Not</strong> do this in reverse as there is no official structure for arrays of features and geometries in ArcGIS and all the output features will not have <code>id</code> properties. See <a href="https://github.com/Esri/Terraformer/issues/104">this issue</a> for more details.</p>
+<h5>Example</h5><pre class="highlight javascript"><span class="c1">//parse an ArcGIS Geometry to GeoJSON
+</span><span class="kd">var</span> <span class="nx">point</span> <span class="o">=</span> <span class="nx">Terraformer</span><span class="p">.</span><span class="nx">ArcGIS</span><span class="p">.</span><span class="nx">parse</span><span class="p">({</span>
+  <span class="na">x</span><span class="p">:</span><span class="s2">&quot;-122.6764&quot;</span><span class="p">,</span>
+  <span class="na">y</span><span class="p">:</span><span class="s2">&quot;45.5165&quot;</span><span class="p">,</span>
+  <span class="na">spatialReference</span><span class="p">:</span> <span class="p">{</span>
+    <span class="na">wkid</span><span class="p">:</span> <span class="mi">4326</span>
+  <span class="p">}</span>
+<span class="p">});</span>
+</pre><h4>
+          <a id='arcgisconvert' class='section-link'></a>
+          <a href='#arcgisconvert' class='header-link'>Link</a>
+          ArcGIS.convert(geojson, options)
+          <a href='#' class='back-to-top-link'>Back to Top</a>
+        </h4>
+<p><code>Terraformer.ArcGIS.convert(geoJSON, options)</code> will convert GeoJSON or a Terraformer Primitive to ArcGIS JSON.</p>
+
+<table><thead>
+<tr>
+<th>Option</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>idAttribute</code></td>
+<td><code>String</code></td>
+<td><code>&quot;OBJECTID&quot; &quot;FID&quot;</code></td>
+<td>When converting ArcGIS Feature the <code>attributes</code> will contain id of the feature. This is usually called <code>OBJECTID</code> or <code>FID</code>. If your feature does not use the <code>OBJECTID</code> or <code>FID</code> keys as its id, you should define what the key representing your Features ID is.</td>
+</tr>
+</tbody></table>
+<h5>Notes</h5>
+<p>If the object is in the Web Mercator spatial reference it will be converted to WGS84.</p>
+<h5>Example</h5><pre class="highlight javascript"><span class="c1">// take a Terraformer.Primitive or GeoJSON and convert it to ArcGIS JSON object
+</span><span class="kd">var</span> <span class="nx">point</span> <span class="o">=</span> <span class="nx">ArcGIS</span><span class="p">.</span><span class="nx">convert</span><span class="p">({</span>
+  <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;Point&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;coordinates&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mf">45.5165</span><span class="p">,</span> <span class="o">-</span><span class="mf">122.6764</span><span class="p">]</span>
+<span class="p">});</span>
+</pre>
+    </main>
+
+    <footer>
+  <p>
+    The Terraformer is an open source project from the <a href="http://pdx.esri.com/">Esri Portland R&D Center</a>
+  </p>
+</footer>
+  </body>
+
+    <script src="/assets/javascripts/modernizer.custom.js" type="text/javascript"></script>
+    <script src="/assets/javascripts/classie-b6db1f70.js" type="text/javascript"></script>
+    <script src="/assets/javascripts/drawer-cc39b530.js" type="text/javascript"></script>
+</html>

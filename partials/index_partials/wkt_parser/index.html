@@ -1,0 +1,22 @@
+<p><header class="subhead">
+  <img src="assets/images/terraformer-wktparser.png" alt="terraformer WKT Parser">
+  <h2>Well Known Text Parser</h2>
+  <h3>
+    <a href="/wkt-parser/" class="button button-light">Documentation</a>
+    <a href="/install/#wkt-parser" class="button button-light">Get WKT Parser</a>
+  </h3>
+</header></p>
+
+<p><a href="http://en.wikipedia.org/wiki/Well-known_text">Well Known Text</a> is a format used by databases like PostGIS. With Terraformer&rsquo;s WKT parser you can convert between this format and GeoJSON.</p>
+<pre class="highlight javascript"><span class="c1">// parse a WKT file, convert it into a primitive
+</span><span class="kd">var</span> <span class="nx">primitive</span> <span class="o">=</span> <span class="nx">Terraformer</span><span class="p">.</span><span class="nx">WKT</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="s1">'LINESTRING (30 10, 10 30, 40 40)'</span><span class="p">);</span>
+
+<span class="c1">// take a primitive and convert it into a WKT representation
+</span><span class="kd">var</span> <span class="nx">polygon</span> <span class="o">=</span> <span class="nx">Terraformer</span><span class="p">.</span><span class="nx">WKT</span><span class="p">.</span><span class="nx">convert</span><span class="p">({</span>
+  <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;Polygon&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;coordinates&quot;</span><span class="p">:</span> <span class="p">[</span>
+    <span class="p">[</span> <span class="p">[</span><span class="mf">100.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">101.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">101.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">100.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">100.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">]</span> <span class="p">],</span>
+    <span class="p">[</span> <span class="p">[</span><span class="mf">100.2</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">],</span> <span class="p">[</span><span class="mf">100.8</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">],</span> <span class="p">[</span><span class="mf">100.8</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">],</span> <span class="p">[</span><span class="mf">100.2</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">],</span> <span class="p">[</span><span class="mf">100.2</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">]</span> <span class="p">]</span>
+  <span class="p">]</span>
+<span class="p">});</span>
+</pre>
