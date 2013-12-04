@@ -26,7 +26,7 @@ We make Terraformer available via a number of distribution methods including NPM
 
 
 <a href="https://github.com/Esri/terraformer-arcgis-parser/releases" class="button button-light">Download</a>
-<a href="http://cdn-geoweb.s3.amazonaws.com/terraformer-arcgis-parser/1.0.0/terraformer-arcgis-parser.min.js" class="button button-light">Cloudfront CDN</a>
+<a href="http://cdn-geoweb.s3.amazonaws.com/terraformer-arcgis-parser/1.0.1/terraformer-arcgis-parser.min.js" class="button button-light">Cloudfront CDN</a>
 
 
 ## WKT Parser
