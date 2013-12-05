@@ -13,7 +13,7 @@ Terraformer uses the [GeoJSON specification](http://geojson.org/geojson-spec.htm
 
 ### Coordinate
 
-A coordinate is the building block for the rest of the GeoJSON specification. It is repestented by an array of `x`, `y` integers. The ordering of `x` and `y` are important, this means that when representing latitude and longitiude the order is `[longitude, latitude]`.
+A coordinate is the building block for the rest of the GeoJSON specification. It is represented by an array of `x`, `y` integers. The ordering of `x` and `y` are important, this means that when representing latitude and longitiude the order is `[longitude, latitude]`.
 
 ```js
 [-122.680, 45.528]
@@ -37,7 +37,7 @@ A series of [Coordinate](#coordinate) objects that are used to define a line or 
 
 ### Bbox
 
-A GeoJSON bounding box is usuaally a 4 item array representing the rectangle that will contain the GeoJSON object.
+A GeoJSON bounding box is usually a 4 item array representing the rectangle that will contain the GeoJSON object.
 
 ```js
 [-122.70, 45.51, -122.64, 45.53]
@@ -182,7 +182,7 @@ GeoJSON Features combine a [Geometry](#geometry) object with a unique identifier
 
 ### FeatureCollection
 
-Contains multiple [Features](#feature) objects in a single obejct.
+Contains multiple [Features](#feature) objects in a single object.
 
 ```json
 {
@@ -218,7 +218,7 @@ Contains multiple [Features](#feature) objects in a single obejct.
 
 ### GeometryCollection
 
-Contains multiple [Geometry](#geometry) objects in a single obejct.
+Contains multiple [Geometry](#geometry) objects in a single object.
 
 ```json
 {
