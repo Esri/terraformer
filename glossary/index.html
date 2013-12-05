@@ -66,7 +66,7 @@
           Coordinate
           <a href='#' class='back-to-top-link'>Back to Top</a>
         </h3>
-<p>A coordinate is the building block for the rest of the GeoJSON specification. It is repestented by an array of <code>x</code>, <code>y</code> integers. The ordering of <code>x</code> and <code>y</code> are important, this means that when representing latitude and longitiude the order is <code>[longitude, latitude]</code>.</p>
+<p>A coordinate is the building block for the rest of the GeoJSON specification. It is represented by an array of <code>x</code>, <code>y</code> integers. The ordering of <code>x</code> and <code>y</code> are important, this means that when representing latitude and longitiude the order is <code>[longitude, latitude]</code>.</p>
 <pre class="highlight javascript"><span class="p">[</span><span class="o">-</span><span class="mf">122.680</span><span class="p">,</span> <span class="mf">45.528</span><span class="p">]</span>
 </pre>
 <p><a href="http://geojson.org/geojson-spec.html#positions">GeoJSON Coordinate</a></p>
@@ -90,7 +90,7 @@
           Bbox
           <a href='#' class='back-to-top-link'>Back to Top</a>
         </h3>
-<p>A GeoJSON bounding box is usuaally a 4 item array representing the rectangle that will contain the GeoJSON object.</p>
+<p>A GeoJSON bounding box is usually a 4 item array representing the rectangle that will contain the GeoJSON object.</p>
 <pre class="highlight javascript"><span class="p">[</span><span class="o">-</span><span class="mf">122.70</span><span class="p">,</span> <span class="mf">45.51</span><span class="p">,</span> <span class="o">-</span><span class="mf">122.64</span><span class="p">,</span> <span class="mf">45.53</span><span class="p">]</span>
 </pre>
 <p><a href="http://geojson.org/geojson-spec.html#bounding-boxes">GeoJSON BBox</a></p>
@@ -111,8 +111,8 @@
         </h3>
 <p>An object representing a single point.</p>
 <pre class="highlight json"><span class="p">{</span><span class="w">
-  </span><span class="s2">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Point&quot;</span><span class="p">,</span><span class="w">
-  </span><span class="s2">&quot;coordinates&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">-105.01621</span><span class="p">,</span><span class="mf">39.57422</span><span class="p">]</span><span class="w">
+  </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Point"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"coordinates"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">-105.01621</span><span class="p">,</span><span class="mf">39.57422</span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></pre>
 <p><a href="http://geojson.org/geojson-spec.html#point">GeoJSON Point</a></p>
@@ -124,8 +124,8 @@
         </h3>
 <p>An object represeneting multiple points as a single coordinate array.</p>
 <pre class="highlight json"><span class="p">{</span><span class="w">
-  </span><span class="s2">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;MultiPoint&quot;</span><span class="p">,</span><span class="w">
-  </span><span class="s2">&quot;coordinates&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="p">[</span><span class="mf">-105.01</span><span class="p">,</span><span class="mf">39.57</span><span class="p">],[</span><span class="mf">-80.66</span><span class="p">,</span><span class="mf">35.05</span><span class="p">]</span><span class="w"> </span><span class="p">]</span><span class="w">
+  </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"MultiPoint"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"coordinates"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="p">[</span><span class="mf">-105.01</span><span class="p">,</span><span class="mf">39.57</span><span class="p">],[</span><span class="mf">-80.66</span><span class="p">,</span><span class="mf">35.05</span><span class="p">]</span><span class="w"> </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></pre>
 <p><a href="http://geojson.org/geojson-spec.html#multipoint">GeoJSON MultiPoint</a></p>
@@ -137,8 +137,8 @@
         </h3>
 <p>A series of coordinates that form a line.</p>
 <pre class="highlight json"><span class="p">{</span><span class="w">
-  </span><span class="s2">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;LineString&quot;</span><span class="p">,</span><span class="w">
-  </span><span class="s2">&quot;coordinates&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> 
+  </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"LineString"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"coordinates"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> 
     </span><span class="p">[</span><span class="mf">-101.5</span><span class="p">,</span><span class="mf">39.662</span><span class="p">],</span><span class="w">
     </span><span class="p">[</span><span class="mf">-101.75</span><span class="p">,</span><span class="mf">39.2415</span><span class="p">],</span><span class="w">
     </span><span class="p">[</span><span class="mf">-101.64</span><span class="p">,</span><span class="mf">39.2415</span><span class="p">],</span><span class="w">
@@ -154,8 +154,8 @@
         </h3>
 <p>An object that represents multiple linestrings in a single object.</p>
 <pre class="highlight json"><span class="p">{</span><span class="w">
-  </span><span class="s2">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;MultiLineString&quot;</span><span class="p">,</span><span class="w">
-  </span><span class="s2">&quot;coordinates&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> 
+  </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"MultiLineString"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"coordinates"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> 
     </span><span class="p">[</span><span class="w">
       </span><span class="p">[</span><span class="mf">-101.5</span><span class="p">,</span><span class="mf">39.662</span><span class="p">],</span><span class="w">
       </span><span class="p">[</span><span class="mf">-101.75</span><span class="p">,</span><span class="mf">39.2415</span><span class="p">],</span><span class="w">
@@ -184,8 +184,8 @@
         </h3>
 <p>An array of coordinates defining a polygon.</p>
 <pre class="highlight json"><span class="p">{</span><span class="w">
-  </span><span class="s2">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Polygon&quot;</span><span class="p">,</span><span class="w">
-  </span><span class="s2">&quot;coordinates&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+  </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Polygon"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"coordinates"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
     </span><span class="p">[</span><span class="w"> </span><span class="p">[</span><span class="mf">41.83</span><span class="p">,</span><span class="mf">71.01</span><span class="p">],[</span><span class="mf">56.95</span><span class="p">,</span><span class="mf">33.75</span><span class="p">],[</span><span class="mf">21.79</span><span class="p">,</span><span class="mf">36.56</span><span class="p">],[</span><span class="mf">41.83</span><span class="p">,</span><span class="mf">71.01</span><span class="p">]</span><span class="w"> </span><span class="p">]</span><span class="w">
   </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
@@ -199,8 +199,8 @@
         </h3>
 <p>An object that represents multiple polygons in a single object.</p>
 <pre class="highlight json"><span class="p">{</span><span class="w">
-  </span><span class="s2">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;MultiPolygon&quot;</span><span class="p">,</span><span class="w">
-  </span><span class="s2">&quot;coordinates&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+  </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"MultiPolygon"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"coordinates"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
     </span><span class="p">[</span><span class="w">
       </span><span class="p">[</span><span class="w"> </span><span class="p">[</span><span class="mf">102.0</span><span class="p">,</span><span class="w"> </span><span class="mf">2.0</span><span class="p">],</span><span class="w"> </span><span class="p">[</span><span class="mf">103.0</span><span class="p">,</span><span class="w"> </span><span class="mf">2.0</span><span class="p">],</span><span class="w"> </span><span class="p">[</span><span class="mf">103.0</span><span class="p">,</span><span class="w"> </span><span class="mf">3.0</span><span class="p">],</span><span class="w"> </span><span class="p">[</span><span class="mf">102.0</span><span class="p">,</span><span class="w"> </span><span class="mf">3.0</span><span class="p">],</span><span class="w"> </span><span class="p">[</span><span class="mf">102.0</span><span class="p">,</span><span class="w"> </span><span class="mf">2.0</span><span class="p">]</span><span class="w"> </span><span class="p">]</span><span class="w">
     </span><span class="p">],</span><span class="w">
@@ -219,16 +219,16 @@
         </h3>
 <p>GeoJSON Features combine a <a href="#geometry">Geometry</a> object with a unique identifier and set of metadata.</p>
 <pre class="highlight json"><span class="p">{</span><span class="w">
-  </span><span class="s2">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Feature&quot;</span><span class="p">,</span><span class="w">
-  </span><span class="s2">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;stadium&quot;</span><span class="p">,</span><span class="w">
-  </span><span class="s2">&quot;geometry&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-    </span><span class="s2">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Point&quot;</span><span class="p">,</span><span class="w">
-    </span><span class="s2">&quot;coordinates&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">-104.99404</span><span class="p">,</span><span class="w"> </span><span class="mf">39.75621</span><span class="p">]</span><span class="w">
+  </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Feature"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"stadium"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"geometry"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Point"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"coordinates"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">-104.99404</span><span class="p">,</span><span class="w"> </span><span class="mf">39.75621</span><span class="p">]</span><span class="w">
   </span><span class="p">},</span><span class="w">
-  </span><span class="s2">&quot;properties&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-    </span><span class="s2">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Coors Field&quot;</span><span class="p">,</span><span class="w">
-    </span><span class="s2">&quot;amenity&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Baseball Stadium&quot;</span><span class="p">,</span><span class="w">
-    </span><span class="s2">&quot;popupContent&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;This is where the Rockies play!&quot;</span><span class="w">
+  </span><span class="s2">"properties"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Coors Field"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"amenity"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Baseball Stadium"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"popupContent"</span><span class="p">:</span><span class="w"> </span><span class="s2">"This is where the Rockies play!"</span><span class="w">
   </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></pre>
@@ -239,30 +239,30 @@
           FeatureCollection
           <a href='#' class='back-to-top-link'>Back to Top</a>
         </h3>
-<p>Contains multiple <a href="#feature">Features</a> objects in a single obejct.</p>
+<p>Contains multiple <a href="#feature">Features</a> objects in a single object.</p>
 <pre class="highlight json"><span class="p">{</span><span class="w">
-  </span><span class="s2">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;FeatureCollection&quot;</span><span class="p">,</span><span class="w">
-  </span><span class="s2">&quot;features&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+  </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"FeatureCollection"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"features"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
     </span><span class="p">{</span><span class="w">
-      </span><span class="s2">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Feature&quot;</span><span class="p">,</span><span class="w">
-      </span><span class="s2">&quot;geometry&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-        </span><span class="s2">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Point&quot;</span><span class="p">,</span><span class="w">
-        </span><span class="s2">&quot;coordinates&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">-80.83775386582222</span><span class="p">,</span><span class="mf">35.24980190252168</span><span class="p">]</span><span class="w">
+      </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Feature"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"geometry"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Point"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"coordinates"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">-80.83775386582222</span><span class="p">,</span><span class="mf">35.24980190252168</span><span class="p">]</span><span class="w">
       </span><span class="p">},</span><span class="w">
-      </span><span class="s2">&quot;properties&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-        </span><span class="s2">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;DOUBLE OAKS CENTER&quot;</span><span class="p">,</span><span class="w">
-        </span><span class="s2">&quot;address&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;1326 WOODWARD AV&quot;</span><span class="w">
+      </span><span class="s2">"properties"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"DOUBLE OAKS CENTER"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"address"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1326 WOODWARD AV"</span><span class="w">
       </span><span class="p">}</span><span class="w">
     </span><span class="p">},</span><span class="w">
     </span><span class="p">{</span><span class="w">
-      </span><span class="s2">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Feature&quot;</span><span class="p">,</span><span class="w">
-      </span><span class="s2">&quot;geometry&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-        </span><span class="s2">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Point&quot;</span><span class="p">,</span><span class="w">
-        </span><span class="s2">&quot;coordinates&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">-80.83827000459532</span><span class="p">,</span><span class="mf">35.25674709224663</span><span class="p">]</span><span class="w">
+      </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Feature"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"geometry"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Point"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"coordinates"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">-80.83827000459532</span><span class="p">,</span><span class="mf">35.25674709224663</span><span class="p">]</span><span class="w">
       </span><span class="p">},</span><span class="w">
-      </span><span class="s2">&quot;properties&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-        </span><span class="s2">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;DOUBLE OAKS NEIGHBORHOOD PARK&quot;</span><span class="p">,</span><span class="w">
-        </span><span class="s2">&quot;address&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2605  DOUBLE OAKS RD&quot;</span><span class="w">
+      </span><span class="s2">"properties"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"DOUBLE OAKS NEIGHBORHOOD PARK"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"address"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2605  DOUBLE OAKS RD"</span><span class="w">
       </span><span class="p">}</span><span class="w">
     </span><span class="p">}</span><span class="w">
   </span><span class="p">]</span><span class="w">
@@ -275,17 +275,17 @@
           GeometryCollection
           <a href='#' class='back-to-top-link'>Back to Top</a>
         </h3>
-<p>Contains multiple <a href="#geometry">Geometry</a> objects in a single obejct.</p>
+<p>Contains multiple <a href="#geometry">Geometry</a> objects in a single object.</p>
 <pre class="highlight json"><span class="p">{</span><span class="w">
-  </span><span class="s2">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;GeometryCollection&quot;</span><span class="p">,</span><span class="w">
-  </span><span class="s2">&quot;geometries&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="w">
-    </span><span class="s2">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Polygon&quot;</span><span class="p">,</span><span class="w">
-    </span><span class="s2">&quot;coordinates&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+  </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"GeometryCollection"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"geometries"</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="w">
+    </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Polygon"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"coordinates"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
       </span><span class="p">[</span><span class="w"> </span><span class="p">[</span><span class="mf">41.83</span><span class="p">,</span><span class="mf">71.01</span><span class="p">],[</span><span class="mf">56.95</span><span class="p">,</span><span class="mf">33.75</span><span class="p">],[</span><span class="mf">21.79</span><span class="p">,</span><span class="mf">36.56</span><span class="p">],[</span><span class="mf">41.83</span><span class="p">,</span><span class="mf">71.01</span><span class="p">]</span><span class="w"> </span><span class="p">]</span><span class="w">
     </span><span class="p">]</span><span class="w">
     </span><span class="p">},{</span><span class="w">
-      </span><span class="s2">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;MultiPoint&quot;</span><span class="p">,</span><span class="w">
-      </span><span class="s2">&quot;coordinates&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="p">[</span><span class="mi">100</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">],[</span><span class="mi">45</span><span class="p">,</span><span class="w"> </span><span class="mi">-122</span><span class="p">]</span><span class="w"> </span><span class="p">]</span><span class="w">
+      </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"MultiPoint"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"coordinates"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="p">[</span><span class="mi">100</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">],[</span><span class="mi">45</span><span class="p">,</span><span class="w"> </span><span class="mi">-122</span><span class="p">]</span><span class="w"> </span><span class="p">]</span><span class="w">
     </span><span class="p">}</span><span class="w">
   </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">

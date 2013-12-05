@@ -71,12 +71,12 @@
 
 <p>The GeoStore manages data that is made available as either a <code>Feature</code> or a <code>FeatureCollection</code>.  In order to work, there must be an <code>id</code> field.</p>
 <pre class="highlight javascript"><span class="p">{</span>
-  <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;Feature&quot;</span><span class="p">,</span>
-  <span class="s2">&quot;properties&quot;</span><span class="p">:</span> <span class="p">{},</span>
-  <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;my id&quot;</span><span class="p">,</span>
-  <span class="s2">&quot;geometry&quot;</span><span class="p">:</span> <span class="p">{</span>
-    <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;Polygon&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;coordinates&quot;</span><span class="p">:</span> <span class="p">[</span>
+  <span class="s2">"type"</span><span class="p">:</span> <span class="s2">"Feature"</span><span class="p">,</span>
+  <span class="s2">"properties"</span><span class="p">:</span> <span class="p">{},</span>
+  <span class="s2">"id"</span><span class="p">:</span> <span class="s2">"my id"</span><span class="p">,</span>
+  <span class="s2">"geometry"</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s2">"type"</span><span class="p">:</span> <span class="s2">"Polygon"</span><span class="p">,</span>
+    <span class="s2">"coordinates"</span><span class="p">:</span> <span class="p">[</span>
       <span class="p">[</span>
         <span class="p">[</span>
           <span class="o">-</span><span class="mf">111.09374</span><span class="p">,</span> <span class="mf">41.50857</span>
@@ -104,8 +104,8 @@
           <a href='#' class='back-to-top-link'>Back to Top</a>
         </h3>
 <p>Using the GeoStore in the browser requires including both Terraformer and the GeoStore:</p>
-<pre class="highlight html"><span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;terraformer.min.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
-<span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;terraformer-geostore.min.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
+<pre class="highlight html"><span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"terraformer.min.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
+<span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"terraformer-geostore.min.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
 </pre>
 <p>Once those are included, you can create a new <code>Store</code>.  You will need to include both a Data Store and a Spatial Index to instantiate a GeoStore.</p>
 <pre class="highlight javascript"><span class="c1">// create a new GeoStore using Memory and an RTree Index
@@ -301,9 +301,9 @@
 <span class="nx">store</span><span class="p">.</span><span class="nx">contains</span><span class="p">(</span>
   <span class="nx">geojson</span><span class="p">,</span>
   <span class="p">{</span>
-    <span class="s2">&quot;name&quot;</span><span class="p">:</span>
+    <span class="s2">"name"</span><span class="p">:</span>
     <span class="p">{</span>
-      <span class="s2">&quot;equals&quot;</span><span class="p">:</span> <span class="s2">&quot;Multnomah&quot;</span>
+      <span class="s2">"equals"</span><span class="p">:</span> <span class="s2">"Multnomah"</span>
     <span class="p">}</span>
   <span class="p">},</span>
   <span class="kd">function</span> <span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
@@ -350,9 +350,9 @@
 <span class="nx">store</span><span class="p">.</span><span class="nx">within</span><span class="p">(</span>
   <span class="nx">geojson</span><span class="p">,</span>
   <span class="p">{</span>
-    <span class="s2">&quot;name&quot;</span><span class="p">:</span>
+    <span class="s2">"name"</span><span class="p">:</span>
     <span class="p">{</span>
-      <span class="s2">&quot;equals&quot;</span><span class="p">:</span> <span class="s2">&quot;Multnomah&quot;</span>
+      <span class="s2">"equals"</span><span class="p">:</span> <span class="s2">"Multnomah"</span>
     <span class="p">}</span>
   <span class="p">},</span>
   <span class="kd">function</span> <span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
@@ -374,11 +374,11 @@
 <p><em>Example:</em></p>
 <pre class="highlight javascript"><span class="kd">var</span> <span class="nx">stream</span> <span class="o">=</span> <span class="nx">store</span><span class="p">.</span><span class="nx">createReadStream</span><span class="p">();</span>
 
-<span class="nx">stream</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s2">&quot;data&quot;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">geojson</span><span class="p">)</span> <span class="p">{</span>
+<span class="nx">stream</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s2">"data"</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">geojson</span><span class="p">)</span> <span class="p">{</span>
   <span class="c1">// found geojson
 </span><span class="p">});</span>
 
-<span class="nx">stream</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s2">&quot;end&quot;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">geojson</span><span class="p">)</span> <span class="p">{</span>
+<span class="nx">stream</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s2">"end"</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">geojson</span><span class="p">)</span> <span class="p">{</span>
   <span class="c1">// final geojson object
 </span><span class="p">});</span>
 </pre>

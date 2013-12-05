@@ -78,7 +78,7 @@
           <a href='#' class='back-to-top-link'>Back to Top</a>
         </h3>
 <p>Include the core Terraformer library with a <code>&lt;script&gt;</code> tag.</p>
-<pre class="highlight html"><span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;http://cdn.webgeo.io/terraformer/1.0.1/terraformer.min.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
+<pre class="highlight html"><span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"http://cdn.webgeo.io/terraformer/1.0.1/terraformer.min.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
 </pre><h3>
           <a id='nodejs' class='section-link'></a>
           <a href='#nodejs' class='header-link'>Link</a>
@@ -99,8 +99,8 @@
 <p>You can create a new <a href="/core/#terraformerprimitive">Terraformer.Primitive</a> with any GeoJSON object.</p>
 <pre class="highlight javascript">
 <span class="kd">var</span> <span class="nx">polygon</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Terraformer</span><span class="p">.</span><span class="nx">Primitive</span><span class="p">({</span>
-  <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;Polygon&quot;</span><span class="p">,</span>
-  <span class="s2">&quot;coordinates&quot;</span><span class="p">:</span> <span class="p">[</span>
+  <span class="s2">"type"</span><span class="p">:</span> <span class="s2">"Polygon"</span><span class="p">,</span>
+  <span class="s2">"coordinates"</span><span class="p">:</span> <span class="p">[</span>
     <span class="p">[</span>
       <span class="p">[</span><span class="o">-</span><span class="mf">122.66589403152467</span><span class="p">,</span> <span class="mf">45.52290150862236</span><span class="p">],</span>
       <span class="p">[</span><span class="o">-</span><span class="mf">122.66926288604736</span><span class="p">,</span> <span class="mf">45.52291654238294</span><span class="p">],</span>
@@ -114,8 +114,8 @@
 <span class="p">});</span>
 
 <span class="kd">var</span> <span class="nx">point</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Terraformer</span><span class="p">.</span><span class="nx">Primitive</span><span class="p">({</span>
-  <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;Point&quot;</span><span class="p">,</span>
-  <span class="s2">&quot;coordinates&quot;</span><span class="p">:</span> <span class="p">[</span><span class="o">-</span><span class="mf">122.66947746276854</span><span class="p">,</span> <span class="mf">45.51775972687403</span><span class="p">]</span>
+  <span class="s2">"type"</span><span class="p">:</span> <span class="s2">"Point"</span><span class="p">,</span>
+  <span class="s2">"coordinates"</span><span class="p">:</span> <span class="p">[</span><span class="o">-</span><span class="mf">122.66947746276854</span><span class="p">,</span> <span class="mf">45.51775972687403</span><span class="p">]</span>
 <span class="p">});</span>
 </pre>
 <p>Now that you have a point and a polygon primitive you can use many of the primitive helper methods</p>

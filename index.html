@@ -78,9 +78,9 @@
 <p>Tools and objects for working with and transforming GeoJSON.</p>
 </blockquote>
 
-<p>The core Terraformer library provides a series of <code>Terraformer.Primitves</code> which wrap GeoJSON objects for additional functionality and a series of <code>Terraformer.Tools</code> for manipulating and performing calculations on coordinates.</p>
+<p>The core Terraformer library provides a series of <code>Terraformer.Primitives</code> which wrap GeoJSON objects for additional functionality and a series of <code>Terraformer.Tools</code> for manipulating and performing calculations on coordinates.</p>
 
-<p>You can also use the core library to seeing if an object contains or intersects another obejct, convert and object to a different spatial reference or transform an objects coordinates.</p>
+<p>You can also use the core library to see if an object contains or intersects another object, convert an object to a different spatial reference, or transform an object&rsquo;s coordinates.</p>
 
 <p>The core library is also used in most other components of Terraformer for performing basic tasks and calculations.</p>
 
@@ -117,8 +117,8 @@
 <p>Allows you to convert between <a href="/core/#terraformerprimitive">Terraformer Primitives</a> or <a href="http://geojson.org/geojson-spec.html">GeoJSON</a> and the <a href="http://resources.arcgis.com/en/help/arcgis-rest-api/#/Geometry_Objects/02r3000000n1000000/">ArcGIS Geometry Objects</a>.</p>
 <pre class="highlight javascript"><span class="c1">// parse ArcGIS JSON, convert it to a Terraformer.Primitive
 </span><span class="kd">var</span> <span class="nx">primitive</span> <span class="o">=</span> <span class="nx">Terraformer</span><span class="p">.</span><span class="nx">ArcGIS</span><span class="p">.</span><span class="nx">parse</span><span class="p">({</span>
-  <span class="na">x</span><span class="p">:</span><span class="s2">&quot;-122.6764&quot;</span><span class="p">,</span>
-  <span class="na">y</span><span class="p">:</span><span class="s2">&quot;45.5165&quot;</span><span class="p">,</span>
+  <span class="na">x</span><span class="p">:</span><span class="s2">"-122.6764"</span><span class="p">,</span>
+  <span class="na">y</span><span class="p">:</span><span class="s2">"45.5165"</span><span class="p">,</span>
   <span class="na">spatialReference</span><span class="p">:</span> <span class="p">{</span>
     <span class="na">wkid</span><span class="p">:</span> <span class="mi">4326</span>
   <span class="p">}</span>
@@ -126,8 +126,8 @@
 
 <span class="c1">// take a Terraformer.Primitive or GeoJSON and convert it to ArcGIS JSON
 </span><span class="kd">var</span> <span class="nx">point</span> <span class="o">=</span> <span class="nx">Terraformer</span><span class="p">.</span><span class="nx">ArcGIS</span><span class="p">.</span><span class="nx">convert</span><span class="p">({</span>
-  <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;Point&quot;</span><span class="p">,</span>
-  <span class="s2">&quot;coordinates&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mf">45.5165</span><span class="p">,</span> <span class="o">-</span><span class="mf">122.6764</span><span class="p">]</span>
+  <span class="s2">"type"</span><span class="p">:</span> <span class="s2">"Point"</span><span class="p">,</span>
+  <span class="s2">"coordinates"</span><span class="p">:</span> <span class="p">[</span><span class="mf">45.5165</span><span class="p">,</span> <span class="o">-</span><span class="mf">122.6764</span><span class="p">]</span>
 <span class="p">});</span>
 </pre>
 <p><header class="subhead">
@@ -145,8 +145,8 @@
 
 <span class="c1">// take a primitive and convert it into a WKT representation
 </span><span class="kd">var</span> <span class="nx">polygon</span> <span class="o">=</span> <span class="nx">Terraformer</span><span class="p">.</span><span class="nx">WKT</span><span class="p">.</span><span class="nx">convert</span><span class="p">({</span>
-  <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;Polygon&quot;</span><span class="p">,</span>
-  <span class="s2">&quot;coordinates&quot;</span><span class="p">:</span> <span class="p">[</span>
+  <span class="s2">"type"</span><span class="p">:</span> <span class="s2">"Polygon"</span><span class="p">,</span>
+  <span class="s2">"coordinates"</span><span class="p">:</span> <span class="p">[</span>
     <span class="p">[</span> <span class="p">[</span><span class="mf">100.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">101.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">101.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">100.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">100.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">]</span> <span class="p">],</span>
     <span class="p">[</span> <span class="p">[</span><span class="mf">100.2</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">],</span> <span class="p">[</span><span class="mf">100.8</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">],</span> <span class="p">[</span><span class="mf">100.8</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">],</span> <span class="p">[</span><span class="mf">100.2</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">],</span> <span class="p">[</span><span class="mf">100.2</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">]</span> <span class="p">]</span>
   <span class="p">]</span>

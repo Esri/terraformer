@@ -10,8 +10,8 @@
 <p>Allows you to convert between <a href="/core/#terraformerprimitive">Terraformer Primitives</a> or <a href="http://geojson.org/geojson-spec.html">GeoJSON</a> and the <a href="http://resources.arcgis.com/en/help/arcgis-rest-api/#/Geometry_Objects/02r3000000n1000000/">ArcGIS Geometry Objects</a>.</p>
 <pre class="highlight javascript"><span class="c1">// parse ArcGIS JSON, convert it to a Terraformer.Primitive
 </span><span class="kd">var</span> <span class="nx">primitive</span> <span class="o">=</span> <span class="nx">Terraformer</span><span class="p">.</span><span class="nx">ArcGIS</span><span class="p">.</span><span class="nx">parse</span><span class="p">({</span>
-  <span class="na">x</span><span class="p">:</span><span class="s2">&quot;-122.6764&quot;</span><span class="p">,</span>
-  <span class="na">y</span><span class="p">:</span><span class="s2">&quot;45.5165&quot;</span><span class="p">,</span>
+  <span class="na">x</span><span class="p">:</span><span class="s2">"-122.6764"</span><span class="p">,</span>
+  <span class="na">y</span><span class="p">:</span><span class="s2">"45.5165"</span><span class="p">,</span>
   <span class="na">spatialReference</span><span class="p">:</span> <span class="p">{</span>
     <span class="na">wkid</span><span class="p">:</span> <span class="mi">4326</span>
   <span class="p">}</span>
@@ -19,7 +19,7 @@
 
 <span class="c1">// take a Terraformer.Primitive or GeoJSON and convert it to ArcGIS JSON
 </span><span class="kd">var</span> <span class="nx">point</span> <span class="o">=</span> <span class="nx">Terraformer</span><span class="p">.</span><span class="nx">ArcGIS</span><span class="p">.</span><span class="nx">convert</span><span class="p">({</span>
-  <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;Point&quot;</span><span class="p">,</span>
-  <span class="s2">&quot;coordinates&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mf">45.5165</span><span class="p">,</span> <span class="o">-</span><span class="mf">122.6764</span><span class="p">]</span>
+  <span class="s2">"type"</span><span class="p">:</span> <span class="s2">"Point"</span><span class="p">,</span>
+  <span class="s2">"coordinates"</span><span class="p">:</span> <span class="p">[</span><span class="mf">45.5165</span><span class="p">,</span> <span class="o">-</span><span class="mf">122.6764</span><span class="p">]</span>
 <span class="p">});</span>
 </pre>
