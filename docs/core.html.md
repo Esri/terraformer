@@ -192,7 +192,7 @@ A JavaScript object representing a [GeoJSON Feature](/glossary/#feature) .
 ```js
 var feature1 = new Terraformer.Feature(
   type: "Feature",
-  "geometry: {
+  "geometry": {
     "type": "Polygon",
     "coordinates": [
       [ [100.0, 0.0], [101.0, 0.0], [101.0, 1.0], [100.0, 1.0], [100.0, 0.0] ],
