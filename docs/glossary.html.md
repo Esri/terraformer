@@ -37,7 +37,7 @@ A series of [Coordinate](#coordinate) objects that are used to define a line or 
 
 ### Bbox
 
-A GeoJSON bounding box is usually a 4 item array representing the rectangle that will contain the GeoJSON object.
+A GeoJSON bounding box is usually a 4-item array representing the rectangle that will contain the GeoJSON object.
 
 ```js
 [-122.70, 45.51, -122.64, 45.53]
@@ -46,7 +46,7 @@ A GeoJSON bounding box is usually a 4 item array representing the rectangle that
 [GeoJSON BBox](http://geojson.org/geojson-spec.html#bounding-boxes)
 
 ### Geometry
-"GeoJSON Geometry" refers to any of the single geometry objects from the geojson specification like [Point](#point), [MultiPoint](#multiPoint), [LineString](#linestring), [MultiLineString](#multilinestring), [Polygon](#polygon), or [MultiPolygon](#multipolygon).
+"GeoJSON Geometry" refers to any of the single geometry objects from the geoJSON specification like [Point](#point), [MultiPoint](#multiPoint), [LineString](#linestring), [MultiLineString](#multilinestring), [Polygon](#polygon), or [MultiPolygon](#multipolygon).
 
 [GeoJSON Geometry](http://geojson.org/geojson-spec.html#geometry-objects)
 

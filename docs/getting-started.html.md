@@ -10,13 +10,13 @@ Terraformer is an open source (MIT licensed) Javascript geo toolkit, built for t
 
 ## Getting Started
 
-Terraformer is broken into multiple small packages to give you the functionality that you need while still remaining extremely lightweight.
+Terraformer is broken into multiple small packages to give you the functionality you need while still remaining extremely lightweight.
 
 There are currently several packages in the Terraformer ecosystem.
 
 * [Terraformer](/core/) - The core library for manipilating GeoJSON and performaing calculations. Most other modules rely on `terraformer`.
-* [ArcGIS Parser](/arcgis-parser/) - Parses ArcGIS geometry objects to GeoJSON and vica-versa.
-* [WKT Parser](/wkt-parser/) - Parses basic WKT strings to and from GeoJSON.
+* [ArcGIS Parser](/arcgis-parser/) - Parses ArcGIS geometry objects to GeoJSON and vice-versa.
+* [WKT Parser](/wkt-parser/) - Parses basic WKT (Well Known Text) strings to and from GeoJSON.
 * [GeoStore](/geostore/) - A JavaScript database for storing and querying collections of GeoJSON Features. GeoStores also need an index module and a backing store which are distributed as seperate modules.
 
 ### Browser
@@ -41,7 +41,7 @@ var Terraformer = require('terraformer');
 
 ## Working with Primitives
 
-Most of the core Terraformer libray centers around using [`Primitives`](/core/#terraformerprimitive) which wrap GeoJSON objects and provide additonal functionality.
+Most of the core Terraformer libray centers around using [`Primitives`](/core/#terraformerprimitive), which wrap GeoJSON objects and provide additional functionality.
 
 You can create a new [Terraformer.Primitive](/core/#terraformerprimitive) with any GeoJSON object.
 
@@ -68,7 +68,7 @@ var point = new Terraformer.Primitive({
 });
 ```
 
-Now that you have a point and a polygon primitive you can use many of the primitive helper methods
+Now that you have a point and a polygon primitive, you can use many of the primitive helper methods.
 
 ```js
 // add a new vertex to our polygon
@@ -90,8 +90,8 @@ var boundingBox = polygon.bbox(); // returns the geojson bounding box for this o
 
 ## Whats Next?
 
-Start exploring all the options you have working with [Primitives](/core/#terraformerprimitive) and the core library then start exploring other modules.
+Start exploring all the options you have working with [Primitives](/core/#terraformerprimitive) and the core library. Then start exploring other modules.
 
-[Terraformer GeoStore](/geostore/) is a JavaScript database for indexing and querying large amounds of GeoJSON. You can use multuile types of spatial indexes and backing stores for your data.
+[Terraformer GeoStore](/geostore/) is a JavaScript database for indexing and querying large amounds of GeoJSON. You can use multiple types of spatial indexes and backing stores for your data.
 
-You can also convert data between different formats like [ArcGIS Geometries](/arcgis-parser/) and [Well Known Text](/wkt-parser/). Remember Terraformer is a modular framework use only the pieces you need to complete your applicaiton. 
+You can also convert data between different formats like [ArcGIS Geometries](/arcgis-parser/) and [Well Known Text](/wkt-parser/). Remember Terraformer is a modular framework, so use only the pieces you need to complete your applicaiton.
