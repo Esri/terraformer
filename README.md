@@ -20,9 +20,51 @@ The Terraformer project to broken up into a series of smaller modules.
 
 Check out the getting [started guide](http://terraformer.io/getting-started/) which will give you an overview of core concepts and methods in Terraformer.
 
-## Examples
+## Documentation
 
-Coming Soon!
+Make sure your check out the full documentation on the [Terraformer website](http://terraformer.io/core/) and the [getting started guide](http://terraformer.io/getting-started/).
+
+```js
+var polygon = new Terraformer.Primitive({
+  "type": "Polygon",
+  "coordinates": [
+    [
+      [-122.66589403152467, 45.52290150862236],
+      [-122.66926288604736, 45.52291654238294],
+      [-122.67115116119385, 45.518406234030586],
+      [-122.67325401306151, 45.514000817199715],
+      [-122.6684260368347, 45.5127377671934],
+      [-122.66765356063841, 45.51694782364431],
+      [-122.66589403152467, 45.52290150862236 ]
+    ]
+  ]
+});
+
+var point = new Terraformer.Primitive({
+  "type": "Point",
+  "coordinates": [-122.66947746276854, 45.51775972687403]
+});
+``
+
+Now that you have a point and a polygon primitive you can use the primitive helper methods.
+
+```js
+// add a new vertex to our polygon
+polygon.insertVertex([-122.6708507537842, 45.513188859735436], 2);
+
+// figure out if our point is within our polygon
+point.within(polygon); // returns true
+```
+
+You can also have Terraformer perform many geometric operations like convex hulls and bounding boxes.
+
+```js
+var convexHull = polygon.convexHull();
+
+point.within(convexHull); // returns true
+
+var boundingBox = polygon.bbox(); // returns the geojson bounding box for this object.
+```
 
 ## Resources
 
