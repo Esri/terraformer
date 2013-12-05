@@ -29,7 +29,7 @@ Coming Soon!
 * [Terraformer Website](http://terraformer.io)
 * [twitter@EsriPDX](http://twitter.com/esripdx)
 
-## Building the site
+## Building the documentation
 
 To build the site locally, first `bundle install` then `bundle exec middleman` to run a local server. Once you're satisfied, run `bundle exec middleman build`, then `grunt gh-pages` to deploy to github pages.
 
