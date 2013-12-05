@@ -9,9 +9,8 @@
 
 > Tools and objects for working with and transforming GeoJSON.
 
-The core Terraformer library provides a series of `Terraformer.Primitves` which wrap GeoJSON objects for additional functionality and a series of `Terraformer.Tools` for manipulating and performing calculations on coordinates.
+The core Terraformer library provides a series of `Terraformer.Primitives` which wrap GeoJSON objects for additional functionality and a series of `Terraformer.Tools` for manipulating and performing calculations on coordinates.
 
-You can also use the core library to seeing if an object contains or intersects another obejct, convert and object to a different spatial reference or transform an objects coordinates.
+You can also use the core library to see if an object contains or intersects another object, convert an object to a different spatial reference, or transform an object's coordinates.
 
 The core library is also used in most other components of Terraformer for performing basic tasks and calculations.
-

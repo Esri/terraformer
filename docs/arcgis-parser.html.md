@@ -62,7 +62,7 @@ var ArcGIS = require('terraformer-arcgis-parser');
 
 | Option | Type | Default | Description |
 | --- | --- | --- | --- |
-| `sr` | `Number` | `4236` | This is used to set the value of `spatialReference.wkid` on the output. By default this will use 4326. |
+| `sr` | `Number` | `4236` | This is used to set the value of `spatialReference.wkid` on the output. By default this will use 4326. Setting `sr` **will not** convert the `geojson` to that spatial reference it is only used to set the value of `spatialReference.wkid`. |
 | `idAttribute` | `String` | `"OBJECTID"` |  When converting GeoJSON Features the `id` key of your feature will be set on the `OBJECTID` field in your output. If you want to assign your id to a different key you should set this to the string of the key your wish to assign the `id` to. |
 
 ##### Notes
