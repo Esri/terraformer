@@ -6,7 +6,7 @@
 
     <title>Terraformer</title>
 
-    <link href="/assets/css/terraformer-c49376d8.css" media="screen" rel="stylesheet" type="text/css" />
+    <link href="/assets/css/terraformer-0bc71a96.css" media="screen" rel="stylesheet" type="text/css" />
   </head>
 
   <body class="wkt-parser wkt-parser_index" id="wrap">
@@ -67,8 +67,8 @@
 
 <span class="c1">// take a primitive and convert it into a WKT representation
 </span><span class="kd">var</span> <span class="nx">polygon</span> <span class="o">=</span> <span class="nx">Terraformer</span><span class="p">.</span><span class="nx">WKT</span><span class="p">.</span><span class="nx">convert</span><span class="p">({</span>
-  <span class="s2">"type"</span><span class="p">:</span> <span class="s2">"Polygon"</span><span class="p">,</span>
-  <span class="s2">"coordinates"</span><span class="p">:</span> <span class="p">[</span>
+  <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;Polygon&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;coordinates&quot;</span><span class="p">:</span> <span class="p">[</span>
     <span class="p">[</span> <span class="p">[</span><span class="mf">100.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">101.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">101.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">100.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">100.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">]</span> <span class="p">],</span>
     <span class="p">[</span> <span class="p">[</span><span class="mf">100.2</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">],</span> <span class="p">[</span><span class="mf">100.8</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">],</span> <span class="p">[</span><span class="mf">100.8</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">],</span> <span class="p">[</span><span class="mf">100.2</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">],</span> <span class="p">[</span><span class="mf">100.2</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">]</span> <span class="p">]</span>
   <span class="p">]</span>
@@ -80,13 +80,13 @@
           <a href='#' class='back-to-top-link'>Back to Top</a>
         </h3>
 <p>In the browser, the core <a href="http://github.com/esri/terraformer">Terraformer</a> library is required.</p>
-<pre class="highlight html"><span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"terraformer.min.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
-<span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"terraformer-wkt-parser.min.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
+<pre class="highlight html"><span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;terraformer.min.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
+<span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;terraformer-wkt-parser.min.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
 <span class="nt">&lt;script&gt;</span>
   <span class="c1">//Terraformer and Terraformer.WKT will be defined.
 </span><span class="nt">&lt;/script&gt;</span>
 </pre>
-<p>You can also use <a href="http://bower.io/">Bower</a> to install the components if you like or download them and host them yourself.</p>
+<p>You can also use <a href="http://bower.io/">Bower</a> to install the components if you like, or download them and host them yourself.</p>
 <pre class="highlight plaintext">$ bower install terraformer-wkt-parser
 </pre><h3>
           <a id='using-in-nodejs' class='section-link'></a>
@@ -94,7 +94,7 @@
           Using in Node.js
           <a href='#' class='back-to-top-link'>Back to Top</a>
         </h3>
-<p>Just install the package from NPM with <code>$ npm install terraformer-arcgis-parser</code> Then include it in your application</p>
+<p>Just install the package from NPM with <code>$ npm install terraformer-arcgis-parser</code>. Then include it in your application.</p>
 <pre class="highlight javascript"><span class="kd">var</span> <span class="nx">WKT</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'terraformer-wkt-parser'</span><span class="p">);</span>
 
 <span class="c1">// Start using the parse and convert methods!
@@ -109,7 +109,7 @@
           WKT.parse(string)
           <a href='#' class='back-to-top-link'>Back to Top</a>
         </h4>
-<p><code>Terraformer.WKT.parse(string)</code> - Converts a GeoJSON or a <a href="">Terraformer.Primitive</a> into WKT.</p>
+<p><code>Terraformer.WKT.parse(string)</code> - Converts a GeoJSON or a <a href="/core/#terraformerprimitive">Terraformer.Primitive</a> into WKT.</p>
 <pre class="highlight javascript"><span class="kd">var</span> <span class="nx">geojson</span> <span class="o">=</span> <span class="nx">Terraformer</span><span class="p">.</span><span class="nx">WKT</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="s1">'LINESTRING (30 10, 10 30, 40 40)'</span><span class="p">);</span>
 </pre><h4>
           <a id='wktconvert' class='section-link'></a>
@@ -119,8 +119,8 @@
         </h4>
 <p><code>Terraformer.WKT.convert(geoJSON)</code> will convert GeoJSON or a Terraformer Primitive to WKT.</p>
 <h5>Example</h5><pre class="highlight javascript"><span class="kd">var</span> <span class="nx">polygon</span> <span class="o">=</span> <span class="nx">Terraformer</span><span class="p">.</span><span class="nx">WKT</span><span class="p">.</span><span class="nx">convert</span><span class="p">({</span>
-  <span class="s2">"type"</span><span class="p">:</span> <span class="s2">"Polygon"</span><span class="p">,</span>
-  <span class="s2">"coordinates"</span><span class="p">:</span> <span class="p">[</span>
+  <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;Polygon&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;coordinates&quot;</span><span class="p">:</span> <span class="p">[</span>
     <span class="p">[</span> <span class="p">[</span><span class="mf">100.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">101.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">101.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">100.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">100.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">]</span> <span class="p">],</span>
     <span class="p">[</span> <span class="p">[</span><span class="mf">100.2</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">],</span> <span class="p">[</span><span class="mf">100.8</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">],</span> <span class="p">[</span><span class="mf">100.8</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">],</span> <span class="p">[</span><span class="mf">100.2</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">],</span> <span class="p">[</span><span class="mf">100.2</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">]</span> <span class="p">]</span>
   <span class="p">]</span>
@@ -136,6 +136,6 @@
 
     <script src="/assets/javascripts/modernizer.custom.js" type="text/javascript"></script>
     <script src="/assets/javascripts/classie-b6db1f70.js" type="text/javascript"></script>
-    <script src="/assets/javascripts/drawer-cc39b530.js" type="text/javascript"></script>
+    <script src="/assets/javascripts/drawer-3a1490eb.js" type="text/javascript"></script>
   </body>
 </html>

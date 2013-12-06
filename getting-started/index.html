@@ -6,7 +6,7 @@
 
     <title>Terraformer</title>
 
-    <link href="/assets/css/terraformer-c49376d8.css" media="screen" rel="stylesheet" type="text/css" />
+    <link href="/assets/css/terraformer-0bc71a96.css" media="screen" rel="stylesheet" type="text/css" />
   </head>
 
   <body class="getting-started getting-started_index" id="wrap">
@@ -61,14 +61,14 @@
           Getting Started
           <a href='#' class='back-to-top-link'>Back to Top</a>
         </h2>
-<p>Terraformer is broken into multiple small packages to give you the functionality that you need while still remaining extremely lightweight.</p>
+<p>Terraformer is broken into multiple small packages to give you the functionality you need while still remaining extremely lightweight.</p>
 
 <p>There are currently several packages in the Terraformer ecosystem.</p>
 
 <ul>
 <li><a href="/core/">Terraformer</a> - The core library for manipilating GeoJSON and performaing calculations. Most other modules rely on <code>terraformer</code>.</li>
-<li><a href="/arcgis-parser/">ArcGIS Parser</a> - Parses ArcGIS geometry objects to GeoJSON and vica-versa.</li>
-<li><a href="/wkt-parser/">WKT Parser</a> - Parses basic WKT strings to and from GeoJSON.</li>
+<li><a href="/arcgis-parser/">ArcGIS Parser</a> - Parses ArcGIS geometry objects to GeoJSON and vice-versa.</li>
+<li><a href="/wkt-parser/">WKT Parser</a> - Parses basic WKT (Well Known Text) strings to and from GeoJSON.</li>
 <li><a href="/geostore/">GeoStore</a> - A JavaScript database for storing and querying collections of GeoJSON Features. GeoStores also need an index module and a backing store which are distributed as seperate modules.</li>
 </ul>
 <h3>
@@ -78,7 +78,7 @@
           <a href='#' class='back-to-top-link'>Back to Top</a>
         </h3>
 <p>Include the core Terraformer library with a <code>&lt;script&gt;</code> tag.</p>
-<pre class="highlight html"><span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"http://cdn.webgeo.io/terraformer/1.0.1/terraformer.min.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
+<pre class="highlight html"><span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;http://cdn.webgeo.io/terraformer/1.0.1/terraformer.min.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
 </pre><h3>
           <a id='nodejs' class='section-link'></a>
           <a href='#nodejs' class='header-link'>Link</a>
@@ -94,13 +94,13 @@
           Working with Primitives
           <a href='#' class='back-to-top-link'>Back to Top</a>
         </h2>
-<p>Most of the core Terraformer libray centers around using <a href="/core/#terraformerprimitive"><code>Primitives</code></a> which wrap GeoJSON objects and provide additonal functionality.</p>
+<p>Most of the core Terraformer libray centers around using <a href="/core/#terraformerprimitive"><code>Primitives</code></a>, which wrap GeoJSON objects and provide additional functionality.</p>
 
 <p>You can create a new <a href="/core/#terraformerprimitive">Terraformer.Primitive</a> with any GeoJSON object.</p>
 <pre class="highlight javascript">
 <span class="kd">var</span> <span class="nx">polygon</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Terraformer</span><span class="p">.</span><span class="nx">Primitive</span><span class="p">({</span>
-  <span class="s2">"type"</span><span class="p">:</span> <span class="s2">"Polygon"</span><span class="p">,</span>
-  <span class="s2">"coordinates"</span><span class="p">:</span> <span class="p">[</span>
+  <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;Polygon&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;coordinates&quot;</span><span class="p">:</span> <span class="p">[</span>
     <span class="p">[</span>
       <span class="p">[</span><span class="o">-</span><span class="mf">122.66589403152467</span><span class="p">,</span> <span class="mf">45.52290150862236</span><span class="p">],</span>
       <span class="p">[</span><span class="o">-</span><span class="mf">122.66926288604736</span><span class="p">,</span> <span class="mf">45.52291654238294</span><span class="p">],</span>
@@ -114,11 +114,11 @@
 <span class="p">});</span>
 
 <span class="kd">var</span> <span class="nx">point</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Terraformer</span><span class="p">.</span><span class="nx">Primitive</span><span class="p">({</span>
-  <span class="s2">"type"</span><span class="p">:</span> <span class="s2">"Point"</span><span class="p">,</span>
-  <span class="s2">"coordinates"</span><span class="p">:</span> <span class="p">[</span><span class="o">-</span><span class="mf">122.66947746276854</span><span class="p">,</span> <span class="mf">45.51775972687403</span><span class="p">]</span>
+  <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;Point&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;coordinates&quot;</span><span class="p">:</span> <span class="p">[</span><span class="o">-</span><span class="mf">122.66947746276854</span><span class="p">,</span> <span class="mf">45.51775972687403</span><span class="p">]</span>
 <span class="p">});</span>
 </pre>
-<p>Now that you have a point and a polygon primitive you can use many of the primitive helper methods</p>
+<p>Now that you have a point and a polygon primitive, you can use many of the primitive helper methods.</p>
 <pre class="highlight javascript"><span class="c1">// add a new vertex to our polygon
 </span><span class="nx">polygon</span><span class="p">.</span><span class="nx">insertVertex</span><span class="p">([</span><span class="o">-</span><span class="mf">122.6708507537842</span><span class="p">,</span> <span class="mf">45.513188859735436</span><span class="p">],</span> <span class="mi">2</span><span class="p">);</span>
 
@@ -137,11 +137,11 @@
           Whats Next?
           <a href='#' class='back-to-top-link'>Back to Top</a>
         </h2>
-<p>Start exploring all the options you have working with <a href="/core/#terraformerprimitive">Primitives</a> and the core library then start exploring other modules.</p>
+<p>Start exploring all the options you have working with <a href="/core/#terraformerprimitive">Primitives</a> and the core library. Then start exploring other modules.</p>
 
-<p><a href="/geostore/">Terraformer GeoStore</a> is a JavaScript database for indexing and querying large amounds of GeoJSON. You can use multuile types of spatial indexes and backing stores for your data.</p>
+<p><a href="/geostore/">Terraformer GeoStore</a> is a JavaScript database for indexing and querying large amounds of GeoJSON. You can use multiple types of spatial indexes and backing stores for your data.</p>
 
-<p>You can also convert data between different formats like <a href="/arcgis-parser/">ArcGIS Geometries</a> and <a href="/wkt-parser/">Well Known Text</a>. Remember Terraformer is a modular framework use only the pieces you need to complete your applicaiton. </p>
+<p>You can also convert data between different formats like <a href="/arcgis-parser/">ArcGIS Geometries</a> and <a href="/wkt-parser/">Well Known Text</a>. Remember Terraformer is a modular framework, so use only the pieces you need to complete your applicaiton.</p>
 
     </main>
 
@@ -153,6 +153,6 @@
 
     <script src="/assets/javascripts/modernizer.custom.js" type="text/javascript"></script>
     <script src="/assets/javascripts/classie-b6db1f70.js" type="text/javascript"></script>
-    <script src="/assets/javascripts/drawer-cc39b530.js" type="text/javascript"></script>
+    <script src="/assets/javascripts/drawer-3a1490eb.js" type="text/javascript"></script>
   </body>
 </html>

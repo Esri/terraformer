@@ -6,7 +6,7 @@
 
     <title>Terraformer</title>
 
-    <link href="/assets/css/terraformer-c49376d8.css" media="screen" rel="stylesheet" type="text/css" />
+    <link href="/assets/css/terraformer-0bc71a96.css" media="screen" rel="stylesheet" type="text/css" />
   </head>
 
   <body class="core core_index" id="wrap">
@@ -63,7 +63,7 @@
 
 <p>Every <code>Terraformer.Primitive</code> inherits from the <code>Terraformer.Primitive</code> base class, thus all other Primitives share the <code>Terraformer.Primitive</code> methods.</p>
 
-<p>There is a Primitive for every type of GeoJSON object plus a <code>Circle</code> Primitive which represents a circle as a Polygon.</p>
+<p>There is a Primitive for every type of GeoJSON object, plus a <code>Circle</code> Primitive which represents a circle as a polygon.</p>
 <h3>
           <a id='constructor' class='section-link'></a>
           <a href='#constructor' class='header-link'>Link</a>
@@ -72,7 +72,7 @@
         </h3>
 <p>You create new <code>Terraformer.Primitive</code> objects by passing it a valid <a href="/glossary/#geojson">GeoJSON Object</a>. This will return the a <code>Terraformer.Primitive</code> of the type that corresponds with type of your GeoJSON object.</p>
 <pre class="highlight javascript"><span class="kd">var</span> <span class="nx">point</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Terraformer</span><span class="p">.</span><span class="nx">Primitive</span><span class="p">({</span>
-  <span class="na">type</span><span class="p">:</span><span class="s2">"Point"</span><span class="p">,</span>
+  <span class="na">type</span><span class="p">:</span><span class="s2">&quot;Point&quot;</span><span class="p">,</span>
   <span class="na">coordinates</span><span class="p">:[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span>
 <span class="p">});</span>
 
@@ -96,12 +96,12 @@
 <tr>
 <td><code>toMercator()</code></td>
 <td><code>this</code></td>
-<td>Converts this GeoJSON objects coordinates to the <a href="http://spatialreference.org/ref/sr-org/6928/">web mercator spatial reference</a>.</td>
+<td>Converts this GeoJSON object&rsquo;s coordinates to the <a href="http://spatialreference.org/ref/sr-org/6928/">web mercator spatial reference</a>.</td>
 </tr>
 <tr>
 <td><code>toGeographic()</code></td>
 <td><code>this</code></td>
-<td>Converts this GeoJSON objects coordinates to <a href="http://spatialreference.org/ref/epsg/4326/">geographic coordinates</a>.</td>
+<td>Converts this GeoJSON object&rsquo;s coordinates to <a href="http://spatialreference.org/ref/epsg/4326/">geographic coordinates</a>.</td>
 </tr>
 <tr>
 <td><code>envelope()</code></td>
@@ -121,7 +121,7 @@
 <tr>
 <td><code>contains(<a href="/glossary/#geometry">&lt;Geometry&gt;</a> <i>geometry</i>)</code></td>
 <td><code>Boolean</code></td>
-<td>Returns <code>true</code> if the passed <a href="/glossary/#geometry"><code>GeoJSON Geometry</code></a> object is completely contains this primitive.</td>
+<td>Returns <code>true</code> if the passed <a href="/glossary/#geometry"><code>GeoJSON Geometry</code></a> object is completely contained inside this primitive.</td>
 </tr>
 <tr>
 <td><code>within(<a href="/glossary/#geometry">&lt;Geometry&gt;</a> <i>geometry</i>)</code></td>
@@ -149,7 +149,7 @@
         </h3>
 <p><code>Terraformer.Point</code> can be created by passing a <a href="/glossary/#coordinate">GeoJSON Coordinate Pair</a> like <code>[longitude, latitude]</code>, with plain <code>x,y</code>, or a valid <a href="/glossary/#point">GeoJSON Point</a>.</p>
 <pre class="highlight javascript"><span class="kd">var</span> <span class="nx">point1</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Terraformer</span><span class="p">.</span><span class="nx">Point</span><span class="p">({</span>
-  <span class="na">type</span><span class="p">:</span><span class="s2">"Point"</span><span class="p">,</span>
+  <span class="na">type</span><span class="p">:</span><span class="s2">&quot;Point&quot;</span><span class="p">,</span>
   <span class="na">coordinates</span><span class="p">:[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span>
 <span class="p">});</span>
 
@@ -171,7 +171,7 @@
         </h3>
 <p><code>Terraformer.MultiPoint</code> can be created by passing in a valid <a href="/glossary/#multipoint">GeoJSON MultiPoint</a>, or an array of <a href="/glossary/#coordinates">GeoJSON Coordinates</a> like <code>[longitude, latitude]</code>.</p>
 <pre class="highlight javascript"><span class="kd">var</span> <span class="nx">multipoint1</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Terraformer</span><span class="p">.</span><span class="nx">MultiPoint</span><span class="p">({</span>
-  <span class="na">type</span><span class="p">:</span><span class="s2">"MultiPoint"</span><span class="p">,</span>
+  <span class="na">type</span><span class="p">:</span><span class="s2">&quot;MultiPoint&quot;</span><span class="p">,</span>
   <span class="na">coordinates</span><span class="p">:[</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">],[</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span> <span class="p">]</span>
 <span class="p">});</span>
 
@@ -197,7 +197,7 @@
 <tr>
 <td><code>get(&lt;Integer&gt; index)</code></td>
 <td><a href="/glossary/#point-primitive"><code>Point</code></a></td>
-<td>Returns a <a href="/glossary/#point-primitive"><code>Terraformer.Point</code></a> for the point at <code>index</code> in the coordinates array.</td>
+<td>Returns a <a href="/glossary/#point-primitive"><code>Terraformer.Point</code></a> for the point at <code>index</code> in the coordinate array.</td>
 </tr>
 <tr>
 <td><code>addPoint(<a href="/glossary/#coordinate">&lt;Coordinate&gt;</a> <i>coordinate</i>)</code></td>
@@ -230,7 +230,7 @@
         </h3>
 <p><code>Terraformer.LineString</code> can be created by passing in a valid <a href="/glossary/#linestring">GeoJSON LineString</a>, or an array of <a href="/glossary/#coordinates">GeoJSON Coordinates</a> like <code>[longitude, latitude]</code>.</p>
 <pre class="highlight javascript"><span class="kd">var</span> <span class="nx">linestring</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Terraformer</span><span class="p">.</span><span class="nx">LineString</span><span class="p">({</span>
-  <span class="na">type</span><span class="p">:</span><span class="s2">"LineString"</span><span class="p">,</span>
+  <span class="na">type</span><span class="p">:</span><span class="s2">&quot;LineString&quot;</span><span class="p">,</span>
   <span class="na">coordinates</span><span class="p">:[</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">],[</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span> <span class="p">]</span>
 <span class="p">});</span>
 
@@ -279,7 +279,7 @@
         </h3>
 <p><code>Terraformer.LineString</code> can be created by passing in a valid <a href="/glossary/#multilinestring">GeoJSON MultiLineString</a>, or an array  that is valid coordinate array for <a href="/glossary/#multilinestring">GeoJSON MultiLineString</a>.</p>
 <pre class="highlight javascript"><span class="kd">var</span> <span class="nx">multilinestring</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Terraformer</span><span class="p">.</span><span class="nx">MultiLineString</span><span class="p">({</span>
-  <span class="na">type</span><span class="p">:</span><span class="s2">"LineString"</span><span class="p">,</span>
+  <span class="na">type</span><span class="p">:</span><span class="s2">&quot;LineString&quot;</span><span class="p">,</span>
   <span class="na">coordinates</span><span class="p">:[</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">],[</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span> <span class="p">]</span>
 <span class="p">});</span>
 
@@ -321,10 +321,10 @@
           Constructor
           <a href='#' class='back-to-top-link'>Back to Top</a>
         </h3>
-<p><code>Terraformer.Polygon</code> can be created by passing in a valid <a href="/glossary/#polygon">GeoJSON Polygon</a>, or an array that is a valid coordinates for a <a href="/glossary/#polygon">GeoJSON Polygon</a>.</p>
+<p><code>Terraformer.Polygon</code> can be created by passing in a valid <a href="/glossary/#polygon">GeoJSON Polygon</a>, or an array that is a valid coordinate for a <a href="/glossary/#polygon">GeoJSON Polygon</a>.</p>
 <pre class="highlight javascript"><span class="kd">var</span> <span class="nx">polygon1</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Terraformer</span><span class="p">.</span><span class="nx">Polygon</span><span class="p">({</span>
-  <span class="s2">"type"</span><span class="p">:</span> <span class="s2">"Polygon"</span><span class="p">,</span>
-  <span class="s2">"coordinates"</span><span class="p">:</span> <span class="p">[</span>
+  <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;Polygon&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;coordinates&quot;</span><span class="p">:</span> <span class="p">[</span>
     <span class="p">[</span> <span class="p">[</span><span class="mf">100.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">101.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">101.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">100.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">100.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">]</span> <span class="p">],</span>
     <span class="p">[</span> <span class="p">[</span><span class="mf">100.2</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">],</span> <span class="p">[</span><span class="mf">100.8</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">],</span> <span class="p">[</span><span class="mf">100.8</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">],</span> <span class="p">[</span><span class="mf">100.2</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">],</span> <span class="p">[</span><span class="mf">100.2</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">]</span> <span class="p">]</span>
     <span class="p">]</span>
@@ -383,8 +383,8 @@
         </h3>
 <p><code>Terraformer.MultiPolygon</code> can be created by passing in a valid <a href="/glossary/#multipolygon">GeoJSON MultiPolygon</a>, or an array that is a valid coordinate array for <a href="/glossary/#multipolygon">GeoJSON MultiPolygon</a>.</p>
 <pre class="highlight javascript"><span class="kd">var</span> <span class="nx">multipolygon1</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Terraformer</span><span class="p">.</span><span class="nx">MultiPolygon</span><span class="p">({</span>
-  <span class="s2">"type"</span><span class="p">:</span> <span class="s2">"MultiPolygon"</span><span class="p">,</span>
-  <span class="s2">"coordinates"</span><span class="p">:</span> <span class="p">[</span>
+  <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;MultiPolygon&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;coordinates&quot;</span><span class="p">:</span> <span class="p">[</span>
     <span class="p">[</span> <span class="p">[</span><span class="mf">100.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">101.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">101.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">100.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">100.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">]</span> <span class="p">],</span>
     <span class="p">[</span> <span class="p">[</span><span class="mf">100.2</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">],</span> <span class="p">[</span><span class="mf">100.8</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">],</span> <span class="p">[</span><span class="mf">100.8</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">],</span> <span class="p">[</span><span class="mf">100.2</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">],</span> <span class="p">[</span><span class="mf">100.2</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">]</span> <span class="p">]</span>
     <span class="p">]</span>
@@ -415,7 +415,7 @@
 <tr>
 <td><code>get(&lt;Integer&gt; index)</code></td>
 <td><a href="/glossary/#polygon-primitive"><code>Polygon</code></a></td>
-<td>Returns a <a href="/glossary/#polygon-primitive"><code>Terraformer.Polygon</code></a> for the Polygon at <code>index</code> in the coordinates array.</td>
+<td>Returns a <a href="/glossary/#polygon-primitive"><code>Terraformer.Polygon</code></a> for the Polygon at <code>index</code> in the coordinate array.</td>
 </tr>
 </tbody></table>
 <h2>
@@ -424,7 +424,7 @@
           Terraformer.Feature
           <a href='#' class='back-to-top-link'>Back to Top</a>
         </h2>
-<p>A JavaScript object representing a <a href="/glossary/#feature">GeoJSON Feature</a> .</p>
+<p>A JavaScript object representing a <a href="/glossary/#feature">GeoJSON Feature</a>.</p>
 <h3>
           <a id='constructor-7' class='section-link'></a>
           <a href='#constructor-7' class='header-link'>Link</a>
@@ -433,10 +433,10 @@
         </h3>
 <p><code>Terraformer.Feature</code> can be created by passing in a valid <a href="/glossary/#feature">GeoJSON Feature</a> or <a href="/glossary/#geometry">GeoJSON Geometry</a>.</p>
 <pre class="highlight javascript"><span class="kd">var</span> <span class="nx">feature1</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Terraformer</span><span class="p">.</span><span class="nx">Feature</span><span class="p">(</span>
-  <span class="nx">type</span><span class="err">:</span> <span class="s2">"Feature"</span><span class="p">,</span>
-  <span class="s2">"geometry"</span><span class="err">:</span> <span class="p">{</span>
-    <span class="s2">"type"</span><span class="p">:</span> <span class="s2">"Polygon"</span><span class="p">,</span>
-    <span class="s2">"coordinates"</span><span class="p">:</span> <span class="p">[</span>
+  <span class="nx">type</span><span class="err">:</span> <span class="s2">&quot;Feature&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;geometry&quot;</span><span class="err">:</span> <span class="p">{</span>
+    <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;Polygon&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;coordinates&quot;</span><span class="p">:</span> <span class="p">[</span>
       <span class="p">[</span> <span class="p">[</span><span class="mf">100.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">101.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">101.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">100.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">100.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">]</span> <span class="p">],</span>
       <span class="p">[</span> <span class="p">[</span><span class="mf">100.2</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">],</span> <span class="p">[</span><span class="mf">100.8</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">],</span> <span class="p">[</span><span class="mf">100.8</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">],</span> <span class="p">[</span><span class="mf">100.2</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">],</span> <span class="p">[</span><span class="mf">100.2</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">]</span> <span class="p">]</span>
     <span class="p">]</span>
@@ -444,8 +444,8 @@
 <span class="err">}</span><span class="p">);</span>
 
 <span class="kd">var</span> <span class="nx">feature2</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Terraformer</span><span class="p">.</span><span class="nx">Feature</span><span class="p">({</span>
-  <span class="s2">"type"</span><span class="p">:</span> <span class="s2">"Polygon"</span><span class="p">,</span>
-  <span class="s2">"coordinates"</span><span class="p">:</span> <span class="p">[</span>
+  <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;Polygon&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;coordinates&quot;</span><span class="p">:</span> <span class="p">[</span>
     <span class="p">[</span> <span class="p">[</span><span class="mf">100.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">101.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">101.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">100.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">100.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">]</span> <span class="p">],</span>
     <span class="p">[</span> <span class="p">[</span><span class="mf">100.2</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">],</span> <span class="p">[</span><span class="mf">100.8</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">],</span> <span class="p">[</span><span class="mf">100.8</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">],</span> <span class="p">[</span><span class="mf">100.2</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">],</span> <span class="p">[</span><span class="mf">100.2</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">]</span> <span class="p">]</span>
   <span class="p">]</span>
@@ -465,8 +465,8 @@
         </h3>
 <p><code>Terraformer.FeatureCollection</code> can be created by passing a valid <a href="/glossary/#featurecollection">GeoJSON Feature Collection</a> or an array of <a href="/glossary/#feature">GeoJSON Features</a>.</p>
 <pre class="highlight javascript"><span class="kd">var</span> <span class="nx">featurecollection1</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Terraformer</span><span class="p">.</span><span class="nx">FeatureCollection</span><span class="p">(</span>
-  <span class="s2">"type"</span><span class="err">:</span> <span class="s2">"FeatureCollection"</span><span class="p">,</span>
-  <span class="s2">"features"</span><span class="err">:</span> <span class="p">[</span><span class="nx">feature1</span><span class="p">,</span> <span class="nx">feature2</span><span class="p">]</span>
+  <span class="s2">&quot;type&quot;</span><span class="err">:</span> <span class="s2">&quot;FeatureCollection&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;features&quot;</span><span class="err">:</span> <span class="p">[</span><span class="nx">feature1</span><span class="p">,</span> <span class="nx">feature2</span><span class="p">]</span>
 <span class="err">}</span><span class="p">);</span>
 
 <span class="kd">var</span> <span class="nx">featurecollection2</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Terraformer</span><span class="p">.</span><span class="nx">FeatureCollection</span><span class="p">([</span><span class="nx">feature1</span><span class="p">,</span> <span class="nx">feature2</span><span class="p">]);</span>
@@ -509,8 +509,8 @@
         </h3>
 <p><code>Terraformer.GeometryCollection</code> can be created by passing a valid <a href="/glossary/#geometrycollection">GeoJSON Geometry Collection</a> or an array of <a href="/glossary/#geometry">GeoJSON Geometries</a>.</p>
 <pre class="highlight javascript"><span class="kd">var</span> <span class="nx">geometrycollection1</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Terraformer</span><span class="p">.</span><span class="nx">GeometryCollection</span><span class="p">(</span>
-  <span class="s2">"type"</span><span class="err">:</span> <span class="s2">"FeatureCollection"</span><span class="p">,</span>
-  <span class="s2">"features"</span><span class="err">:</span> <span class="p">[</span><span class="nx">geometry1</span><span class="p">,</span> <span class="nx">geometry2</span><span class="p">]</span>
+  <span class="s2">&quot;type&quot;</span><span class="err">:</span> <span class="s2">&quot;FeatureCollection&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;features&quot;</span><span class="err">:</span> <span class="p">[</span><span class="nx">geometry1</span><span class="p">,</span> <span class="nx">geometry2</span><span class="p">]</span>
 <span class="err">}</span><span class="p">);</span>
 
 <span class="kd">var</span> <span class="nx">geometrycollection2</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Terraformer</span><span class="p">.</span><span class="nx">GeometryCollection</span><span class="p">([</span><span class="nx">geometry1</span><span class="p">,</span> <span class="nx">geometry2</span><span class="p">]);</span>
@@ -535,7 +535,7 @@
 <tr>
 <td><code>get(&lt;Integer&gt; index)</code></td>
 <td><a href="/glossary/#feature-primitive"><code>Primitive</code></a></td>
-<td>Returns a <a href="/glossary/#feature-primitive"><code>Terraformer.Primitive</code></a> for the Geometry at <code>index</code> in the coordinates array.</td>
+<td>Returns a <a href="/glossary/#feature-primitive"><code>Terraformer.Primitive</code></a> for the Geometry at <code>index</code> in the coordinate array.</td>
 </tr>
 </tbody></table>
 <h2>
@@ -604,7 +604,7 @@
 <tr>
 <td><code>steps(&lt;Integer <em>optional</em>&gt; steps)</code></td>
 <td><code>Integer</code></td>
-<td>Returns the number of steps to produce the Polygon representing the circle. If the <code>steps</code> parameter is passed the circle will be recalculated witht he new step count before returning.</td>
+<td>Returns the number of steps to produce the polygon representing the circle. If the <code>steps</code> parameter is passed the circle will be recalculated witht he new step count before returning.</td>
 </tr>
 <tr>
 <td><code>radius(&lt;Integer <em>optional</em>&gt; radius)</code></td>
@@ -640,27 +640,27 @@
 <tr>
 <td><code>toMercator(<a href="/glossary/#geojson">&lt;GeoJSON&gt;</a> <i>geojson</i>)</code></td>
 <td><a href="/glossary/#geojson"><code>GeoJSON</code></a></td>
-<td>Converts this GeoJSON objects coordinates to the <a href="http://spatialreference.org/ref/sr-org/6928/">web mercator spatial reference</a>. This is an in place modification of the passed object.</td>
+<td>Converts this GeoJSON object&rsquo;s coordinates to the <a href="http://spatialreference.org/ref/sr-org/6928/">web mercator spatial reference</a>. This is an in-place modification of the passed object.</td>
 </tr>
 <tr>
 <td><code>toGeographic(<a href="/glossary/#geojson">&lt;GeoJSON&gt;</a> <i>geojson</i>)</code></td>
 <td><a href="/glossary/#geojson"><code>GeoJSON</code></a></td>
-<td>Converts this GeoJSON objects coordinates to <a href="http://spatialreference.org/ref/epsg/4326/">geographic coordinates</a>. This is an in place modification of the passed object.</td>
+<td>Converts this GeoJSON object&rsquo;s coordinates to <a href="http://spatialreference.org/ref/epsg/4326/">geographic coordinates</a>. This is an in-place modification of the passed object.</td>
 </tr>
 <tr>
 <td><code>applyConverter(<a href="/glossary/#geojson">&lt;GeoJSON&gt;</a> <i>geojson</i>), function)</td>
 <td><a href="/glossary/#geojson"><code>GeoJSON</code></a></td>
-<td>runs the passed <code>function</code>against every <a href=""><code>Coordinate</code></a> in the <code>geojson</code> object. Your <code>function</code> will be passed a <a href=""><code>Coordinate</code></a> and will be expected to return a <a href=""><code>Coordinate</code></a>.</td>
+<td>Runs the passed <code>function</code>against every <a href=""><code>Coordinate</code></a> in the <code>geojson</code> object. Your <code>function</code> will be passed a <a href="/glossary/#coordinate"><code>Coordinate</code></a> and will be expected to return a <a href=""><code>Coordinate</code></a>.</td>
 </tr>
 <tr>
 <td><code>positionToMercator(<a href="/glossary/#coordinate">&lt;Coordinate&gt;</a> <i>coordinate</i>)</td>
 <td><a href="/glossary/#coordinate"><code>Coordinate</code></a></td>
-<td>Converts the passed <a href=""><code>Coordinate</code></a> to <a href="http://spatialreference.org/ref/sr-org/6928/">web mercator spatial reference</a>.</td>
+<td>Converts the passed <a href="/glossary/#coordinate"><code>Coordinate</code></a> to <a href="http://spatialreference.org/ref/sr-org/6928/">web mercator spatial reference</a>.</td>
 </tr>
 <tr>
 <td><code>positionToGeographic(<a href="/glossary/#coordinate">&lt;Coordinate&gt;</a> <i>coordinate</i>)</td>
 <td><a href="/glossary/#coordinate"><code>Coordinate</code></a></td>
-<td>Converts the passed <a href=""><code>Coordinate</code></a> to to <a href="http://spatialreference.org/ref/epsg/4326/">geographic coordinates</a>.</td>
+<td>Converts the passed <a href="/glossary/#coordinate"><code>Coordinate</code></a> to <a href="http://spatialreference.org/ref/epsg/4326/">geographic coordinates</a>.</td>
 </tr>
 </tbody></table>
 <h3>
@@ -679,7 +679,7 @@
 <tr>
 <td><code>calculateBounds(<a href="/glossary/#geojson">&lt;GeoJSON&gt;</a> <i>geojson</i>)</code></td>
 <td><a href="/glossary#bbox"><code>BBox</code></a></td>
-<td>Returns a <a href="/glossary#bbox"><code>GeoJSON bounding box</code></a> for the passed geojson.</td>
+<td>Returns a <a href="/glossary#bbox"><code>GeoJSON bounding box</code></a> for the passed geoJSON.</td>
 </tr>
 <tr>
 <td><code>calculateEnvelope(<a href="/glossary/#geojson">&lt;GeoJSON&gt;</a> <i>geojson</i>)</code></td>
@@ -689,7 +689,7 @@
 <tr>
 <td><code>convexHull(<a href="/glossary/#geojson">&lt;GeoJSON&gt;</a> <i>geojson</i>)</code></td>
 <td><a href="/glossary#geojson-coordinates"><code>Coordinates</code></a></td>
-<td>Returns an array of <a href="/glossary#geojson-coordinates"><code>coordinates</code></a> representing the <a href="http://en.wikipedia.org/wiki/Convex_hull">convex hull</a> the the passed geojson.</td>
+<td>Returns an array of <a href="/glossary#geojson-coordinates"><code>coordinates</code></a> representing the <a href="http://en.wikipedia.org/wiki/Convex_hull">convex hull</a> the the passed geoJSON.</td>
 </tr>
 </tbody></table>
 <h3>
@@ -713,12 +713,12 @@
 <tr>
 <td><code>polygonContainsPoint(<a href="/glossary/#polygon">&lt;Polygon&gt;</a> <i>polygon</i>, <a href="/glossary/#coordinate">&lt;Coordinate&gt;</a> <i>coordinate</i>)</code></td>
 <td><code>Boolean</code></td>
-<td>Accepts a <a href="/glossary#geojson-polygon">Polygon</a> and a <a href="/glossary#geojson-coordinate"><code>coordinate</code></a> and returns <code>true</code> if the point falls within the polygon.</td>
+<td>Accepts a <a href="/glossary#geojson-polygon">polygon</a> and a <a href="/glossary#geojson-coordinate"><code>coordinate</code></a> and returns <code>true</code> if the point falls within the polygon.</td>
 </tr>
 <tr>
 <td><code>arrayIntersectsArray(<a href="/glossary/#coordinates">&lt;Coordinates&gt;</a> <i>coordinates</i>, <a href="/glossary/#coordinates">&lt;Coordinates&gt;</a> <i>coordinates</i>)</code></td>
 <td><code>Boolean</code></td>
-<td>Accepts two arrays of <a href="/glossary#geojson-coordinates"><code>coordinates</code></a> and returns true if they cross each other at any point.</td>
+<td>Accepts two arrays of <a href="/glossary#geojson-coordinates"><code>coordinates</code></a> and returns <code>true</code> if they cross each other at any point.</td>
 </tr>
 <tr>
 <td><code>coordinatesEqual(<a href="/glossary/#coordinate">&lt;Coordinate&gt;</a> <i>coordinate</i>, <a href="/glossary/#coordinate">&lt;Coordinate&gt;</a> <i>coordinate</i>)</code></td>
@@ -737,6 +737,6 @@
 
     <script src="/assets/javascripts/modernizer.custom.js" type="text/javascript"></script>
     <script src="/assets/javascripts/classie-b6db1f70.js" type="text/javascript"></script>
-    <script src="/assets/javascripts/drawer-cc39b530.js" type="text/javascript"></script>
+    <script src="/assets/javascripts/drawer-3a1490eb.js" type="text/javascript"></script>
   </body>
 </html>

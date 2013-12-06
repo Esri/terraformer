@@ -6,7 +6,7 @@
 
     <title>Terraformer</title>
 
-    <link href="/assets/css/terraformer-c49376d8.css" media="screen" rel="stylesheet" type="text/css" />
+    <link href="/assets/css/terraformer-0bc71a96.css" media="screen" rel="stylesheet" type="text/css" />
   </head>
 
   <body class="geostore geostore_alternate-indexes geostore_alternate-indexes_index" id="wrap">
@@ -62,13 +62,13 @@
 <p>Alternate Indexes can be added to an existing GeoStore very easily:</p>
 <pre class="highlight javascript"><span class="c1">// create an index on the properties.street value
 </span><span class="nx">gs</span><span class="p">.</span><span class="nx">addIndex</span><span class="p">({</span>
-  <span class="na">property</span><span class="p">:</span> <span class="s2">"street"</span><span class="p">,</span>
+  <span class="na">property</span><span class="p">:</span> <span class="s2">&quot;street&quot;</span><span class="p">,</span>
   <span class="na">index</span><span class="p">:</span> <span class="k">new</span> <span class="nx">BTree</span><span class="p">()</span>
 <span class="p">});</span>
 
 <span class="c1">// create an index on the properties.crime value
 </span><span class="nx">gs</span><span class="p">.</span><span class="nx">addIndex</span><span class="p">({</span>
-  <span class="na">property</span><span class="p">:</span> <span class="s2">"crime"</span><span class="p">,</span>
+  <span class="na">property</span><span class="p">:</span> <span class="s2">&quot;crime&quot;</span><span class="p">,</span>
   <span class="na">index</span><span class="p">:</span> <span class="k">new</span> <span class="nx">BTree</span><span class="p">()</span>
 <span class="p">});</span>
 </pre>
@@ -76,11 +76,11 @@
 <pre class="highlight javascript"><span class="nx">gs</span><span class="p">.</span><span class="nx">within</span><span class="p">(</span>
   <span class="nx">geojson</span><span class="p">,</span>
   <span class="p">{</span>
-    <span class="s2">"name"</span><span class="p">:</span> <span class="p">{</span>
-      <span class="s2">"equals"</span><span class="p">:</span> <span class="s2">"Main"</span>
+    <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="s2">&quot;equals&quot;</span><span class="p">:</span> <span class="s2">&quot;Main&quot;</span>
     <span class="p">},</span>
-    <span class="s2">"crime"</span><span class="p">:</span> <span class="p">{</span>
-      <span class="s2">"equals"</span><span class="p">:</span> <span class="s2">"Arson"</span>
+    <span class="s2">&quot;crime&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="s2">&quot;equals&quot;</span><span class="p">:</span> <span class="s2">&quot;Arson&quot;</span>
     <span class="p">}</span>
   <span class="p">},</span>
   <span class="kd">function</span> <span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
@@ -201,6 +201,6 @@
 
     <script src="/assets/javascripts/modernizer.custom.js" type="text/javascript"></script>
     <script src="/assets/javascripts/classie-b6db1f70.js" type="text/javascript"></script>
-    <script src="/assets/javascripts/drawer-cc39b530.js" type="text/javascript"></script>
+    <script src="/assets/javascripts/drawer-3a1490eb.js" type="text/javascript"></script>
   </body>
 </html>
