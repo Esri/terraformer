@@ -44,7 +44,7 @@ var point = new Terraformer.Primitive({
   "type": "Point",
   "coordinates": [-122.66947746276854, 45.51775972687403]
 });
-``
+```
 
 Now that you have a point and a polygon primitive you can use the primitive helper methods.
 
