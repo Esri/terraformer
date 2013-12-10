@@ -7,10 +7,15 @@
     <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
 
     <!-- Use title if it's in the page YAML frontmatter -->
-    <title><%= "Terraformer" || current_page.data.title %></title>
+    <title><%= "Home" || current_page.data.title %> | Terraformer</title>
 
     <!-- Assets -->
     <%= stylesheet_link_tag "terraformer" %>
+    <script>
+      if (window.location.href.match('github.io')) {
+        window.location = window.location.replace('github.io', 'terraformer.io');
+      }
+    </script>
   </head>
 
   <body id="wrap">
