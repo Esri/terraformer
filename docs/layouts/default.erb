@@ -13,7 +13,7 @@
     <%= stylesheet_link_tag "terraformer" %>
     <script>
       if (window.location.href.match('github.io')) {
-        window.location = window.location.replace('github.io', 'terraformer.io');
+        window.location.replace('http://terraformer.io' + window.location.pathname);
       }
     </script>
   </head>
