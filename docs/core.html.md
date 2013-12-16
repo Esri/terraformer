@@ -36,7 +36,7 @@ Method | Returns | Description
 `toGeographic()` | `this` | Converts this GeoJSON object's coordinates to [geographic coordinates](http://spatialreference.org/ref/epsg/4326/).
 `envelope()` | [`Envelope`](/glossary/#envelope) | Return an object with `x`, `y`, `w` and `h` suitable for passing to most indexes.
 `bbox()` | [`BBox`](/glossary/#bbox) | Returns the [GeoJSON Bounding Box](/glossary/#bbox) for this primitive.
-`convexHull()` | [`Polygon`](#polygon) | Returns the convex hull of this primitive as a [`Polygon`](#polygon).
+`convexHull()` | [`Polygon`](#polygon) or `null` | Returns the convex hull of this primitive as a [`Polygon`](#polygon). Will return `null` if the convex hull cannot be calculated or a valid POlygon cannot be created.
 <code>contains(<a href="/glossary/#geometry">&lt;Geometry&gt;</a> <i>geometry</i>)</code> | `Boolean` | Returns `true` if the passed [`GeoJSON Geometry`](/glossary/#geometry) object is completely contained inside this primitive.
 <code>within(<a href="/glossary/#geometry">&lt;Geometry&gt;</a> <i>geometry</i>)</code> | `Boolean` | Returns `true` if the passed [`GeoJSON Geometry`](/glossary/#geometry) object is completely within this primitive.
 <code>interesects(<a href="/glossary/#geometry">&lt;Geometry&gt;</a> <i>geometry</i>)</code> | `Boolean` | Returns `true` if the passed [`GeoJSON Geometry`](/glossary/#geometry) intersects this primitive.
