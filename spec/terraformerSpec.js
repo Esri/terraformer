@@ -494,7 +494,8 @@ describe("Primitives", function(){
     });
 
     it("should form a closed polygon", function(){
-      expect(circle.geometry.coordinates[0]).toEqual(circle.geometry.coordinates[circle.geometry.coordinates.length-1]);
+      expect(circle.geometry.coordinates[0][0][0]).toEqual(circle.geometry.coordinates[0][circle.geometry.coordinates[0].length-1][0]);
+      expect(circle.geometry.coordinates[0][0][1]).toEqual(circle.geometry.coordinates[0][circle.geometry.coordinates[0].length-1][1]);
     });
 
     it("should have a getter for steps", function(){
