@@ -509,7 +509,7 @@ describe("Primitives", function(){
     it("should create a Circle Feature from a GeoJSON Position and a radius", function(){
       expect(circle.type).toEqual("Feature");
       expect(circle.geometry.type).toEqual("Polygon");
-      expect(circle.geometry.coordinates[0].length).toEqual(128);
+      expect(circle.geometry.coordinates[0].length).toEqual(129); // 128 + 1 to close the circle
     });
 
     it("should throw an error when called invalid data", function(){

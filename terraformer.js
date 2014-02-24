@@ -606,10 +606,9 @@
 
   function pointsEqual(a, b) {
     for (var i = 0; i < a.length; i++) {
-      for (var j = 0; j < b.length; j++) {
-        if (a[i] !== b[j]) {
-          return false;
-        }
+
+      if (a[i] !== b[i]) {
+        return false;
       }
     }
 
@@ -1341,8 +1340,7 @@
       var radians = i * (360/steps) * Math.PI / 180;
       polygon.coordinates[0].push([mercatorPosition[0] + radius * Math.cos(radians), mercatorPosition[1] + radius * Math.sin(radians)]);
     }
-
-    closedPolygon(polygon.coordinates);
+    polygon.coordinates = closedPolygon(polygon.coordinates);
 
     return toGeographic(polygon);
   }
