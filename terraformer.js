@@ -594,7 +594,6 @@
 
     for (var i = 0; i < coordinates.length; i++) {
       var inner = coordinates[i].slice();
-
       if (pointsEqual(inner[0], inner[inner.length - 1]) === false) {
         inner.push(inner[0]);
       }
@@ -1183,7 +1182,6 @@
     this.coordinates[0].splice(remove, 1);
     return this;
   };
-
   Polygon.prototype.close = function() {
     this.coordinates = closedPolygon(this.coordinates);
   };
@@ -1218,6 +1216,14 @@
   };
   MultiPolygon.prototype.get = function(i){
     return new Polygon(this.coordinates[i]);
+  };
+  MultiPolygon.prototype.close = function(){
+    var outer = [];
+    this.forEach(function(polygon){
+      outer.push(closedPolygon(polygon));
+    });
+    this.coordinates = outer;
+    return this;
   };
 
   /*

@@ -472,6 +472,31 @@ describe("Primitives", function(){
       expect(count).toEqual(2);
     });
 
+    it("should be able to be closed", function(){
+      var unclosed = new Terraformer.MultiPolygon({
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [ [102.0, 2.0],[103.0, 2.0],[103.0, 3.0],[102.0, 3.0] ],
+            [ [102.2, 2.2],[102.8, 2.2],[102.8, 2.8],[102.2, 2.8] ]
+          ],
+          [
+            [ [100.0, 0.0],[101.0, 0.0],[101.0, 1.0],[100.0, 1.0] ],
+            [ [100.2, 0.2],[100.8, 0.2],[100.8, 0.8],[100.2, 0.8] ]
+          ]
+        ]
+      });
+
+      unclosed.close();
+
+      unclosed.forEach(function(poly){
+        expect(poly[0].length).toEqual(5);
+        expect(poly[0][0][0]).toEqual(poly[0][poly[0].length-1][0]);
+        expect(poly[0][0][1]).toEqual(poly[0][poly[0].length-1][1]);
+      });
+
+    });
+
   });
 
   describe("Circle", function(){
