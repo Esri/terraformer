@@ -467,6 +467,29 @@
     return hull;
   }
 
+  function isConvex(points) {
+    var ltz;
+
+    for (var i = 0; i < points.length - 3; i++) {
+      // (x2 - x1)*(y3 - y2) - (y2 - y1)*(x3 - x1)
+      var res = (points[i + 1][0] - points[i][0]) * (points[i + 2][1] - points[i + 1][1]) - (points[i + 1][1] - points[i][1]) * (points[i + 2][0] - points[i][0]);
+
+      if (i === 0) {
+        if (res < 0) {
+          ltz = true;
+        } else {
+          ltz = false;
+        }
+      } else {
+        if (ltz && (res >= 0)) {
+          return false;
+        }
+      }
+    }
+
+    return true;
+  }
+
   function coordinatesContainPoint(coordinates, point) {
     var contains = false;
     for(var i = -1, l = coordinates.length, j = l - 1; ++i < l; j = i) {
@@ -1429,6 +1452,7 @@
   exports.Tools.coordinatesContainPoint = coordinatesContainPoint;
   exports.Tools.coordinatesEqual = coordinatesEqual;
   exports.Tools.convexHull = convexHull;
+  exports.Tools.isConvex = isConvex;
 
   exports.MercatorCRS = MercatorCRS;
   exports.GeographicCRS = GeographicCRS;
