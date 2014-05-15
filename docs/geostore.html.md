@@ -9,9 +9,9 @@ layout: documentation
 
 The Terraformer GeoStore is a set of building blocks for managing spatial data as a GeoJSON `Feature` or `FeatureCollection`.  It includes functionality for storing and querying data in primarily a spatial manner.
 
-GeoStores are broken into three parts: [Data Stores](/documentation/geostore/data-stores), [Spatial Indexes](/documentation/geostore/spatial-indexes), and [Alternate Indexes](/documentation/geostore/alternate-indexes).
+GeoStores are broken into three parts: [Data Stores](/geostore/data-stores), [Spatial Indexes](/geostore/spatial-indexes), and [Alternate Indexes](/geostore/alternate-indexes).
 
-More in-depth information can be found in [Core Concepts](/documentation/geostore/core-concepts).
+More in-depth information can be found in [Core Concepts](/geostore/core-concepts).
 
 ## Using the GeoStore
 

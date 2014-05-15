@@ -1,7 +1,8 @@
+var fs = require('fs');
 
 module.exports = function (grunt) {
+
   grunt.initConfig({
-    aws: grunt.file.readJSON(process.env.HOME + '/terraformer-s3.json'),
     pkg: grunt.file.readJSON('package.json'),
 
     jshint: {
@@ -108,9 +109,31 @@ module.exports = function (grunt) {
         branch: 'gh-pages'
       },
       src: ['**']
+    },
+
+
+    middleman: {
+      server: {
+        options: {
+          useBundle: true
+        }
+      },
+      build: {
+        options: {
+          useBundle: true,
+          server: false,
+          command: "build"
+        }
+      }
     }
 
   });
+
+  var awsExists = fs.existsSync(process.env.HOME + '/terraformer-s3.json');
+
+  if (awsExists) {
+    grunt.config.set('aws', grunt.file.readJSON(process.env.HOME + '/terraformer-s3.json'));
+  }
 
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-uglify');
@@ -119,8 +142,10 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-jasmine-node');
   grunt.loadNpmTasks('grunt-s3');
   grunt.loadNpmTasks('grunt-gh-pages');
+  grunt.loadNpmTasks('grunt-middleman');
 
   grunt.registerTask('test', ['jshint', 'jasmine_node', 'jasmine']);
   grunt.registerTask('version', ['test', 'uglify', 's3']);
   grunt.registerTask('default', ['test']);
+  grunt.registerTask('deploy-docs', ['middleman:build', 'gh-pages']);
 };
