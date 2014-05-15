@@ -27,6 +27,7 @@ h6 {@include p12; @include OpenBold;
 }
 
 h1, h2, h3, h4,h5, h6 {
+  margin-top: 2rem;
   position: relative;
   &:hover {
     .header-link {
@@ -122,7 +123,7 @@ pre {
   background: #002b36;
   color: #839496;
   @include respond-to($tablet-mid) {
-    width: 100%;
+    width: 90%;
   }
   code {
     display: block;

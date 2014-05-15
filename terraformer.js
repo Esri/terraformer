@@ -33,9 +33,9 @@
   /*
   Internal: isArray function
   */
-  isArray = function (obj) {
+  function isArray(obj) {
     return Object.prototype.toString.call(obj) === "[object Array]";
-  };
+  }
 
   /*
   Internal: safe warning
@@ -467,6 +467,29 @@
     return hull;
   }
 
+  function isConvex(points) {
+    var ltz;
+
+    for (var i = 0; i < points.length - 3; i++) {
+      // (x2 - x1)*(y3 - y2) - (y2 - y1)*(x3 - x1)
+      var res = (points[i + 1][0] - points[i][0]) * (points[i + 2][1] - points[i + 1][1]) - (points[i + 1][1] - points[i][1]) * (points[i + 2][0] - points[i][0]);
+
+      if (i === 0) {
+        if (res < 0) {
+          ltz = true;
+        } else {
+          ltz = false;
+        }
+      } else {
+        if (ltz && (res > 0)) {
+          return false;
+        }
+      }
+    }
+
+    return true;
+  }
+
   function coordinatesContainPoint(coordinates, point) {
     var contains = false;
     for(var i = -1, l = coordinates.length, j = l - 1; ++i < l; j = i) {
@@ -594,7 +617,6 @@
 
     for (var i = 0; i < coordinates.length; i++) {
       var inner = coordinates[i].slice();
-
       if (pointsEqual(inner[0], inner[inner.length - 1]) === false) {
         inner.push(inner[0]);
       }
@@ -607,10 +629,9 @@
 
   function pointsEqual(a, b) {
     for (var i = 0; i < a.length; i++) {
-      for (var j = 0; j < b.length; j++) {
-        if (a[i] !== b[j]) {
-          return false;
-        }
+
+      if (a[i] !== b[i]) {
+        return false;
       }
     }
 
@@ -702,24 +723,23 @@
   Primitive.prototype.convexHull = function(){
     var coordinates = [ ], i, j;
     if (this.type === 'Point') {
-      if (this.coordinates && this.coordinates.length > 0) {
-        return [ this.coordinates ];
-      } else {
-        return [ ];
-      }
+      return null;
     } else if (this.type === 'LineString' || this.type === 'MultiPoint') {
-      if (this.coordinates && this.coordinates.length > 0) {
+      if (this.coordinates && this.coordinates.length >= 3) {
         coordinates = this.coordinates;
       } else {
-        return [ ];
+        return null;
       }
     } else if (this.type === 'Polygon' || this.type === 'MultiLineString') {
       if (this.coordinates && this.coordinates.length > 0) {
         for (i = 0; i < this.coordinates.length; i++) {
           coordinates = coordinates.concat(this.coordinates[i]);
         }
+        if(coordinates.length < 3){
+          return null;
+        }
       } else {
-        return [ ];
+        return null;
       }
     } else if (this.type === 'MultiPolygon') {
       if (this.coordinates && this.coordinates.length > 0) {
@@ -728,14 +748,21 @@
             coordinates = coordinates.concat(this.coordinates[i][j]);
           }
         }
+        if(coordinates.length < 3){
+          return null;
+        }
       } else {
-        return [ ];
+        return null;
       }
-    } else {
-      throw new Error("Unable to get convex hull of " + this.type);
+    } else if(this.type === "Feature"){
+      var primitive = new Primitive(this.geometry);
+      return primitive.convexHull();
     }
 
-    return new Polygon(convexHull(coordinates));
+    return new Polygon({
+      type: 'Polygon',
+      coordinates: closedPolygon([convexHull(coordinates)])
+    });
   };
 
   Primitive.prototype.toJSON = function(){
@@ -1178,7 +1205,6 @@
     this.coordinates[0].splice(remove, 1);
     return this;
   };
-
   Polygon.prototype.close = function() {
     this.coordinates = closedPolygon(this.coordinates);
   };
@@ -1213,6 +1239,14 @@
   };
   MultiPolygon.prototype.get = function(i){
     return new Polygon(this.coordinates[i]);
+  };
+  MultiPolygon.prototype.close = function(){
+    var outer = [];
+    this.forEach(function(polygon){
+      outer.push(closedPolygon(polygon));
+    });
+    this.coordinates = outer;
+    return this;
   };
 
   /*
@@ -1329,6 +1363,8 @@
       var radians = i * (360/steps) * Math.PI / 180;
       polygon.coordinates[0].push([mercatorPosition[0] + radius * Math.cos(radians), mercatorPosition[1] + radius * Math.sin(radians)]);
     }
+    polygon.coordinates = closedPolygon(polygon.coordinates);
+
     return toGeographic(polygon);
   }
 
@@ -1416,6 +1452,7 @@
   exports.Tools.coordinatesContainPoint = coordinatesContainPoint;
   exports.Tools.coordinatesEqual = coordinatesEqual;
   exports.Tools.convexHull = convexHull;
+  exports.Tools.isConvex = isConvex;
 
   exports.MercatorCRS = MercatorCRS;
   exports.GeographicCRS = GeographicCRS;

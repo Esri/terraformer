@@ -39,7 +39,7 @@ In the browser, the core [Terraformer](http://github.com/esri/terraformer) libra
 </script>
 ```
 
-You can also use [Bower](http://bower.io/) to install the components if you like or download them and host them yourself.
+You can also use [Bower](http://bower.io/) to install the components if you like, or download them and host them yourself.
 
 ```
 $ bower install terraformer-wkt-parser
@@ -47,7 +47,7 @@ $ bower install terraformer-wkt-parser
 
 ### Using in Node.js
 
-Just install the package from NPM with `$ npm install terraformer-arcgis-parser` Then include it in your application
+Just install the package from NPM with `$ npm install terraformer-arcgis-parser`. Then include it in your application.
 
 ```js
 var WKT = require('terraformer-wkt-parser');
@@ -59,7 +59,7 @@ var WKT = require('terraformer-wkt-parser');
 
 #### WKT.parse(string)
 
-`Terraformer.WKT.parse(string)` - Converts a GeoJSON or a [Terraformer.Primitive]() into WKT.
+`Terraformer.WKT.parse(string)` - Converts a GeoJSON or a [Terraformer.Primitive](/core/#terraformerprimitive) into WKT.
 
 ```js
 var geojson = Terraformer.WKT.parse('LINESTRING (30 10, 10 30, 40 40)');
