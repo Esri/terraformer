@@ -481,7 +481,7 @@
           ltz = false;
         }
       } else {
-        if (ltz && (res >= 0)) {
+        if (ltz && (res > 0)) {
           return false;
         }
       }
