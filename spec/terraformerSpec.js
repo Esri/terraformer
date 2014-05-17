@@ -169,6 +169,14 @@ describe("Primitives", function(){
       expect(Terraformer.Tools.convexHull([ point.coordinates ])).toEqual([[45, 60]]);
     });
 
+    it("should be able to tell a non-convex polygon using Tools", function(){
+      expect(Terraformer.Tools.isConvex(GeoJSON.polygons[1].coordinates[0])).toEqual(false);
+    });
+
+    it("should be able to tell a convex polygon using Tools", function(){
+      expect(Terraformer.Tools.isConvex(GeoJSON.polygons[0].coordinates[0])).toEqual(true);
+    });
+
     it("should calculate envelope", function(){
       expect(point.envelope()).toEqual({ x: 45, y: 60, w: 0, h: 0 });
     });
