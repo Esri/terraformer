@@ -467,6 +467,34 @@
     return hull;
   }
 
+  function isConvex(points) {
+    var ltz;
+
+    for (var i = 0; i < points.length - 3; i++) {
+      var p1 = points[i];
+      var p2 = points[i + 1];
+      var p3 = points[i + 2];
+      var v = [p2[0] - p1[0], p2[1] - p1[1]];
+
+      // p3.x * v.y - p3.y * v.x + v.x * p1.y - v.y * p1.x
+      var res = p3[0] * v[1] - p3[1] * v[0] + v[0] * p1[1] - v[1] * p1[0];
+
+      if (i === 0) {
+        if (res < 0) {
+          ltz = true;
+        } else {
+          ltz = false;
+        }
+      } else {
+        if (ltz && (res > 0) || !ltz && (res < 0)) {
+          return false;
+        }
+      }
+    }
+
+    return true;
+  }
+
   function coordinatesContainPoint(coordinates, point) {
     var contains = false;
     for(var i = -1, l = coordinates.length, j = l - 1; ++i < l; j = i) {
@@ -561,9 +589,9 @@
       if (arrayIntersectsMultiArray(a, b[i])) {
         return true;
       }
-
-      return false;
     }
+
+    return false;
   }
 
   function multiArrayIntersectsMultiMultiArray(a, b) {
@@ -571,9 +599,9 @@
       if (arrayIntersectsMultiMultiArray(a[i], b)) {
         return true;
       }
-
-      return false;
     }
+
+    return false;
   }
 
   function multiMultiArrayIntersectsMultiMultiArray(a, b) {
@@ -581,9 +609,9 @@
       if (multiArrayIntersectsMultiMultiArray(a[i], b)) {
         return true;
       }
-
-      return false;
     }
+
+    return false;
   }
 
   /*
@@ -1429,6 +1457,7 @@
   exports.Tools.coordinatesContainPoint = coordinatesContainPoint;
   exports.Tools.coordinatesEqual = coordinatesEqual;
   exports.Tools.convexHull = convexHull;
+  exports.Tools.isConvex = isConvex;
 
   exports.MercatorCRS = MercatorCRS;
   exports.GeographicCRS = GeographicCRS;
