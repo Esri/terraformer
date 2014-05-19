@@ -589,9 +589,9 @@
       if (arrayIntersectsMultiArray(a, b[i])) {
         return true;
       }
-
-      return false;
     }
+
+    return false;
   }
 
   function multiArrayIntersectsMultiMultiArray(a, b) {
@@ -599,9 +599,9 @@
       if (arrayIntersectsMultiMultiArray(a[i], b)) {
         return true;
       }
-
-      return false;
     }
+
+    return false;
   }
 
   function multiMultiArrayIntersectsMultiMultiArray(a, b) {
@@ -609,9 +609,9 @@
       if (multiArrayIntersectsMultiMultiArray(a[i], b)) {
         return true;
       }
-
-      return false;
     }
+
+    return false;
   }
 
   /*
