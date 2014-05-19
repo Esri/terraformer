@@ -471,8 +471,13 @@
     var ltz;
 
     for (var i = 0; i < points.length - 3; i++) {
-      // (x2 - x1)*(y3 - y2) - (y2 - y1)*(x3 - x1)
-      var res = (points[i + 1][0] - points[i][0]) * (points[i + 2][1] - points[i + 1][1]) - (points[i + 1][1] - points[i][1]) * (points[i + 2][0] - points[i][0]);
+      var p1 = points[i];
+      var p2 = points[i + 1];
+      var p3 = points[i + 2];
+      var v = [p2[0] - p1[0], p2[1] - p1[1]];
+
+      // p3.x * v.y - p3.y * v.x + v.x * p1.y - v.y * p1.x
+      var res = p3[0] * v[1] - p3[1] * v[0] + v[0] * p1[1] - v[1] * p1[0];
 
       if (i === 0) {
         if (res < 0) {
@@ -481,7 +486,7 @@
           ltz = false;
         }
       } else {
-        if (ltz && (res > 0)) {
+        if (ltz && (res > 0) || !ltz && (res < 0)) {
           return false;
         }
       }
