@@ -412,56 +412,24 @@
   }
 
 
-  /*
-  Internal: used to determine turn
-  */
-  function turn(p, q, r) {
-    // Returns -1, 0, 1 if p,q,r forms a right, straight, or left turn.
-    return cmp((q[0] - p[0]) * (r[1] - p[1]) - (r[0] - p[0]) * (q[1] - p[1]), 0);
-  }
-
-  /*
-  Internal: used to determine euclidean distance between two points
-  */
-  function euclideanDistance(p, q) {
-    // Returns the squared Euclidean distance between p and q.
-    var dx = q[0] - p[0];
-    var dy = q[1] - p[1];
-
-    return dx * dx + dy * dy;
-  }
-
-  function nextHullPoint(points, p) {
-    // Returns the next point on the convex hull in CCW from p.
-    var q = p;
-    for(var r in points) {
-      var t = turn(p, q, points[r]);
-      if(t === -1 || t === 0 && euclideanDistance(p, points[r]) > euclideanDistance(p, q)) {
-        q = points[r];
-      }
-    }
-    return q;
+  function ccw(p1, p2, p3) {
+    return (p2[0] - p1[0]) * (p3[1] - p1[1]) - (p2[1] - p1[1]) * (p3[0] - p1[0]);
   }
 
   function convexHull(points) {
-    // implementation of the Jarvis March algorithm
-    // adapted from http://tixxit.wordpress.com/2009/12/09/jarvis-march/
-
-    if(points.length === 0) {
-      return [];
-    } else if(points.length === 1) {
-      return points;
+    var i, t, k = 0;
+    var hull = [ ];
+   
+    /* lower hull */
+    for (i = 0; i < points.length; ++i) {
+      while (k >= 2 && ccw(hull[k-2], hull[k-1], points[i]) <= 0) --k;
+      hull[k++] = points[i];
     }
-
-    // Returns the points on the convex hull of points in CCW order.
-    var hull = [points.sort(compSort)[0]];
-
-    for(var p = 0; p < hull.length; p++) {
-      var q = nextHullPoint(points, hull[p]);
-
-      if(q !== hull[0]) {
-        hull.push(q);
-      }
+   
+    /* upper hull */
+    for (i = points.length - 2, t = k+1; i >= 0; --i) {
+      while (k >= t && ccw(hull[k-2], hull[k-1], points[i]) <= 0) --k;
+      hull[k++] = points[i];
     }
 
     return hull;

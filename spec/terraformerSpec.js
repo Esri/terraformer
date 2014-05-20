@@ -236,7 +236,7 @@ describe("Primitives", function(){
       multiPoint.addPoint([80,-60]);
       expect(multiPoint.convexHull().type).toEqual("Polygon");
       expect(multiPoint.convexHull().coordinates).toEqual([
-        [ [ -45, 122 ], [ 80, -60 ], [ 100, 0 ], [ -45, 122 ] ]
+        [ [ 100, 0 ], [ -45, 122 ], [ 80, -60 ], [ 100, 0 ] ]
       ]);
     });
 
@@ -295,7 +295,7 @@ describe("Primitives", function(){
       lineString.addVertex([80,-60]);
       expect(lineString.convexHull().type).toEqual("Polygon");
       expect(lineString.convexHull().coordinates).toEqual([
-        [ [ -45, 122 ], [ 80, -60 ], [ 100, 0 ], [ -45, 122 ] ]
+        [ [ 100, 0 ], [ -45, 122 ], [ 80, -60 ], [ 100, 0 ] ]
       ]);
     });
 
@@ -343,7 +343,7 @@ describe("Primitives", function(){
     it("should calculate convex hull", function(){
       expect(multiLineString.convexHull().type).toEqual("Polygon");
       expect(multiLineString.convexHull().coordinates).toEqual([
-        [ [ -115, 55 ], [ -110, 45 ], [ -105, 40 ], [ -100, 40 ], [ -110, 55 ], [ -115, 55 ] ]
+        [ [ -105, 40 ], [ -100, 40 ], [ -110, 55 ], [ -115, 55 ], [ -110, 45 ], [ -105, 40 ] ]
       ]);
     });
 
@@ -406,7 +406,7 @@ describe("Primitives", function(){
 
     it("should calculate convex hull", function(){
       expect(polygon.convexHull().coordinates).toEqual([
-        [ [ 100, 1 ], [ 100, 0 ], [ 101, 0 ], [ 101, 1 ], [ 100, 1 ] ]
+        [ [ 100, 0 ], [ 101, 0 ], [ 101, 1 ], [ 100, 1 ], [ 100, 0 ], [ 100, 0 ] ]
       ]);
       expect(polygon.convexHull().type).toEqual("Polygon");
     });
@@ -457,7 +457,7 @@ describe("Primitives", function(){
 
     it("should calculate convex hull", function (){
       expect(multiPolygon.convexHull().coordinates).toEqual([
-        [ [ 102, 3 ], [ 100, 1 ], [ 100, 0 ], [ 101, 0 ], [ 103, 2 ], [ 103, 3 ], [ 102, 3 ] ]
+        [ [ 102, 2 ], [ 103, 2 ], [ 103, 3 ], [ 102, 3 ], [ 100, 0 ], [ 101, 0 ], [ 101, 1 ], [ 100, 1 ], [ 100, 0 ], [ 103, 2 ], [ 102, 2 ] ]
       ]);
       expect(multiPolygon.convexHull().type).toEqual("Polygon");
     });
@@ -600,7 +600,7 @@ describe("Primitives", function(){
     it("should calculate convex hull", function(){
       expect(feature.convexHull().type).toEqual("Polygon");
       expect(feature.convexHull().coordinates).toEqual([
-        [ [ 41.83, 71.01 ], [ 21.79, 36.56 ], [ 56.95, 33.75 ], [ 41.83, 71.01 ] ]
+        [ [ 41.83, 71.01 ], [ 41.83, 71.01 ], [ 21.79, 36.56 ], [ 56.95, 33.75 ], [ 41.83, 71.01 ] ]
       ]);
     });
 
