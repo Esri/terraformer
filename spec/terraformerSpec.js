@@ -343,7 +343,7 @@ describe("Primitives", function(){
     it("should calculate convex hull", function(){
       expect(multiLineString.convexHull().type).toEqual("Polygon");
       expect(multiLineString.convexHull().coordinates).toEqual([
-        [ [ -105, 40 ], [ -100, 40 ], [ -110, 55 ], [ -115, 55 ], [ -110, 45 ], [ -105, 40 ] ]
+        [ [ -100, 40 ], [ -110, 55 ], [ -115, 55 ], [ -110, 45 ], [ -105, 40 ], [ -100, 40 ] ]
       ]);
     });
 
@@ -406,7 +406,7 @@ describe("Primitives", function(){
 
     it("should calculate convex hull", function(){
       expect(polygon.convexHull().coordinates).toEqual([
-        [ [ 100, 0 ], [ 101, 0 ], [ 101, 1 ], [ 100, 1 ], [ 100, 0 ], [ 100, 0 ] ]
+        [ [ 101, 1 ], [ 100, 1 ], [ 100, 0 ], [ 101, 0 ], [ 101, 1 ] ]
       ]);
       expect(polygon.convexHull().type).toEqual("Polygon");
     });
@@ -417,7 +417,7 @@ describe("Primitives", function(){
   });
 
   describe("MultiPolygon", function(){
-    var multiPolygon;
+    var multiPolygon, mp;
 
     beforeEach(function(){
       multiPolygon = new Terraformer.MultiPolygon(GeoJSON.multiPolygons[0].coordinates);
@@ -429,7 +429,7 @@ describe("Primitives", function(){
     });
 
     it("should return true when a MultiPolygon intersects another", function(){
-      var mp = new Terraformer.MultiPolygon([
+      mp = new Terraformer.MultiPolygon([
         [
           [ [102.0, 2.0], [103.0, 2.0], [103.0, 3.0], [102.0, 3.0], [102.0, 2.0] ]
         ],
@@ -456,8 +456,14 @@ describe("Primitives", function(){
     });
 
     it("should calculate convex hull", function (){
-      expect(multiPolygon.convexHull().coordinates).toEqual([
-        [ [ 102, 2 ], [ 103, 2 ], [ 103, 3 ], [ 102, 3 ], [ 100, 0 ], [ 101, 0 ], [ 101, 1 ], [ 100, 1 ], [ 100, 0 ], [ 103, 2 ], [ 102, 2 ] ]
+      expect(mp.convexHull().coordinates).toEqual([
+        [ [ 103, 3 ],
+          [ 102, 3 ],
+          [ 100, 1 ],
+          [ 100, 0 ],
+          [ 102, 0 ],
+          [ 103, 2 ],
+          [ 103, 3 ] ]
       ]);
       expect(multiPolygon.convexHull().type).toEqual("Polygon");
     });
@@ -600,7 +606,7 @@ describe("Primitives", function(){
     it("should calculate convex hull", function(){
       expect(feature.convexHull().type).toEqual("Polygon");
       expect(feature.convexHull().coordinates).toEqual([
-        [ [ 41.83, 71.01 ], [ 41.83, 71.01 ], [ 21.79, 36.56 ], [ 56.95, 33.75 ], [ 41.83, 71.01 ] ]
+        [ [ 56.95, 33.75 ], [ 41.83, 71.01 ], [ 21.79, 36.56 ], [ 56.95, 33.75 ] ]
       ]);
     });
 

@@ -402,14 +402,19 @@
   Internal: used for sorting
   */
   function compSort(p1, p2) {
-    if(p1[0] - p2[0] > p1[1] - p2[1]) {
-      return 1;
-    } else if(p1[0] - p2[0] < p1[1] - p2[1]) {
+    if (p1[0] > p2[0]) {
       return -1;
+    } else if (p1[0] < p2[0]) {
+      return 1;
+    } else if (p1[1] > p2[1]) {
+      return -1;
+    } else if (p1[1] < p2[1]) {
+      return 1;
     } else {
       return 0;
     }
   }
+
 
 
   function ccw(p1, p2, p3) {
@@ -419,6 +424,8 @@
   function convexHull(points) {
     var i, t, k = 0;
     var hull = [ ];
+
+    points = points.sort(compSort);
    
     /* lower hull */
     for (i = 0; i < points.length; ++i) {
