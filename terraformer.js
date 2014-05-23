@@ -1119,6 +1119,18 @@
   Polygon.prototype.close = function() {
     this.coordinates = closedPolygon(this.coordinates);
   };
+  Polygon.prototype.hasHoles = function() {
+    return this.coordinates.length > 1;
+  };
+  Polygon.prototype.holes = function() {
+    holes = [];
+    if (this.hasHoles()) {
+      for (var i = 1; i < this.coordinates.length; i++) {
+        holes.push(new Polygon([this.coordinates[i]]));
+      }
+    }
+    return holes;
+  };
 
   /*
   GeoJSON MultiPolygon Class
