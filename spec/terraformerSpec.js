@@ -369,9 +369,14 @@ describe("Primitives", function(){
 
   describe("Polygon", function(){
     var polygon;
+    var polygonWithHoles;
 
     beforeEach(function(){
       polygon = new Terraformer.Polygon([ [ [100.0, 0.0],[101.0, 0.0],[101.0, 1.0],[100.0, 1.0],[100.0, 0.0] ] ]);
+      polygonWithHoles = new Terraformer.Polygon([
+        [ [100.0, 0.0], [101.0, 0.0], [101.0, 1.0], [100.0, 1.0], [100.0, 0.0] ],
+        [ [100.2, 0.2], [100.8, 0.2], [100.8, 0.8], [100.2, 0.8], [100.2, 0.2] ]
+      ]);
     });
 
     it("should create a Polygon from an array of GeoJSON Positions", function(){
@@ -413,6 +418,16 @@ describe("Primitives", function(){
 
     it("should calculate envelope", function(){
       expect(polygon.envelope()).toEqual({ x : 100.0, y : 0, w : 1, h : 1 });
+    });
+
+    it("should report hole presence properly", function() {
+      expect(polygon.hasHoles()).toEqual(false);
+      expect(polygonWithHoles.hasHoles()).toEqual(true);
+    });
+
+    it("should return an array of polygons of each hole", function() {
+      var hole = new Terraformer.Polygon([[[100.2, 0.2], [100.8, 0.2], [100.8, 0.8], [100.2, 0.8], [100.2, 0.2]]]);
+      expect(polygonWithHoles.holes()).toEqual([hole]);
     });
   });
 
