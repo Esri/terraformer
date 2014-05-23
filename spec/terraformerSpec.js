@@ -392,7 +392,7 @@ describe("Primitives", function(){
 
     it("should be able to add a vertex", function(){
       polygon.addVertex([45, 100]);
-      expect(polygon.coordinates).toEqual([ [ [100.0, 0.0],[101.0, 0.0],[101.0, 1.0],[100.0, 1.0],[100.0, 0.0],[45, 100] ] ]);
+      expect(polygon.coordinates).toEqual([ [ [100.0, 0.0],[101.0, 0.0],[101.0, 1.0],[100.0, 1.0],[45, 100],[100.0, 0.0] ] ]);
     });
 
     it("should be able to insert a vertex", function(){

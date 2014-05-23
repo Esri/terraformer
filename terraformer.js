@@ -1105,7 +1105,7 @@
   Polygon.prototype = new Primitive();
   Polygon.prototype.constructor = Polygon;
   Polygon.prototype.addVertex = function(point){
-    this.coordinates[0].push(point);
+    this.insertVertex(point, this.coordinates[0].length - 1);
     return this;
   };
   Polygon.prototype.insertVertex = function(point, index){
