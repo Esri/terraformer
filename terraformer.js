@@ -1105,7 +1105,7 @@
   Polygon.prototype = new Primitive();
   Polygon.prototype.constructor = Polygon;
   Polygon.prototype.addVertex = function(point){
-    this.coordinates[0].push(point);
+    this.insertVertex(point, this.coordinates[0].length - 1);
     return this;
   };
   Polygon.prototype.insertVertex = function(point, index){
@@ -1118,6 +1118,18 @@
   };
   Polygon.prototype.close = function() {
     this.coordinates = closedPolygon(this.coordinates);
+  };
+  Polygon.prototype.hasHoles = function() {
+    return this.coordinates.length > 1;
+  };
+  Polygon.prototype.holes = function() {
+    holes = [];
+    if (this.hasHoles()) {
+      for (var i = 1; i < this.coordinates.length; i++) {
+        holes.push(new Polygon([this.coordinates[i]]));
+      }
+    }
+    return holes;
   };
 
   /*

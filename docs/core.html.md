@@ -151,10 +151,12 @@ var polygon2 = new Terraformer.Polygon([
 ### Methods
 Method | Returns | Description
 --- | --- | --- |
-<code>addVertex(<a href="/glossary/#coordinate">&lt;Coordinate&gt;</a> <i>coordinate</i>)</code> | `this` | Adds a new coordinate to the end of the coordinate array. Equivalent to `polygon.coordinates.push([3,4])`.
+<code>addVertex(<a href="/glossary/#coordinate">&lt;Coordinate&gt;</a> <i>coordinate</i>)</code> | `this` | Adds a new coordinate just before the closing coordinate of the linear ring.
 <code>insertVertex(<a href="/glossary/#coordinate">&lt;Coordinate&gt;</a> <i>coordinate</i>, <Integer> index)</code> | `this` | Inserts the passed coordinate at the passed index. Equivalent to `polygon.coordinates.splice(index, 0, point)`
 `removeVertex(<Integer> index)` | `this` | Removes the coordinate at `index`. Equivalent to calling `polygon.coordinates.splice(remove, 1)`
 `close()` | `this` | Ensures that the first and last vertex of the polygon are equal to each other.
+`hasHoles()` | Boolean | True if this polygon has holes.
+`holes()` | Array `<Polygon>` | Returns an `Array` of `Polygon` objects made from each hole in this polygon.
 
 ## Terraformer.MultiPolygon
 A JavaScript object representing a [GeoJSON MultiPolygon](/glossary/#multipolygon).
