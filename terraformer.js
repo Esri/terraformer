@@ -402,66 +402,41 @@
   Internal: used for sorting
   */
   function compSort(p1, p2) {
-    if(p1[0] - p2[0] > p1[1] - p2[1]) {
-      return 1;
-    } else if(p1[0] - p2[0] < p1[1] - p2[1]) {
+    if (p1[0] > p2[0]) {
       return -1;
+    } else if (p1[0] < p2[0]) {
+      return 1;
+    } else if (p1[1] > p2[1]) {
+      return -1;
+    } else if (p1[1] < p2[1]) {
+      return 1;
     } else {
       return 0;
     }
   }
 
 
-  /*
-  Internal: used to determine turn
-  */
-  function turn(p, q, r) {
-    // Returns -1, 0, 1 if p,q,r forms a right, straight, or left turn.
-    return cmp((q[0] - p[0]) * (r[1] - p[1]) - (r[0] - p[0]) * (q[1] - p[1]), 0);
-  }
 
-  /*
-  Internal: used to determine euclidean distance between two points
-  */
-  function euclideanDistance(p, q) {
-    // Returns the squared Euclidean distance between p and q.
-    var dx = q[0] - p[0];
-    var dy = q[1] - p[1];
-
-    return dx * dx + dy * dy;
-  }
-
-  function nextHullPoint(points, p) {
-    // Returns the next point on the convex hull in CCW from p.
-    var q = p;
-    for(var r in points) {
-      var t = turn(p, q, points[r]);
-      if(t === -1 || t === 0 && euclideanDistance(p, points[r]) > euclideanDistance(p, q)) {
-        q = points[r];
-      }
-    }
-    return q;
+  function ccw(p1, p2, p3) {
+    return (p2[0] - p1[0]) * (p3[1] - p1[1]) - (p2[1] - p1[1]) * (p3[0] - p1[0]);
   }
 
   function convexHull(points) {
-    // implementation of the Jarvis March algorithm
-    // adapted from http://tixxit.wordpress.com/2009/12/09/jarvis-march/
+    var i, t, k = 0;
+    var hull = [ ];
 
-    if(points.length === 0) {
-      return [];
-    } else if(points.length === 1) {
-      return points;
+    points = points.sort(compSort);
+
+    /* lower hull */
+    for (i = 0; i < points.length; ++i) {
+      while (k >= 2 && ccw(hull[k-2], hull[k-1], points[i]) <= 0) --k;
+      hull[k++] = points[i];
     }
 
-    // Returns the points on the convex hull of points in CCW order.
-    var hull = [points.sort(compSort)[0]];
-
-    for(var p = 0; p < hull.length; p++) {
-      var q = nextHullPoint(points, hull[p]);
-
-      if(q !== hull[0]) {
-        hull.push(q);
-      }
+    /* upper hull */
+    for (i = points.length - 2, t = k+1; i >= 0; --i) {
+      while (k >= t && ccw(hull[k-2], hull[k-1], points[i]) <= 0) --k;
+      hull[k++] = points[i];
     }
 
     return hull;
@@ -529,7 +504,7 @@
     }
   }
 
-  function vertexIntersectsVertex(a1, a2, b1, b2) {
+  function edgeIntersectsEdge(a1, a2, b1, b2) {
     var ua_t = (b2[0] - b1[0]) * (a1[1] - b1[1]) - (b2[1] - b1[1]) * (a1[0] - b1[0]);
     var ub_t = (a2[0] - a1[0]) * (a1[1] - b1[1]) - (a2[1] - a1[1]) * (a1[0] - b1[0]);
     var u_b  = (b2[1] - b1[1]) * (a2[0] - a1[0]) - (b2[0] - b1[0]) * (a2[1] - a1[1]);
@@ -546,72 +521,35 @@
     return false;
   }
 
-  function arrayIntersectsArray(a, b) {
-    for (var i = 0; i < a.length - 1; i++) {
-      for (var j = 0; j < b.length - 1; j++) {
-        if (vertexIntersectsVertex(a[i], a[i + 1], b[j], b[j + 1])) {
-          return true;
-        }
-      }
-    }
-
-    return false;
+  function isNumber(n) {
+    return !isNaN(parseFloat(n)) && isFinite(n);
   }
 
-  function arrayIntersectsMultiArray(a, b) {
-    for (var i = 0; i < b.length; i++) {
-      var inner = b[i];
-
-      for (var j = 0; j < inner.length - 1; j++) {
-        for (var k = 0; k < a.length - 1; k++) {
-          if (vertexIntersectsVertex(inner[j], inner[j + 1], a[k], a[k + 1])) {
+  function arraysIntersectArrays(a, b) {
+    if (isNumber(a[0][0])) {
+      if (isNumber(b[0][0])) {
+        for (var i = 0; i < a.length - 1; i++) {
+          for (var j = 0; j < b.length - 1; j++) {
+            if (edgeIntersectsEdge(a[i], a[i + 1], b[j], b[j + 1])) {
+              return true;
+            }
+          }
+        }
+      } else {
+        for (var k = 0; k < b.length; k++) {
+          if (arraysIntersectArrays(a, b[k])) {
             return true;
           }
         }
       }
+    } else {
+      for (var l = 0; l < a.length; l++) {
+        if (arraysIntersectArrays(a[l], b)) {
+          return true;
+        }
+      }
     }
-
     return false;
-  }
-
-  function multiArrayIntersectsMultiArray(a, b) {
-    for (var i = 0; i < a.length; i++) {
-      if (arrayIntersectsMultiArray(a[i], b)) {
-        return true;
-      }
-    }
-
-    return false;
-  }
-
-  function arrayIntersectsMultiMultiArray(a, b) {
-    for (var i = 0; i < b.length; i++) {
-      if (arrayIntersectsMultiArray(a, b[i])) {
-        return true;
-      }
-
-      return false;
-    }
-  }
-
-  function multiArrayIntersectsMultiMultiArray(a, b) {
-    for (var i = 0; i < a.length; i++) {
-      if (arrayIntersectsMultiMultiArray(a[i], b)) {
-        return true;
-      }
-
-      return false;
-    }
-  }
-
-  function multiMultiArrayIntersectsMultiMultiArray(a, b) {
-    for (var i = 0; i < a.length; i++) {
-      if (multiArrayIntersectsMultiMultiArray(a[i], b)) {
-        return true;
-      }
-
-      return false;
-    }
   }
 
   /*
@@ -837,7 +775,7 @@
         }
 
         if (this.coordinates.length && polygonContainsPoint(primitive.coordinates, this.coordinates[0][0])) {
-          return !multiArrayIntersectsMultiArray(closedPolygon(this.coordinates), closedPolygon(primitive.coordinates));
+          return !arraysIntersectArrays(closedPolygon(this.coordinates), closedPolygon(primitive.coordinates));
         } else {
           return false;
         }
@@ -894,7 +832,7 @@
         if (primitive.coordinates.length) {
           for (i = 0; i < primitive.coordinates.length; i++) {
             coordinates = primitive.coordinates[i];
-            if (polygonContainsPoint(coordinates, this.coordinates) && multiArrayIntersectsMultiArray(this.coordinates, primitive.coordinates) === false) {
+            if (polygonContainsPoint(coordinates, this.coordinates) && arraysIntersectArrays([this.coordinates], primitive.coordinates) === false) {
               return true;
             }
           }
@@ -913,7 +851,7 @@
           }
         }
 
-        if (multiArrayIntersectsMultiMultiArray(this.coordinates, primitive.coordinates) === false) {
+        if (arraysIntersectArrays(this.coordinates, primitive.coordinates) === false) {
           if (primitive.coordinates.length) {
             for (i = 0; i < primitive.coordinates.length; i++) {
               coordinates = primitive.coordinates[i];
@@ -981,42 +919,10 @@
       return true;
     }
 
-    if (this.type === 'LineString') {
-      if (primitive.type === 'LineString') {
-        return arrayIntersectsArray(this.coordinates, primitive.coordinates);
-      } else if (primitive.type === 'MultiLineString') {
-        return arrayIntersectsMultiArray(this.coordinates, primitive.coordinates);
-      } else if (primitive.type === 'Polygon') {
-        return arrayIntersectsMultiArray(this.coordinates, closedPolygon(primitive.coordinates));
-      } else if (primitive.type === 'MultiPolygon') {
-        return arrayIntersectsMultiMultiArray(this.coordinates, primitive.coordinates);
-      }
-    } else if (this.type === 'MultiLineString') {
-      if (primitive.type === 'LineString') {
-        return arrayIntersectsMultiArray(primitive.coordinates, this.coordinates);
-      } else if (primitive.type === 'Polygon' || primitive.type === 'MultiLineString') {
-        return multiArrayIntersectsMultiArray(this.coordinates, primitive.coordinates);
-      } else if (primitive.type === 'MultiPolygon') {
-        return multiArrayIntersectsMultiMultiArray(this.coordinates, primitive.coordinates);
-      }
-    } else if (this.type === 'Polygon') {
-      if (primitive.type === 'LineString') {
-        return arrayIntersectsMultiArray(primitive.coordinates, closedPolygon(this.coordinates));
-      } else if (primitive.type === 'MultiLineString') {
-        return multiArrayIntersectsMultiArray(closedPolygon(this.coordinates), primitive.coordinates);
-      } else if (primitive.type === 'Polygon') {
-        return multiArrayIntersectsMultiArray(closedPolygon(this.coordinates), closedPolygon(primitive.coordinates));
-      } else if (primitive.type === 'MultiPolygon') {
-        return multiArrayIntersectsMultiMultiArray(closedPolygon(this.coordinates), primitive.coordinates);
-      }
-    } else if (this.type === 'MultiPolygon') {
-      if (primitive.type === 'LineString') {
-        return arrayIntersectsMultiMultiArray(primitive.coordinates, this.coordinates);
-      } else if (primitive.type === 'Polygon' || primitive.type === 'MultiLineString') {
-        return multiArrayIntersectsMultiMultiArray(closedPolygon(primitive.coordinates), this.coordinates);
-      } else if (primitive.type === 'MultiPolygon') {
-        return multiMultiArrayIntersectsMultiMultiArray(this.coordinates, primitive.coordinates);
-      }
+
+    if (this.type !== 'Point' && this.type !== 'MultiPoint' &&
+        primitive.type !== 'Point' && primitive.type !== 'MultiPoint') {
+      return arraysIntersectArrays(this.coordinates, primitive.coordinates);
     } else if (this.type === 'Feature') {
       // in the case of a Feature, use the internal primitive for intersection
       var inner = new Primitive(this.geometry);
@@ -1453,7 +1359,7 @@
 
   exports.Tools.coordinatesContainPoint = coordinatesContainPoint;
   exports.Tools.polygonContainsPoint = polygonContainsPoint;
-  exports.Tools.arrayIntersectsArray = arrayIntersectsArray;
+  exports.Tools.arraysIntersectArrays = arraysIntersectArrays;
   exports.Tools.coordinatesContainPoint = coordinatesContainPoint;
   exports.Tools.coordinatesEqual = coordinatesEqual;
   exports.Tools.convexHull = convexHull;
