@@ -91,11 +91,12 @@
 <p>You can pass any needed arguments while instantiating.</p>
 
 <p><em>Example:</em></p>
-<pre class="highlight javascript"><span class="kd">var</span> <span class="nx">si</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">SpatialIndex</span><span class="p">({</span>
-  <span class="s2">&quot;width&quot;</span><span class="p">:</span> <span class="mi">45</span><span class="p">,</span>
-  <span class="s2">&quot;dateline&quot;</span><span class="p">:</span> <span class="kc">false</span>
+<pre><code class="highlight javascript"><span class="kd">var</span> <span class="nx">si</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">SpatialIndex</span><span class="p">({</span>
+  <span class="s2">"width"</span><span class="p">:</span> <span class="mi">45</span><span class="p">,</span>
+  <span class="s2">"dateline"</span><span class="p">:</span> <span class="kc">false</span>
 <span class="p">});</span>
-</pre><h4>
+</code></pre>
+<h4>
           <a id='spatialindexinsert' class='section-link'></a>
           <a href='#spatialindexinsert' class='header-link'>Link</a>
           SpatialIndex.insert(geojson | envelope, id, callback)
@@ -128,10 +129,11 @@
 </tbody></table>
 
 <p><em>Example:</em></p>
-<pre class="highlight javascript"><span class="nx">si</span><span class="p">.</span><span class="nx">insert</span><span class="p">(</span><span class="nx">geojson</span><span class="p">,</span> <span class="nx">id</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
+<pre><code class="highlight javascript"><span class="nx">si</span><span class="p">.</span><span class="nx">insert</span><span class="p">(</span><span class="nx">geojson</span><span class="p">,</span> <span class="nx">id</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
   <span class="c1">// Node.js style callback
 </span><span class="p">});</span>
-</pre><h4>
+</code></pre>
+<h4>
           <a id='spatialindexremove' class='section-link'></a>
           <a href='#spatialindexremove' class='header-link'>Link</a>
           SpatialIndex.remove(geojson | envelope, id, callback)
@@ -164,10 +166,11 @@
 </tbody></table>
 
 <p><em>Example:</em></p>
-<pre class="highlight javascript"><span class="nx">si</span><span class="p">.</span><span class="nx">remove</span><span class="p">(</span><span class="nx">geojson</span><span class="p">,</span> <span class="nx">id</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
+<pre><code class="highlight javascript"><span class="nx">si</span><span class="p">.</span><span class="nx">remove</span><span class="p">(</span><span class="nx">geojson</span><span class="p">,</span> <span class="nx">id</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
   <span class="c1">// Node.js style callback
 </span><span class="p">});</span>
-</pre><h4>
+</code></pre>
+<h4>
           <a id='spatialindexsearch' class='section-link'></a>
           <a href='#spatialindexsearch' class='header-link'>Link</a>
           SpatialIndex.search(geojson | envelope, callback)
@@ -195,10 +198,11 @@
 </tbody></table>
 
 <p><em>Example:</em></p>
-<pre class="highlight javascript"><span class="nx">si</span><span class="p">.</span><span class="nx">search</span><span class="p">(</span><span class="nx">geojson</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
+<pre><code class="highlight javascript"><span class="nx">si</span><span class="p">.</span><span class="nx">search</span><span class="p">(</span><span class="nx">geojson</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
   <span class="c1">// Node.js style callback
 </span><span class="p">});</span>
-</pre><h4>
+</code></pre>
+<h4>
           <a id='spatialindexwithin' class='section-link'></a>
           <a href='#spatialindexwithin' class='header-link'>Link</a>
           SpatialIndex.within(geojson | envelope, callback)
@@ -226,10 +230,11 @@
 </tbody></table>
 
 <p><em>Example:</em></p>
-<pre class="highlight javascript"><span class="nx">si</span><span class="p">.</span><span class="nx">within</span><span class="p">(</span><span class="nx">geojson</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
+<pre><code class="highlight javascript"><span class="nx">si</span><span class="p">.</span><span class="nx">within</span><span class="p">(</span><span class="nx">geojson</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
   <span class="c1">// Node.js style callback
 </span><span class="p">});</span>
-</pre>
+</code></pre>
+
     </main>
 
     <footer>

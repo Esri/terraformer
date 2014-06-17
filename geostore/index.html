@@ -70,13 +70,13 @@
 <p>The GeoStore uses Node.js style callbacks, so most method signatures require a <code>callback</code> function that expects <code>error</code> and <code>response</code>: <code>function (err, res) { }</code>.</p>
 
 <p>The GeoStore manages data that is made available as either a <code>Feature</code> or a <code>FeatureCollection</code>.  In order to work, there must be an <code>id</code> field.</p>
-<pre class="highlight javascript"><span class="p">{</span>
-  <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;Feature&quot;</span><span class="p">,</span>
-  <span class="s2">&quot;properties&quot;</span><span class="p">:</span> <span class="p">{},</span>
-  <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;my id&quot;</span><span class="p">,</span>
-  <span class="s2">&quot;geometry&quot;</span><span class="p">:</span> <span class="p">{</span>
-    <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;Polygon&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;coordinates&quot;</span><span class="p">:</span> <span class="p">[</span>
+<pre><code class="highlight javascript"><span class="p">{</span>
+  <span class="s2">"type"</span><span class="p">:</span> <span class="s2">"Feature"</span><span class="p">,</span>
+  <span class="s2">"properties"</span><span class="p">:</span> <span class="p">{},</span>
+  <span class="s2">"id"</span><span class="p">:</span> <span class="s2">"my id"</span><span class="p">,</span>
+  <span class="s2">"geometry"</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s2">"type"</span><span class="p">:</span> <span class="s2">"Polygon"</span><span class="p">,</span>
+    <span class="s2">"coordinates"</span><span class="p">:</span> <span class="p">[</span>
       <span class="p">[</span>
         <span class="p">[</span>
           <span class="o">-</span><span class="mf">111.09374</span><span class="p">,</span> <span class="mf">41.50857</span>
@@ -97,23 +97,26 @@
     <span class="p">]</span>
   <span class="p">}</span>
 <span class="p">}</span>
-</pre><h3>
+</code></pre>
+<h3>
           <a id='using-in-the-browser' class='section-link'></a>
           <a href='#using-in-the-browser' class='header-link'>Link</a>
           Using in the Browser
           <a href='#' class='back-to-top-link'>Back to Top</a>
         </h3>
 <p>Using the GeoStore in the browser requires including both Terraformer and the GeoStore:</p>
-<pre class="highlight html"><span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;terraformer.min.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
-<span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;terraformer-geostore.min.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
-</pre>
+<pre><code class="highlight html"><span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"terraformer.min.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
+<span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"terraformer-geostore.min.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
+</code></pre>
+
 <p>Once those are included, you can create a new <code>Store</code>.  You will need to include both a Data Store and a Spatial Index to instantiate a GeoStore.</p>
-<pre class="highlight javascript"><span class="c1">// create a new GeoStore using Memory and an RTree Index
+<pre><code class="highlight javascript"><span class="c1">// create a new GeoStore using Memory and an RTree Index
 </span><span class="kd">var</span> <span class="nx">store</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Terraformer</span><span class="p">.</span><span class="nx">GeoStore</span><span class="p">({</span>
   <span class="na">store</span><span class="p">:</span> <span class="k">new</span> <span class="nx">Terraformer</span><span class="p">.</span><span class="nx">Store</span><span class="p">.</span><span class="nx">Memory</span><span class="p">(),</span>
   <span class="na">index</span><span class="p">:</span> <span class="k">new</span> <span class="nx">Terraformer</span><span class="p">.</span><span class="nx">RTree</span><span class="p">()</span>
 <span class="p">});</span>
-</pre>
+</code></pre>
+
 <p>Once the store has been created, you can start using it right away.</p>
 <h3>
           <a id='using-in-nodejs' class='section-link'></a>
@@ -122,17 +125,19 @@
           <a href='#' class='back-to-top-link'>Back to Top</a>
         </h3>
 <p>In Node.js, the components are available via <code>require()</code>.</p>
-<pre class="highlight javascript"><span class="c1">// require geostore, an RTree index, and a LevelDB data store
+<pre><code class="highlight javascript"><span class="c1">// require geostore, an RTree index, and a LevelDB data store
 </span><span class="kd">var</span> <span class="nx">GeoStore</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'terraformer-geostore'</span><span class="p">).</span><span class="nx">GeoStore</span><span class="p">;</span>
 <span class="kd">var</span> <span class="nx">RTree</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'terraformer-geostore-rtree'</span><span class="p">).</span><span class="nx">RTree</span><span class="p">;</span>
 <span class="kd">var</span> <span class="nx">LevelStore</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'terraformer-geostore-leveldb'</span><span class="p">).</span><span class="nx">LevelStore</span><span class="p">;</span>
-</pre>
+</code></pre>
+
 <p>Once the packages are in scope, it is very similar as using the GeoStore in the browser.</p>
-<pre class="highlight javascript"><span class="kd">var</span> <span class="nx">store</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">GeoStore</span><span class="p">({</span>
+<pre><code class="highlight javascript"><span class="kd">var</span> <span class="nx">store</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">GeoStore</span><span class="p">({</span>
   <span class="na">store</span><span class="p">:</span> <span class="k">new</span> <span class="nx">LevelStore</span><span class="p">(),</span>
   <span class="na">index</span><span class="p">:</span> <span class="k">new</span> <span class="nx">RTree</span><span class="p">()</span>
 <span class="p">});</span>
-</pre><h3>
+</code></pre>
+<h3>
           <a id='methods' class='section-link'></a>
           <a href='#methods' class='header-link'>Link</a>
           Methods
@@ -165,10 +170,11 @@
 </tbody></table>
 
 <p><em>Example:</em></p>
-<pre class="highlight javascript"><span class="nx">store</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="nx">geojson</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
+<pre><code class="highlight javascript"><span class="nx">store</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="nx">geojson</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
   <span class="c1">// Node.js style callback
 </span><span class="p">});</span>
-</pre><h4>
+</code></pre>
+<h4>
           <a id='geostoreupdate' class='section-link'></a>
           <a href='#geostoreupdate' class='header-link'>Link</a>
           GeoStore.update(geojson, callback)
@@ -196,10 +202,11 @@
 </tbody></table>
 
 <p><em>Example:</em></p>
-<pre class="highlight javascript"><span class="nx">store</span><span class="p">.</span><span class="nx">update</span><span class="p">(</span><span class="nx">geojson</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
+<pre><code class="highlight javascript"><span class="nx">store</span><span class="p">.</span><span class="nx">update</span><span class="p">(</span><span class="nx">geojson</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
   <span class="c1">// Node.js style callback
 </span><span class="p">});</span>
-</pre><h4>
+</code></pre>
+<h4>
           <a id='geostoreremove' class='section-link'></a>
           <a href='#geostoreremove' class='header-link'>Link</a>
           GeoStore.remove(id, callback)
@@ -227,10 +234,11 @@
 </tbody></table>
 
 <p><em>Example:</em></p>
-<pre class="highlight javascript"><span class="nx">store</span><span class="p">.</span><span class="nx">remove</span><span class="p">(</span><span class="nx">id</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
+<pre><code class="highlight javascript"><span class="nx">store</span><span class="p">.</span><span class="nx">remove</span><span class="p">(</span><span class="nx">id</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
   <span class="c1">// Node.js style callback
 </span><span class="p">});</span>
-</pre><h4>
+</code></pre>
+<h4>
           <a id='geostoreget' class='section-link'></a>
           <a href='#geostoreget' class='header-link'>Link</a>
           GeoStore.get(id, callback)
@@ -258,10 +266,11 @@
 </tbody></table>
 
 <p><em>Example:</em></p>
-<pre class="highlight javascript"><span class="nx">store</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">id</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
+<pre><code class="highlight javascript"><span class="nx">store</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">id</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
   <span class="c1">// Node.js style callback
 </span><span class="p">});</span>
-</pre><h4>
+</code></pre>
+<h4>
           <a id='geostorecontains' class='section-link'></a>
           <a href='#geostorecontains' class='header-link'>Link</a>
           GeoStore.contains(geojson, search, callback)
@@ -294,23 +303,24 @@
 </tbody></table>
 
 <p><em>Example:</em></p>
-<pre class="highlight javascript"><span class="nx">store</span><span class="p">.</span><span class="nx">contains</span><span class="p">(</span><span class="nx">geojson</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
+<pre><code class="highlight javascript"><span class="nx">store</span><span class="p">.</span><span class="nx">contains</span><span class="p">(</span><span class="nx">geojson</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
   <span class="c1">// Node.js style callback
 </span><span class="p">});</span>
 
 <span class="nx">store</span><span class="p">.</span><span class="nx">contains</span><span class="p">(</span>
   <span class="nx">geojson</span><span class="p">,</span>
   <span class="p">{</span>
-    <span class="s2">&quot;name&quot;</span><span class="p">:</span>
+    <span class="s2">"name"</span><span class="p">:</span>
     <span class="p">{</span>
-      <span class="s2">&quot;equals&quot;</span><span class="p">:</span> <span class="s2">&quot;Multnomah&quot;</span>
+      <span class="s2">"equals"</span><span class="p">:</span> <span class="s2">"Multnomah"</span>
     <span class="p">}</span>
   <span class="p">},</span>
   <span class="kd">function</span> <span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
     <span class="c1">// Node.js style callback
 </span>  <span class="p">}</span>
 <span class="p">);</span>
-</pre><h4>
+</code></pre>
+<h4>
           <a id='geostorewithin' class='section-link'></a>
           <a href='#geostorewithin' class='header-link'>Link</a>
           GeoStore.within(geojson, search, callback)
@@ -343,23 +353,24 @@
 </tbody></table>
 
 <p><em>Example:</em></p>
-<pre class="highlight javascript"><span class="nx">store</span><span class="p">.</span><span class="nx">within</span><span class="p">(</span><span class="nx">geojson</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
+<pre><code class="highlight javascript"><span class="nx">store</span><span class="p">.</span><span class="nx">within</span><span class="p">(</span><span class="nx">geojson</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
   <span class="c1">// Node.js style callback
 </span><span class="p">});</span>
 
 <span class="nx">store</span><span class="p">.</span><span class="nx">within</span><span class="p">(</span>
   <span class="nx">geojson</span><span class="p">,</span>
   <span class="p">{</span>
-    <span class="s2">&quot;name&quot;</span><span class="p">:</span>
+    <span class="s2">"name"</span><span class="p">:</span>
     <span class="p">{</span>
-      <span class="s2">&quot;equals&quot;</span><span class="p">:</span> <span class="s2">&quot;Multnomah&quot;</span>
+      <span class="s2">"equals"</span><span class="p">:</span> <span class="s2">"Multnomah"</span>
     <span class="p">}</span>
   <span class="p">},</span>
   <span class="kd">function</span> <span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
     <span class="c1">// Node.js style callback
 </span>  <span class="p">}</span>
 <span class="p">);</span>
-</pre><h4>
+</code></pre>
+<h4>
           <a id='geostorecreatereadstream' class='section-link'></a>
           <a href='#geostorecreatereadstream' class='header-link'>Link</a>
           GeoStore.createReadStream()
@@ -372,16 +383,17 @@
 <p>Since streams are not reentrant in the GeoStore, it is recommended to create a new GeoStore for each stream. Streams are destroyed after the <code>end</code> event has been called.</p>
 
 <p><em>Example:</em></p>
-<pre class="highlight javascript"><span class="kd">var</span> <span class="nx">stream</span> <span class="o">=</span> <span class="nx">store</span><span class="p">.</span><span class="nx">createReadStream</span><span class="p">();</span>
+<pre><code class="highlight javascript"><span class="kd">var</span> <span class="nx">stream</span> <span class="o">=</span> <span class="nx">store</span><span class="p">.</span><span class="nx">createReadStream</span><span class="p">();</span>
 
-<span class="nx">stream</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s2">&quot;data&quot;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">geojson</span><span class="p">)</span> <span class="p">{</span>
+<span class="nx">stream</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s2">"data"</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">geojson</span><span class="p">)</span> <span class="p">{</span>
   <span class="c1">// found geojson
 </span><span class="p">});</span>
 
-<span class="nx">stream</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s2">&quot;end&quot;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">geojson</span><span class="p">)</span> <span class="p">{</span>
+<span class="nx">stream</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s2">"end"</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">geojson</span><span class="p">)</span> <span class="p">{</span>
   <span class="c1">// final geojson object
 </span><span class="p">});</span>
-</pre>
+</code></pre>
+
     </main>
 
     <footer>

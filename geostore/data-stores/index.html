@@ -93,24 +93,26 @@
 <p>You can pass any needed arguments while instantiating.</p>
 
 <p><em>Example:</em></p>
-<pre class="highlight javascript"><span class="kd">var</span> <span class="nx">ds</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">DataStore</span><span class="p">({</span>
-  <span class="s2">&quot;path&quot;</span><span class="p">:</span> <span class="s2">&quot;some_path&quot;</span><span class="p">,</span>
-  <span class="s2">&quot;username&quot;</span><span class="p">:</span> <span class="s2">&quot;me&quot;</span><span class="p">,</span>
-  <span class="s2">&quot;password&quot;</span><span class="p">:</span> <span class="s2">&quot;mypass&quot;</span>
+<pre><code class="highlight javascript"><span class="kd">var</span> <span class="nx">ds</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">DataStore</span><span class="p">({</span>
+  <span class="s2">"path"</span><span class="p">:</span> <span class="s2">"some_path"</span><span class="p">,</span>
+  <span class="s2">"username"</span><span class="p">:</span> <span class="s2">"me"</span><span class="p">,</span>
+  <span class="s2">"password"</span><span class="p">:</span> <span class="s2">"mypass"</span>
 <span class="p">});</span>
-</pre><h4>
+</code></pre>
+<h4>
           <a id='datastoreadd' class='section-link'></a>
           <a href='#datastoreadd' class='header-link'>Link</a>
           DataStore.add(geostore, callback)
           <a href='#' class='back-to-top-link'>Back to Top</a>
         </h4>
 <p>Add a <code>geojson</code> object to a DataStore.  In the case of a <code>Feature</code>, the <code>id</code> should be used as the primary key for storage and retrieval:</p>
-<pre class="highlight javascript"><span class="c1">// get the id
+<pre><code class="highlight javascript"><span class="c1">// get the id
 </span><span class="kd">var</span> <span class="nx">id</span> <span class="o">=</span> <span class="nx">geojson</span><span class="p">.</span><span class="nx">id</span><span class="p">;</span>
 
 <span class="c1">// store the data
 </span><span class="k">this</span><span class="p">.</span><span class="nx">magicdb</span><span class="p">.</span><span class="nx">put</span><span class="p">(</span><span class="nx">geojson</span><span class="p">.</span><span class="nx">id</span><span class="p">,</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">geojson</span><span class="p">));</span>
-</pre>
+</code></pre>
+
 <p>If a <code>FeatureCollection</code> is passed in instead, each <code>Feature</code> inside of the <code>FeatureCollection</code> needs to be added before the <code>callback</code> is called.</p>
 
 <table><thead>
@@ -133,10 +135,11 @@
 </tbody></table>
 
 <p><em>Example:</em></p>
-<pre class="highlight javascript"><span class="nx">ds</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="nx">geojson</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
+<pre><code class="highlight javascript"><span class="nx">ds</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="nx">geojson</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
   <span class="c1">// Node.js style callback
 </span><span class="p">});</span>
-</pre><h4>
+</code></pre>
+<h4>
           <a id='datastoreupdate' class='section-link'></a>
           <a href='#datastoreupdate' class='header-link'>Link</a>
           DataStore.update(geostore, callback)
@@ -164,10 +167,11 @@
 </tbody></table>
 
 <p><em>Example:</em></p>
-<pre class="highlight javascript"><span class="nx">ds</span><span class="p">.</span><span class="nx">update</span><span class="p">(</span><span class="nx">geojson</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
+<pre><code class="highlight javascript"><span class="nx">ds</span><span class="p">.</span><span class="nx">update</span><span class="p">(</span><span class="nx">geojson</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
   <span class="c1">// Node.js style callback
 </span><span class="p">});</span>
-</pre><h4>
+</code></pre>
+<h4>
           <a id='datastoreremove' class='section-link'></a>
           <a href='#datastoreremove' class='header-link'>Link</a>
           DataStore.remove(id, callback)
@@ -195,10 +199,11 @@
 </tbody></table>
 
 <p><em>Example:</em></p>
-<pre class="highlight javascript"><span class="nx">ds</span><span class="p">.</span><span class="nx">remove</span><span class="p">(</span><span class="nx">id</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
+<pre><code class="highlight javascript"><span class="nx">ds</span><span class="p">.</span><span class="nx">remove</span><span class="p">(</span><span class="nx">id</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
   <span class="c1">// Node.js style callback
 </span><span class="p">});</span>
-</pre><h4>
+</code></pre>
+<h4>
           <a id='datastoreget' class='section-link'></a>
           <a href='#datastoreget' class='header-link'>Link</a>
           DataStore.get(id, callback)
@@ -226,10 +231,11 @@
 </tbody></table>
 
 <p><em>Example:</em></p>
-<pre class="highlight javascript"><span class="nx">ds</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">id</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
+<pre><code class="highlight javascript"><span class="nx">ds</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">id</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
   <span class="c1">// Node.js style callback
 </span><span class="p">});</span>
-</pre>
+</code></pre>
+
     </main>
 
     <footer>

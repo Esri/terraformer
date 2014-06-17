@@ -62,10 +62,10 @@
           <a href='#' class='back-to-top-link'>Back to Top</a>
         </h2>
 <p>The ArcGIS parser can be used client-side in a browser and server-side via Node.js.</p>
-<pre class="highlight javascript"><span class="c1">//parse an ArcGIS Geometry to GeoJSON
+<pre><code class="highlight javascript"><span class="c1">//parse an ArcGIS Geometry to GeoJSON
 </span><span class="kd">var</span> <span class="nx">geojsonPoint</span> <span class="o">=</span> <span class="nx">Terraformer</span><span class="p">.</span><span class="nx">ArcGIS</span><span class="p">.</span><span class="nx">parse</span><span class="p">({</span>
-  <span class="na">x</span><span class="p">:</span><span class="s2">&quot;-122.6764&quot;</span><span class="p">,</span>
-  <span class="na">y</span><span class="p">:</span><span class="s2">&quot;45.5165&quot;</span><span class="p">,</span>
+  <span class="na">x</span><span class="p">:</span><span class="s2">"-122.6764"</span><span class="p">,</span>
+  <span class="na">y</span><span class="p">:</span><span class="s2">"45.5165"</span><span class="p">,</span>
   <span class="na">spatialReference</span><span class="p">:</span> <span class="p">{</span>
     <span class="na">wkid</span><span class="p">:</span> <span class="mi">4326</span>
   <span class="p">}</span>
@@ -73,32 +73,36 @@
 
 <span class="c1">// convert a GeoJSON object into an ArcGIS geometry
 </span><span class="kd">var</span> <span class="nx">arcgisPoint</span> <span class="o">=</span> <span class="nx">Terraformer</span><span class="p">.</span><span class="nx">ArcGIS</span><span class="p">.</span><span class="nx">convert</span><span class="p">(</span><span class="nx">point</span><span class="p">)</span>
-</pre><h3>
+</code></pre>
+<h3>
           <a id='using-in-the-browser' class='section-link'></a>
           <a href='#using-in-the-browser' class='header-link'>Link</a>
           Using in the Browser
           <a href='#' class='back-to-top-link'>Back to Top</a>
         </h3>
 <p>In the browser, the core <a href="http://github.com/esri/terraformer">Terraformer</a> library is required.</p>
-<pre class="highlight html"><span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;terraformer.min.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
-<span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;terraformer-arcgis-parser.min.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
+<pre><code class="highlight html"><span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"terraformer.min.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
+<span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"terraformer-arcgis-parser.min.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
 <span class="nt">&lt;script&gt;</span>
   <span class="c1">//Terraformer and Terraformer.ArcGIS will be defined.
 </span><span class="nt">&lt;/script&gt;</span>
-</pre>
+</code></pre>
+
 <p>You can also use <a href="http://bower.io/">Bower</a> to install the components if you like, or download them and host them yourself.</p>
-<pre class="highlight plaintext">$ bower install terraformer-arcgis-parser
-</pre><h3>
+<pre><code class="highlight plaintext">$ bower install terraformer-arcgis-parser
+</code></pre>
+<h3>
           <a id='using-in-nodejs' class='section-link'></a>
           <a href='#using-in-nodejs' class='header-link'>Link</a>
           Using in Node.js
           <a href='#' class='back-to-top-link'>Back to Top</a>
         </h3>
 <p>Just install the package from NPM with <code>$ npm install terraformer-arcgis-parser</code> Then include it in your application.</p>
-<pre class="highlight javascript"><span class="kd">var</span> <span class="nx">ArcGIS</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'terraformer-arcgis-parser'</span><span class="p">);</span>
+<pre><code class="highlight javascript"><span class="kd">var</span> <span class="nx">ArcGIS</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'terraformer-arcgis-parser'</span><span class="p">);</span>
 
 <span class="c1">// Start using the parse and convert methods!
-</span></pre><h3>
+</span></code></pre>
+<h3>
           <a id='methods' class='section-link'></a>
           <a href='#methods' class='header-link'>Link</a>
           Methods
@@ -122,7 +126,7 @@
 <tr>
 <td><code>sr</code></td>
 <td><code>Number</code></td>
-<td><code>4236</code></td>
+<td><code>4326</code></td>
 <td>This is used to set the value of <code>spatialReference.wkid</code> on the output. By default this will use 4326. Setting <code>sr</code> <strong>will not</strong> convert the <code>geojson</code> to that spatial reference it is only used to set the value of <code>spatialReference.wkid</code>.</td>
 </tr>
 <tr>
@@ -134,15 +138,16 @@
 </tbody></table>
 <h5>Notes</h5>
 <p>Terraformer will also handle converting <code>FeatureCollection</code> and <code>GeometryCollection</code> objects to arrays of ArcGIS geometries or features. However it will <strong>not</strong> do this in reverse as there is no official structure for arrays of features and geometries in ArcGIS and all the output features will not have <code>id</code> properties. See <a href="https://github.com/Esri/Terraformer/issues/104">this issue</a> for more details.</p>
-<h5>Example</h5><pre class="highlight javascript"><span class="c1">//parse an ArcGIS Geometry to GeoJSON
+<h5>Example</h5><pre><code class="highlight javascript"><span class="c1">//parse an ArcGIS Geometry to GeoJSON
 </span><span class="kd">var</span> <span class="nx">point</span> <span class="o">=</span> <span class="nx">Terraformer</span><span class="p">.</span><span class="nx">ArcGIS</span><span class="p">.</span><span class="nx">parse</span><span class="p">({</span>
-  <span class="na">x</span><span class="p">:</span><span class="s2">&quot;-122.6764&quot;</span><span class="p">,</span>
-  <span class="na">y</span><span class="p">:</span><span class="s2">&quot;45.5165&quot;</span><span class="p">,</span>
+  <span class="na">x</span><span class="p">:</span><span class="s2">"-122.6764"</span><span class="p">,</span>
+  <span class="na">y</span><span class="p">:</span><span class="s2">"45.5165"</span><span class="p">,</span>
   <span class="na">spatialReference</span><span class="p">:</span> <span class="p">{</span>
     <span class="na">wkid</span><span class="p">:</span> <span class="mi">4326</span>
   <span class="p">}</span>
 <span class="p">});</span>
-</pre><h4>
+</code></pre>
+<h4>
           <a id='arcgisconvert' class='section-link'></a>
           <a href='#arcgisconvert' class='header-link'>Link</a>
           ArcGIS.convert(geojson, options)
@@ -167,12 +172,13 @@
 </tbody></table>
 <h5>Notes</h5>
 <p>If the object is in the Web Mercator spatial reference it will be converted to WGS84.</p>
-<h5>Example</h5><pre class="highlight javascript"><span class="c1">// take a Terraformer.Primitive or GeoJSON and convert it to ArcGIS JSON object
+<h5>Example</h5><pre><code class="highlight javascript"><span class="c1">// take a Terraformer.Primitive or GeoJSON and convert it to ArcGIS JSON object
 </span><span class="kd">var</span> <span class="nx">point</span> <span class="o">=</span> <span class="nx">ArcGIS</span><span class="p">.</span><span class="nx">convert</span><span class="p">({</span>
-  <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;Point&quot;</span><span class="p">,</span>
-  <span class="s2">&quot;coordinates&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mf">45.5165</span><span class="p">,</span> <span class="o">-</span><span class="mf">122.6764</span><span class="p">]</span>
+  <span class="s2">"type"</span><span class="p">:</span> <span class="s2">"Point"</span><span class="p">,</span>
+  <span class="s2">"coordinates"</span><span class="p">:</span> <span class="p">[</span><span class="mf">45.5165</span><span class="p">,</span> <span class="o">-</span><span class="mf">122.6764</span><span class="p">]</span>
 <span class="p">});</span>
-</pre>
+</code></pre>
+
     </main>
 
     <footer>

@@ -78,17 +78,20 @@
           <a href='#' class='back-to-top-link'>Back to Top</a>
         </h3>
 <p>Include the core Terraformer library with a <code>&lt;script&gt;</code> tag.</p>
-<pre class="highlight html"><span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;http://cdn.webgeo.io/terraformer/1.0.1/terraformer.min.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
-</pre><h3>
+<pre><code class="highlight html"><span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"http://cdn.webgeo.io/terraformer/1.0.1/terraformer.min.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
+</code></pre>
+<h3>
           <a id='nodejs' class='section-link'></a>
           <a href='#nodejs' class='header-link'>Link</a>
           Node.js
           <a href='#' class='back-to-top-link'>Back to Top</a>
         </h3>
 <p>Install the core module with NPM and then require it in your Node program.</p>
-<pre class="highlight plaintext">$ npm install terraformer
-</pre><pre class="highlight javascript"><span class="kd">var</span> <span class="nx">Terraformer</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'terraformer'</span><span class="p">);</span>
-</pre><h2>
+<pre><code class="highlight plaintext">$ npm install terraformer
+</code></pre>
+<pre><code class="highlight javascript"><span class="kd">var</span> <span class="nx">Terraformer</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'terraformer'</span><span class="p">);</span>
+</code></pre>
+<h2>
           <a id='working-with-primitives' class='section-link'></a>
           <a href='#working-with-primitives' class='header-link'>Link</a>
           Working with Primitives
@@ -97,10 +100,10 @@
 <p>Most of the core Terraformer libray centers around using <a href="/core/#terraformerprimitive"><code>Primitives</code></a>, which wrap GeoJSON objects and provide additional functionality.</p>
 
 <p>You can create a new <a href="/core/#terraformerprimitive">Terraformer.Primitive</a> with any GeoJSON object.</p>
-<pre class="highlight javascript">
+<pre><code class="highlight javascript">
 <span class="kd">var</span> <span class="nx">polygon</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Terraformer</span><span class="p">.</span><span class="nx">Primitive</span><span class="p">({</span>
-  <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;Polygon&quot;</span><span class="p">,</span>
-  <span class="s2">&quot;coordinates&quot;</span><span class="p">:</span> <span class="p">[</span>
+  <span class="s2">"type"</span><span class="p">:</span> <span class="s2">"Polygon"</span><span class="p">,</span>
+  <span class="s2">"coordinates"</span><span class="p">:</span> <span class="p">[</span>
     <span class="p">[</span>
       <span class="p">[</span><span class="o">-</span><span class="mf">122.66589403152467</span><span class="p">,</span> <span class="mf">45.52290150862236</span><span class="p">],</span>
       <span class="p">[</span><span class="o">-</span><span class="mf">122.66926288604736</span><span class="p">,</span> <span class="mf">45.52291654238294</span><span class="p">],</span>
@@ -114,24 +117,27 @@
 <span class="p">});</span>
 
 <span class="kd">var</span> <span class="nx">point</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Terraformer</span><span class="p">.</span><span class="nx">Primitive</span><span class="p">({</span>
-  <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;Point&quot;</span><span class="p">,</span>
-  <span class="s2">&quot;coordinates&quot;</span><span class="p">:</span> <span class="p">[</span><span class="o">-</span><span class="mf">122.66947746276854</span><span class="p">,</span> <span class="mf">45.51775972687403</span><span class="p">]</span>
+  <span class="s2">"type"</span><span class="p">:</span> <span class="s2">"Point"</span><span class="p">,</span>
+  <span class="s2">"coordinates"</span><span class="p">:</span> <span class="p">[</span><span class="o">-</span><span class="mf">122.66947746276854</span><span class="p">,</span> <span class="mf">45.51775972687403</span><span class="p">]</span>
 <span class="p">});</span>
-</pre>
+</code></pre>
+
 <p>Now that you have a point and a polygon primitive, you can use many of the primitive helper methods.</p>
-<pre class="highlight javascript"><span class="c1">// add a new vertex to our polygon
+<pre><code class="highlight javascript"><span class="c1">// add a new vertex to our polygon
 </span><span class="nx">polygon</span><span class="p">.</span><span class="nx">insertVertex</span><span class="p">([</span><span class="o">-</span><span class="mf">122.6708507537842</span><span class="p">,</span> <span class="mf">45.513188859735436</span><span class="p">],</span> <span class="mi">2</span><span class="p">);</span>
 
 <span class="c1">// figure out if our point is within our polygon
 </span><span class="nx">point</span><span class="p">.</span><span class="nx">within</span><span class="p">(</span><span class="nx">polygon</span><span class="p">);</span> <span class="c1">// returns true
-</span></pre>
+</span></code></pre>
+
 <p>You can also have Terraformer perform many geometric operations like convex hulls and bounding boxes.</p>
-<pre class="highlight javascript"><span class="kd">var</span> <span class="nx">convexHull</span> <span class="o">=</span> <span class="nx">polygon</span><span class="p">.</span><span class="nx">convexHull</span><span class="p">();</span>
+<pre><code class="highlight javascript"><span class="kd">var</span> <span class="nx">convexHull</span> <span class="o">=</span> <span class="nx">polygon</span><span class="p">.</span><span class="nx">convexHull</span><span class="p">();</span>
 
 <span class="nx">point</span><span class="p">.</span><span class="nx">within</span><span class="p">(</span><span class="nx">convexHull</span><span class="p">);</span> <span class="c1">// returns true
 </span>
 <span class="kd">var</span> <span class="nx">boundingBox</span> <span class="o">=</span> <span class="nx">polygon</span><span class="p">.</span><span class="nx">bbox</span><span class="p">();</span> <span class="c1">// returns the geojson bounding box for this object.
-</span></pre><h2>
+</span></code></pre>
+<h2>
           <a id='whats-next' class='section-link'></a>
           <a href='#whats-next' class='header-link'>Link</a>
           Whats Next?
