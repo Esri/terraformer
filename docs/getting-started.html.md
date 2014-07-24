@@ -24,7 +24,7 @@ There are currently several packages in the Terraformer ecosystem.
 Include the core Terraformer library with a `<script>` tag.
 
 ```html
-<script src="http://cdn.webgeo.io/terraformer/1.0.1/terraformer.min.js"></script>
+<script src="http://cdn-geoweb.s3.amazonaws.com/terraformer/1.0.4/terraformer.min.js"></script>
 ```
 
 ### Node.js
