@@ -49,7 +49,7 @@ $ bower install terraformer-arcgis-parser
 Just install the package from NPM with `$ npm install terraformer-arcgis-parser` Then include it in your application.
 
 ```js
-var Terraformer.ArcGIS = require('terraformer-arcgis-parser');
+Terraformer.ArcGIS = require('terraformer-arcgis-parser');
 
 // Start using the parse and convert methods!
 ```
