@@ -6,8 +6,6 @@ Terraformer is a modular toolkit for working with geographic data.
 
 The Terraformer project to broken up into a series of smaller modules.
 
-LOL MAPS LOL
-
 * [Terraformer Core](http://terraformer.io/core/) - Contains methods and objects for working with GeoJSON. This also contains common methods used by other modules.
 * [WKT Parser](http://terraformer.io/wkt-parser/) - Parse Well Known Text into GeoJSON and vica-versa.
 * [ArcGIS Geometry Parser](http://terraformer.io/arcgis-parser/) - Parse the [ArcGIS Geometry Format](http://resources.arcgis.com/en/help/arcgis-rest-api/#/Geometry_Objects/02r3000000n1000000/) into GeoJSON and vica-versa.
