@@ -234,7 +234,7 @@ Method | Returns | Description
 `get(<Integer> index)` | [`Feature`](/glossary/#feature) | Returns a [`Terraformer.Feature`](/glossary/#feature) for the Feature at `index` in the features array.
 
 ## Terraformer.GeometryCollection
-A JavaScript object representing a (GeoJSON GeometryCollection)[/glossary/#Geometrycollection].
+A JavaScript object representing a [GeoJSON GeometryCollection](/glossary/#Geometrycollection).
 
 ### Constructor
 `Terraformer.GeometryCollection` can be created by passing a valid [GeoJSON Geometry Collection](/glossary/#geometrycollection) or an array of [GeoJSON Geometries](/glossary/#geometry).
