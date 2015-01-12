@@ -192,8 +192,8 @@ A JavaScript object representing a [GeoJSON Feature](/glossary/#feature).
 `Terraformer.Feature` can be created by passing in a valid [GeoJSON Feature](/glossary/#feature) or [GeoJSON Geometry](/glossary/#geometry).
 
 ```js
-var feature1 = new Terraformer.Feature(
-  type: "Feature",
+var feature1 = new Terraformer.Feature({
+  "type": "Feature",
   "geometry": {
     "type": "Polygon",
     "coordinates": [
