@@ -192,15 +192,15 @@ A JavaScript object representing a [GeoJSON Feature](/glossary/#feature).
 `Terraformer.Feature` can be created by passing in a valid [GeoJSON Feature](/glossary/#feature) or [GeoJSON Geometry](/glossary/#geometry).
 
 ```js
-var feature1 = new Terraformer.Feature(
-  type: "Feature",
+var feature1 = new Terraformer.Feature({
+  "type": "Feature",
   "geometry": {
     "type": "Polygon",
     "coordinates": [
       [ [100.0, 0.0], [101.0, 0.0], [101.0, 1.0], [100.0, 1.0], [100.0, 0.0] ],
       [ [100.2, 0.2], [100.8, 0.2], [100.8, 0.8], [100.2, 0.8], [100.2, 0.2] ]
     ]
- }
+  }
 });
 
 var feature2 = new Terraformer.Feature({
@@ -234,7 +234,7 @@ Method | Returns | Description
 `get(<Integer> index)` | [`Feature`](/glossary/#feature) | Returns a [`Terraformer.Feature`](/glossary/#feature) for the Feature at `index` in the features array.
 
 ## Terraformer.GeometryCollection
-A JavaScript object representing a (GeoJSON GeometryCollection)[/glossary/#Geometrycollection].
+A JavaScript object representing a [GeoJSON GeometryCollection](/glossary/#Geometrycollection).
 
 ### Constructor
 `Terraformer.GeometryCollection` can be created by passing a valid [GeoJSON Geometry Collection](/glossary/#geometrycollection) or an array of [GeoJSON Geometries](/glossary/#geometry).
