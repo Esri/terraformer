@@ -7,8 +7,9 @@ require([
   "esri/graphic",
   "esri/symbols/SimpleLineSymbol",
   "esri/symbols/SimpleFillSymbol",
+  "esri/Color",
   "esri/geometry/jsonUtils"
-], function (query, Map, Geometry, Graphic, SimpleLineSymbol, SimpleFillSymbol, JsonUtils) {
+], function (query, Map, Geometry, Graphic, SimpleLineSymbol, SimpleFillSymbol, Color, geometryJsonUtils) {
 
   var map = new Map("map", {
     basemap: "gray",
@@ -36,12 +37,12 @@ require([
       var arcgis = Terraformer.ArcGIS.convert(county);
 
       // convert to an esri geometry
-      var geometry = JsonUtils.fromJson(arcgis.geometry);
+      var geometry = geometryJsonUtils.fromJson(arcgis.geometry);
 
       // make a new graphic for the map
       var gfx = new Graphic(geometry, new SimpleFillSymbol(SimpleFillSymbol.STYLE_SOLID,
         new SimpleLineSymbol(SimpleLineSymbol.STYLE_SOLID,
-        new dojo.Color([100,155,55]),1), new dojo.Color([155,255,100,0.35])));
+        new Color([100,155,55]),1), new Color([155,255,100,0.35])));
 
       // add the graphic to the map
       map.graphics.add(gfx);
@@ -56,7 +57,6 @@ require([
       // Query location
       var def = CountyGeoStore.contains({
         type: "Point",
-        //coordinates: [ -122.61923540493, 45.533841334631 ]
         coordinates: [ lng, lat ]
       },function(err,results){
         if (results.length) {
@@ -64,13 +64,15 @@ require([
 
           // add highlighted county graphic to map, center and zoom
           var arcgis = Terraformer.ArcGIS.convert(results[0]);
-          var geometry = JsonUtils.fromJson(arcgis.geometry);
+          var geometry = geometryJsonUtils.fromJson(arcgis.geometry);
 
+          //create a new graphic using the geometry of the search result, setting both the fill and outline style.
           var gfx = new Graphic(geometry, new SimpleFillSymbol(SimpleFillSymbol.STYLE_SOLID,
             new SimpleLineSymbol(SimpleLineSymbol.STYLE_SOLID,
             new dojo.Color([255,155,55]),2), new dojo.Color([255,155,100,0.45])));
 
           map.graphics.add(gfx);
+          //zoom in the map to the extent of the search result
           map.setExtent(geometry.getExtent(), true);
         } else {
           query("#whereami")[0].innerHTML = "We couldn't find where you were. Or you aren't in a country right now.";
@@ -78,6 +80,6 @@ require([
       });
     });
   }
-
+  //wire up event listener to track when someone clicks on the button in the top righthand corner
   query("#submit").on("click", findMe);
 });

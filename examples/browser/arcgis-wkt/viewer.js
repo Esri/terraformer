@@ -3,8 +3,9 @@ require([
   "esri/map",
   "esri/symbols/SimpleLineSymbol",
   "esri/graphic",
+  "esri/geometry/jsonUtils",
   "dojo/domReady!"
-], function (query, Map, SimpleLineSymbol, Graphic) {
+], function (query, Map, SimpleLineSymbol, Graphic, geometryJsonUtils) {
 
   var map = new Map("map", {
     basemap: "national-geographic",
@@ -25,7 +26,7 @@ require([
     var arcgis = Terraformer.ArcGIS.convert(primitive);
 
     // create a new geometry object from json
-    var geometry = esri.geometry.fromJson(arcgis);
+    var geometry = geometryJsonUtils.fromJson(arcgis);
 
     // make a new graphic to put on the map
     var gfx = new Graphic(geometry, new SimpleLineSymbol(SimpleLineSymbol.STYLE_SOLID,new dojo.Color([0,0,255,0.5]), 4));
