@@ -235,9 +235,9 @@ describe("Primitives", function(){
     it("should calculate convex hull", function(){
       multiPoint.addPoint([80,-60]);
       expect(multiPoint.convexHull().type).toEqual("Polygon");
-      expect(multiPoint.convexHull().coordinates).toEqual([
-        [ [ 100, 0 ], [ -45, 122 ], [ 80, -60 ], [ 100, 0 ] ]
-      ]);
+      expect(multiPoint.convexHull().coordinates).toEqual(
+        [ [ [ 100, 0 ], [ -45, 122 ], [ 80, -60 ], [ 100, 0 ] ] ]
+      );
     });
 
     it("should return null when a convex hull cannot return a valid Polygon", function(){
