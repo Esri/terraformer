@@ -58,7 +58,7 @@ Terraformer.ArcGIS = require('terraformer-arcgis-parser');
 
 #### ArcGIS.parse(json, options)
 
-`Terraformer.ArcGIS.parse(json, options)` - Converts a GeoJSON or a [Terraformer.Primitive](http://terraformer.io/core/#terraformerprimitive) into the ArcGIS JSON format.
+`Terraformer.ArcGIS.parse(json, options)` - Converts from ArcGIS JSON to GeoJSON or a [Terraformer.Primitive](http://terraformer.io/core/#terraformerprimitive).
 
 | Option | Type | Default | Description |
 | --- | --- | --- | --- |
