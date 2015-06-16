@@ -15,10 +15,10 @@ The ArcGIS parser can be used client-side in a browser and server-side via Node.
 ```js
 //parse an ArcGIS Geometry to GeoJSON
 var geojsonPoint = Terraformer.ArcGIS.parse({
-  x:"-122.6764",
-  y:"45.5165",
-  spatialReference: {
-    wkid: 4326
+  "x":-122.6764,
+  "y":45.5165,
+  "spatialReference": {
+    "wkid": 4326
   }
 });
 
@@ -74,10 +74,10 @@ Terraformer will also handle converting `FeatureCollection` and `GeometryCollect
 ```js
 //parse an ArcGIS Geometry to GeoJSON
 var point = Terraformer.ArcGIS.parse({
-  x:"-122.6764",
-  y:"45.5165",
-  spatialReference: {
-    wkid: 4326
+  "x":-122.6764,
+  "y":45.5165,
+  "spatialReference": {
+    "wkid": 4326
   }
 });
 ```
