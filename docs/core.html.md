@@ -14,7 +14,7 @@ Every `Terraformer.Primitive` inherits from the `Terraformer.Primitive` base cla
 There is a Primitive for every type of GeoJSON object, plus a `Circle` Primitive which represents a circle as a polygon.
 
 ### Constructor
-You create new `Terraformer.Primitive` objects by passing it a valid [GeoJSON Object](/glossary/#geojson). This will return the a `Terraformer.Primitive` of the type that corresponds with type of your GeoJSON object.
+You create new `Terraformer.Primitive` objects by passing it a valid [GeoJSON Object](/glossary/#geojson). This will return a `Terraformer.Primitive` of the type that corresponds with type of your GeoJSON object.
 
 ```js
 var point = new Terraformer.Primitive({
@@ -34,7 +34,7 @@ Method | Returns | Description
 --- | --- | --- | ---
 `toMercator()` | `this` | Converts this GeoJSON object's coordinates to the [web mercator spatial reference](http://spatialreference.org/ref/sr-org/6928/).
 `toGeographic()` | `this` | Converts this GeoJSON object's coordinates to [geographic coordinates](http://spatialreference.org/ref/epsg/4326/).
-`envelope()` | [`Envelope`](/glossary/#envelope) | Return an object with `x`, `y`, `w` and `h` suitable for passing to most indexes.
+`envelope()` | [`Envelope`](/glossary/#envelope) | Returns an object with `x`, `y`, `w` and `h` suitable for passing to most indexes.
 `bbox()` | [`BBox`](/glossary/#bbox) | Returns the [GeoJSON Bounding Box](/glossary/#bbox) for this primitive.
 `convexHull()` | [`Polygon`](#polygon) or `null` | Returns the convex hull of this primitive as a [`Polygon`](#polygon). Will return `null` if the convex hull cannot be calculated or a valid Polygon cannot be created.
 <code>contains(<a href="/glossary/#geometry">&lt;Geometry&gt;</a> <i>geometry</i>)</code> | `Boolean` | Returns `true` if the passed [`GeoJSON Geometry`](/glossary/#geometry) object is completely contained inside this primitive.
@@ -234,7 +234,7 @@ Method | Returns | Description
 `get(<Integer> index)` | [`Feature`](/glossary/#feature) | Returns a [`Terraformer.Feature`](/glossary/#feature) for the Feature at `index` in the features array.
 
 ## Terraformer.GeometryCollection
-A JavaScript object representing a [GeoJSON GeometryCollection](/glossary/#Geometrycollection).
+A JavaScript object representing a [GeoJSON Geometry Collection](/glossary/#geometrycollection).
 
 ### Constructor
 `Terraformer.GeometryCollection` can be created by passing a valid [GeoJSON Geometry Collection](/glossary/#geometrycollection) or an array of [GeoJSON Geometries](/glossary/#geometry).
@@ -297,7 +297,7 @@ Method | Returns | Description
 Method | Returns | Description
 --- | --- | ---
 <code>calculateBounds(<a href="/glossary/#geojson">&lt;GeoJSON&gt;</a> <i>geojson</i>)</code> | [`BBox`](/glossary#bbox) | Returns a [`GeoJSON bounding box`](/glossary#bbox) for the passed geoJSON.
-<code>calculateEnvelope(<a href="/glossary/#geojson">&lt;GeoJSON&gt;</a> <i>geojson</i>)</code> | [`Envelope`](/glossary#envelope) | Return an object with `x`, `y`, `w`, `h`. Suitable for passing to most indexes.
+<code>calculateEnvelope(<a href="/glossary/#geojson">&lt;GeoJSON&gt;</a> <i>geojson</i>)</code> | [`Envelope`](/glossary#envelope) | Returns an object with `x`, `y`, `w`, `h`. Suitable for passing to most indexes.
 <code>convexHull(<a href="/glossary/#geojson">&lt;GeoJSON&gt;</a> <i>geojson</i>)</code> | [`Coordinates`](/glossary#geojson-coordinates) | Returns an array of [`coordinates`](/glossary#geojson-coordinates) representing the [convex hull](http://en.wikipedia.org/wiki/Convex_hull) the the passed geoJSON.
 
 ### Comparisons
