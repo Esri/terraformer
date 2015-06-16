@@ -6,7 +6,7 @@
 
     <title>Terraformer</title>
 
-    <link href="/assets/css/terraformer-0bc71a96.css" media="screen" rel="stylesheet" type="text/css" />
+    <link href="/assets/css/terraformer-02847305.css" media="screen" rel="stylesheet" type="text/css" />
   </head>
 
   <body class="getting-started getting-started_index" id="wrap">
@@ -78,7 +78,7 @@
           <a href='#' class='back-to-top-link'>Back to Top</a>
         </h3>
 <p>Include the core Terraformer library with a <code>&lt;script&gt;</code> tag.</p>
-<pre><code class="highlight html"><span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"http://cdn.webgeo.io/terraformer/1.0.1/terraformer.min.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
+<pre class="highlight html"><code><span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"http://cdn-geoweb.s3.amazonaws.com/terraformer/1.0.4/terraformer.min.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
 </code></pre>
 <h3>
           <a id='nodejs' class='section-link'></a>
@@ -87,9 +87,9 @@
           <a href='#' class='back-to-top-link'>Back to Top</a>
         </h3>
 <p>Install the core module with NPM and then require it in your Node program.</p>
-<pre><code class="highlight plaintext">$ npm install terraformer
+<pre class="highlight plaintext"><code>$ npm install terraformer
 </code></pre>
-<pre><code class="highlight javascript"><span class="kd">var</span> <span class="nx">Terraformer</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'terraformer'</span><span class="p">);</span>
+<pre class="highlight javascript"><code><span class="kd">var</span> <span class="nx">Terraformer</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'terraformer'</span><span class="p">);</span>
 </code></pre>
 <h2>
           <a id='working-with-primitives' class='section-link'></a>
@@ -100,7 +100,7 @@
 <p>Most of the core Terraformer libray centers around using <a href="/core/#terraformerprimitive"><code>Primitives</code></a>, which wrap GeoJSON objects and provide additional functionality.</p>
 
 <p>You can create a new <a href="/core/#terraformerprimitive">Terraformer.Primitive</a> with any GeoJSON object.</p>
-<pre><code class="highlight javascript">
+<pre class="highlight javascript"><code>
 <span class="kd">var</span> <span class="nx">polygon</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Terraformer</span><span class="p">.</span><span class="nx">Primitive</span><span class="p">({</span>
   <span class="s2">"type"</span><span class="p">:</span> <span class="s2">"Polygon"</span><span class="p">,</span>
   <span class="s2">"coordinates"</span><span class="p">:</span> <span class="p">[</span>
@@ -123,20 +123,20 @@
 </code></pre>
 
 <p>Now that you have a point and a polygon primitive, you can use many of the primitive helper methods.</p>
-<pre><code class="highlight javascript"><span class="c1">// add a new vertex to our polygon
-</span><span class="nx">polygon</span><span class="p">.</span><span class="nx">insertVertex</span><span class="p">([</span><span class="o">-</span><span class="mf">122.6708507537842</span><span class="p">,</span> <span class="mf">45.513188859735436</span><span class="p">],</span> <span class="mi">2</span><span class="p">);</span>
+<pre class="highlight javascript"><code><span class="c1">// add a new vertex to our polygon</span>
+<span class="nx">polygon</span><span class="p">.</span><span class="nx">insertVertex</span><span class="p">([</span><span class="o">-</span><span class="mf">122.6708507537842</span><span class="p">,</span> <span class="mf">45.513188859735436</span><span class="p">],</span> <span class="mi">2</span><span class="p">);</span>
 
-<span class="c1">// figure out if our point is within our polygon
-</span><span class="nx">point</span><span class="p">.</span><span class="nx">within</span><span class="p">(</span><span class="nx">polygon</span><span class="p">);</span> <span class="c1">// returns true
-</span></code></pre>
+<span class="c1">// figure out if our point is within our polygon</span>
+<span class="nx">point</span><span class="p">.</span><span class="nx">within</span><span class="p">(</span><span class="nx">polygon</span><span class="p">);</span> <span class="c1">// returns true</span>
+</code></pre>
 
 <p>You can also have Terraformer perform many geometric operations like convex hulls and bounding boxes.</p>
-<pre><code class="highlight javascript"><span class="kd">var</span> <span class="nx">convexHull</span> <span class="o">=</span> <span class="nx">polygon</span><span class="p">.</span><span class="nx">convexHull</span><span class="p">();</span>
+<pre class="highlight javascript"><code><span class="kd">var</span> <span class="nx">convexHull</span> <span class="o">=</span> <span class="nx">polygon</span><span class="p">.</span><span class="nx">convexHull</span><span class="p">();</span>
 
-<span class="nx">point</span><span class="p">.</span><span class="nx">within</span><span class="p">(</span><span class="nx">convexHull</span><span class="p">);</span> <span class="c1">// returns true
-</span>
-<span class="kd">var</span> <span class="nx">boundingBox</span> <span class="o">=</span> <span class="nx">polygon</span><span class="p">.</span><span class="nx">bbox</span><span class="p">();</span> <span class="c1">// returns the geojson bounding box for this object.
-</span></code></pre>
+<span class="nx">point</span><span class="p">.</span><span class="nx">within</span><span class="p">(</span><span class="nx">convexHull</span><span class="p">);</span> <span class="c1">// returns true</span>
+
+<span class="kd">var</span> <span class="nx">boundingBox</span> <span class="o">=</span> <span class="nx">polygon</span><span class="p">.</span><span class="nx">bbox</span><span class="p">();</span> <span class="c1">// returns the geojson bounding box for this object.</span>
+</code></pre>
 <h2>
           <a id='whats-next' class='section-link'></a>
           <a href='#whats-next' class='header-link'>Link</a>
@@ -153,11 +153,11 @@
 
     <footer>
   <p>
-    The Terraformer is an open source project from the <a href="http://pdx.esri.com/">Esri Portland R&D Center</a>
+    Terraformer is an open source project from the <a href="http://pdx.esri.com/">Esri Portland R&amp;D Center</a>
   </p>
 </footer>
 
-    <script src="/assets/javascripts/modernizer.custom.js" type="text/javascript"></script>
+    <script src="/assets/javascripts/modernizr.custom-cadc78a2.js" type="text/javascript"></script>
     <script src="/assets/javascripts/classie-b6db1f70.js" type="text/javascript"></script>
     <script src="/assets/javascripts/drawer-3a1490eb.js" type="text/javascript"></script>
   </body>

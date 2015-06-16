@@ -10,7 +10,7 @@
     <title>Home | Terraformer</title>
 
     <!-- Assets -->
-    <link href="/assets/css/terraformer-0bc71a96.css" media="screen" rel="stylesheet" type="text/css" />
+    <link href="/assets/css/terraformer-02847305.css" media="screen" rel="stylesheet" type="text/css" />
     <script>
       if (window.location.href.match('github.io')) {
         window.location.replace('http://terraformer.io' + window.location.pathname);
@@ -70,14 +70,14 @@
 </header>
 
     <main class="index main-content" id="main-content">
-      <p><header class="subhead">
+      <header class="subhead">
   <img src="assets/images/terraformer-core-93b83c36.png" alt="terraformer core">
   <h2>Terraformer Core</h2>
   <h3>
     <a href="/core/" class="button button-light">Documentation</a>
     <a href="/install/#terraformer-core" class="button button-light">Get Core</a>
   </h3>
-</header></p>
+</header>
 
 <blockquote>
 <p>Tools and objects for working with and transforming GeoJSON.</p>
@@ -89,14 +89,14 @@
 
 <p>The core library is also used in most other components of Terraformer for performing basic tasks and calculations.</p>
 
-<p><header class="subhead">
+<header class="subhead">
   <img src="assets/images/terraformer-geostore-9e09ce2c.png" alt="terraformer geostore">
   <h2>GeoStore</h2>
   <h3>
     <a href="/geostore/" class="button button-light">Documentation</a>
     <a href="/install/#geostore" class="button button-light">Get GeoStore</a>
   </h3>
-</header></p>
+</header>
 
 <blockquote>
 <p>A lightweight API that allows you to store, index and query geographic data.</p>
@@ -110,18 +110,18 @@
 <li><p>Any number of <em>secondary indexes</em> which index properties associated with your geographic data.</p></li>
 </ol>
 
-<p><header class="subhead">
+<header class="subhead">
   <img src="assets/images/terraformer-arcparser-a0228324.png" alt="terraformer ArcGIS Parser">
   <h2>ArcGIS Parser</h2>
   <h3>
     <a href="/arcgis-parser/" class="button button-light">Documentation</a>
     <a href="/install/#arcgis-parser" class="button button-light">Get ArcGIS Parser</a>
   </h3>
-</header></p>
+</header>
 
 <p>Allows you to convert between <a href="/core/#terraformerprimitive">Terraformer Primitives</a> or <a href="http://geojson.org/geojson-spec.html">GeoJSON</a> and the <a href="http://resources.arcgis.com/en/help/arcgis-rest-api/#/Geometry_Objects/02r3000000n1000000/">ArcGIS Geometry Objects</a>.</p>
-<pre><code class="highlight javascript"><span class="c1">// parse ArcGIS JSON, convert it to a Terraformer.Primitive
-</span><span class="kd">var</span> <span class="nx">primitive</span> <span class="o">=</span> <span class="nx">Terraformer</span><span class="p">.</span><span class="nx">ArcGIS</span><span class="p">.</span><span class="nx">parse</span><span class="p">({</span>
+<pre class="highlight javascript"><code><span class="c1">// parse ArcGIS JSON, convert it to a Terraformer.Primitive</span>
+<span class="kd">var</span> <span class="nx">primitive</span> <span class="o">=</span> <span class="nx">Terraformer</span><span class="p">.</span><span class="nx">ArcGIS</span><span class="p">.</span><span class="nx">parse</span><span class="p">({</span>
   <span class="na">x</span><span class="p">:</span><span class="s2">"-122.6764"</span><span class="p">,</span>
   <span class="na">y</span><span class="p">:</span><span class="s2">"45.5165"</span><span class="p">,</span>
   <span class="na">spatialReference</span><span class="p">:</span> <span class="p">{</span>
@@ -129,28 +129,28 @@
   <span class="p">}</span>
 <span class="p">});</span>
 
-<span class="c1">// take a Terraformer.Primitive or GeoJSON and convert it to ArcGIS JSON
-</span><span class="kd">var</span> <span class="nx">point</span> <span class="o">=</span> <span class="nx">Terraformer</span><span class="p">.</span><span class="nx">ArcGIS</span><span class="p">.</span><span class="nx">convert</span><span class="p">({</span>
+<span class="c1">// take a Terraformer.Primitive or GeoJSON and convert it to ArcGIS JSON</span>
+<span class="kd">var</span> <span class="nx">point</span> <span class="o">=</span> <span class="nx">Terraformer</span><span class="p">.</span><span class="nx">ArcGIS</span><span class="p">.</span><span class="nx">convert</span><span class="p">({</span>
   <span class="s2">"type"</span><span class="p">:</span> <span class="s2">"Point"</span><span class="p">,</span>
   <span class="s2">"coordinates"</span><span class="p">:</span> <span class="p">[</span><span class="mf">45.5165</span><span class="p">,</span> <span class="o">-</span><span class="mf">122.6764</span><span class="p">]</span>
 <span class="p">});</span>
 </code></pre>
 
-<p><header class="subhead">
+<header class="subhead">
   <img src="assets/images/terraformer-wktparser-b18bc9d9.png" alt="terraformer WKT Parser">
   <h2>Well Known Text Parser</h2>
   <h3>
     <a href="/wkt-parser/" class="button button-light">Documentation</a>
     <a href="/install/#wkt-parser" class="button button-light">Get WKT Parser</a>
   </h3>
-</header></p>
+</header>
 
 <p><a href="http://en.wikipedia.org/wiki/Well-known_text">Well Known Text</a> is a format used by databases like PostGIS. With Terraformer&rsquo;s WKT parser you can convert between this format and GeoJSON.</p>
-<pre><code class="highlight javascript"><span class="c1">// parse a WKT file, convert it into a primitive
-</span><span class="kd">var</span> <span class="nx">primitive</span> <span class="o">=</span> <span class="nx">Terraformer</span><span class="p">.</span><span class="nx">WKT</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="s1">'LINESTRING (30 10, 10 30, 40 40)'</span><span class="p">);</span>
+<pre class="highlight javascript"><code><span class="c1">// parse a WKT file, convert it into a primitive</span>
+<span class="kd">var</span> <span class="nx">primitive</span> <span class="o">=</span> <span class="nx">Terraformer</span><span class="p">.</span><span class="nx">WKT</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="s1">'LINESTRING (30 10, 10 30, 40 40)'</span><span class="p">);</span>
 
-<span class="c1">// take a primitive and convert it into a WKT representation
-</span><span class="kd">var</span> <span class="nx">polygon</span> <span class="o">=</span> <span class="nx">Terraformer</span><span class="p">.</span><span class="nx">WKT</span><span class="p">.</span><span class="nx">convert</span><span class="p">({</span>
+<span class="c1">// take a primitive and convert it into a WKT representation</span>
+<span class="kd">var</span> <span class="nx">polygon</span> <span class="o">=</span> <span class="nx">Terraformer</span><span class="p">.</span><span class="nx">WKT</span><span class="p">.</span><span class="nx">convert</span><span class="p">({</span>
   <span class="s2">"type"</span><span class="p">:</span> <span class="s2">"Polygon"</span><span class="p">,</span>
   <span class="s2">"coordinates"</span><span class="p">:</span> <span class="p">[</span>
     <span class="p">[</span> <span class="p">[</span><span class="mf">100.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">101.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">101.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">100.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">100.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">]</span> <span class="p">],</span>
@@ -162,11 +162,11 @@
     </main>
     <footer>
   <p>
-    The Terraformer is an open source project from the <a href="http://pdx.esri.com/">Esri Portland R&D Center</a>
+    Terraformer is an open source project from the <a href="http://pdx.esri.com/">Esri Portland R&amp;D Center</a>
   </p>
 </footer>
   </body>
-    <script src="/assets/javascripts/modernizer.custom.js" type="text/javascript"></script>
+    <script src="/assets/javascripts/modernizr.custom-cadc78a2.js" type="text/javascript"></script>
     <script src="/assets/javascripts/classie-b6db1f70.js" type="text/javascript"></script>
     <script src="/assets/javascripts/drawer-3a1490eb.js" type="text/javascript"></script>
 </html>
