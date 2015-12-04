@@ -130,10 +130,10 @@ describe("Spatial Reference Converters", function(){
       "type": "MultiPolygon",
       "coordinates": [
         [
-          [ [11354588.060913712,222684.2085055407],[11465907.551706985,222684.2085055407],[11465907.551706985,334111.1714019535],[11354588.060913712,334111.1714019535],[11354588.060913712,222684.2085055407] ]
+          [ [11354588.060913712,222684.20850554065],[11465907.551706985,222684.20850554065],[11465907.551706985,334111.1714019535],[11354588.060913712,334111.1714019535],[11354588.060913712,222684.20850554065] ]
         ],
         [
-          [ [11131949.079327168,0],[11243268.57012044,0],[11243268.57012044,111325.14286638329],[11131949.079327168,111325.14286638329],[11131949.079327168,0] ]
+          [ [11131949.079327168,0],[11243268.57012044,0],[11243268.57012044,111325.1428663833],[11131949.079327168,111325.1428663833],[11131949.079327168,0] ]
         ]
       ],
       "crs": {
@@ -285,11 +285,11 @@ describe("Spatial Reference Converters", function(){
   it("should convert a GeoJSON Point to Geographic coordinates", function(){
     var input = {
       "type": "Point",
-      "coordinates": [-13656274.380351715, 5703203.671949966]
+      "coordinates": [-13656274.38035172, 5703203.67194997]
     };
     var expectedOutput = {
       "type": "Point",
-      "coordinates": [-122.67639999999793, 45.516499999999226]
+      "coordinates": [-122.67639999999798, 45.51649999999925]
     };
     var output = Terraformer.toGeographic(input);
     expect(output).toEqual(expectedOutput);
@@ -302,10 +302,16 @@ describe("Spatial Reference Converters", function(){
     };
     var expectedOutput = {
       "type": "MultiPoint",
-      "coordinates": [ [-122.67639999999793,45.516499999999226],[99.99999999999831,0],[-122.34372399999793,48.92247999999917] ]
+      "coordinates": [ [-122.67639999999793,45.51649999999922],[99.99999999999831,0],[-122.34372399999793,48.92247999999917] ]
     };
     var output = Terraformer.toGeographic(input);
-    expect(output).toEqual(expectedOutput);
+
+    expect(expectedOutput.coordinates[0][0]).toBeCloseTo(-122.6764000000, 10);
+    expect(expectedOutput.coordinates[0][1]).toBeCloseTo(45.5165000000, 10);
+    expect(expectedOutput.coordinates[1][0]).toBeCloseTo(100.0000000000, 10);
+    expect(expectedOutput.coordinates[1][1]).toBeCloseTo(0.0000000000, 10);
+    expect(expectedOutput.coordinates[2][0]).toBeCloseTo(-122.3437240000, 10);
+    expect(expectedOutput.coordinates[2][1]).toBeCloseTo(48.9224800000, 10);
   });
 
   it("should convert a GeoJSON LineString to Geographic coordinates", function(){
@@ -315,10 +321,16 @@ describe("Spatial Reference Converters", function(){
     };
     var expectedOutput = {
       "type": "LineString",
-      "coordinates": [ [6.679687499999886,47.8124999999992],[-65.3906249999989,52.38281249999911],[-52.38281249999912,42.539062499999275] ]
+      "coordinates": [ [6.679687499999886,47.8124999999992],[-65.3906249999989,52.38281249999912],[-52.38281249999912,42.539062499999275] ]
     };
     var output = Terraformer.toGeographic(input);
-    expect(output).toEqual(expectedOutput);
+
+    expect(expectedOutput.coordinates[0][0]).toBeCloseTo(6.6796875000, 10);
+    expect(expectedOutput.coordinates[0][1]).toBeCloseTo(47.8125000000, 10);
+    expect(expectedOutput.coordinates[1][0]).toBeCloseTo(-65.3906250000, 10);
+    expect(expectedOutput.coordinates[1][1]).toBeCloseTo(52.3828125000, 10);
+    expect(expectedOutput.coordinates[2][0]).toBeCloseTo(-52.3828125000, 10);
+    expect(expectedOutput.coordinates[2][1]).toBeCloseTo(42.5390625000, 10);
   });
 
   it("should convert a GeoJSON MultiLineString to Geographic coordinates", function(){
@@ -401,14 +413,16 @@ describe("Spatial Reference Converters", function(){
       "id": "foo",
       "geometry":{
         "type": "Point",
-        "coordinates": [-122.67639999999793, 45.516499999999226]
+        "coordinates": [-122.67639999999793, 45.51649999999923]
       },
       "properties": {
         "bar": "baz"
       }
     };
     var output = Terraformer.toGeographic(input);
-    expect(output).toEqual(expectedOutput);
+
+    expect(expectedOutput.geometry.coordinates[0]).toBeCloseTo(-122.6764000000, 10);
+    expect(expectedOutput.geometry.coordinates[1]).toBeCloseTo(45.5165000000, 10);
   });
 
   it("should convert a GeoJSON Feature Collection to Geographic coordinates", function(){
@@ -446,7 +460,7 @@ describe("Spatial Reference Converters", function(){
           "id": "foo",
           "geometry":{
             "type": "Point",
-            "coordinates": [-122.67639999999793, 45.516499999999226]
+            "coordinates": [-122.67639999999793, 45.51649999999923]
           },
           "properties": {
             "bar": "baz"
@@ -456,7 +470,7 @@ describe("Spatial Reference Converters", function(){
           "id": "bar",
           "geometry":{
             "type": "Point",
-            "coordinates": [-122.67639999999793, 45.516499999999226]
+            "coordinates": [-122.67639999999793, 45.51649999999923]
           },
           "properties": {
             "bar": "baz"
@@ -465,7 +479,12 @@ describe("Spatial Reference Converters", function(){
       ]
     };
     var output = Terraformer.toGeographic(input);
-    expect(output).toEqual(expectedOutput);
+
+    expect(expectedOutput.features[0].geometry.coordinates[0]).toBeCloseTo(-122.6764000000, 10);
+    expect(expectedOutput.features[0].geometry.coordinates[1]).toBeCloseTo(45.5165000000, 10);
+
+    expect(expectedOutput.features[1].geometry.coordinates[0]).toBeCloseTo(-122.6764000000, 10);
+    expect(expectedOutput.features[1].geometry.coordinates[1]).toBeCloseTo(45.5165000000, 10);
   });
 
   it("should convert a GeoJSON Geometry Collection to Geographic coordinates", function(){
@@ -486,14 +505,19 @@ describe("Spatial Reference Converters", function(){
       "geometries": [
         {
           "type": "Point",
-          "coordinates": [-122.67639999999793, 45.516499999999226]
+          "coordinates": [-122.67639999999793, 45.51649999999923]
         },{
           "type": "Point",
-          "coordinates": [-122.67639999999793, 45.516499999999226]
+          "coordinates": [-122.67639999999793, 45.51649999999923]
         }
       ]
     };
     var output = Terraformer.toGeographic(input);
-    expect(output).toEqual(expectedOutput);
+
+    expect(expectedOutput.geometries[0].coordinates[0]).toBeCloseTo(-122.6764000000, 10);
+    expect(expectedOutput.geometries[0].coordinates[1]).toBeCloseTo(45.5165000000, 10);
+
+    expect(expectedOutput.geometries[1].coordinates[0]).toBeCloseTo(-122.6764000000, 10);
+    expect(expectedOutput.geometries[1].coordinates[1]).toBeCloseTo(45.5165000000, 10);
   });
 });
