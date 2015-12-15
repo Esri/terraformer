@@ -580,11 +580,18 @@ describe("Primitives", function(){
     });
 
     it("should calculate bounds", function(){
-      expect(circle.bbox()).toEqual([ -122.00898315283914, 44.99364759960156, -121.99101684715673, 45.00635169618245 ]);
+      expect(circle.bbox()[0]).toBeCloseTo(-122.0089831528, 10);
+      expect(circle.bbox()[1]).toBeCloseTo(44.9936475996, 10);
+      expect(circle.bbox()[2]).toBeCloseTo(-121.9910168472, 10);
+      expect(circle.bbox()[3]).toBeCloseTo(45.0063516962, 10);
+
     });
 
     it("should calculate envelope", function(){
-      expect(circle.envelope()).toEqual({ x : -122.00898315283914, y : 44.99364759960156, w : 0.01796630568240687, h : 0.012704096580890223 });
+      expect(circle.envelope().x).toBeCloseTo(-122.0089831528, 10);
+      expect(circle.envelope().y).toBeCloseTo(44.9936475996, 10);
+      expect(circle.envelope().w).toBeCloseTo(0.0179663057, 10);
+      expect(circle.envelope().h).toBeCloseTo(0.0127040966, 10);
     });
 
   });

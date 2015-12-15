@@ -39,7 +39,7 @@ Method | Returns | Description
 `convexHull()` | [`Polygon`](#polygon) or `null` | Returns the convex hull of this primitive as a [`Polygon`](#polygon). Will return `null` if the convex hull cannot be calculated or a valid Polygon cannot be created.
 <code>contains(<a href="/glossary/#geometry">&lt;Geometry&gt;</a> <i>geometry</i>)</code> | `Boolean` | Returns `true` if the passed [`GeoJSON Geometry`](/glossary/#geometry) object is completely contained inside this primitive.
 <code>within(<a href="/glossary/#geometry">&lt;Geometry&gt;</a> <i>geometry</i>)</code> | `Boolean` | Returns `true` if the passed [`GeoJSON Geometry`](/glossary/#geometry) object is completely within this primitive.
-<code>interesects(<a href="/glossary/#geometry">&lt;Geometry&gt;</a> <i>geometry</i>)</code> | `Boolean` | Returns `true` if the passed [`GeoJSON Geometry`](/glossary/#geometry) intersects this primitive.
+<code>intersects(<a href="/glossary/#geometry">&lt;Geometry&gt;</a> <i>geometry</i>)</code> | `Boolean` | Returns `true` if the passed [`GeoJSON Geometry`](/glossary/#geometry) intersects this primitive.
 
 ## Terraformer.Point
 A JavaScript object representing a [GeoJSON Point](/glossary/#point).

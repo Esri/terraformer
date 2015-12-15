@@ -13,6 +13,9 @@ complexity.xml
 # Ignore the doc output
 docs-build
 
+# Ignore sample data
+examples/node/timezone/tz_world
+
 # Mac
 .DS_Store
 Icon

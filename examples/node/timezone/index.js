@@ -75,10 +75,11 @@ var server = http.createServer(function (request, response) {
       } else {
         // otherwise, find the polygon that contain the latitude and longitude
         var found = false;
+
         for (var i = 0; i < results.length; i++) {
           // since we are using Terraformer, we can check containsPoint()
           var rowId = results[i].rowId;
-          if (places[rowId].contains({ type: "Point", coordinates: [ parsed.query.longitude, parsed.query.latitude ] })) {
+          if (places[rowId].intersects({ type: "Point", coordinates: [ parsed.query.longitude, parsed.query.latitude ] })) {
             found = places[results[i].rowId].properties.TZID;
           }
         }
