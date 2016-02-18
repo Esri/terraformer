@@ -52,7 +52,7 @@
 
     <main class="docs main-content" id="main-content">
       <h1>Terraformer</h1>
-<div class='semantic-toc'><ol><li><a href='#getting-started'>Getting Started</a><ol><li><a href='#browser'>Browser</a></li><li><a href='#nodejs'>Node.js</a></li></ol></li><li><a href='#working-with-primitives'>Working with Primitives</a></li><li><a href='#whats-next'>Whats Next?</a></div>
+<div class='semantic-toc'><ol><li><a href='#getting-started'>Getting Started</a><ol><li><a href='#nodejs'>Node.js</a></li><li><a href='#browser'>Browser</a></li></ol></li><li><a href='#working-with-primitives'>Working with Primitives</a></li><li><a href='#whats-next'>Whats Next?</a></div>
 
 <p>Terraformer is an open source (MIT licensed) Javascript geo toolkit, built for the server and the browser.</p>
 <h2>
@@ -72,15 +72,6 @@
 <li><a href="/geostore/">GeoStore</a> - A JavaScript database for storing and querying collections of GeoJSON Features. GeoStores also need an index module and a backing store which are distributed as seperate modules.</li>
 </ul>
 <h3>
-          <a id='browser' class='section-link'></a>
-          <a href='#browser' class='header-link'>Link</a>
-          Browser
-          <a href='#' class='back-to-top-link'>Back to Top</a>
-        </h3>
-<p>Include the core Terraformer library with a <code>&lt;script&gt;</code> tag.</p>
-<pre class="highlight html"><code><span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"http://cdn-geoweb.s3.amazonaws.com/terraformer/1.0.4/terraformer.min.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
-</code></pre>
-<h3>
           <a id='nodejs' class='section-link'></a>
           <a href='#nodejs' class='header-link'>Link</a>
           Node.js
@@ -90,6 +81,27 @@
 <pre class="highlight plaintext"><code>$ npm install terraformer
 </code></pre>
 <pre class="highlight javascript"><code><span class="kd">var</span> <span class="nx">Terraformer</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'terraformer'</span><span class="p">);</span>
+</code></pre>
+
+<p>If needed, supporting packages can be added too.</p>
+<pre class="highlight javascript"><code><span class="nx">require</span><span class="p">(</span><span class="s1">'terraformer-arcgis-parser'</span><span class="p">);</span>
+<span class="nx">require</span><span class="p">(</span><span class="s1">'terraformer-wkt-parser'</span><span class="p">);</span>
+<span class="nx">require</span><span class="p">(</span><span class="s1">'terraformer-geostore'</span><span class="p">);</span>
+</code></pre>
+<h3>
+          <a id='browser' class='section-link'></a>
+          <a href='#browser' class='header-link'>Link</a>
+          Browser
+          <a href='#' class='back-to-top-link'>Back to Top</a>
+        </h3>
+<p>To use the Terraformer library, include a reference to it using a <code>&lt;script&gt;</code> tag.</p>
+<pre class="highlight html"><code><span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"http://cdn-geoweb.s3.amazonaws.com/terraformer/1.0.4/terraformer.min.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
+</code></pre>
+
+<p>To utilize supporting packages, you must load their source as well.</p>
+<pre class="highlight html"><code><span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"terraformer-arcgis-parser.min.js"</span><span class="nt">&gt;&lt;/script&gt;</span> <span class="c">&lt;!-- https://github.com/Esri/terraformer-arcgis-parser --&gt;</span>
+<span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"terraformer-wkt-parser.min.js"</span><span class="nt">&gt;&lt;/script&gt;</span> <span class="c">&lt;!-- https://github.com/Esri/terraformer-wkt-parser --&gt;</span>
+<span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"terraformer-geostore.min.js"</span><span class="nt">&gt;&lt;/script&gt;</span> <span class="c">&lt;!-- https://github.com/Esri/terraformer-geostore --&gt;</span>
 </code></pre>
 <h2>
           <a id='working-with-primitives' class='section-link'></a>
