@@ -14,26 +14,46 @@ The Terraformer project to broken up into a series of smaller modules.
 ## Features
 
 * Designed to work in Node and the browser
-* No dependancies of other tools or libraries
+* No dependencies on other tools or libraries
 
 ## Getting Started
 
 Check out the getting [started guide](http://terraformer.io/getting-started/) which will give you an overview of core concepts and methods in Terraformer.
 
-### Browser
-To use the Terraformer library, you **must include** the core Terraformer library with a `<script>` tag.
+### Node.js
 
-If you would like to utilize any of the Terraformer packages: ArcGIS parser, WKT parser, or GeoStore, you must include the library with a `<script>` tag in addition to the Terraformer library.
+Install the core module with NPM and then require it in your Node program.
+
+```
+$ npm install terraformer
+```
+
+```js
+var Terraformer = require('terraformer');
+```
+
+If needed, supporting packages can be added too.
+
+```js
+require('terraformer-arcgis-parser');
+require('terraformer-wkt-parser');
+require('terraformer-geostore');
+```
+
+### Browser
+
+To use the Terraformer library, include a reference to it using a `<script>` tag.
 
 ```html
-<!--Terraformer Library (Required)
-Learn more: https://github.com/Esri/Terraformer-->
 <script src="http://cdn-geoweb.s3.amazonaws.com/terraformer/1.0.4/terraformer.min.js"></script>
+```
 
-<!--Terraformer Packages (Optional)-->
-<script src="terraformer-arcgis-parser.min.js"></script><!--Define ArcGIS Parser package: https://github.com/Esri/terraformer-arcgis-parser-->
-<script src="terraformer-wkt-parser.min.js"></script> <!--Define WKT Parser package: https://github.com/Esri/terraformer-wkt-parser-->
-<script src="terraformer-geostore.min.js"></script> <!--Define GeoStore package: https://github.com/Esri/terraformer-geostore-->
+To utilize supporting packages, you must load their source as well.
+
+```html
+<script src="terraformer-arcgis-parser.min.js"></script> <!-- https://github.com/Esri/terraformer-arcgis-parser -->
+<script src="terraformer-wkt-parser.min.js"></script> <!-- https://github.com/Esri/terraformer-wkt-parser -->
+<script src="terraformer-geostore.min.js"></script> <!-- https://github.com/Esri/terraformer-geostore -->
 ```
 
 ## Documentation
@@ -89,7 +109,7 @@ var boundingBox = polygon.bbox(); // returns the geojson bounding box for this o
 
 ## Building the documentation
 
-To build the site locally, first `bundle install` then `bundle exec middleman` to run a local server. Once you're satisfied, run `bundle exec middleman build`, then `grunt gh-pages` to deploy to github pages.
+To build the site locally, first `bundle install` then `bundle exec middleman` to run a local server. Maintainers can run `bundle exec middleman build`, then `grunt gh-pages` to deploy to github pages.
 
 ## Issues
 

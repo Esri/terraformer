@@ -19,23 +19,6 @@ There are currently several packages in the Terraformer ecosystem.
 * [WKT Parser](/wkt-parser/) - Parses basic WKT (Well Known Text) strings to and from GeoJSON.
 * [GeoStore](/geostore/) - A JavaScript database for storing and querying collections of GeoJSON Features. GeoStores also need an index module and a backing store which are distributed as seperate modules.
 
-### Browser
-
-To use the Terraformer library, you **must include** the core Terraformer library with a `<script>` tag.
-
-If you would like to utilize any of the Terraformer packages: [ArcGIS Parser](/arcgis-parser/), [WKT Parser](/wkt-parser/) , or [GeoStore](/geostore/), you must include the library with a `<script>` tag in addition to the Terraformer library.
-
-```html
-<!--Terraformer Library (Required)
-Learn more: https://github.com/Esri/Terraformer-->
-<script src="http://cdn-geoweb.s3.amazonaws.com/terraformer/1.0.4/terraformer.min.js"></script>
-
-<!--Terraformer Packages (Optional)-->
-<script src="terraformer-arcgis-parser.min.js"></script><!--Define ArcGIS Parser package: https://github.com/Esri/terraformer-arcgis-parser-->
-<script src="terraformer-wkt-parser.min.js"></script> <!--Define WKT Parser package: https://github.com/Esri/terraformer-wkt-parser-->
-<script src="terraformer-geostore.min.js"></script> <!--Define GeoStore package: https://github.com/Esri/terraformer-geostore-->
-```
-
 ### Node.js
 
 Install the core module with NPM and then require it in your Node program.
@@ -46,6 +29,30 @@ $ npm install terraformer
 
 ```js
 var Terraformer = require('terraformer');
+```
+
+If needed, supporting packages can be added too.
+
+```js
+require('terraformer-arcgis-parser');
+require('terraformer-wkt-parser');
+require('terraformer-geostore');
+```
+
+### Browser
+
+To use the Terraformer library, include a reference to it using a `<script>` tag.
+
+```html
+<script src="http://cdn-geoweb.s3.amazonaws.com/terraformer/1.0.4/terraformer.min.js"></script>
+```
+
+To utilize supporting packages, you must load their source as well.
+
+```html
+<script src="terraformer-arcgis-parser.min.js"></script> <!-- https://github.com/Esri/terraformer-arcgis-parser -->
+<script src="terraformer-wkt-parser.min.js"></script> <!-- https://github.com/Esri/terraformer-wkt-parser -->
+<script src="terraformer-geostore.min.js"></script> <!-- https://github.com/Esri/terraformer-geostore -->
 ```
 
 ## Working with Primitives
