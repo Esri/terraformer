@@ -21,10 +21,19 @@ There are currently several packages in the Terraformer ecosystem.
 
 ### Browser
 
-Include the core Terraformer library with a `<script>` tag.
+To use the Terraformer library, you **must include** the core Terraformer library with a `<script>` tag.
+
+If you would like to utilize any of the Terraformer packages: [ArcGIS Parser](/arcgis-parser/), [WKT Parser](/wkt-parser/) , or [GeoStore](/geostore/), you must include the library with a `<script>` tag in addition to the Terraformer library.
 
 ```html
+<!--Terraformer Library (Required)
+Learn more: https://github.com/Esri/Terraformer-->
 <script src="http://cdn-geoweb.s3.amazonaws.com/terraformer/1.0.4/terraformer.min.js"></script>
+
+<!--Terraformer Packages (Optional)-->
+<script src="terraformer-arcgis-parser.min.js"></script><!--Define ArcGIS Parser package: https://github.com/Esri/terraformer-arcgis-parser-->
+<script src="terraformer-wkt-parser.min.js"></script> <!--Define WKT Parser package: https://github.com/Esri/terraformer-wkt-parser-->
+<script src="terraformer-geostore.min.js"></script> <!--Define GeoStore package: https://github.com/Esri/terraformer-geostore-->
 ```
 
 ### Node.js
