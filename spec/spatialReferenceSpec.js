@@ -40,7 +40,13 @@ describe("Spatial Reference Converters", function(){
       }
     };
     var output = Terraformer.toMercator(input);
-    expect(output).toEqual(expectedOutput);
+    // expect(output).toEqual(expectedOutput);
+    expect(output.type).toEqual(expectedOutput.type);
+    expect(output.crs).toEqual(expectedOutput.crs);
+    expect(output.coordinates[0][0]).toBeCloseTo(expectedOutput.coordinates[0][0], 9);
+    expect(output.coordinates[0][1]).toBeCloseTo(expectedOutput.coordinates[0][1], 9);
+    expect(output.coordinates[1][0]).toBeCloseTo(expectedOutput.coordinates[1][0], 9);
+    expect(output.coordinates[1][1]).toBeCloseTo(expectedOutput.coordinates[1][1], 9);
   });
 
   it("should convert a GeoJSON LineString to Web Mercator", function(){
@@ -145,7 +151,15 @@ describe("Spatial Reference Converters", function(){
       }
     };
     var output = Terraformer.toMercator(input);
-    expect(output).toEqual(expectedOutput);
+    expect(output.type).toEqual(expectedOutput.type);
+    expect(output.crs).toEqual(expectedOutput.crs);
+    for (var i=0; i < output.coordinates[0].length; i++) {
+      var segments = output.coordinates[0][i];
+      for (var j=0; j < segments.length; j++) {
+        expect(segments[j][0]).toBeCloseTo(expectedOutput.coordinates[0][i][j][0], 9);
+        expect(segments[j][1]).toBeCloseTo(expectedOutput.coordinates[0][i][j][1], 9);
+      }
+    }
   });
 
   it("should convert a GeoJSON Feature to Web Mercator", function(){

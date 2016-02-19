@@ -15,6 +15,7 @@ docs-build
 
 # Ignore sample data
 examples/node/timezone/tz_world
+examples/node/npm-debug.log
 
 # Mac
 .DS_Store

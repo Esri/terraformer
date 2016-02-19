@@ -106,7 +106,8 @@ describe("Primitives", function(){
 
       var mercator = point.toGeographic();
 
-      expect(mercator.coordinates).toEqual([101.99999999179026, 1.9999999236399357]);
+      expect(mercator.coordinates[0]).toBeCloseTo(101.99999999179026, 10);
+      expect(mercator.coordinates[1]).toBeCloseTo(1.9999999236399357, 10);
     });
 
     it("should convert a Primitive to JSON", function(){
@@ -1124,4 +1125,3 @@ describe("Intersection", function(){
   });
 
 });
-
