@@ -10,7 +10,7 @@
     "grunt-contrib-jshint": "0.6.x",
     "grunt-contrib-uglify": "~0.2.2",
     "grunt-gh-pages": "~0.8.1",
-    "grunt-jasmine-node": "https://github.com/magicmoose/grunt-jasmine-node/tarball/master",
+    "grunt-jasmine-node": "^0.3.1",
     "grunt-middleman": "~0.1.0",
     "grunt-s3": "~0.2.0-alpha.3",
     "grunt-template-jasmine-istanbul": "~0.2.4",
