@@ -47,7 +47,7 @@ $ bower install terraformer-wkt-parser
 
 ### Using in Node.js
 
-Just install the package from NPM with `$ npm install terraformer-arcgis-parser`. Then include it in your application.
+Just install the package from NPM with `$ npm install terraformer-wkt-parser`. Then include it in your application.
 
 ```js
 var WKT = require('terraformer-wkt-parser');
