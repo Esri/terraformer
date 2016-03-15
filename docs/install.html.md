@@ -16,7 +16,7 @@ We make Terraformer available via a number of distribution methods including NPM
 **Bower** `bower install terraformer`
 
 <a href="https://github.com/Esri/Terraformer/releases" class="button button-light">Download</a>
-<a href="http://cdn-geoweb.s3.amazonaws.com/terraformer/1.0.4/terraformer.min.js" class="button button-light">Cloudfront CDN</a>
+<a href="http://cdn-geoweb.s3.amazonaws.com/terraformer/1.0.5/terraformer.min.js" class="button button-light">Cloudfront CDN</a>
 
 ## ArcGIS Parser
 
@@ -36,7 +36,7 @@ We make Terraformer available via a number of distribution methods including NPM
 **Bower** `bower install terraformer-wkt-parser`
 
 <a href="https://github.com/Esri/terraformer-wkt-parser/releases" class="button button-light">Download</a>
-<a href="http://cdn-geoweb.s3.amazonaws.com/terraformer-wkt-parser/1.0.0/terraformer-wkt-parser.min.js" class="button button-light">Cloudfront CDN</a>
+<a href="http://cdn-geoweb.s3.amazonaws.com/terraformer-wkt-parser/1.1.0/terraformer-wkt-parser.min.js" class="button button-light">Cloudfront CDN</a>
 
 ## GeoStore
 
