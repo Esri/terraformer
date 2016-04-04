@@ -59,7 +59,7 @@ var WKT = require('terraformer-wkt-parser');
 
 #### WKT.parse(string)
 
-`Terraformer.WKT.parse(string)` - Converts a GeoJSON or a [Terraformer.Primitive](/core/#terraformerprimitive) into WKT.
+`Terraformer.WKT.parse(string)` - Converts a WKT string into a [Terraformer.Primitive](/core/#terraformerprimitive).
 
 ```js
 var geojson = Terraformer.WKT.parse('LINESTRING (30 10, 10 30, 40 40)');
@@ -67,7 +67,7 @@ var geojson = Terraformer.WKT.parse('LINESTRING (30 10, 10 30, 40 40)');
 
 #### WKT.convert(geojson)
 
-`Terraformer.WKT.convert(geoJSON)` will convert GeoJSON or a Terraformer Primitive to WKT.
+`Terraformer.WKT.convert(geoJSON)` will turn a GeoJSON [geometry object](http://geojson.org/geojson-spec.html#geometry-objects) or a Terraformer Primitive into WKT.
 
 ##### Example
 
