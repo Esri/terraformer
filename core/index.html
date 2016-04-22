@@ -727,26 +727,47 @@
 </tr>
 </thead><tbody>
 <tr>
-<td><code>coordinatesContainPoint(<a href="/glossary/#coordinates">&lt;Coordinates&gt;</a> <i>coordinates</i>, <a href="/glossary/#coordinate">&lt;Coordinate&gt;</a> <i>coordinate</i>)</code></td>
+<td><code>coordinatesContainPoint(<a href="/glossary/#coordinates">&lt;[Coordinates]&gt;</a> <i>coordinates</i>, <a href="/glossary/#coordinate">&lt;Coordinate&gt;</a> <i>coordinate</i>)</code></td>
 <td><code>Boolean</code></td>
-<td>Accepts a <a href="/glossary#geojson-coordinates"><code>coordinate</code></a> array and a <a href="/glossary#geojson-coordinate"><code>coordinate</code></a> and returns <code>true</code> if the point falls within the coordinate array.</td>
+<td>Accepts an array of <a href="/glossary#coordinates"><code>coordinates</code></a> and a <a href="/glossary#coordinate"><code>coordinate</code></a> and returns <code>true</code> if the point falls within the coordinate array.</td>
 </tr>
 <tr>
 <td><code>polygonContainsPoint(<a href="/glossary/#polygon">&lt;Polygon&gt;</a> <i>polygon</i>, <a href="/glossary/#coordinate">&lt;Coordinate&gt;</a> <i>coordinate</i>)</code></td>
 <td><code>Boolean</code></td>
-<td>Accepts a <a href="/glossary#geojson-polygon">polygon</a> and a <a href="/glossary#geojson-coordinate"><code>coordinate</code></a> and returns <code>true</code> if the point falls within the polygon.</td>
+<td>Accepts the geometry of a <a href="/glossary#polygon">polygon</a> and a <a href="/glossary#coordinate"><code>coordinate</code></a> and returns <code>true</code> if the point falls within the polygon.</td>
 </tr>
 <tr>
-<td><code>arrayIntersectsArray(<a href="/glossary/#coordinates">&lt;Coordinates&gt;</a> <i>coordinates</i>, <a href="/glossary/#coordinates">&lt;Coordinates&gt;</a> <i>coordinates</i>)</code></td>
+<td><code>arrayIntersectsArray(<a href="/glossary/#coordinates">&lt;[Coordinates]&gt;</a> <i>coordinates</i>, <a href="/glossary/#coordinates">&lt;[Coordinates]&gt;</a> <i>coordinates</i>)</code></td>
 <td><code>Boolean</code></td>
-<td>Accepts two arrays of <a href="/glossary#geojson-coordinates"><code>coordinates</code></a> and returns <code>true</code> if they cross each other at any point.</td>
+<td>Accepts two arrays of <a href="/glossary#coordinates"><code>coordinates</code></a> and returns <code>true</code> if they cross each other at any point.</td>
 </tr>
 <tr>
 <td><code>coordinatesEqual(<a href="/glossary/#coordinate">&lt;Coordinate&gt;</a> <i>coordinate</i>, <a href="/glossary/#coordinate">&lt;Coordinate&gt;</a> <i>coordinate</i>)</code></td>
 <td><code>Boolean</code></td>
-<td>Accepts two <a href="/glossary#geojson-coordinate"><code>coordinates</code></a> and returns <code>true</code> if the passed coordinates are equal to each other.</td>
+<td>Accepts two individual <a href="/glossary#coordinate"><code>coordinate</code></a> pairs and returns <code>true</code> if the passed coordinate pairs are equal to each other.</td>
 </tr>
 </tbody></table>
+<pre class="highlight javascript"><code><span class="kd">var</span> <span class="nx">pt</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mf">111.467285</span><span class="p">,</span> <span class="mf">40.75766</span><span class="p">];</span>
+<span class="kd">var</span> <span class="nx">pt2</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mf">111.873779</span><span class="p">,</span> <span class="mf">40.647303</span><span class="p">];</span>
+
+<span class="kd">var</span> <span class="nx">polygon</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s2">"type"</span><span class="p">:</span> <span class="s2">"Polygon"</span><span class="p">,</span>
+  <span class="s2">"coordinates"</span><span class="p">:</span> <span class="p">[[</span>
+    <span class="p">[</span><span class="o">-</span><span class="mf">112.074279</span><span class="p">,</span> <span class="mf">40.52215</span><span class="p">],</span>
+    <span class="p">[</span><span class="o">-</span><span class="mf">112.074279</span><span class="p">,</span> <span class="mf">40.853293</span><span class="p">],</span>
+    <span class="p">[</span><span class="o">-</span><span class="mf">111.610107</span><span class="p">,</span> <span class="mf">40.853293</span><span class="p">],</span>
+    <span class="p">[</span><span class="o">-</span><span class="mf">111.610107</span><span class="p">,</span> <span class="mf">40.52215</span><span class="p">],</span>
+    <span class="p">[</span><span class="o">-</span><span class="mf">112.074279</span><span class="p">,</span> <span class="mf">40.52215</span><span class="p">]</span>
+  <span class="p">]]</span>
+<span class="p">};</span>
+
+<span class="kd">var</span> <span class="nx">polygonGeometry</span> <span class="o">=</span> <span class="nx">polygon</span><span class="p">.</span><span class="nx">coordinates</span><span class="p">;</span>
+
+<span class="nx">Terraformer</span><span class="p">.</span><span class="nx">Tools</span><span class="p">.</span><span class="nx">polygonContainsPoint</span><span class="p">(</span><span class="nx">polygonGeometry</span><span class="p">,</span> <span class="nx">pt</span><span class="p">);</span>
+<span class="c1">// returns false</span>
+<span class="nx">Terraformer</span><span class="p">.</span><span class="nx">Tools</span><span class="p">.</span><span class="nx">polygonContainsPoint</span><span class="p">(</span><span class="nx">polygonGeometry</span><span class="p">,</span> <span class="nx">pt2</span><span class="p">);</span>
+<span class="c1">// returns true</span>
+</code></pre>
 
     </main>
 

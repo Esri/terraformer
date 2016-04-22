@@ -127,8 +127,8 @@
 <p>In Node.js, the components are available via <code>require()</code>.</p>
 <pre class="highlight javascript"><code><span class="c1">// require geostore, an RTree index, and a LevelDB data store</span>
 <span class="kd">var</span> <span class="nx">GeoStore</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'terraformer-geostore'</span><span class="p">).</span><span class="nx">GeoStore</span><span class="p">;</span>
-<span class="kd">var</span> <span class="nx">RTree</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'terraformer-geostore-rtree'</span><span class="p">).</span><span class="nx">RTree</span><span class="p">;</span>
-<span class="kd">var</span> <span class="nx">LevelStore</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'terraformer-geostore-leveldb'</span><span class="p">).</span><span class="nx">LevelStore</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">RTree</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'terraformer-rtree'</span><span class="p">).</span><span class="nx">RTree</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">LevelStore</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'terraformer-geostore-leveldb'</span><span class="p">);</span>
 </code></pre>
 
 <p>Once the packages are in scope, it is very similar as using the GeoStore in the browser.</p>
