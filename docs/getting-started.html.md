@@ -110,4 +110,4 @@ Start exploring all the options you have working with [Primitives](/core/#terraf
 
 [Terraformer GeoStore](/geostore/) is a JavaScript database for indexing and querying large amounds of GeoJSON. You can use multiple types of spatial indexes and backing stores for your data.
 
-You can also convert data between different formats like [ArcGIS Geometries](/arcgis-parser/) and [Well Known Text](/wkt-parser/). Remember Terraformer is a modular framework, so use only the pieces you need to complete your applicaiton.
+You can also convert data between different formats like [ArcGIS Geometries](/arcgis-parser/) and [Well Known Text](/wkt-parser/). Since Terraformer is a modular framework, you can pick and choose the pieces to use in your own application.

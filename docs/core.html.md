@@ -303,7 +303,30 @@ Method | Returns | Description
 ### Comparisons
 Method | Returns | Description
 --- | --- | ---
-<code>coordinatesContainPoint(<a href="/glossary/#coordinates">&lt;Coordinates&gt;</a> <i>coordinates</i>, <a href="/glossary/#coordinate">&lt;Coordinate&gt;</a> <i>coordinate</i>)</code> | `Boolean` |  Accepts a [`coordinate`](/glossary#geojson-coordinates) array and a [`coordinate`](/glossary#geojson-coordinate) and returns `true` if the point falls within the coordinate array.
-<code>polygonContainsPoint(<a href="/glossary/#polygon">&lt;Polygon&gt;</a> <i>polygon</i>, <a href="/glossary/#coordinate">&lt;Coordinate&gt;</a> <i>coordinate</i>)</code> | `Boolean` | Accepts a [polygon](/glossary#geojson-polygon) and a [`coordinate`](/glossary#geojson-coordinate) and returns `true` if the point falls within the polygon.
-<code>arrayIntersectsArray(<a href="/glossary/#coordinates">&lt;Coordinates&gt;</a> <i>coordinates</i>, <a href="/glossary/#coordinates">&lt;Coordinates&gt;</a> <i>coordinates</i>)</code> | `Boolean` | Accepts two arrays of [`coordinates`](/glossary#geojson-coordinates) and returns `true` if they cross each other at any point.
-<code>coordinatesEqual(<a href="/glossary/#coordinate">&lt;Coordinate&gt;</a> <i>coordinate</i>, <a href="/glossary/#coordinate">&lt;Coordinate&gt;</a> <i>coordinate</i>)</code> | `Boolean` | Accepts two [`coordinates`](/glossary#geojson-coordinate) and returns `true` if the passed coordinates are equal to each other.
+<code>coordinatesContainPoint(<a href="/glossary/#coordinates">&lt;[Coordinates]&gt;</a> <i>coordinates</i>, <a href="/glossary/#coordinate">&lt;Coordinate&gt;</a> <i>coordinate</i>)</code> | `Boolean` |  Accepts an array of [`coordinates`](/glossary#coordinates) and a [`coordinate`](/glossary#coordinate) and returns `true` if the point falls within the coordinate array.
+<code>polygonContainsPoint(<a href="/glossary/#polygon">&lt;Polygon&gt;</a> <i>polygon</i>, <a href="/glossary/#coordinate">&lt;Coordinate&gt;</a> <i>coordinate</i>)</code> | `Boolean` | Accepts the geometry of a [polygon](/glossary#polygon) and a [`coordinate`](/glossary#coordinate) and returns `true` if the point falls within the polygon.
+<code>arrayIntersectsArray(<a href="/glossary/#coordinates">&lt;[Coordinates]&gt;</a> <i>coordinates</i>, <a href="/glossary/#coordinates">&lt;[Coordinates]&gt;</a> <i>coordinates</i>)</code> | `Boolean` | Accepts two arrays of [`coordinates`](/glossary#coordinates) and returns `true` if they cross each other at any point.
+<code>coordinatesEqual(<a href="/glossary/#coordinate">&lt;Coordinate&gt;</a> <i>coordinate</i>, <a href="/glossary/#coordinate">&lt;Coordinate&gt;</a> <i>coordinate</i>)</code> | `Boolean` | Accepts two individual [`coordinate`](/glossary#coordinate) pairs and returns `true` if the passed coordinate pairs are equal to each other.
+
+```js
+var pt = [-111.467285, 40.75766];
+var pt2 = [-111.873779, 40.647303];
+
+var polygon = {
+  "type": "Polygon",
+  "coordinates": [[
+    [-112.074279, 40.52215],
+    [-112.074279, 40.853293],
+    [-111.610107, 40.853293],
+    [-111.610107, 40.52215],
+    [-112.074279, 40.52215]
+  ]]
+};
+
+var polygonGeometry = polygon.coordinates;
+
+Terraformer.Tools.polygonContainsPoint(polygonGeometry, pt);
+// returns false
+Terraformer.Tools.polygonContainsPoint(polygonGeometry, pt2);
+// returns true
+```

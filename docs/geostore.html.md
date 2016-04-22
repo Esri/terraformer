@@ -79,8 +79,8 @@ In Node.js, the components are available via `require()`.
 ```js
 // require geostore, an RTree index, and a LevelDB data store
 var GeoStore = require('terraformer-geostore').GeoStore;
-var RTree = require('terraformer-geostore-rtree').RTree;
-var LevelStore = require('terraformer-geostore-leveldb').LevelStore;
+var RTree = require('terraformer-rtree').RTree;
+var LevelStore = require('terraformer-geostore-leveldb');
 ```
 
 Once the packages are in scope, it is very similar as using the GeoStore in the browser.
