@@ -55,32 +55,23 @@ A GeoJSON bounding box is usually a 4-item array representing the rectangle that
 An object representing a single point.
 
 ```json
-<<<<<<< HEAD
 {
   "type": "Point",
   "coordinates": [-105.01621, 39.57422]
 }
-=======
-[-105.01621, 39.57422]
-
->>>>>>> point-in-poly
 ```
 
 [GeoJSON Point](http://geojson.org/geojson-spec.html#point)
 
 ### MultiPoint
 
-An object represeneting multiple points as a single coordinate array.
+An object representing multiple points as a single coordinate array.
 
 ```json
-<<<<<<< HEAD
 {
   "type": "MultiPoint",
   "coordinates": [ [-105.01, 39.57], [-80.66, 35.05] ]
 }
-=======
-[ [-105.01, 39.57], [-80.66, 35.05] ]
->>>>>>> point-in-poly
 ```
 
 [GeoJSON MultiPoint](http://geojson.org/geojson-spec.html#multipoint)
@@ -90,11 +81,14 @@ An object represeneting multiple points as a single coordinate array.
 A series of coordinates that form a line.
 
 ```json
-[
-  [-101.5, 39.662],
-  [-101.75, 39.2415],
-  [-101.64, 39.2415],
-]
+{
+  "type": "LineString",
+  "coordinates": [
+    [-101.5, 39.662],
+    [-101.75, 39.2415],
+    [-101.64, 39.2415],
+  ]
+}
 ```
 
 [GeoJSON LineString](http://geojson.org/geojson-spec.html#linestring)
@@ -104,24 +98,27 @@ A series of coordinates that form a line.
 An object that represents multiple linestrings in a single object.
 
 ```json
-[
-  [
-    [-101.5, 39.662],
-    [-101.75, 39.2415],
-    [-101.23, 39.2415],
-    [-101.749, 39.7984],
-    [-101.5, 39.011]
-  ],[
-    [-99.23, 38.6605],
-    [-99.56, 38.727],
-    [-99.25, 38.018]
-  ],[
-    [-98.499, 38.913],
-    [-98.499, 38.913],
-    [-98.38, 38.15],
-    [-97.5, 38.629]
+{
+  "type": "MultiLineString",
+  "coordinates": [
+    [
+      [-101.5, 39.662],
+      [-101.75, 39.2415],
+      [-101.23, 39.2415],
+      [-101.749, 39.7984],
+      [-101.5, 39.011]
+    ],[
+      [-99.23, 38.6605],
+      [-99.56, 38.727],
+      [-99.25, 38.018]
+    ],[
+      [-98.499, 38.913],
+      [-98.499, 38.913],
+      [-98.38, 38.15],
+      [-97.5, 38.629]
+    ]
   ]
-]
+}
 ```
 
 [GeoJSON MultiLineString](http://geojson.org/geojson-spec.html#multilinestring)
@@ -131,9 +128,12 @@ An object that represents multiple linestrings in a single object.
 An array of coordinates defining a polygon.
 
 ```json
-[
-  [ [41.83, 71.01], [56.95, 33.75], [21.79, 36.56], [41.83, 71.01] ]
-]
+{
+  "type": "Polygon",
+  "coordinates": [
+    [ [41.83, 71.01], [56.95, 33.75], [21.79, 36.56], [41.83, 71.01] ]
+  ]
+}
 ```
 
 [GeoJSON Polygon](http://geojson.org/geojson-spec.html#polygon)
@@ -143,18 +143,20 @@ An array of coordinates defining a polygon.
 An object that represents multiple polygons in a single object.
 
 ```json
-[
-  [
-    [ [102.0, 2.0], [103.0, 2.0], [103.0, 3.0], [102.0, 3.0], [102.0, 2.0] ]
-  ],
-  [
-    [ [100.0, 0.0], [101.0, 0.0], [101.0, 1.0], [100.0, 1.0], [100.0, 0.0] ]
+{
+  "type": "MultiPolygon",
+  "coordinates": [
+    [
+      [ [102.0, 2.0], [103.0, 2.0], [103.0, 3.0], [102.0, 3.0], [102.0, 2.0] ]
+    ],
+    [
+      [ [100.0, 0.0], [101.0, 0.0], [101.0, 1.0], [100.0, 1.0], [100.0, 0.0] ]
+    ]
   ]
-]
+}
 ```
 
 [GeoJSON MultiPolygon](http://geojson.org/geojson-spec.html#multipolygon)
-
 ### Feature
 
 GeoJSON Features combine a [Geometry](#geometry) object with a unique identifier and set of metadata.
@@ -243,41 +245,41 @@ Contains multiple [Geometry](#geometry) objects in a single object.
 
 An object respresenting a [GeoJSON Point](#point)
 
-[Point](/documentation/core/#point)
+[Point](/documentation/core/#terraformerpoint)
 
 ### MultiPoint Primitive
 
 An object respresenting a [GeoJSON MultiPoint](#multipoint)
 
-[MultiPoint](/documentation/core/#multipoint)
+[MultiPoint](/documentation/core/#terraformermultipoint)
 
 ### LineString Primitive
 
 An object respresenting a [GeoJSON LineString](#lineString)
 
-[LineString](/documentation/core/#linestring)
+[LineString](/documentation/core/#terraformerlinestring)
 
 ### MultiLineString Primitive
 
 An object respresenting a [GeoJSON MultiLineString](#multilinestring)
 
-[MultiLineString](/documentation/core/#multilinestring)
+[MultiLineString](/documentation/core/#terraformermultilinestring)
 
 ### Polygon Primitive
 
 An object respresenting a [GeoJSON Polygon](#polygon)
 
-[Polygon](/documentation/core/#polygon)
+[Polygon](/documentation/core/#terraformerpolygon)
 
 ### MultiPolygon Primitive
 
 An object respresenting a [GeoJSON MultiPolygon](#multipolygon)
 
-[MultiPolygon](/documentation/core/#multipolygon)
+[MultiPolygon](/documentation/core/#terraformermultipolygon)
 
 ### Feature Primitive
 
-An object respresenting a [GeoJSON Feature](#feature)
+An object respresenting a [GeoJSON Feature](#terraformerfeature)
 
 [Feature](/documentation/core/#feature)
 
@@ -285,19 +287,19 @@ An object respresenting a [GeoJSON Feature](#feature)
 
 An object respresenting a [GeoJSON FeatureCollection](#featurecollection)
 
-[FeatureCollection](/documentation/core/#featurecollection)
+[FeatureCollection](/documentation/core/#terraformerfeaturecollection)
 
 ### GeometryCollection Primitive
 
 An object respresenting a [GeoJSON GeometryCollection](#geometrycollection)
 
-[GeometryCollection](/documentation/core/#geometrycollection)
+[GeometryCollection](/documentation/core/#terraformergeometrycollection)
 
 ### Circle Primitive
 
 An object representing a [GeoJSON Feature](#feature) which contains a polygonal representation of a circle.
 
-[Circle](/documentation/core/#circle)
+[Circle](/documentation/core/#terraformercircle)
 
 ## Misc
 
