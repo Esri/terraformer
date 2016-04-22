@@ -55,10 +55,15 @@ A GeoJSON bounding box is usually a 4-item array representing the rectangle that
 An object representing a single point.
 
 ```json
+<<<<<<< HEAD
 {
   "type": "Point",
   "coordinates": [-105.01621, 39.57422]
 }
+=======
+[-105.01621, 39.57422]
+
+>>>>>>> point-in-poly
 ```
 
 [GeoJSON Point](http://geojson.org/geojson-spec.html#point)
@@ -68,10 +73,14 @@ An object representing a single point.
 An object represeneting multiple points as a single coordinate array.
 
 ```json
+<<<<<<< HEAD
 {
   "type": "MultiPoint",
   "coordinates": [ [-105.01, 39.57], [-80.66, 35.05] ]
 }
+=======
+[ [-105.01, 39.57], [-80.66, 35.05] ]
+>>>>>>> point-in-poly
 ```
 
 [GeoJSON MultiPoint](http://geojson.org/geojson-spec.html#multipoint)
@@ -81,14 +90,11 @@ An object represeneting multiple points as a single coordinate array.
 A series of coordinates that form a line.
 
 ```json
-{
-  "type": "LineString",
-  "coordinates": [
-    [-101.5, 39.662],
-    [-101.75, 39.2415],
-    [-101.64, 39.2415],
-  ]
-}
+[
+  [-101.5, 39.662],
+  [-101.75, 39.2415],
+  [-101.64, 39.2415],
+]
 ```
 
 [GeoJSON LineString](http://geojson.org/geojson-spec.html#linestring)
@@ -98,27 +104,24 @@ A series of coordinates that form a line.
 An object that represents multiple linestrings in a single object.
 
 ```json
-{
-  "type": "MultiLineString",
-  "coordinates": [
-    [
-      [-101.5, 39.662],
-      [-101.75, 39.2415],
-      [-101.23, 39.2415],
-      [-101.749, 39.7984],
-      [-101.5, 39.011]
-    ],[
-      [-99.23, 38.6605],
-      [-99.56, 38.727],
-      [-99.25, 38.018]
-    ],[
-      [-98.499, 38.913],
-      [-98.499, 38.913],
-      [-98.38, 38.15],
-      [-97.5, 38.629]
-    ]
+[
+  [
+    [-101.5, 39.662],
+    [-101.75, 39.2415],
+    [-101.23, 39.2415],
+    [-101.749, 39.7984],
+    [-101.5, 39.011]
+  ],[
+    [-99.23, 38.6605],
+    [-99.56, 38.727],
+    [-99.25, 38.018]
+  ],[
+    [-98.499, 38.913],
+    [-98.499, 38.913],
+    [-98.38, 38.15],
+    [-97.5, 38.629]
   ]
-}
+]
 ```
 
 [GeoJSON MultiLineString](http://geojson.org/geojson-spec.html#multilinestring)
@@ -128,12 +131,9 @@ An object that represents multiple linestrings in a single object.
 An array of coordinates defining a polygon.
 
 ```json
-{
-  "type": "Polygon",
-  "coordinates": [
-    [ [41.83, 71.01], [56.95, 33.75], [21.79, 36.56], [41.83, 71.01] ]
-  ]
-}
+[
+  [ [41.83, 71.01], [56.95, 33.75], [21.79, 36.56], [41.83, 71.01] ]
+]
 ```
 
 [GeoJSON Polygon](http://geojson.org/geojson-spec.html#polygon)
@@ -143,17 +143,14 @@ An array of coordinates defining a polygon.
 An object that represents multiple polygons in a single object.
 
 ```json
-{
-  "type": "MultiPolygon",
-  "coordinates": [
-    [
-      [ [102.0, 2.0], [103.0, 2.0], [103.0, 3.0], [102.0, 3.0], [102.0, 2.0] ]
-    ],
-    [
-      [ [100.0, 0.0], [101.0, 0.0], [101.0, 1.0], [100.0, 1.0], [100.0, 0.0] ]
-    ]
+[
+  [
+    [ [102.0, 2.0], [103.0, 2.0], [103.0, 3.0], [102.0, 3.0], [102.0, 2.0] ]
+  ],
+  [
+    [ [100.0, 0.0], [101.0, 0.0], [101.0, 1.0], [100.0, 1.0], [100.0, 0.0] ]
   ]
-}
+]
 ```
 
 [GeoJSON MultiPolygon](http://geojson.org/geojson-spec.html#multipolygon)
