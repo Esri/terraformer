@@ -1107,8 +1107,21 @@ describe("Intersection", function(){
       expect(bounds).toEqual(null);
     });
 
-    it("should return false when polygonContainsPoint is passed an empty polygon", function() {
+    it("should return true when polygonContainsPoint is passed the right stuff", function() {
       expect(Terraformer.Tools.polygonContainsPoint([], [])).toEqual(false);
+    });
+
+    it("should return false when polygonContainsPoint is passed an empty polygon", function() {
+      var pt = [-111.873779, 40.647303];
+      var polygon = [[
+        [-112.074279, 40.52215],
+        [-112.074279, 40.853293],
+        [-111.610107, 40.853293],
+        [-111.610107, 40.52215],
+        [-112.074279, 40.52215]
+      ]]
+
+      expect(Terraformer.Tools.polygonContainsPoint(polygon, pt)).toEqual(true);
     });
 
     it("should return false if a polygonContainsPoint is called and the point is outside the polygon", function(){
