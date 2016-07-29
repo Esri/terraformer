@@ -113,7 +113,7 @@
           WKT.parse(string)
           <a href='#' class='back-to-top-link'>Back to Top</a>
         </h4>
-<p><code>Terraformer.WKT.parse(string)</code> - Converts a WKT string into a <a href="/core/#terraformerprimitive">Terraformer.Primitive</a>.</p>
+<p><code>Terraformer.WKT.parse(string)</code> - Used to convert a <code>POINT, MULTIPOINT, LINESTRING, MULTILINESTRING, POLYGON</code> or <code>MULTIPOLYGON</code> WKT string into a <a href="/core/#terraformerprimitive">Terraformer.Primitive</a>.</p>
 <pre class="highlight javascript"><code><span class="kd">var</span> <span class="nx">geojson</span> <span class="o">=</span> <span class="nx">Terraformer</span><span class="p">.</span><span class="nx">WKT</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="s1">'LINESTRING (30 10, 10 30, 40 40)'</span><span class="p">);</span>
 </code></pre>
 <h4>
@@ -122,7 +122,7 @@
           WKT.convert(geojson)
           <a href='#' class='back-to-top-link'>Back to Top</a>
         </h4>
-<p><code>Terraformer.WKT.convert(geoJSON)</code> will turn a GeoJSON <a href="http://geojson.org/geojson-spec.html#geometry-objects">geometry object</a> or a Terraformer Primitive into WKT.</p>
+<p><code>Terraformer.WKT.convert(geoJSON)</code> will turn a GeoJSON <a href="http://geojson.org/geojson-spec.html#geometry-objects"><code>Point, MultiPoint, LineString, MultiLineString, Polygon</code> or <code>MultiPolygon</code></a> geometry object or a Terraformer Primitive into WKT.</p>
 <h5>Example</h5><pre class="highlight javascript"><code><span class="kd">var</span> <span class="nx">polygon</span> <span class="o">=</span> <span class="nx">Terraformer</span><span class="p">.</span><span class="nx">WKT</span><span class="p">.</span><span class="nx">convert</span><span class="p">({</span>
   <span class="s2">"type"</span><span class="p">:</span> <span class="s2">"Polygon"</span><span class="p">,</span>
   <span class="s2">"coordinates"</span><span class="p">:</span> <span class="p">[</span>
