@@ -31,6 +31,7 @@ Icon
 
 #Node
 node_modules
+npm-debug.log
 
 #anvil
 /index.html
@@ -50,6 +51,10 @@ test/tmp
 test/version_tmp
 tmp
 Gemfile.lock
+
+# typescript
+typings/**
+test.js
 
 # YARD artifacts
 .yardoc
