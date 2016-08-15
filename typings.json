@@ -1,0 +1,8 @@
+{
+  "name": "terraformer",
+  "main": "terraformer.d.ts",
+  "dependencies": {},
+  "globalDependencies": {
+    "geojson": "registry:dt/geojson#0.0.0+20160619034323"
+  }
+}
