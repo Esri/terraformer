@@ -4,6 +4,12 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [unreleased]
 
+## [1.0.6] - 2016-08-17
+
+### Added
+* typings for TypeScript folks (thx [@JeffJacobson](https://github.com/JeffJacobson)) [#20](https://github.com/Esri/terraformer-wkt-parser/pull/20)
+* lots of little website improvements
+
 ## [1.0.5] - 2015-03-14
 
 ### Changed
@@ -48,7 +54,8 @@ primitive.convexHull() now always returns null or a valid Terraformer.Polygon. I
 
 Initial Release
 
-[unreleased]: https://github.com/Esri/Terraformer/compare/v1.0.5...HEAD
+[unreleased]: https://github.com/Esri/Terraformer/compare/v1.0.6...HEAD
+[1.0.6]: https://github.com/Esri/Terraformer/compare/v1.0.5...v1.0.6
 [1.0.5]: https://github.com/Esri/Terraformer/compare/v1.0.4...v1.0.5
 [1.0.4]: https://github.com/Esri/Terraformer/compare/v1.0.3...v1.0.4
 [1.0.3]: https://github.com/Esri/Terraformer/compare/v1.0.2...v1.0.3

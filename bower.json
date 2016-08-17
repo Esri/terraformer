@@ -1,6 +1,13 @@
 {
-  "name"          : "terraformer",
-  "version"       : "1.0.5",
-  "main"          : "terraformer.min.js",
-  "ignore"        : ["docs", "examples", "spec", "versions", "source", "Gemfile", "config.rb"]
+  "name": "terraformer",
+  "main": "terraformer.min.js",
+  "ignore": [
+    "docs",
+    "examples",
+    "spec",
+    "versions",
+    "source",
+    "Gemfile",
+    "config.rb"
+  ]
 }
