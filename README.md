@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/Esri/Terraformer.svg?branch=master)](https://travis-ci.org/Esri/Terraformer)
 
-Terraformer is a modular toolkit for working with geographic data.
+> A modular toolkit for working with geographic data.
 
 ## Modules
 
@@ -67,20 +67,20 @@ var polygon = new Terraformer.Primitive({
   "type": "Polygon",
   "coordinates": [
     [
-      [-122.66589403152467, 45.52290150862236],
-      [-122.66926288604736, 45.52291654238294],
-      [-122.67115116119385, 45.518406234030586],
-      [-122.67325401306151, 45.514000817199715],
-      [-122.6684260368347, 45.5127377671934],
-      [-122.66765356063841, 45.51694782364431],
-      [-122.66589403152467, 45.52290150862236 ]
+      [-122.665894, 45.5229015],
+      [-122.669263, 45.5229165],
+      [-122.671151, 45.5184062],
+      [-122.673254, 45.5140008],
+      [-122.668426, 45.5127378],
+      [-122.667654, 45.5169478],
+      [-122.665894, 45.5229015]
     ]
   ]
 });
 
 var point = new Terraformer.Primitive({
   "type": "Point",
-  "coordinates": [-122.66947746276854, 45.51775972687403]
+  "coordinates": [-122.669477, 45.517760]
 });
 ```
 
@@ -88,7 +88,7 @@ Now that you have a point and a polygon primitive you can use the primitive help
 
 ```js
 // add a new vertex to our polygon
-polygon.insertVertex([-122.6708507537842, 45.513188859735436], 2);
+polygon.insertVertex([-122.670851, 45.513189], 2);
 
 // figure out if our point is within our polygon
 point.within(polygon); // returns true
