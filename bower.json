@@ -1,5 +1,6 @@
 {
   "name": "terraformer",
+  "license": "MIT",
   "main": "terraformer.min.js",
   "ignore": [
     "docs",
