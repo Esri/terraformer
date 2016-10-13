@@ -36,6 +36,9 @@ npm-debug.log
 #anvil
 /index.html
 
+#manual test files
+playing-around.js
+
 # Ruby
 *.gem
 *.rbc

@@ -9,12 +9,12 @@ layout: documentation
 ## Terraformer.Primitive
 Terraformer Primitives are JavaScript objects that map directly to their GeoJSON couterparts. Converting a GeoJSON object into a Terraformer Primitive will allow you use convenience methods like `point.within(polygon)`.
 
-Every `Terraformer.Primitive` inherits from the `Terraformer.Primitive` base class, thus all other Primitives share the `Terraformer.Primitive` methods.
+Every `Primitive` inherits from the `Terraformer.Primitive` base class, thus all other Primitives share the `Terraformer.Primitive` methods.
 
 There is a Primitive for every type of GeoJSON object, plus a `Circle` Primitive which represents a circle as a polygon.
 
 ### Constructor
-You create new `Terraformer.Primitive` objects by passing it a valid [GeoJSON Object](/glossary/#geojson). This will return a `Terraformer.Primitive` of the type that corresponds with type of your GeoJSON object.
+You create a new `Terraformer.Primitive` object by passing it a valid [GeoJSON Object](/glossary/#geojson). This will return a `Terraformer.Primitive` with the same type as your GeoJSON object.
 
 ```js
 var point = new Terraformer.Primitive({
@@ -63,7 +63,7 @@ A JavaScript object representing a [GeoJSON MultiPoint](/glossary/#multipoint).
 
 ### Constructor
 
-`Terraformer.MultiPoint` can be created by passing in a valid [GeoJSON MultiPoint](/glossary/#multipoint), or an array of [GeoJSON Coordinates](/glossary/#coordinates) like `[longitude, latitude]`.
+`Terraformer.MultiPoint` can be created by passing in a valid [GeoJSON MultiPoint](/glossary/#multipoint), or an array of [GeoJSON Coordinates](/glossary/#coordinates).
 
 ```js
 var multipoint1 = new Terraformer.MultiPoint({
@@ -110,7 +110,7 @@ Method | Returns | Description
 A JavaScript object representing a [GeoJSON MultiLineString](/glossary/#multilinestring).
 
 ### Constructor
-`Terraformer.LineString` can be created by passing in a valid [GeoJSON MultiLineString](/glossary/#multilinestring), or an array  that is valid coordinate array for [GeoJSON MultiLineString](/glossary/#multilinestring).
+`Terraformer.LineString` can be created by passing in a valid [GeoJSON MultiLineString](/glossary/#multilinestring), or a [GeoJSON MultiLineString](/glossary/#multilinestring) coordinate array.
 
 ```js
 var multilinestring = new Terraformer.MultiLineString({
@@ -118,7 +118,10 @@ var multilinestring = new Terraformer.MultiLineString({
   coordinates:[ [1,2],[2,1] ]
 });
 
-var multilinestring = new Terraformer.MultiLineString([ [[1,1],[2,2],[3,4]], [[0,1],[0,2],[0,3]] ]);
+var multilinestring = new Terraformer.MultiLineString([
+  [[1,1],[2,2],[3,4]],
+  [[0,1],[0,2],[0,3]]
+]);
 ```
 
 ### Methods
@@ -131,7 +134,7 @@ Method | Returns | Description
 A JavaScript object representing a [GeoJSON Polygon](/glossary/#polygon).
 
 ### Constructor
-`Terraformer.Polygon` can be created by passing in a valid [GeoJSON Polygon](/glossary/#polygon), or an array that is a valid coordinate for a [GeoJSON Polygon](/glossary/#polygon).
+`Terraformer.Polygon` can be created by passing in a valid [GeoJSON Polygon](/glossary/#polygon), or [GeoJSON Polygon](/glossary/#polygon) coordinate array.
 
 ```js
 var polygon1 = new Terraformer.Polygon({
@@ -168,14 +171,22 @@ A JavaScript object representing a [GeoJSON MultiPolygon](/glossary/#multipolygo
 var multipolygon1 = new Terraformer.MultiPolygon({
   "type": "MultiPolygon",
   "coordinates": [
-    [ [100.0, 0.0], [101.0, 0.0], [101.0, 1.0], [100.0, 1.0], [100.0, 0.0] ],
-    [ [100.2, 0.2], [100.8, 0.2], [100.8, 0.8], [100.2, 0.8], [100.2, 0.2] ]
+    [
+      [ [100.0, 0.0], [101.0, 0.0], [101.0, 1.0], [100.0, 1.0], [100.0, 0.0] ]
+    ],
+    [
+      [ [100.2, 0.2], [100.8, 0.2], [100.8, 0.8], [100.2, 0.8], [100.2, 0.2] ]
     ]
- });
+  ]
+});
 
 var multipolygon2 = new Terraformer.MultiPolygon([
-  [ [100.0, 0.0], [101.0, 0.0], [101.0, 1.0], [100.0, 1.0], [100.0, 0.0] ],
-  [ [100.2, 0.2], [100.8, 0.2], [100.8, 0.8], [100.2, 0.8], [100.2, 0.2] ]
+  [
+    [ [100.0, 0.0], [101.0, 0.0], [101.0, 1.0], [100.0, 1.0], [100.0, 0.0] ]
+  ],
+  [
+    [ [100.2, 0.2], [100.8, 0.2], [100.8, 0.8], [100.2, 0.8], [100.2, 0.2] ]
+  ]
 ]);
 ```
 
@@ -309,7 +320,7 @@ Method | Returns | Description
 <code>coordinatesEqual(<a href="/glossary/#coordinate">&lt;Coordinate&gt;</a> <i>coordinate</i>, <a href="/glossary/#coordinate">&lt;Coordinate&gt;</a> <i>coordinate</i>)</code> | `Boolean` | Accepts two individual [`coordinate`](/glossary#coordinate) pairs and returns `true` if the passed coordinate pairs are equal to each other.
 
 ```js
-var pt = [-111.467285, 40.75766];
+var pt = [0,0];
 var pt2 = [-111.873779, 40.647303];
 
 var polygon = {
