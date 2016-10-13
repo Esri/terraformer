@@ -910,6 +910,11 @@ describe("Intersection", function(){
       expect(point.within(polygon)).toEqual(true);
     });
 
+    it("should return true when inside a circle", function(){
+      var circle = new Terraformer.Circle([ 10, 10 ], 50, 64);
+      expect(point.within(circle)).toEqual(true);
+    });
+
   });
 
   describe("MultiPolygon Within", function(){
