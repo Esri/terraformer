@@ -61,7 +61,7 @@
         </h2>
 <p>Terraformer Primitives are JavaScript objects that map directly to their GeoJSON couterparts. Converting a GeoJSON object into a Terraformer Primitive will allow you use convenience methods like <code>point.within(polygon)</code>.</p>
 
-<p>Every <code>Terraformer.Primitive</code> inherits from the <code>Terraformer.Primitive</code> base class, thus all other Primitives share the <code>Terraformer.Primitive</code> methods.</p>
+<p>Every <code>Primitive</code> inherits from the <code>Terraformer.Primitive</code> base class, thus all other Primitives share the <code>Terraformer.Primitive</code> methods.</p>
 
 <p>There is a Primitive for every type of GeoJSON object, plus a <code>Circle</code> Primitive which represents a circle as a polygon.</p>
 <h3>
@@ -70,7 +70,7 @@
           Constructor
           <a href='#' class='back-to-top-link'>Back to Top</a>
         </h3>
-<p>You create new <code>Terraformer.Primitive</code> objects by passing it a valid <a href="/glossary/#geojson">GeoJSON Object</a>. This will return a <code>Terraformer.Primitive</code> of the type that corresponds with type of your GeoJSON object.</p>
+<p>You create a new <code>Terraformer.Primitive</code> object by passing it a valid <a href="/glossary/#geojson">GeoJSON Object</a>. This will return a <code>Terraformer.Primitive</code> with the same type as your GeoJSON object.</p>
 <pre class="highlight javascript"><code><span class="kd">var</span> <span class="nx">point</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Terraformer</span><span class="p">.</span><span class="nx">Primitive</span><span class="p">({</span>
   <span class="na">type</span><span class="p">:</span><span class="s2">"Point"</span><span class="p">,</span>
   <span class="na">coordinates</span><span class="p">:[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span>
@@ -171,7 +171,7 @@
           Constructor
           <a href='#' class='back-to-top-link'>Back to Top</a>
         </h3>
-<p><code>Terraformer.MultiPoint</code> can be created by passing in a valid <a href="/glossary/#multipoint">GeoJSON MultiPoint</a>, or an array of <a href="/glossary/#coordinates">GeoJSON Coordinates</a> like <code>[longitude, latitude]</code>.</p>
+<p><code>Terraformer.MultiPoint</code> can be created by passing in a valid <a href="/glossary/#multipoint">GeoJSON MultiPoint</a>, or an array of <a href="/glossary/#coordinates">GeoJSON Coordinates</a>.</p>
 <pre class="highlight javascript"><code><span class="kd">var</span> <span class="nx">multipoint1</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Terraformer</span><span class="p">.</span><span class="nx">MultiPoint</span><span class="p">({</span>
   <span class="na">type</span><span class="p">:</span><span class="s2">"MultiPoint"</span><span class="p">,</span>
   <span class="na">coordinates</span><span class="p">:[</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">],[</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span> <span class="p">]</span>
@@ -281,13 +281,16 @@
           Constructor
           <a href='#' class='back-to-top-link'>Back to Top</a>
         </h3>
-<p><code>Terraformer.LineString</code> can be created by passing in a valid <a href="/glossary/#multilinestring">GeoJSON MultiLineString</a>, or an array  that is valid coordinate array for <a href="/glossary/#multilinestring">GeoJSON MultiLineString</a>.</p>
+<p><code>Terraformer.LineString</code> can be created by passing in a valid <a href="/glossary/#multilinestring">GeoJSON MultiLineString</a>, or a <a href="/glossary/#multilinestring">GeoJSON MultiLineString</a> coordinate array.</p>
 <pre class="highlight javascript"><code><span class="kd">var</span> <span class="nx">multilinestring</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Terraformer</span><span class="p">.</span><span class="nx">MultiLineString</span><span class="p">({</span>
   <span class="na">type</span><span class="p">:</span><span class="s2">"LineString"</span><span class="p">,</span>
   <span class="na">coordinates</span><span class="p">:[</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">],[</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span> <span class="p">]</span>
 <span class="p">});</span>
 
-<span class="kd">var</span> <span class="nx">multilinestring</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Terraformer</span><span class="p">.</span><span class="nx">MultiLineString</span><span class="p">([</span> <span class="p">[[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">],[</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">],[</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">]],</span> <span class="p">[[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">],[</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">],[</span><span class="mi">0</span><span class="p">,</span><span class="mi">3</span><span class="p">]]</span> <span class="p">]);</span>
+<span class="kd">var</span> <span class="nx">multilinestring</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Terraformer</span><span class="p">.</span><span class="nx">MultiLineString</span><span class="p">([</span>
+  <span class="p">[[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">],[</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">],[</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">]],</span>
+  <span class="p">[[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">],[</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">],[</span><span class="mi">0</span><span class="p">,</span><span class="mi">3</span><span class="p">]]</span>
+<span class="p">]);</span>
 </code></pre>
 <h3>
           <a id='methods-3' class='section-link'></a>
@@ -326,7 +329,7 @@
           Constructor
           <a href='#' class='back-to-top-link'>Back to Top</a>
         </h3>
-<p><code>Terraformer.Polygon</code> can be created by passing in a valid <a href="/glossary/#polygon">GeoJSON Polygon</a>, or an array that is a valid coordinate for a <a href="/glossary/#polygon">GeoJSON Polygon</a>.</p>
+<p><code>Terraformer.Polygon</code> can be created by passing in a valid <a href="/glossary/#polygon">GeoJSON Polygon</a>, or <a href="/glossary/#polygon">GeoJSON Polygon</a> coordinate array.</p>
 <pre class="highlight javascript"><code><span class="kd">var</span> <span class="nx">polygon1</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Terraformer</span><span class="p">.</span><span class="nx">Polygon</span><span class="p">({</span>
   <span class="s2">"type"</span><span class="p">:</span> <span class="s2">"Polygon"</span><span class="p">,</span>
   <span class="s2">"coordinates"</span><span class="p">:</span> <span class="p">[</span>
@@ -401,14 +404,22 @@
 <pre class="highlight javascript"><code><span class="kd">var</span> <span class="nx">multipolygon1</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Terraformer</span><span class="p">.</span><span class="nx">MultiPolygon</span><span class="p">({</span>
   <span class="s2">"type"</span><span class="p">:</span> <span class="s2">"MultiPolygon"</span><span class="p">,</span>
   <span class="s2">"coordinates"</span><span class="p">:</span> <span class="p">[</span>
-    <span class="p">[</span> <span class="p">[</span><span class="mf">100.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">101.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">101.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">100.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">100.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">]</span> <span class="p">],</span>
-    <span class="p">[</span> <span class="p">[</span><span class="mf">100.2</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">],</span> <span class="p">[</span><span class="mf">100.8</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">],</span> <span class="p">[</span><span class="mf">100.8</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">],</span> <span class="p">[</span><span class="mf">100.2</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">],</span> <span class="p">[</span><span class="mf">100.2</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">]</span> <span class="p">]</span>
+    <span class="p">[</span>
+      <span class="p">[</span> <span class="p">[</span><span class="mf">100.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">101.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">101.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">100.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">100.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">]</span> <span class="p">]</span>
+    <span class="p">],</span>
+    <span class="p">[</span>
+      <span class="p">[</span> <span class="p">[</span><span class="mf">100.2</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">],</span> <span class="p">[</span><span class="mf">100.8</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">],</span> <span class="p">[</span><span class="mf">100.8</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">],</span> <span class="p">[</span><span class="mf">100.2</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">],</span> <span class="p">[</span><span class="mf">100.2</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">]</span> <span class="p">]</span>
     <span class="p">]</span>
- <span class="p">});</span>
+  <span class="p">]</span>
+<span class="p">});</span>
 
 <span class="kd">var</span> <span class="nx">multipolygon2</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Terraformer</span><span class="p">.</span><span class="nx">MultiPolygon</span><span class="p">([</span>
-  <span class="p">[</span> <span class="p">[</span><span class="mf">100.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">101.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">101.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">100.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">100.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">]</span> <span class="p">],</span>
-  <span class="p">[</span> <span class="p">[</span><span class="mf">100.2</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">],</span> <span class="p">[</span><span class="mf">100.8</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">],</span> <span class="p">[</span><span class="mf">100.8</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">],</span> <span class="p">[</span><span class="mf">100.2</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">],</span> <span class="p">[</span><span class="mf">100.2</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">]</span> <span class="p">]</span>
+  <span class="p">[</span>
+    <span class="p">[</span> <span class="p">[</span><span class="mf">100.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">101.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">101.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">100.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">100.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">]</span> <span class="p">]</span>
+  <span class="p">],</span>
+  <span class="p">[</span>
+    <span class="p">[</span> <span class="p">[</span><span class="mf">100.2</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">],</span> <span class="p">[</span><span class="mf">100.8</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">],</span> <span class="p">[</span><span class="mf">100.8</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">],</span> <span class="p">[</span><span class="mf">100.2</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">],</span> <span class="p">[</span><span class="mf">100.2</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">]</span> <span class="p">]</span>
+  <span class="p">]</span>
 <span class="p">]);</span>
 </code></pre>
 <h3>
@@ -747,7 +758,7 @@
 <td>Accepts two individual <a href="/glossary#coordinate"><code>coordinate</code></a> pairs and returns <code>true</code> if the passed coordinate pairs are equal to each other.</td>
 </tr>
 </tbody></table>
-<pre class="highlight javascript"><code><span class="kd">var</span> <span class="nx">pt</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mf">111.467285</span><span class="p">,</span> <span class="mf">40.75766</span><span class="p">];</span>
+<pre class="highlight javascript"><code><span class="kd">var</span> <span class="nx">pt</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">];</span>
 <span class="kd">var</span> <span class="nx">pt2</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mf">111.873779</span><span class="p">,</span> <span class="mf">40.647303</span><span class="p">];</span>
 
 <span class="kd">var</span> <span class="nx">polygon</span> <span class="o">=</span> <span class="p">{</span>
