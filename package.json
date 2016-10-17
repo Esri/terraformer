@@ -21,7 +21,8 @@
   },
   "scripts": {
     "test": "grunt test",
-    "test:ts": "typings install && tsc"
+    "test:ts": "typings install && tsc",
+    "release": "./release.sh"
   },
   "repository": {
     "type": "git",

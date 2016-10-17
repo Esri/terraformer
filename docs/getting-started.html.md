@@ -44,7 +44,7 @@ require('terraformer-geostore');
 To use the Terraformer library, include a reference to it using a `<script>` tag.
 
 ```html
-<script src="http://cdn-geoweb.s3.amazonaws.com/terraformer/1.0.4/terraformer.min.js"></script>
+<script src="https://unpkg.com/terraformer@1.0.7"></script>
 ```
 
 To utilize supporting packages, you must load their source as well.

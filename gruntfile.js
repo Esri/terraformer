@@ -95,7 +95,7 @@ module.exports = function (grunt) {
       dev: {
         upload: [
           {
-            src: 'versions/terraformer-<%= pkg.version %>.min.js',
+            src: 'terraformer-<%= pkg.version %>.min.js',
             dest: 'terraformer/<%= pkg.version %>/terraformer.min.js'
           }
         ]
