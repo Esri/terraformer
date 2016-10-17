@@ -60,7 +60,7 @@ To utilize supporting packages, you must load their source as well.
 
 ## Documentation
 
-Make sure your check out the full documentation on the [Terraformer website](http://terraformer.io/core/) and the [getting started guide](http://terraformer.io/getting-started/).
+Make sure you check out the full documentation on the [Terraformer website](http://terraformer.io/core/) and the [getting started guide](http://terraformer.io/getting-started/).
 
 ```js
 var polygon = new Terraformer.Primitive({

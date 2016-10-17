@@ -17,6 +17,9 @@ docs-build
 examples/node/timezone/tz_world
 examples/node/npm-debug.log
 
+# dont check built code into source control
+terraformer.min.js
+
 # Mac
 .DS_Store
 Icon
