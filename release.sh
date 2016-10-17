@@ -10,7 +10,7 @@ npm test || exit 1
 # checkout temp branch for release
 git checkout -b gh-release
 
-# create built library
+# create built library (and versioned copy)
 grunt uglify
 
 # force add files
@@ -21,9 +21,6 @@ git commit -m "build $VERSION"
 
 # push commit so it exists on GitHub when we run gh-release
 git push upstream gh-release
-
-# create a copy of the minified library
-cp terraformer.min.js $NAME-$VERSION.min.js
 
 # run gh-release to create the tag and push release to github
 gh-release --assets $NAME-$VERSION.min.js
