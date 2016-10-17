@@ -4,6 +4,15 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [unreleased]
 
+
+## [1.0.7] - 2016-10-17
+
+### Fixed
+* ensure that contains()/within() can compare the geometry of GeoJSON feature objects. [#281](https://github.com/Esri/Terraformer/issues/281)
+
+### Removed
+* the minified library and archived versions have been removed from source control
+
 ## [1.0.6] - 2016-08-17
 
 ### Added
@@ -54,7 +63,8 @@ primitive.convexHull() now always returns null or a valid Terraformer.Polygon. I
 
 Initial Release
 
-[unreleased]: https://github.com/Esri/Terraformer/compare/v1.0.6...HEAD
+[unreleased]: https://github.com/Esri/Terraformer/compare/v1.0.7...HEAD
+[1.0.7]: https://github.com/Esri/Terraformer/compare/v1.0.6...v1.0.7
 [1.0.6]: https://github.com/Esri/Terraformer/compare/v1.0.5...v1.0.6
 [1.0.5]: https://github.com/Esri/Terraformer/compare/v1.0.4...v1.0.5
 [1.0.4]: https://github.com/Esri/Terraformer/compare/v1.0.3...v1.0.4
