@@ -26,7 +26,7 @@ module.exports = function (grunt) {
       },
       versioned: {
         src: ['terraformer.js'],
-        dest: 'versions/terraformer-<%= pkg.version %>.min.js'
+        dest: 'terraformer-<%= pkg.version %>.min.js'
       }
     },
 
