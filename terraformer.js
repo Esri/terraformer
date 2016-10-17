@@ -755,6 +755,11 @@
   Primitive.prototype.within = function(primitive) {
     var coordinates, i, contains;
 
+    // if we are passed a feature, use the polygon inside instead
+    if (primitive.type === 'Feature') {
+      primitive = primitive.geometry;
+    }
+
     // point.within(point) :: equality
     if (primitive.type === "Point") {
       if (this.type === "Point") {
