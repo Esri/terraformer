@@ -10,7 +10,7 @@ npm test || exit 1
 # checkout temp branch for release
 git checkout -b gh-release
 
-# run prepublish to build files
+# create built library
 grunt uglify
 
 # force add files
@@ -23,10 +23,10 @@ git commit -m "build $VERSION"
 git push upstream gh-release
 
 # create a copy of the minified library
-cp terraformer.min.js $NAME-$VERSION.js
+cp terraformer.min.js $NAME-$VERSION.min.js
 
 # run gh-release to create the tag and push release to github
-gh-release --assets $NAME-$VERSION.js
+gh-release --assets $NAME-$VERSION.min.js
 
 # checkout master and delete release branch locally and on GitHub
 git checkout master
@@ -35,3 +35,6 @@ git push upstream :gh-release
 
 # publish release on NPM
 npm publish
+
+# push to s3 bucket
+grunt s3
