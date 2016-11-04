@@ -48,7 +48,7 @@ if (argv['in-format'] === 'wkt') {
 if (argv['out-format'] === 'wkt') {
   output = wkt.convert(primitive);
 } else if (argv['out-format'] === 'arcgis') {
-  output = JSON.stringify(arcgis.convert(primitive));
+  output = "{\"features\":" + JSON.stringify(arcgis.convert(primitive)) + "}";
 } else {
   output = primitive.toJson();
 }

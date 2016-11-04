@@ -10,9 +10,10 @@
   },
   "dependencies": {
     "terraformer": "*",
-     "terraformer-rtree": "*"
+    "terraformer-rtree": "*"
   },
   "engines": {
     "node": "*"
-  }
+  },
+  "license": "Apache-2.0"
 }
