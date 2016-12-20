@@ -54,7 +54,7 @@
       <h1>ArcGIS JSON Parser</h1>
 <div class='semantic-toc'><ol><li><a href='#using-the-arcgis-json-parser'>Using the ArcGIS JSON Parser</a><ol><li><a href='#using-in-the-browser'>Using in the Browser</a></li><li><a href='#using-in-nodejs'>Using in Node.js</a></li><li><a href='#methods'>Methods</a><ol><li><a href='#arcgisparse'>ArcGIS.parse(json, options)</a></li><li><a href='#arcgisconvert'>ArcGIS.convert(geojson, options)</a></div>
 
-<p>This plugin handles 2-way conversion between <a href="http://geojson.org/geojson-spec.html">GeoJSON</a> and the <a href="http://help.arcgis.com/en/arcgisserver/10.0/apis/rest/geometry.html">ArcGIS Geometry</a> format used by Esri.</p>
+<p>This plugin handles two-way conversion between <a href="http://geojson.org/geojson-spec.html">GeoJSON</a> and the <a href="http://resources.arcgis.com/en/help/arcgis-rest-api/index.html#/Geometry_objects/02r3000000n1000000/">ArcGIS Geometry</a> format used by Esri.</p>
 <h2>
           <a id='using-the-arcgis-json-parser' class='section-link'></a>
           <a href='#using-the-arcgis-json-parser' class='header-link'>Link</a>
@@ -62,7 +62,7 @@
           <a href='#' class='back-to-top-link'>Back to Top</a>
         </h2>
 <p>The ArcGIS parser can be used client-side in a browser and server-side via Node.js.</p>
-<pre class="highlight javascript"><code><span class="c1">//parse an ArcGIS Geometry to GeoJSON</span>
+<pre class="highlight javascript"><code><span class="c1">// parse an ArcGIS Geometry to GeoJSON</span>
 <span class="kd">var</span> <span class="nx">geojsonPoint</span> <span class="o">=</span> <span class="nx">Terraformer</span><span class="p">.</span><span class="nx">ArcGIS</span><span class="p">.</span><span class="nx">parse</span><span class="p">({</span>
   <span class="s2">"x"</span><span class="p">:</span><span class="o">-</span><span class="mf">122.6764</span><span class="p">,</span>
   <span class="s2">"y"</span><span class="p">:</span><span class="mf">45.5165</span><span class="p">,</span>
@@ -72,7 +72,10 @@
 <span class="p">});</span>
 
 <span class="c1">// convert a GeoJSON object into an ArcGIS geometry</span>
-<span class="kd">var</span> <span class="nx">arcgisPoint</span> <span class="o">=</span> <span class="nx">Terraformer</span><span class="p">.</span><span class="nx">ArcGIS</span><span class="p">.</span><span class="nx">convert</span><span class="p">(</span><span class="nx">point</span><span class="p">)</span>
+<span class="kd">var</span> <span class="nx">arcgisPoint</span> <span class="o">=</span> <span class="nx">Terraformer</span><span class="p">.</span><span class="nx">ArcGIS</span><span class="p">.</span><span class="nx">convert</span><span class="p">({</span>
+  <span class="s2">"type"</span><span class="p">:</span> <span class="s2">"Point"</span><span class="p">,</span>
+  <span class="s2">"coordinates"</span><span class="p">:</span> <span class="p">[</span><span class="mf">45.5165</span><span class="p">,</span> <span class="o">-</span><span class="mf">122.6764</span><span class="p">]</span>
+<span class="p">});</span>
 </code></pre>
 <h3>
           <a id='using-in-the-browser' class='section-link'></a>
@@ -84,7 +87,7 @@
 <pre class="highlight html"><code><span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"terraformer.min.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
 <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"terraformer-arcgis-parser.min.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
 <span class="nt">&lt;script&gt;</span>
-  <span class="c1">//Terraformer and Terraformer.ArcGIS will be defined.</span>
+  <span class="c1">// Terraformer and Terraformer.ArcGIS will be defined.</span>
 <span class="nt">&lt;/script&gt;</span>
 </code></pre>
 
@@ -97,10 +100,10 @@
           Using in Node.js
           <a href='#' class='back-to-top-link'>Back to Top</a>
         </h3>
-<p>Just install the package from NPM with <code>$ npm install terraformer-arcgis-parser</code> Then include it in your application.</p>
+<p>Just install the package from npm with <code>$ npm install terraformer-arcgis-parser</code> Then include it in your application.</p>
 <pre class="highlight javascript"><code><span class="nx">Terraformer</span><span class="p">.</span><span class="nx">ArcGIS</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'terraformer-arcgis-parser'</span><span class="p">);</span>
 
-<span class="c1">// Start using the parse and convert methods!</span>
+<span class="c1">// Start parsing and converting!</span>
 </code></pre>
 <h3>
           <a id='methods' class='section-link'></a>
@@ -124,21 +127,15 @@
 </tr>
 </thead><tbody>
 <tr>
-<td><code>sr</code></td>
-<td><code>Number</code></td>
-<td><code>4326</code></td>
-<td>This is used to set the value of <code>spatialReference.wkid</code> on the output. By default this will use 4326. Setting <code>sr</code> <strong>will not</strong> convert the <code>geojson</code> to that spatial reference it is only used to set the value of <code>spatialReference.wkid</code>.</td>
-</tr>
-<tr>
 <td><code>idAttribute</code></td>
 <td><code>String</code></td>
 <td><code>&quot;OBJECTID&quot;</code></td>
-<td>When converting GeoJSON Features the <code>id</code> key of your feature will be set on the <code>OBJECTID</code> field in your output. If you want to assign your ID to a different key you should set this to the string of the key your wish to assign the <code>id</code> to.</td>
+<td>By default, when converting GeoJSON Features the <code>id</code> key of your output feature will be set on the <code>OBJECTID</code> field. This option allows you to assign your ID using a different fieldname.</td>
 </tr>
 </tbody></table>
 <h5>Notes</h5>
-<p>Terraformer will also handle converting <code>FeatureCollection</code> and <code>GeometryCollection</code> objects to arrays of ArcGIS geometries or features. However it will <strong>not</strong> do this in reverse as there is no official structure for arrays of features and geometries in ArcGIS and all the output features will not have <code>id</code> properties. See <a href="https://github.com/Esri/Terraformer/issues/104">this issue</a> for more details.</p>
-<h5>Example</h5><pre class="highlight javascript"><code><span class="c1">//parse an ArcGIS Geometry to GeoJSON</span>
+<p>Terraformer will also handle converting <code>FeatureCollection</code> and <code>GeometryCollection</code> objects to arrays of ArcGIS geometries or features. However it will <strong>not</strong> do this in reverse. This is because there is no official structure for arrays of features and geometries in ArcGIS and output features will be missing an <code>id</code> property. See <a href="https://github.com/Esri/Terraformer/issues/104">this issue</a> for more details.</p>
+<h5>Example</h5><pre class="highlight javascript"><code><span class="c1">// parse an ArcGIS Geometry to GeoJSON</span>
 <span class="kd">var</span> <span class="nx">point</span> <span class="o">=</span> <span class="nx">Terraformer</span><span class="p">.</span><span class="nx">ArcGIS</span><span class="p">.</span><span class="nx">parse</span><span class="p">({</span>
   <span class="s2">"x"</span><span class="p">:</span><span class="o">-</span><span class="mf">122.6764</span><span class="p">,</span>
   <span class="s2">"y"</span><span class="p">:</span><span class="mf">45.5165</span><span class="p">,</span>
@@ -164,6 +161,12 @@
 </tr>
 </thead><tbody>
 <tr>
+<td><code>sr</code></td>
+<td><code>Number</code></td>
+<td><code>4326</code></td>
+<td>This is used to set the value of <code>spatialReference.wkid</code> in the output. Setting <code>sr</code> <strong>does not</strong> convert the <code>geojson</code> coordinates, it only identifies the projection using the appropriate code.</td>
+</tr>
+<tr>
 <td><code>idAttribute</code></td>
 <td><code>String</code></td>
 <td><code>&quot;OBJECTID&quot; &quot;FID&quot;</code></td>
@@ -171,8 +174,8 @@
 </tr>
 </tbody></table>
 <h5>Notes</h5>
-<p>If the object is in the Web Mercator spatial reference it will be converted to WGS84.</p>
-<h5>Example</h5><pre class="highlight javascript"><code><span class="c1">// take a Terraformer.Primitive or GeoJSON and convert it to ArcGIS JSON object</span>
+<p>If the geometry is in the Web Mercator spatial reference it <strong>will be reprojected</strong> to WGS84.</p>
+<h5>Example</h5><pre class="highlight javascript"><code><span class="c1">// take a Terraformer.Primitive or GeoJSON and convert it to an ArcGIS JSON object</span>
 <span class="kd">var</span> <span class="nx">point</span> <span class="o">=</span> <span class="nx">ArcGIS</span><span class="p">.</span><span class="nx">convert</span><span class="p">({</span>
   <span class="s2">"type"</span><span class="p">:</span> <span class="s2">"Point"</span><span class="p">,</span>
   <span class="s2">"coordinates"</span><span class="p">:</span> <span class="p">[</span><span class="mf">45.5165</span><span class="p">,</span> <span class="o">-</span><span class="mf">122.6764</span><span class="p">]</span>
