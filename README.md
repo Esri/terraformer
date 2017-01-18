@@ -24,7 +24,7 @@ Check out the getting [started guide](http://terraformer.io/getting-started/) wh
 
 ### Node.js
 
-Install the core module with NPM and then require it in your Node program.
+Install the core module with npm and then require it in your Node program.
 
 ```
 $ npm install terraformer
@@ -53,9 +53,8 @@ To use the Terraformer library, include a reference to it using a `<script>` tag
 To utilize supporting packages, you must load their source as well.
 
 ```html
-<script src="terraformer-arcgis-parser.min.js"></script> <!-- https://github.com/Esri/terraformer-arcgis-parser -->
-<script src="terraformer-wkt-parser.min.js"></script> <!-- https://github.com/Esri/terraformer-wkt-parser -->
-<script src="terraformer-geostore.min.js"></script> <!-- https://github.com/Esri/terraformer-geostore -->
+<script src="https://unpkg.com/terraformer-arcgis-parser@1.0.5"></script>
+<script src="https://unpkg.com/terraformer-wkt-parser@1.1.2"></script> 
 ```
 
 ## Documentation
@@ -106,8 +105,8 @@ var boundingBox = polygon.bbox(); // returns the geojson bounding box for this o
 
 ## Resources
 
-* [Terraformer Website](http://terraformer.io)
-* [twitter@EsriPDX](http://twitter.com/esripdx)
+* [Documentation Site](http://terraformer.io)
+* [@EsriPDX](http://twitter.com/esripdx)
 
 ## Building the documentation
 

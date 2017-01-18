@@ -56,8 +56,8 @@ The GeoStore manages data that is made available as either a `Feature` or a `Fea
 Using the GeoStore in the browser requires including both Terraformer and the GeoStore:
 
 ```html
-<script src="terraformer.min.js"></script>
-<script src="terraformer-geostore.min.js"></script>
+<script src="https://unpkg.com/terraformer@1.0.7"></script>
+<script src="https://unpkg.com/terraformer-geostore@1.0.4/browser/terraformer-geostore.js"></script>
 ```
 
 Once those are included, you can create a new `Store`.  You will need to include both a Data Store and a Spatial Index to instantiate a GeoStore.

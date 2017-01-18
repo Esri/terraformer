@@ -60,7 +60,7 @@ require([
         coordinates: [ lng, lat ]
       },function(err,results){
         if (results.length) {
-          query("#whereami")[0].innerHTML = "You are at " + lng.toFixed(5) + " longitude, " + lat.toFixed(5) + " latitude, in " + results[0].properties.name + " county.";
+          query("#whereami")[0].innerHTML = "Your location is: " + lng.toFixed(5) + ", " + lat.toFixed(5) + ", in " + results[0].properties.name + " county.";
 
           // add highlighted county graphic to map, center and zoom
           var arcgis = Terraformer.ArcGIS.convert(results[0]);
@@ -75,7 +75,7 @@ require([
           //zoom in the map to the extent of the search result
           map.setExtent(geometry.getExtent(), true);
         } else {
-          query("#whereami")[0].innerHTML = "We couldn't find where you were. Or you aren't in a country right now.";
+          query("#whereami")[0].innerHTML = "We couldn't find you. Or you aren't in a US county right now.";
         }
       });
     });
