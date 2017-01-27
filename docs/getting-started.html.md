@@ -50,9 +50,8 @@ To use the Terraformer library, include a reference to it using a `<script>` tag
 To utilize supporting packages, you must load their source as well.
 
 ```html
-<script src="terraformer-arcgis-parser.min.js"></script> <!-- https://github.com/Esri/terraformer-arcgis-parser -->
-<script src="terraformer-wkt-parser.min.js"></script> <!-- https://github.com/Esri/terraformer-wkt-parser -->
-<script src="terraformer-geostore.min.js"></script> <!-- https://github.com/Esri/terraformer-geostore -->
+<script src="https://unpkg.com/terraformer-arcgis-parser@1.0.5"></script>
+<script src="https://unpkg.com/terraformer-wkt-parser@1.1.2"></script> 
 ```
 
 ## Working with Primitives
