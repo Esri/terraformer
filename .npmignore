@@ -4,3 +4,9 @@ source
 out
 docs
 config.rb
+
+# Ignore Grunt temp files
+.grunt
+
+# SASS
+.sass-cache
