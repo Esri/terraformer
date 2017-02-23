@@ -111,7 +111,6 @@ module.exports = function (grunt) {
       src: ['**']
     },
 
-
     middleman: {
       server: {
         options: {
@@ -125,6 +124,15 @@ module.exports = function (grunt) {
           command: "build"
         }
       }
+    },
+
+    copy: {
+      main: {
+        files: [
+          // includes files within path and its sub-directories
+          {expand: true, src: ['examples/browser/**'], dest: 'docs-build/'}
+        ],
+      },
     }
 
   });
@@ -139,6 +147,7 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-complexity');
   grunt.loadNpmTasks('grunt-contrib-jasmine');
+  grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-jasmine-node');
   grunt.loadNpmTasks('grunt-s3');
   grunt.loadNpmTasks('grunt-gh-pages');
@@ -147,5 +156,6 @@ module.exports = function (grunt) {
   grunt.registerTask('test', ['jshint', 'jasmine_node', 'jasmine']);
   grunt.registerTask('version', ['test', 'uglify', 's3']);
   grunt.registerTask('default', ['test']);
-  grunt.registerTask('deploy-docs', ['middleman:build', 'gh-pages']);
+  grunt.registerTask('docs-build', ['middleman:build', 'copy']);
+  grunt.registerTask('deploy-docs', ['middleman:build', 'copy', 'gh-pages']);
 };

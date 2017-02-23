@@ -7,7 +7,7 @@ layout: documentation
 
 <!-- table_of_contents -->
 
-We make Terraformer available via a number of distribution methods including NPM, Bower and a CDN.
+We make Terraformer available via npm, bower and via a CDN.
 
 ##Terraformer Core
 

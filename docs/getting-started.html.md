@@ -54,6 +54,8 @@ To utilize supporting packages, you must load their source as well.
 <script src="https://unpkg.com/terraformer-wkt-parser@1.1.2"></script> 
 ```
 
+To see Terraformer in action in the browser, check out our [live demos](/examples/browser/index.html).
+
 ## Working with Primitives
 
 Most of the core Terraformer libray centers around using [`Primitives`](/core/#terraformerprimitive), which wrap GeoJSON objects and provide additional functionality.
