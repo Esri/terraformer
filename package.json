@@ -23,7 +23,7 @@
     "typescript": "^2.2.1"
   },
   "scripts": {
-    "test": "grunt test && npm run test:ts",
+    "test": "grunt test",
     "test:ts": "tslint test.ts index.d.ts && tsc",
     "release": "./release.sh"
   },
