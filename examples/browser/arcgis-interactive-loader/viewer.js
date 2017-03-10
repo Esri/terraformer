@@ -3,7 +3,7 @@ require([
   "dojo/dom",
   "esri/map",
   "esri/graphic",
-  "esri/symbols/SimpleFillSymbol", 
+  "esri/symbols/SimpleFillSymbol",
   "esri/symbols/SimpleLineSymbol",
   "esri/Color",
   "esri/geometry/jsonUtils"
@@ -26,7 +26,7 @@ require([
   function showGeoJSON(geojson){
     //create a Terraformer GeoJSON primitive
     var geoJsonPrimitive = new Terraformer.Primitive(geojson);
-    
+
     arcgis = Terraformer.ArcGIS.convert(geoJsonPrimitive);
     for (var i=0; i < arcgis.length; i++){
       addGraphic(arcgis[i], new Color([255,255,0,0.25]));
@@ -115,7 +115,7 @@ require([
       }
 
       // center the map on the graphic
-      map.setExtent(gfx.geometry.getExtent());
+      map.setExtent(gfx.geometry.getExtent().expand(1.2));
     }
   }
 
@@ -144,8 +144,8 @@ require([
         shape.getDojoShape().moveToFront();
       }
       // center the map on the graphic
-      map.setExtent(gfx.geometry.getExtent());
-    }    
+      map.setExtent(gfx.geometry.getExtent().expand(1.2));
+    }
   }
 
   query("#submit").on("click", showOnMap);
