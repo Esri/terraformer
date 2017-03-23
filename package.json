@@ -3,6 +3,7 @@
   "version": "1.0.7",
   "description": "A Geo-toolkit built in Javascript.",
   "main": "terraformer.js",
+  "typings": "index.d.ts",
   "files": [
     "index.d.ts"
   ],
