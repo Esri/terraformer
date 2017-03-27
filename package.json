@@ -26,7 +26,7 @@
   },
   "scripts": {
     "test": "grunt test",
-    "test:ts": "tslint test.ts index.d.ts && tsc -p tsconfig.json",
+    "test:ts": "tslint test.ts index.d.ts && tsc -p tsconfig.json && node test.js",
     "release": "./release.sh"
   },
   "repository": {
