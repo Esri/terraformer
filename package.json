@@ -3,9 +3,9 @@
   "version": "1.0.7",
   "description": "A Geo-toolkit built in Javascript.",
   "main": "terraformer.js",
-  "typings": "index.d.ts",
+  "typings": "terraformer.d.ts",
   "files": [
-    "index.d.ts"
+    "terraformer.d.ts"
   ],
   "devDependencies": {
     "gh-release": "^2.1.0",
