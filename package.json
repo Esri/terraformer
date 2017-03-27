@@ -41,5 +41,8 @@
   "license": "MIT",
   "dependencies": {
     "@types/geojson": "^1.0.0"
+  },
+  "engines": {
+    "node": ">=4.2.6"
   }
 }
