@@ -1,4 +1,4 @@
-import * as Terraformer from "./index";
+import * as Terraformer from "./terraformer";
 
 console.assert(typeof Terraformer !== undefined);
 

@@ -3,10 +3,7 @@
   "version": "1.0.7",
   "description": "A Geo-toolkit built in Javascript.",
   "main": "terraformer.js",
-  "typings": "index.d.ts",
-  "files": [
-    "index.d.ts"
-  ],
+  "typings": "terraformer.d.ts",
   "devDependencies": {
     "gh-release": "^2.1.0",
     "grunt": "0.4.x",
@@ -26,7 +23,7 @@
   },
   "scripts": {
     "test": "grunt test",
-    "test:ts": "tslint test.ts index.d.ts && tsc -p tsconfig.json",
+    "test:ts": "tslint test.ts index.d.ts && tsc -p tsconfig.json && node test.js",
     "release": "./release.sh"
   },
   "repository": {
