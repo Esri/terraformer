@@ -66,3 +66,5 @@ test.js
 .yardoc
 _yardoc
 doc/
+
+.nvmrc
