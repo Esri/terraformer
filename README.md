@@ -120,5 +120,6 @@ Find a bug or want to request a new feature?  Please let us know by submitting a
 
 Esri welcomes contributions from anyone and everyone. Please see our [guidelines for contributing](https://github.com/esri/contributing).
 
-[](Esri Tags: Terraformer GeoJSON)
-[](Esri Language: JavaScript)
+## Licensing
+
+A copy of the license is available in the repository's [LICENSE](./LICENSE) file.
