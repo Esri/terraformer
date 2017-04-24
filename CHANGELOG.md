@@ -4,6 +4,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [unreleased]
 
+## [1.0.8] - 2017-04-24
+
+### Changed
+* removed `.sass-cache` and another local debugging file from npm package
 
 ## [1.0.7] - 2016-10-17
 
@@ -63,7 +67,8 @@ primitive.convexHull() now always returns null or a valid Terraformer.Polygon. I
 
 Initial Release
 
-[unreleased]: https://github.com/Esri/Terraformer/compare/v1.0.7...HEAD
+[unreleased]: https://github.com/Esri/Terraformer/compare/v1.0.8...HEAD
+[1.0.8]: https://github.com/Esri/Terraformer/compare/v1.0.7...v1.0.8
 [1.0.7]: https://github.com/Esri/Terraformer/compare/v1.0.6...v1.0.7
 [1.0.6]: https://github.com/Esri/Terraformer/compare/v1.0.5...v1.0.6
 [1.0.5]: https://github.com/Esri/Terraformer/compare/v1.0.4...v1.0.5
