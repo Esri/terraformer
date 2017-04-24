@@ -44,17 +44,17 @@ require('terraformer-geostore');
 
 ### Browser
 
-To use the Terraformer library, include a reference to it using a `<script>` tag.
+To see Terraformer in action in the browser, check out our [live demos](http://terraformer.io/examples/browser/index.html). To use it in the browser yourself, reference it using a `<script>` tag.
 
 ```html
-<script src="https://unpkg.com/terraformer@1.0.7"></script>
+<script src="https://unpkg.com/terraformer@1.0.8"></script>
 ```
 
 To utilize supporting packages, you must load their source as well.
 
 ```html
 <script src="https://unpkg.com/terraformer-arcgis-parser@1.0.5"></script>
-<script src="https://unpkg.com/terraformer-wkt-parser@1.1.2"></script> 
+<script src="https://unpkg.com/terraformer-wkt-parser@1.1.2"></script>
 ```
 
 ## Documentation
