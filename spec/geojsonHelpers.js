@@ -25,7 +25,7 @@
       },
       {
         "type": "Point",
-        "coordinates": [-105.01621,39.57422]
+        "coordinates": [-105.01621, 39.57422]
       },
       {
         "type": "Point",
@@ -35,11 +35,11 @@
     multiPoints : [
       {
         "type": "MultiPoint",
-        "coordinates": [ [100, 0],[45, -122] ]
+        "coordinates": [ [100, 0],[-122, 45] ]
       },
       {
         "type": "MultiPoint",
-        "coordinates": [ [-105.01621,39.57422],[-80.6665134,35.0539943] ]
+        "coordinates": [ [-105.01621, 39.57422],[-80.6665134, 35.0539943] ]
       }
     ],
     lineStrings : [

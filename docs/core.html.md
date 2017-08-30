@@ -279,7 +279,7 @@ Option | Type | Default | Description
 `steps` | `Integer` | `32` | How many steps will be used to create the polygon that represents the circle.
 
 ```js
-circle = new Terraformer.Circle([45.65, -122.27], 500, 64);
+circle = new Terraformer.Circle([-122.27, 45.65], 500, 64);
 
 circle.contains(point);
 ```
