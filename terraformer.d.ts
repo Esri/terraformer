@@ -182,7 +182,7 @@ declare namespace Terraformer {
     * The GeoJSON spec does not provide a way to visualize circles.
     * Terraformer.Circle is actual a GeoJSON Feature object that contains a Polygon representing a circle with a certain number of sides.
     * @example
-    * circle = new Terraformer.Circle([45.65, -122.27], 500, 64);
+    * circle = new Terraformer.Circle([-122.27, 45.65], 500, 64);
     *
     * circle.contains(point);
     */

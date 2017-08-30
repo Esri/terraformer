@@ -95,7 +95,7 @@ let geometrycollection1 = new Terraformer.GeometryCollection({
 
 let geometrycollection2 = new Terraformer.GeometryCollection([point2, polygon1]);
 
-let circle = new Terraformer.Circle([45.65, -122.27], 500, 64);
+let circle = new Terraformer.Circle([-122.27, 45.65], 500, 64);
 
 circle.contains(point1);
 
