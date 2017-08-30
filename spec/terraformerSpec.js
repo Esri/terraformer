@@ -120,7 +120,7 @@ describe("Primitives", function(){
     });
 
     it("should convert a Circle Primitive to JSON", function(){
-      var circle = new Terraformer.Circle([45.5165, -1226764], 100);
+      var circle = new Terraformer.Circle([-122.6764, 45.5165], 100);
       var json = circle.toJSON();
       expect(json.bbox).toBeTruthy();
       expect(json.type).toEqual("Feature");
