@@ -1,6 +1,6 @@
 # Terraformer
 
-[![Build Status](https://travis-ci.org/Esri/Terraformer.svg?branch=master)](https://travis-ci.org/Esri/Terraformer)
+[![Build Status](https://travis-ci.org/Esri/terraformer.svg?branch=master)](https://travis-ci.org/Esri/terraformer)
 
 > A modular toolkit for working with geographic data.
 
