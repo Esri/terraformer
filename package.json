@@ -36,7 +36,7 @@
     "Jerry Sievert <jsievert@esri.com> (http://legitimatesounding.com)"
   ],
   "license": "MIT",
-  "dependencies": {
+  "optionalDependencies": {
     "@types/geojson": "^1.0.0"
   },
   "engines": {
