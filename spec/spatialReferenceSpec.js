@@ -80,7 +80,7 @@ describe("Spatial Reference Converters", function(){
     var expectedOutput = {
       "type": "MultiLineString",
       "coordinates": [
-        [ [4657155.25935914,11407616.835043576],[6339992.874085551,3995282.329624161] ],
+        [ [4657155.25935914,11407616.835043576],[6339992.874085551,3995282.329624162] ],
         [ [2426417.025884594,4378299.115616046],[5325072.20411877,11407616.835043576] ]
       ],
       "crs": {
@@ -93,6 +93,7 @@ describe("Spatial Reference Converters", function(){
     };
     var output = Terraformer.toMercator(input);
     expect(output).toEqual(expectedOutput);
+
   });
 
   it("should convert a GeoJSON Polygon to Web Mercator", function(){
@@ -105,7 +106,7 @@ describe("Spatial Reference Converters", function(){
     var expectedOutput = {
       "type": "Polygon",
       "coordinates": [
-        [ [4657155.25935914,11407616.835043576],[6339992.874085551,3995282.329624161],[2426417.025884594,4378299.115616046],[4657155.25935914,11407616.835043576] ]
+        [ [4657155.25935914,11407616.835043576],[6339992.874085551,3995282.329624162],[2426417.025884594,4378299.115616046],[4657155.25935914,11407616.835043576] ]
       ],
       "crs": {
         "type": "link",
@@ -303,7 +304,7 @@ describe("Spatial Reference Converters", function(){
     };
     var expectedOutput = {
       "type": "Point",
-      "coordinates": [-122.67639999999798, 45.51649999999925]
+      "coordinates": [-122.67639999999798, 45.516499999999255]
     };
     var output = Terraformer.toGeographic(input);
     expect(output).toEqual(expectedOutput);

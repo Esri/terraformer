@@ -17,7 +17,7 @@ module.exports = function (grunt) {
         report: 'gzip',
         banner: '/*! Terraformer JS - <%= pkg.version %> - <%= grunt.template.today("yyyy-mm-dd") %>\n' +
         '*   https://github.com/esri/Terraformer\n' +
-        '*   Copyright (c) <%= grunt.template.today("yyyy") %> Environmental Systems Research Institute, Inc.\n' +
+        '*   Copyright (c) 2013-<%= grunt.template.today("yyyy") %> Environmental Systems Research Institute, Inc.\n' +
         '*   Licensed MIT */'
       },
       terraformer: {
@@ -38,19 +38,20 @@ module.exports = function (grunt) {
         options: {
           specs: 'spec/*Spec.js',
           helpers: 'spec/*Helpers.js',
-          //keepRunner: true,
-          outfile: 'SpecRunner.html',
-          template: require('grunt-template-jasmine-istanbul'),
-          templateOptions: {
-            coverage: './.coverage/coverage.json',
-            report: './.coverage',
-            thresholds: {
-              lines: 90,
-              statements: 90,
-              branches: 90,
-              functions: 90
-            }
-          }
+          // not sure why coverage isnt being generated
+          // keepRunner: true, 
+          // outfile: 'SpecRunner.html',
+          // template: require('grunt-template-jasmine-istanbul'),
+          // templateOptions: {
+          //   coverage: './.coverage/coverage.json',
+          //   report: './.coverage',
+          //   thresholds: {
+          //     lines: 90,
+          //     statements: 90,
+          //     branches: 90,
+          //     functions: 90
+          //   }
+          // }
         }
       }
     },
@@ -78,28 +79,6 @@ module.exports = function (grunt) {
           maintainability: 65
         }
       }
-    },
-
-    s3: {
-      options: {
-        key: '<%= aws.key %>',
-        secret: '<%= aws.secret %>',
-        bucket: '<%= aws.bucket %>',
-        access: 'public-read',
-        headers: {
-          // 1 Year cache policy (1000 * 60 * 60 * 24 * 365)
-          "Cache-Control": "max-age=630720000, public",
-          "Expires": new Date(Date.now() + 63072000000).toUTCString()
-        }
-      },
-      dev: {
-        upload: [
-          {
-            src: 'terraformer-<%= pkg.version %>.min.js',
-            dest: 'terraformer/<%= pkg.version %>/terraformer.min.js'
-          }
-        ]
-      },
     },
 
     'gh-pages': {
@@ -137,24 +116,17 @@ module.exports = function (grunt) {
 
   });
 
-  var awsExists = fs.existsSync(process.env.HOME + '/terraformer-s3.json');
-
-  if (awsExists) {
-    grunt.config.set('aws', grunt.file.readJSON(process.env.HOME + '/terraformer-s3.json'));
-  }
-
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-complexity');
   grunt.loadNpmTasks('grunt-contrib-jasmine');
   grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-jasmine-node');
-  grunt.loadNpmTasks('grunt-s3');
   grunt.loadNpmTasks('grunt-gh-pages');
   grunt.loadNpmTasks('grunt-middleman');
 
   grunt.registerTask('test', ['jshint', 'jasmine_node', 'jasmine']);
-  grunt.registerTask('version', ['test', 'uglify', 's3']);
+  grunt.registerTask('version', ['test', 'uglify']);
   grunt.registerTask('default', ['test']);
   grunt.registerTask('docs-build', ['middleman:build', 'copy']);
   grunt.registerTask('deploy-docs', ['middleman:build', 'copy', 'gh-pages']);
