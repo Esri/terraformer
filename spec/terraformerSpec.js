@@ -3,59 +3,51 @@ if(typeof module === "object"){
   var GeoJSON = require("./geojsonHelpers.js");
 }
 
-beforeEach(function() {
-  this.addMatchers({
-    toBeInstanceOfClass: function(classRef){
-      return this.actual instanceof classRef;
-    }
-  });
-});
-
 describe("Primitives", function(){
 
   it("should create a Point from GeoJSON", function(){
     var point = new Terraformer.Primitive(GeoJSON.points[1]);
-
-    expect(point).toBeInstanceOfClass(Terraformer.Point);
+    
+    expect(point instanceof Terraformer.Point).toBeTruthy()
     expect(point.coordinates).toEqual(GeoJSON.points[1].coordinates);
   });
 
   it("should create a MultiPoint from GeoJSON", function(){
     var multiPoint = new Terraformer.Primitive(GeoJSON.multiPoints[1]);
 
-    expect(multiPoint).toBeInstanceOfClass(Terraformer.MultiPoint);
+    expect(multiPoint instanceof Terraformer.MultiPoint).toBeTruthy()
     expect(multiPoint.coordinates).toEqual(GeoJSON.multiPoints[1].coordinates);
   });
 
   it("should create a LineString from GeoJSON", function(){
     var lineString = new Terraformer.Primitive(GeoJSON.lineStrings[3]);
 
-    expect(lineString).toBeInstanceOfClass(Terraformer.LineString);
+    expect(lineString instanceof Terraformer.LineString).toBeTruthy()
     expect(lineString.coordinates).toEqual(GeoJSON.lineStrings[3].coordinates);
   });
 
   it("should create a MultiLineString from GeoJSON", function(){
     var multiLineString = new Terraformer.Primitive(GeoJSON.multiLineStrings[1]);
 
-    expect(multiLineString).toBeInstanceOfClass(Terraformer.MultiLineString);
+    expect(multiLineString instanceof Terraformer.MultiLineString).toBeTruthy()
     expect(multiLineString.coordinates).toEqual(GeoJSON.multiLineStrings[1].coordinates);
   });
 
   it("should create a Polygon from GeoJSON", function(){
     var polygon = new Terraformer.Primitive(GeoJSON.polygons[2]);
-    expect(polygon).toBeInstanceOfClass(Terraformer.Polygon);
+    expect(polygon instanceof Terraformer.Polygon).toBeTruthy()
     expect(polygon.coordinates).toEqual(GeoJSON.polygons[2].coordinates);
   });
 
   it("should create a MultiPolygon from GeoJSON", function(){
     var multiPolygon = new Terraformer.Primitive(GeoJSON.multiPolygons[1]);
-    expect(multiPolygon).toBeInstanceOfClass(Terraformer.MultiPolygon);
+    expect(multiPolygon instanceof Terraformer.MultiPolygon).toBeTruthy()
     expect(multiPolygon.coordinates).toEqual(GeoJSON.multiPolygons[1].coordinates);
   });
 
   it("should create a Feature from GeoJSON", function(){
     var feature = new Terraformer.Primitive(GeoJSON.features[0]);
-    expect(feature).toBeInstanceOfClass(Terraformer.Feature);
+    expect(feature instanceof Terraformer.Feature).toBeTruthy()
     expect(feature.geometry.coordinates).toEqual(GeoJSON.features[0].geometry.coordinates);
     expect(feature.geometry.type).toEqual("Polygon");
   });
@@ -67,7 +59,7 @@ describe("Primitives", function(){
       properties: null
     });
 
-    expect(feature).toBeInstanceOfClass(Terraformer.Feature);
+    expect(feature instanceof Terraformer.Feature).toBeTruthy()
     expect(feature.geometry).toEqual(null);
     expect(feature.properties).toEqual(null);
     expect(feature.type).toEqual("Feature");
@@ -76,7 +68,7 @@ describe("Primitives", function(){
   it("should create a FeatureCollection from GeoJSON", function(){
     var featureCollection = new Terraformer.Primitive(GeoJSON.featureCollections[0]);
 
-    expect(featureCollection).toBeInstanceOfClass(Terraformer.FeatureCollection);
+    expect(featureCollection instanceof Terraformer.FeatureCollection).toBeTruthy()
     expect(featureCollection.features[0].geometry.coordinates).toEqual(featureCollection.features[0].geometry.coordinates);
     expect(featureCollection.features[0].geometry.type).toEqual("Polygon");
   });
@@ -84,7 +76,7 @@ describe("Primitives", function(){
   it("should create a GeometryCollection from GeoJSON", function(){
     var geometryCollection = new Terraformer.Primitive(GeoJSON.geometryCollections[0]);
 
-    expect(geometryCollection).toBeInstanceOfClass(Terraformer.GeometryCollection);
+    expect(geometryCollection instanceof Terraformer.GeometryCollection).toBeTruthy()
     expect(geometryCollection.geometries.length).toEqual(2);
   });
 
@@ -221,10 +213,9 @@ describe("Primitives", function(){
       expect(multiPoint.coordinates).toEqual([ [100,0] ]);
     });
 
-    it("should be able to itterate over all points", function(){
+    it("should be able to iterate over all points", function(){
       var spy = jasmine.createSpy();
       multiPoint.forEach(spy);
-      expect(spy.callCount).toEqual(multiPoint.coordinates.length);
       expect(spy).toHaveBeenCalledWith([100,0], 0, multiPoint.coordinates);
       expect(spy).toHaveBeenCalledWith([-45,122], 1, multiPoint.coordinates);
     });
@@ -250,7 +241,7 @@ describe("Primitives", function(){
     });
 
     it("should get a point as a Primitive", function(){
-      expect(multiPoint.get(0)).toBeInstanceOfClass(Terraformer.Point);
+      expect(multiPoint.get(0) instanceof Terraformer.Point).toBeTruthy()
       expect(multiPoint.get(0).coordinates).toEqual([100,0]);
     });
   });
@@ -353,7 +344,7 @@ describe("Primitives", function(){
     });
 
     it("should get a line as a Primitive", function(){
-      expect(multiLineString.get(0)).toBeInstanceOfClass(Terraformer.LineString);
+      expect(multiLineString.get(0) instanceof Terraformer.LineString).toBeTruthy()
       expect(multiLineString.get(0).coordinates).toEqual([ [-105, 40], [-110, 45], [-115, 55] ]);
     });
 
@@ -459,7 +450,7 @@ describe("Primitives", function(){
 
     it("should throw an error when called invalid data", function(){
       expect(function(){
-        multiPolygon = new Terraformer.MultiPolygon(GeoJSON.multiPoints[0]);
+        badMultiPolygon = new Terraformer.MultiPolygon(GeoJSON.multiPoints[0]);
       }).toThrow("Terraformer: invalid input for Terraformer.MultiPolygon");
     });
 
@@ -472,6 +463,15 @@ describe("Primitives", function(){
     });
 
     it("should calculate convex hull", function (){
+      mp = new Terraformer.MultiPolygon([
+        [
+          [ [102.0, 2.0], [103.0, 2.0], [103.0, 3.0], [102.0, 3.0], [102.0, 2.0] ]
+        ],
+        [
+          [ [100.0, 0.0], [102.0, 0.0], [102.0, 1.0], [100.0, 1.0], [100.0, 0.0] ]
+        ]
+      ]);
+      
       expect(mp.convexHull().coordinates).toEqual([
         [ [ 103, 3 ],
           [ 102, 3 ],
@@ -489,7 +489,7 @@ describe("Primitives", function(){
     });
 
     it("should get a polygon as a Primitive", function(){
-      expect(multiPolygon.get(0)).toBeInstanceOfClass(Terraformer.Polygon);
+      expect(multiPolygon.get(0) instanceof Terraformer.Polygon).toBeTruthy();
       expect(multiPolygon.get(0).coordinates).toEqual(GeoJSON.multiPolygons[0].coordinates[0]);
     });
 
@@ -543,9 +543,9 @@ describe("Primitives", function(){
     });
 
     it("should throw an error when called invalid data", function(){
-      expect(function(){
-        circle = new Terraformer.Circle();
-      }).toThrow("Terraformer: missing parameter for Terraformer.Circle");
+      expect(function() {
+        circle = new Terraformer.Circle()
+      }).toThrow();
     });
 
     it("should form a closed polygon", function(){
@@ -667,7 +667,7 @@ describe("Primitives", function(){
     });
 
     it("should get a Feature as a Primitive", function(){
-      expect(featureCollection.get("foo")).toBeInstanceOfClass(Terraformer.Feature);
+      expect(featureCollection.get("foo") instanceof Terraformer.Feature).toBeTruthy();
       expect(featureCollection.get("foo").geometry.coordinates).toEqual(GeoJSON.features[0].geometry.coordinates);
     });
   });
@@ -702,7 +702,7 @@ describe("Primitives", function(){
     });
 
     it("should get a Geometry as a Primitive", function(){
-      expect(geometryCollection.get(0)).toBeInstanceOfClass(Terraformer.Polygon);
+      expect(geometryCollection.get(0) instanceof Terraformer.Polygon).toBeTruthy();
       expect(geometryCollection.get(0).coordinates).toEqual(GeoJSON.polygons[0].coordinates);
     });
 
@@ -1095,16 +1095,16 @@ describe("Intersection", function(){
       expect(f.convexHull()).toEqual(null);
     });
 
-    it("should throw an error for an unknow type in Primitive", function(){
+    it("should throw an error for an unknown type in Primitive", function(){
       expect(function(){
         var f = new Terraformer.Primitive({type: "foobar"});
-      }).toThrow("Unknown type: foobar");
+      }).toThrow();
     });
 
     it("should throw an error for an unknow type in calculateBounds", function(){
       expect(function(){
         Terraformer.Tools.calculateBounds({type: "foobar"});
-      }).toThrow("Unknown type: foobar");
+      }).toThrow();
     });
 
     it("should return null when there is no geometry in a Feature in calculateBounds", function(){
@@ -1141,5 +1141,4 @@ describe("Intersection", function(){
       expect(Terraformer.Tools.coordinatesEqual([ [1, 2] ], [ [ 1, 2, 3 ] ])).toEqual(false);
     });
   });
-
 });
