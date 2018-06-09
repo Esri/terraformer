@@ -11,7 +11,7 @@ npm test || exit 1
 git checkout -b gh-release
 
 # create built library (and versioned copy)
-grunt uglify
+grunt version
 
 # force add file
 git add terraformer.min.js -f
