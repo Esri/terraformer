@@ -56,18 +56,6 @@ module.exports = function (grunt) {
       }
     },
 
-    jasmine_node: {
-      options: {
-        forceExit: true,
-        match: '.',
-        matchall: false,
-        extensions: 'js',
-        specNameMatcher: 'Spec',
-        helperNameMatcher: 'Helpers'
-      },
-      all: ['spec/']
-    },
-
     complexity: {
       generic: {
         src: [ 'terraformer.js' ],
@@ -121,11 +109,11 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-complexity');
   grunt.loadNpmTasks('grunt-contrib-jasmine');
   grunt.loadNpmTasks('grunt-contrib-copy');
-  grunt.loadNpmTasks('grunt-jasmine-node');
   grunt.loadNpmTasks('grunt-gh-pages');
   grunt.loadNpmTasks('grunt-middleman');
-
-  grunt.registerTask('test', ['jshint', 'jasmine_node', 'jasmine']);
+  
+  grunt.registerTask('lint', ['jshint']);
+  grunt.registerTask('test', ['jasmine']);
   grunt.registerTask('version', ['test', 'uglify']);
   grunt.registerTask('default', ['test']);
   grunt.registerTask('docs-build', ['middleman:build', 'copy']);
