@@ -8,10 +8,10 @@
 
 The Terraformer project is broken up into a series of smaller modules.
 
-* [Terraformer Core](http://terraformer.io/core/) - Contains methods and objects for working with GeoJSON. This also contains common methods used by other modules.
-* [WKT Parser](http://terraformer.io/wkt-parser/) - Parse Well Known Text into GeoJSON and vice versa.
-* [ArcGIS Geometry Parser](http://terraformer.io/arcgis-parser/) - Parse the [ArcGIS Geometry Format](http://resources.arcgis.com/en/help/arcgis-rest-api/#/Geometry_Objects/02r3000000n1000000/) into GeoJSON and vice versa.
-* [GeoStore](http://terraformer.io/geostore/) - A framework for persisting and querying GeoJSON features with pluggable indexes and persistent stores.
+* [Terraformer Core](http://esri.github.io/terraformer/core/) - Contains methods and objects for working with GeoJSON. This also contains common methods used by other modules.
+* [WKT Parser](http://esri.github.io/terraformer/wkt-parser/) - Parse Well Known Text into GeoJSON and vice versa.
+* [ArcGIS Geometry Parser](http://esri.github.io/terraformer/arcgis-parser/) - Parse the [ArcGIS Geometry Format](http://resources.arcgis.com/en/help/arcgis-rest-api/#/Geometry_Objects/02r3000000n1000000/) into GeoJSON and vice versa.
+* [GeoStore](http://esri.github.io/terraformer/geostore/) - A framework for persisting and querying GeoJSON features with pluggable indexes and persistent stores.
 
 ## Features
 
@@ -20,7 +20,7 @@ The Terraformer project is broken up into a series of smaller modules.
 
 ## Getting Started
 
-Check out the getting [started guide](http://terraformer.io/getting-started/) which will give you an overview of core concepts and methods in Terraformer.
+Check out the getting [started guide](http://esri.github.io/terraformer/getting-started/) which will give you an overview of core concepts and methods in Terraformer.
 
 ### Node.js
 
@@ -44,7 +44,7 @@ require('terraformer-geostore');
 
 ### Browser
 
-To see Terraformer in action in the browser, check out our [live demos](http://terraformer.io/examples/browser/index.html). To use it in the browser yourself, reference it using a `<script>` tag.
+To see Terraformer in action in the browser, check out our [live demos](http://esri.github.io/terraformer/examples/browser/index.html). To use it in the browser yourself, reference it using a `<script>` tag.
 
 ```html
 <script src="https://unpkg.com/terraformer@1.0.8"></script>
@@ -59,7 +59,7 @@ To utilize supporting packages, you must load their source as well.
 
 ## Documentation
 
-Make sure you check out the full documentation on the [Terraformer website](http://terraformer.io/core/) and the [getting started guide](http://terraformer.io/getting-started/).
+Make sure you check out the full documentation on the [Terraformer website](http://esri.github.io/terraformer/core/) and the [getting started guide](http://esri.github.io/terraformer/getting-started/).
 
 ```js
 var polygon = new Terraformer.Primitive({
@@ -105,7 +105,7 @@ var boundingBox = polygon.bbox(); // returns the geojson bounding box for this o
 
 ## Resources
 
-* [Documentation Site](http://terraformer.io)
+* [Documentation Site](http://esri.github.io/terraformer/)
 * [@EsriPDX](http://twitter.com/esripdx)
 
 ## Building the documentation
