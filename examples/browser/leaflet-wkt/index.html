@@ -3,7 +3,7 @@
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Leaflet Load WKT</title>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.2/dist/leaflet.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css">
     <style>
        html, body, #map {
         margin: 0;
@@ -24,12 +24,12 @@
     <script src="https://unpkg.com/terraformer@1.0.7"></script>
     <script src="https://unpkg.com/terraformer-wkt-parser@1.1.2"></script>
 
-    <script src="https://unpkg.com/leaflet@1.0.2"></script>
+    <script src="https://unpkg.com/leaflet@1.4.0"></script>
     <script>
         var map = new L.Map('map');
 
         // Create a layer of open streetmap tile layer
-        var osmUrl='http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+        var osmUrl='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
         var osmAttrib='Map data © OpenStreetMap contributors';
         var osm = new L.TileLayer(osmUrl, {minZoom: 2, maxZoom: 21, attribution: osmAttrib});
 
