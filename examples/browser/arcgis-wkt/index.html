@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>ArcGIS Load WKT</title>
+    <script src="https://unpkg.com/terraformer@1.0.7"></script>
+    <script src="https://unpkg.com/terraformer-wkt-parser@1.1.2"></script>
+    <script src="https://unpkg.com/terraformer-arcgis-parser@1.0.5"></script>
+
+    <link rel="stylesheet" href="https://js.arcgis.com/3.19/esri/css/esri.css" />
+    <script src="http://js.arcgis.com/3.19/" type="text/javascript"></script>
+    <script src="viewer.js"></script>
+    <style>
+      html, body {
+        margin: 0;
+        padding: 0;
+      }
+      #map {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+      }
+      #submit {
+        position: absolute;
+        right: 20px;
+        top: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="map"></div>
+    <button id="submit">Load WKT into Map</button>
+  </body>
+</html>
