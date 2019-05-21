@@ -14,10 +14,10 @@ Terraformer is broken into multiple small packages to give you the functionality
 
 There are currently several packages in the Terraformer ecosystem.
 
-* [Terraformer](/core/) - The core library for manipilating GeoJSON and performaing calculations. Most other modules rely on `terraformer`.
+* [Terraformer](/core/) - The core library for manipulating GeoJSON and performaing calculations. Most other modules rely on `terraformer`.
 * [ArcGIS Parser](/arcgis-parser/) - Parses ArcGIS geometry objects to GeoJSON and vice-versa.
 * [WKT Parser](/wkt-parser/) - Parses basic WKT (Well Known Text) strings to and from GeoJSON.
-* [GeoStore](/geostore/) - A JavaScript database for storing and querying collections of GeoJSON Features. GeoStores also need an index module and a backing store which are distributed as seperate modules.
+* [GeoStore](/geostore/) - A JavaScript database for storing and querying collections of GeoJSON Features. GeoStores also need an index module and a backing store which are distributed as separate modules.
 
 ### Node.js
 
