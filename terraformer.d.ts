@@ -4,6 +4,8 @@
  * import * as Terraformer from "terraformer";
  */
 
+import * as GeoJSON from 'geojson';
+
 // Note: Terraformer module exports namespace so it can be augmented by
 // terraformer-wkt-parser and potentially others
 export as namespace Terraformer;
