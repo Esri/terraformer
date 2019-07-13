@@ -35,7 +35,17 @@ declare namespace Terraformer {
     * polygon.
     */
     export class Primitive<T extends GeoJSON.GeoJsonObject> implements GeoJSON.GeoJsonObject {
-        public type: string;
+        public type:
+            | "Point"
+            | "MultiPoint"
+            | "LineString"
+            | "MultiLineString"
+            | "Polygon"
+            | "MultiPolygon"
+            | "GeometryCollection"
+            | "Feature"
+            | "FeatureCollection";
+
         /**
         * You create a new Terraformer.Primitive object by passing it a valid GeoJSON Object. This will return a
         * Terraformer.Primitive with the same type as your GeoJSON object.
