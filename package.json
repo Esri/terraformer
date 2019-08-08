@@ -42,7 +42,7 @@
   ],
   "license": "MIT",
   "optionalDependencies": {
-    "@types/geojson": "^1.0.0"
+    "@types/geojson": "^7946.0.0 || ^1.0.0"
   },
   "engines": {
     "node": ">=4.2.6"

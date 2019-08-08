@@ -4,6 +4,8 @@
  * import * as Terraformer from "terraformer";
  */
 
+import * as GeoJSON from 'geojson'
+
 // Note: Terraformer module exports namespace so it can be augmented by
 // terraformer-wkt-parser and potentially others
 export as namespace Terraformer;
@@ -35,7 +37,7 @@ declare namespace Terraformer {
     * polygon.
     */
     export class Primitive<T extends GeoJSON.GeoJsonObject> implements GeoJSON.GeoJsonObject {
-        public type: string;
+        public type: GeoJSON.GeoJsonTypes;
         /**
         * You create a new Terraformer.Primitive object by passing it a valid GeoJSON Object. This will return a
         * Terraformer.Primitive with the same type as your GeoJSON object.
