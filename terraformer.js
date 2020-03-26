@@ -875,7 +875,7 @@
         return false;
       // polygon.within(multipolygon)
       } else if (this.type === "Polygon") {
-        for (i = 0; i < this.coordinates.length; i++) {
+        for (i = 0; i < primitive.coordinates.length; i++) {
           if (primitive.coordinates[i].length === this.coordinates.length) {
             for (j = 0; j < this.coordinates.length; j++) {
               if (coordinatesEqual(this.coordinates[j], primitive.coordinates[i][j])) {
