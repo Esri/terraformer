@@ -753,7 +753,7 @@
   };
 
   Primitive.prototype.within = function(primitive) {
-    var coordinates, i, contains;
+    var coordinates, i, j, contains;
 
     // if we are passed a feature, use the polygon inside instead
     if (primitive.type === 'Feature') {
