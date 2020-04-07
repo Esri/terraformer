@@ -4,6 +4,16 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [unreleased]
 
+## [1.0.12] - 2020-04-07
+
+### Fixed
+
+* added two missing variable declarations
+
+### Changes
+
+* `"strict mode"`
+
 ## [1.0.10] - 2020-01-07
 
 ### Changed
@@ -85,7 +95,8 @@ primitive.convexHull() now always returns null or a valid Terraformer.Polygon. I
 
 Initial Release
 
-[unreleased]: https://github.com/Esri/Terraformer/compare/v1.0.10...HEAD
+[unreleased]: https://github.com/Esri/Terraformer/compare/v1.0.12...HEAD
+[1.0.12]: https://github.com/Esri/Terraformer/compare/v1.0.10...v1.0.12
 [1.0.10]: https://github.com/Esri/Terraformer/compare/v1.0.9...v1.0.10
 [1.0.9]: https://github.com/Esri/Terraformer/compare/v1.0.8...v1.0.9
 [1.0.8]: https://github.com/Esri/Terraformer/compare/v1.0.7...v1.0.8
