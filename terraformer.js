@@ -11,6 +11,8 @@
   }
 
 }(this, function(){
+  "use strict";
+
   var exports = {},
       EarthRadius = 6378137,
       DegreesPerRadian = 57.295779513082320,
