@@ -11,6 +11,8 @@
   }
 
 }(this, function(){
+  "use strict";
+
   var exports = {},
       EarthRadius = 6378137,
       DegreesPerRadian = 57.295779513082320,
@@ -753,7 +755,7 @@
   };
 
   Primitive.prototype.within = function(primitive) {
-    var coordinates, i, contains;
+    var coordinates, i, j, contains;
 
     // if we are passed a feature, use the polygon inside instead
     if (primitive.type === 'Feature') {
@@ -1157,7 +1159,7 @@
     return this.coordinates.length > 1;
   };
   Polygon.prototype.holes = function() {
-    holes = [];
+    var holes = [];
     if (this.hasHoles()) {
       for (var i = 1; i < this.coordinates.length; i++) {
         holes.push(new Polygon([this.coordinates[i]]));
