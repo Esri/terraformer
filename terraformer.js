@@ -1157,7 +1157,7 @@
     return this.coordinates.length > 1;
   };
   Polygon.prototype.holes = function() {
-    holes = [];
+    var holes = [];
     if (this.hasHoles()) {
       for (var i = 1; i < this.coordinates.length; i++) {
         holes.push(new Polygon([this.coordinates[i]]));
