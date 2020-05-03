@@ -7,7 +7,7 @@ describe("Primitives", function(){
 
   it("should create a Point from GeoJSON", function(){
     var point = new Terraformer.Primitive(GeoJSON.points[1]);
-    
+
     expect(point instanceof Terraformer.Point).toBeTruthy()
     expect(point.coordinates).toEqual(GeoJSON.points[1].coordinates);
   });
@@ -471,7 +471,7 @@ describe("Primitives", function(){
           [ [100.0, 0.0], [102.0, 0.0], [102.0, 1.0], [100.0, 1.0], [100.0, 0.0] ]
         ]
       ]);
-      
+
       expect(mp.convexHull().coordinates).toEqual([
         [ [ 103, 3 ],
           [ 102, 3 ],
@@ -781,6 +781,28 @@ describe("Intersection", function(){
     it("should correctly figure out intersection with a MultiPolygon in reverse", function(){
       var mp = new Terraformer.MultiPolygon([ [ [ [ 1, 1 ], [ 11, 1 ], [ 11, 6 ], [ 1, 6 ] ] ] ]);
       expect(mp.intersects(polygon)).toEqual(true);
+    });
+
+    it("shouldn't throw when detecting intersection of MultiPolygon and Polygon", function () {
+      var mp = new Terraformer.MultiPolygon([
+        [
+          [
+            [1, 1], [11, 1], [11, 6], [1, 6], [1, 1]
+          ]
+        ],
+        [
+          [
+            [11, 1], [21, 1], [21, 6], [11, 6], [11, 1]
+          ]
+        ]
+      ]);
+      var polygon1 = new Terraformer.Polygon([[[0, 0], [10, 0], [10, 5], [0, 0]]]);
+      var polygon2 = new Terraformer.Polygon([[[12, 3], [15, 3], [14, 5], [12, 3]]]);
+      var polygon3 = new Terraformer.Polygon([[[33, 3], [35, 3], [34, 5], [33, 3]]]);
+
+      expect(mp.intersects(polygon1)).toEqual(true);
+      expect(mp.intersects(polygon2)).toEqual(true);
+      expect(mp.intersects(polygon3)).toEqual(false);
     });
 
   });
