@@ -276,7 +276,7 @@ declare namespace Terraformer {
         * @param coordinates Array of coordinates
         * @param coordinate Coordinate that will be searched for in the array.
         */
-        public static coordinatesContainPoint(coordinates: Coordinates[], coordinate: Coordinate): Boolean;
+        public static coordinatesContainPoint(coordinates: Coordinates, coordinate: Coordinate): Boolean;
         /**
         * Accepts the geometry of a polygon and a coordinate and returns true if the point falls within the polygon.
         * @param polygon
