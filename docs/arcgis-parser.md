@@ -1,7 +1,3 @@
----
-title: ArcGIS Parser
-layout: documentation
----
 # ArcGIS JSON Parser
 
 <!-- table_of_contents -->
@@ -15,17 +11,17 @@ The ArcGIS parser can be used client-side in a browser and server-side via Node.
 ```js
 // parse an ArcGIS Geometry to GeoJSON
 var geojsonPoint = Terraformer.ArcGIS.parse({
-  "x":-122.6764,
-  "y":45.5165,
-  "spatialReference": {
-    "wkid": 4326
-  }
+  x: -122.6764,
+  y: 45.5165,
+  spatialReference: {
+    wkid: 4326,
+  },
 });
 
 // convert a GeoJSON object into an ArcGIS geometry
 var arcgisPoint = Terraformer.ArcGIS.convert({
-  "type": "Point",
-  "coordinates": [45.5165, -122.6764]
+  type: "Point",
+  coordinates: [45.5165, -122.6764],
 });
 ```
 
@@ -52,7 +48,7 @@ $ bower install terraformer-arcgis-parser
 Just install the package from npm with `$ npm install terraformer-arcgis-parser` Then include it in your application.
 
 ```js
-Terraformer.ArcGIS = require('terraformer-arcgis-parser');
+Terraformer.ArcGIS = require("terraformer-arcgis-parser");
 
 // Start parsing and converting!
 ```
@@ -63,9 +59,9 @@ Terraformer.ArcGIS = require('terraformer-arcgis-parser');
 
 `Terraformer.ArcGIS.parse(json, options)` - Converts from ArcGIS JSON to GeoJSON or a [Terraformer.Primitive](http://terraformer.io/core/#terraformerprimitive).
 
-| Option | Type | Default | Description |
-| --- | --- | --- | --- |
-| `idAttribute` | `String` | `"OBJECTID"` |  By default, when converting GeoJSON Features the `id` key of your output feature will be set on the `OBJECTID` field. This option allows you to assign your ID using a different fieldname. |
+| Option        | Type     | Default      | Description                                                                                                                                                                                 |
+| ------------- | -------- | ------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `idAttribute` | `String` | `"OBJECTID"` | By default, when converting GeoJSON Features the `id` key of your output feature will be set on the `OBJECTID` field. This option allows you to assign your ID using a different fieldname. |
 
 ##### Notes
 
@@ -76,21 +72,22 @@ Terraformer will also handle converting `FeatureCollection` and `GeometryCollect
 ```js
 // parse an ArcGIS Geometry to GeoJSON
 var point = Terraformer.ArcGIS.parse({
-  "x":-122.6764,
-  "y":45.5165,
-  "spatialReference": {
-    "wkid": 4326
-  }
+  x: -122.6764,
+  y: 45.5165,
+  spatialReference: {
+    wkid: 4326,
+  },
 });
 ```
 
 #### ArcGIS.convert(geojson, options)
+
 `Terraformer.ArcGIS.convert(geoJSON, options)` will convert GeoJSON or a Terraformer Primitive to ArcGIS JSON.
 
-| Option | Type | Default | Description |
-| --- | --- | --- | --- |
-| `sr` | `Number` | `4326` | This is used to set the value of `spatialReference.wkid` in the output. Setting `sr` **does not** convert the `geojson` coordinates, it only identifies the projection using the appropriate code. |
-| `idAttribute` | `String` | `"OBJECTID" "FID"` | When converting ArcGIS Feature the `attributes` will contain the ID of the feature. This is usually called `OBJECTID` or `FID`. If your feature does not use the `OBJECTID` or `FID` keys as its ID, you should define what the key representing your Features ID is.
+| Option        | Type     | Default            | Description                                                                                                                                                                                                                                                           |
+| ------------- | -------- | ------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `sr`          | `Number` | `4326`             | This is used to set the value of `spatialReference.wkid` in the output. Setting `sr` **does not** convert the `geojson` coordinates, it only identifies the projection using the appropriate code.                                                                    |
+| `idAttribute` | `String` | `"OBJECTID" "FID"` | When converting ArcGIS Feature the `attributes` will contain the ID of the feature. This is usually called `OBJECTID` or `FID`. If your feature does not use the `OBJECTID` or `FID` keys as its ID, you should define what the key representing your Features ID is. |
 
 ##### Notes
 
@@ -101,7 +98,7 @@ If the geometry is in the Web Mercator spatial reference it **will be reprojecte
 ```js
 // take a Terraformer.Primitive or GeoJSON and convert it to an ArcGIS JSON object
 var point = ArcGIS.convert({
-  "type": "Point",
-  "coordinates": [45.5165, -122.6764]
+  type: "Point",
+  coordinates: [45.5165, -122.6764],
 });
 ```

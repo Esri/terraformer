@@ -1,8 +1,3 @@
----
-title: Glossary
-layout: documentation
----
-
 # Glossary
 
 <!-- table_of_contents -->
@@ -16,7 +11,7 @@ Terraformer uses the [GeoJSON specification](http://geojson.org/geojson-spec.htm
 A coordinate is the building block for the rest of the GeoJSON specification. It is represented by an array of `x`, `y` integers. The ordering of `x` and `y` are important, this means that when representing latitude and longitiude the order is `[longitude, latitude]`.
 
 ```js
-[-122.680, 45.528]
+[-122.68, 45.528];
 ```
 
 [GeoJSON Coordinate](http://geojson.org/geojson-spec.html#positions)
@@ -27,10 +22,10 @@ An array of [Coordinate](#coordinate) objects that are used to define a line or 
 
 ```js
 [
-  [-122.680, 45.58],
-  [-123.230, 45.62],
-  [-122.80, 45.22]
-]
+  [-122.68, 45.58],
+  [-123.23, 45.62],
+  [-122.8, 45.22],
+];
 ```
 
 [GeoJSON Coordinate](http://geojson.org/geojson-spec.html#positions)
@@ -40,12 +35,13 @@ An array of [Coordinate](#coordinate) objects that are used to define a line or 
 A GeoJSON bounding box is usually a 4-item array representing the rectangle that will contain the GeoJSON object.
 
 ```js
-[-122.70, 45.51, -122.64, 45.53]
+[-122.7, 45.51, -122.64, 45.53];
 ```
 
 [GeoJSON BBox](http://geojson.org/geojson-spec.html#bounding-boxes)
 
 ### Geometry
+
 "GeoJSON Geometry" refers to any of the single geometry objects from the geoJSON specification like [Point](#point), [MultiPoint](#multiPoint), [LineString](#linestring), [MultiLineString](#multilinestring), [Polygon](#polygon), or [MultiPolygon](#multipolygon).
 
 [GeoJSON Geometry](http://geojson.org/geojson-spec.html#geometry-objects)
@@ -70,7 +66,10 @@ An object representing multiple points as a single coordinate array.
 ```json
 {
   "type": "MultiPoint",
-  "coordinates": [ [-105.01, 39.57], [-80.66, 35.05] ]
+  "coordinates": [
+    [-105.01, 39.57],
+    [-80.66, 35.05]
+  ]
 }
 ```
 
@@ -86,7 +85,7 @@ A series of coordinates that form a line.
   "coordinates": [
     [-101.5, 39.662],
     [-101.75, 39.2415],
-    [-101.64, 39.2415],
+    [-101.64, 39.2415]
   ]
 }
 ```
@@ -107,11 +106,13 @@ An object that represents multiple linestrings in a single object.
       [-101.23, 39.2415],
       [-101.749, 39.7984],
       [-101.5, 39.011]
-    ],[
+    ],
+    [
       [-99.23, 38.6605],
       [-99.56, 38.727],
       [-99.25, 38.018]
-    ],[
+    ],
+    [
       [-98.499, 38.913],
       [-98.499, 38.913],
       [-98.38, 38.15],
@@ -131,7 +132,12 @@ An array of coordinates defining a polygon.
 {
   "type": "Polygon",
   "coordinates": [
-    [ [41.83, 71.01], [56.95, 33.75], [21.79, 36.56], [41.83, 71.01] ]
+    [
+      [41.83, 71.01],
+      [56.95, 33.75],
+      [21.79, 36.56],
+      [41.83, 71.01]
+    ]
   ]
 }
 ```
@@ -147,16 +153,29 @@ An object that represents multiple polygons in a single object.
   "type": "MultiPolygon",
   "coordinates": [
     [
-      [ [102.0, 2.0], [103.0, 2.0], [103.0, 3.0], [102.0, 3.0], [102.0, 2.0] ]
+      [
+        [102.0, 2.0],
+        [103.0, 2.0],
+        [103.0, 3.0],
+        [102.0, 3.0],
+        [102.0, 2.0]
+      ]
     ],
     [
-      [ [100.0, 0.0], [101.0, 0.0], [101.0, 1.0], [100.0, 1.0], [100.0, 0.0] ]
+      [
+        [100.0, 0.0],
+        [101.0, 0.0],
+        [101.0, 1.0],
+        [100.0, 1.0],
+        [100.0, 0.0]
+      ]
     ]
   ]
 }
 ```
 
 [GeoJSON MultiPolygon](http://geojson.org/geojson-spec.html#multipolygon)
+
 ### Feature
 
 GeoJSON Features combine a [Geometry](#geometry) object with a unique identifier and set of metadata.
@@ -222,14 +241,24 @@ Contains multiple [Geometry](#geometry) objects in a single object.
 ```json
 {
   "type": "GeometryCollection",
-  "geometries": [{
-    "type": "Polygon",
-    "coordinates": [
-      [ [41.83, 71.01], [56.95, 33.75], [21.79, 36.56], [41.83, 71.01] ]
-    ]
-    },{
+  "geometries": [
+    {
+      "type": "Polygon",
+      "coordinates": [
+        [
+          [41.83, 71.01],
+          [56.95, 33.75],
+          [21.79, 36.56],
+          [41.83, 71.01]
+        ]
+      ]
+    },
+    {
       "type": "MultiPoint",
-      "coordinates": [ [100, 0], [45, -122] ]
+      "coordinates": [
+        [100, 0],
+        [45, -122]
+      ]
     }
   ]
 }

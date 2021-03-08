@@ -1,7 +1,3 @@
----
-title: Getting Started
-layout: documentation
----
 # Terraformer
 
 <!-- table_of_contents -->
@@ -14,10 +10,10 @@ Terraformer is broken into multiple small packages to give you the functionality
 
 There are currently several packages in the Terraformer ecosystem.
 
-* [Terraformer](/core/) - The core library for manipulating GeoJSON and performaing calculations. Most other modules rely on `terraformer`.
-* [ArcGIS Parser](/arcgis-parser/) - Parses ArcGIS geometry objects to GeoJSON and vice-versa.
-* [WKT Parser](/wkt-parser/) - Parses basic WKT (Well Known Text) strings to and from GeoJSON.
-* [GeoStore](/geostore/) - A JavaScript database for storing and querying collections of GeoJSON Features. GeoStores also need an index module and a backing store which are distributed as separate modules.
+- [Terraformer](/core/) - The core library for manipulating GeoJSON and performaing calculations. Most other modules rely on `terraformer`.
+- [ArcGIS Parser](/arcgis-parser/) - Parses ArcGIS geometry objects to GeoJSON and vice-versa.
+- [WKT Parser](/wkt-parser/) - Parses basic WKT (Well Known Text) strings to and from GeoJSON.
+- [GeoStore](/geostore/) - A JavaScript database for storing and querying collections of GeoJSON Features. GeoStores also need an index module and a backing store which are distributed as separate modules.
 
 ### Node.js
 
@@ -28,15 +24,15 @@ $ npm install terraformer
 ```
 
 ```js
-var Terraformer = require('terraformer');
+var Terraformer = require("terraformer");
 ```
 
 If needed, supporting packages can be added too.
 
 ```js
-require('terraformer-arcgis-parser');
-require('terraformer-wkt-parser');
-require('terraformer-geostore');
+require("terraformer-arcgis-parser");
+require("terraformer-wkt-parser");
+require("terraformer-geostore");
 ```
 
 ### Browser
@@ -51,7 +47,7 @@ To utilize supporting packages, you must load their source as well.
 
 ```html
 <script src="https://unpkg.com/terraformer-arcgis-parser@1.0.5"></script>
-<script src="https://unpkg.com/terraformer-wkt-parser@1.1.2"></script> 
+<script src="https://unpkg.com/terraformer-wkt-parser@1.1.2"></script>
 ```
 
 To see Terraformer in action in the browser, check out our [live demos](/examples/browser/index.html).
@@ -63,10 +59,9 @@ Most of the core Terraformer libray centers around using [`Primitives`](/core/#t
 You can create a new [Terraformer.Primitive](/core/#terraformerprimitive) with any GeoJSON object.
 
 ```js
-
 var polygon = new Terraformer.Primitive({
-  "type": "Polygon",
-  "coordinates": [
+  type: "Polygon",
+  coordinates: [
     [
       [-122.66589403152467, 45.52290150862236],
       [-122.66926288604736, 45.52291654238294],
@@ -74,14 +69,14 @@ var polygon = new Terraformer.Primitive({
       [-122.67325401306151, 45.514000817199715],
       [-122.6684260368347, 45.5127377671934],
       [-122.66765356063841, 45.51694782364431],
-      [-122.66589403152467, 45.52290150862236 ]
-    ]
-  ]
+      [-122.66589403152467, 45.52290150862236],
+    ],
+  ],
 });
 
 var point = new Terraformer.Primitive({
-  "type": "Point",
-  "coordinates": [-122.66947746276854, 45.51775972687403]
+  type: "Point",
+  coordinates: [-122.66947746276854, 45.51775972687403],
 });
 ```
 

@@ -1,8 +1,3 @@
----
-title: Installing Terraformer
-layout: documentation
----
-
 # Getting Terraformer
 
 <!-- table_of_contents -->
@@ -26,7 +21,6 @@ We make Terraformer available via npm, bower and via a CDN.
 
 <a href="https://github.com/Esri/terraformer-arcgis-parser/releases" class="button button-light">Download</a>
 <a href="https://unpkg.com/terraformer-arcgis-parser@1.0.5" class="button button-light">CDN</a>
-
 
 ## WKT Parser
 
