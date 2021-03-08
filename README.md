@@ -8,10 +8,10 @@
 
 The Terraformer project is broken up into a series of smaller modules.
 
-* [Terraformer Core](http://terraformer.io/core/) - Contains methods and objects for working with GeoJSON. This also contains common methods used by other modules.
-* [WKT Parser](http://terraformer.io/wkt-parser/) - Parse Well Known Text into GeoJSON and vice versa.
-* [ArcGIS Geometry Parser](http://terraformer.io/arcgis-parser/) - Parse the [ArcGIS Geometry Format](http://resources.arcgis.com/en/help/arcgis-rest-api/#/Geometry_Objects/02r3000000n1000000/) into GeoJSON and vice versa.
-* [GeoStore](http://terraformer.io/geostore/) - A framework for persisting and querying GeoJSON features with pluggable indexes and persistent stores.
+* [Terraformer Core](docs/core.html.md) - Contains methods and objects for working with GeoJSON. This also contains common methods used by other modules.
+* [WKT Parser](docs/wkt-parser.html.md) - Parse Well Known Text into GeoJSON and vice versa.
+* [ArcGIS Geometry Parser](docs/arcgis-parser.html.md) - Parse the [ArcGIS Geometry Format](http://resources.arcgis.com/en/help/arcgis-rest-api/#/Geometry_Objects/02r3000000n1000000/) into GeoJSON and vice versa.
+* [GeoStore](docs/glossary.html.md) - A framework for persisting and querying GeoJSON features with pluggable indexes and persistent stores.
 
 ## Features
 
@@ -20,7 +20,7 @@ The Terraformer project is broken up into a series of smaller modules.
 
 ## Getting Started
 
-Check out the getting [started guide](http://terraformer.io/getting-started/) which will give you an overview of core concepts and methods in Terraformer.
+Check out the getting [started guide](docs/getting-started.html.md) which will give you an overview of core concepts and methods in Terraformer.
 
 ### Node.js
 
@@ -44,8 +44,6 @@ require('terraformer-geostore');
 
 ### Browser
 
-To see Terraformer in action in the browser, check out our [live demos](http://terraformer.io/examples/browser/index.html). To use it in the browser yourself, reference it using a `<script>` tag.
-
 ```html
 <script src="https://unpkg.com/terraformer@1.0.8"></script>
 ```
@@ -59,7 +57,10 @@ To utilize supporting packages, you must load their source as well.
 
 ## Documentation
 
-Make sure you check out the full documentation on the [Terraformer website](http://terraformer.io/core/) and the [getting started guide](http://terraformer.io/getting-started/).
+* [Terraformer Core](docs/core.html.md) - Contains methods and objects for working with GeoJSON. This also contains common methods used by other modules.
+* [WKT Parser](docs/wkt-parser.html.md) - Parse Well Known Text into GeoJSON and vice versa.
+* [ArcGIS Geometry Parser](docs/arcgis-parser.html.md) - Parse the [ArcGIS Geometry Format](http://resources.arcgis.com/en/help/arcgis-rest-api/#/Geometry_Objects/02r3000000n1000000/) into GeoJSON and vice versa.
+* [GeoStore](docs/glossary.html.md) - A framework for persisting and querying GeoJSON features with pluggable indexes and persistent stores.
 
 ```js
 var polygon = new Terraformer.Primitive({
@@ -102,19 +103,6 @@ point.within(convexHull); // returns true
 
 var boundingBox = polygon.bbox(); // returns the geojson bounding box for this object.
 ```
-
-## Resources
-
-* [Documentation Site](http://terraformer.io)
-* [@EsriPDX](http://twitter.com/esripdx)
-
-## Building the documentation
-
-To build the site locally, first `bundle install` then `bundle exec middleman` to run a local server. Maintainers can run `bundle exec middleman build`, then `grunt gh-pages` to deploy to github pages.
-
-## Issues
-
-Find a bug or want to request a new feature?  Please let us know by submitting an issue.
 
 ## Contributing
 
