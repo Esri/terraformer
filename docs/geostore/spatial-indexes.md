@@ -37,11 +37,11 @@ var si = new SpatialIndex({
 
 Add a `geojson` object or `envelope` to a `SpatialIndex`. It is important to include an `id`, as this is the key that is returned from searches.
 
-| Option                                                                 | Value                  | Description                                               |
-| ---------------------------------------------------------------------- | ---------------------- | --------------------------------------------------------- |
-| [`GeoJSON`](/glossary/#geojson) _or_ [`Envelope`](/glossary/#envelope) | `object`               | Must be either `GeoJSON` or `Envelope`                    |
-| id                                                                     | `String` _or_ `Number` | The `id` of the spatial area                              |
-| callback                                                               | `function`             | Callback to be fired when the `insert` has been completed |
+| Option                                                                         | Value                  | Description                                               |
+| ------------------------------------------------------------------------------ | ---------------------- | --------------------------------------------------------- |
+| [`GeoJSON`](../glossary.md#geojson) _or_ [`Envelope`](../glossary.md#envelope) | `object`               | Must be either `GeoJSON` or `Envelope`                    |
+| id                                                                             | `String` _or_ `Number` | The `id` of the spatial area                              |
+| callback                                                                       | `function`             | Callback to be fired when the `insert` has been completed |
 
 _Example:_
 
@@ -55,11 +55,11 @@ si.insert(geojson, id, function (err, res) {
 
 Remove a `geojson` or `envelope` object already in a SpatialIndex.
 
-| Option                                                                 | Value                  | Description                                               |
-| ---------------------------------------------------------------------- | ---------------------- | --------------------------------------------------------- |
-| [`GeoJSON`](/glossary/#geojson) _or_ [`Envelope`](/glossary/#envelope) | `object`               | Must be either `GeoJSON` or `Envelope`                    |
-| id                                                                     | `String` _or_ `Number` | The `id` of the spatial area                              |
-| callback                                                               | `function`             | Callback to be fired when the `remove` has been completed |
+| Option                                                                         | Value                  | Description                                               |
+| ------------------------------------------------------------------------------ | ---------------------- | --------------------------------------------------------- |
+| [`GeoJSON`](../glossary.md#geojson) _or_ [`Envelope`](../glossary.md#envelope) | `object`               | Must be either `GeoJSON` or `Envelope`                    |
+| id                                                                             | `String` _or_ `Number` | The `id` of the spatial area                              |
+| callback                                                                       | `function`             | Callback to be fired when the `remove` has been completed |
 
 _Example:_
 
@@ -73,10 +73,10 @@ si.remove(geojson, id, function (err, res) {
 
 Searches for any `id`'s that can contain the `geojson` or `envelope` passed in. These are returned as an `Array`.
 
-| Option                                                                 | Value      | Description                                               |
-| ---------------------------------------------------------------------- | ---------- | --------------------------------------------------------- |
-| [`GeoJSON`](/glossary/#geojson) _or_ [`Envelope`](/glossary/#envelope) | `object`   | Must be either `GeoJSON` or `Envelope`                    |
-| callback                                                               | `function` | Callback to be fired when the `search` has been completed |
+| Option                                                                        | Value      | Description                                               |
+| ----------------------------------------------------------------------------- | ---------- | --------------------------------------------------------- |
+| [`GeoJSON`](..glossary.md#geojson) _or_ [`Envelope`](../glossary.md#envelope) | `object`   | Must be either `GeoJSON` or `Envelope`                    |
+| callback                                                                      | `function` | Callback to be fired when the `search` has been completed |
 
 _Example:_
 
@@ -90,10 +90,10 @@ si.search(geojson, function (err, res) {
 
 Searches for any `id`'s that are within the `geojson` or `envelope` passed in. These are returned as an `Array`.
 
-| Option                                                                 | Value      | Description                                               |
-| ---------------------------------------------------------------------- | ---------- | --------------------------------------------------------- |
-| [`GeoJSON`](/glossary/#geojson) _or_ [`Envelope`](/glossary/#envelope) | `object`   | Must be either `GeoJSON` or `Envelope`                    |
-| callback                                                               | `function` | Callback to be fired when the `search` has been completed |
+| Option                                                                   | Value      | Description                                               |
+| ------------------------------------------------------------------------ | ---------- | --------------------------------------------------------- |
+| [`GeoJSON`](../glossary#geojson) _or_ [`Envelope`](../glossary#envelope) | `object`   | Must be either `GeoJSON` or `Envelope`                    |
+| callback                                                                 | `function` | Callback to be fired when the `search` has been completed |
 
 _Example:_
 

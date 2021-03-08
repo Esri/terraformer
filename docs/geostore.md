@@ -4,9 +4,9 @@
 
 The Terraformer GeoStore is a set of building blocks for managing spatial data as a GeoJSON `Feature` or `FeatureCollection`. It includes functionality for storing and querying data in primarily a spatial manner.
 
-GeoStores are broken into three parts: [Data Stores](/geostore/data-stores), [Spatial Indexes](/geostore/spatial-indexes), and [Alternate Indexes](/geostore/alternate-indexes).
+GeoStores are broken into three parts: [Data Stores](./geostore/data-stores.md), [Spatial Indexes](./geostore/spatial-indexes.md), and [Alternate Indexes](./geostore/alternate-indexes.md).
 
-More in-depth information can be found in [Core Concepts](/geostore/core-concepts).
+More in-depth information can be found in [Core Concepts](./geostore/core-concepts.md).
 
 ## Using the GeoStore
 
@@ -93,10 +93,10 @@ var store = new GeoStore({
 
 Add a `geojson` object to the GeoStore.
 
-| Option                          | Value      | Description                                                           |
-| ------------------------------- | ---------- | --------------------------------------------------------------------- |
-| [`GeoJSON`](/glossary/#geojson) | `object`   | Must be either a `Feature` or `FeatureCollection` and contain an `id` |
-| callback                        | `function` | Callback to be fired when the `add` has been completed                |
+| Option                             | Value      | Description                                                           |
+| ---------------------------------- | ---------- | --------------------------------------------------------------------- |
+| [`GeoJSON`](./glossary.md#geojson) | `object`   | Must be either a `Feature` or `FeatureCollection` and contain an `id` |
+| callback                           | `function` | Callback to be fired when the `add` has been completed                |
 
 _Example:_
 
@@ -110,10 +110,10 @@ store.add(geojson, function (err, res) {
 
 Update a single `geojson` `Feature` in the GeoStore.
 
-| Option                          | Value      | Description                                               |
-| ------------------------------- | ---------- | --------------------------------------------------------- |
-| [`GeoJSON`](/glossary/#geojson) | `object`   | Must be a `Feature` and contain an `id`                   |
-| callback                        | `function` | Callback to be fired when the `update` has been completed |
+| Option                             | Value      | Description                                               |
+| ---------------------------------- | ---------- | --------------------------------------------------------- |
+| [`GeoJSON`](./glossary.md#geojson) | `object`   | Must be a `Feature` and contain an `id`                   |
+| callback                           | `function` | Callback to be fired when the `update` has been completed |
 
 _Example:_
 
@@ -161,11 +161,11 @@ store.get(id, function (err, res) {
 
 Find all `Features` that contain the `geojson primitive` passed in. `contains` can use additional indexes to do set elimination on properties of a `Feature`.
 
-| Option                          | Value      | Description                                                                                             |
-| ------------------------------- | ---------- | ------------------------------------------------------------------------------------------------------- |
-| [`GeoJSON`](/glossary/#geojson) | `object`   | A GeoJSON primitive to search with                                                                      |
-| search (optional)               | `object`   | The second argument is optional. If provided it contains additional search criteria for set elimination |
-| callback                        | `function` | Callback to be fired when the `contains` has been completed                                             |
+| Option                             | Value      | Description                                                                                             |
+| ---------------------------------- | ---------- | ------------------------------------------------------------------------------------------------------- |
+| [`GeoJSON`](./glossary.md#geojson) | `object`   | A GeoJSON primitive to search with                                                                      |
+| search (optional)                  | `object`   | The second argument is optional. If provided it contains additional search criteria for set elimination |
+| callback                           | `function` | Callback to be fired when the `contains` has been completed                                             |
 
 _Example:_
 
@@ -191,11 +191,11 @@ store.contains(
 
 Find all `Features` that are within the `geojson primitive` passed in. `within` can use additional indexes to do set elimination on properties of a `Feature`.
 
-| Option                          | Value      | Description                                                                                             |
-| ------------------------------- | ---------- | ------------------------------------------------------------------------------------------------------- |
-| [`GeoJSON`](/glossary/#geojson) | `object`   | A GeoJSON primitive to search with                                                                      |
-| search (optional)               | `object`   | The second argument is optional. If provided it contains additional search criteria for set elimination |
-| callback                        | `function` | Callback to be fired when the `within` has been completed                                               |
+| Option                             | Value      | Description                                                                                             |
+| ---------------------------------- | ---------- | ------------------------------------------------------------------------------------------------------- |
+| [`GeoJSON`](./glossary.md#geojson) | `object`   | A GeoJSON primitive to search with                                                                      |
+| search (optional)                  | `object`   | The second argument is optional. If provided it contains additional search criteria for set elimination |
+| callback                           | `function` | Callback to be fired when the `within` has been completed                                               |
 
 _Example:_
 

@@ -268,67 +268,67 @@ Contains multiple [Geometry](#geometry) objects in a single object.
 
 ## Terraformer Primitives
 
-[Terraformer Primitives](/documentation/core/#Primitive) wrap their [GeoJSON](#geojson) counterparts to provide extra functionality.
+[Terraformer Primitives](./core.md#Primitive) wrap their [GeoJSON](#geojson) counterparts to provide extra functionality.
 
 ### Point Primitive
 
 An object respresenting a [GeoJSON Point](#point)
 
-[Point](/documentation/core/#terraformerpoint)
+[Point](./core.md#terraformerpoint)
 
 ### MultiPoint Primitive
 
 An object respresenting a [GeoJSON MultiPoint](#multipoint)
 
-[MultiPoint](/documentation/core/#terraformermultipoint)
+[MultiPoint](./core.md#terraformermultipoint)
 
 ### LineString Primitive
 
 An object respresenting a [GeoJSON LineString](#lineString)
 
-[LineString](/documentation/core/#terraformerlinestring)
+[LineString](./core.md#terraformerlinestring)
 
 ### MultiLineString Primitive
 
 An object respresenting a [GeoJSON MultiLineString](#multilinestring)
 
-[MultiLineString](/documentation/core/#terraformermultilinestring)
+[MultiLineString](./core.md#terraformermultilinestring)
 
 ### Polygon Primitive
 
 An object respresenting a [GeoJSON Polygon](#polygon)
 
-[Polygon](/documentation/core/#terraformerpolygon)
+[Polygon](./core.md#terraformerpolygon)
 
 ### MultiPolygon Primitive
 
 An object respresenting a [GeoJSON MultiPolygon](#multipolygon)
 
-[MultiPolygon](/documentation/core/#terraformermultipolygon)
+[MultiPolygon](./core.md#terraformermultipolygon)
 
 ### Feature Primitive
 
 An object respresenting a [GeoJSON Feature](#terraformerfeature)
 
-[Feature](/documentation/core/#feature)
+[Feature](./core.md#feature)
 
 ### FeatureCollection Primitive
 
 An object respresenting a [GeoJSON FeatureCollection](#featurecollection)
 
-[FeatureCollection](/documentation/core/#terraformerfeaturecollection)
+[FeatureCollection](./core.md#terraformerfeaturecollection)
 
 ### GeometryCollection Primitive
 
 An object respresenting a [GeoJSON GeometryCollection](#geometrycollection)
 
-[GeometryCollection](/documentation/core/#terraformergeometrycollection)
+[GeometryCollection](./core.md#terraformergeometrycollection)
 
 ### Circle Primitive
 
 An object representing a [GeoJSON Feature](#feature) which contains a polygonal representation of a circle.
 
-[Circle](/documentation/core/#terraformercircle)
+[Circle](./core.md#terraformercircle)
 
 ## Misc
 

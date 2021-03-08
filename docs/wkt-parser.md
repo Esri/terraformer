@@ -66,7 +66,7 @@ var WKT = require("terraformer-wkt-parser");
 
 #### WKT.parse(string)
 
-`Terraformer.WKT.parse(string)` - Used to convert a `POINT, MULTIPOINT, LINESTRING, MULTILINESTRING, POLYGON` or `MULTIPOLYGON` WKT string into a [Terraformer.Primitive](/core/#terraformerprimitive).
+`Terraformer.WKT.parse(string)` - Used to convert a `POINT, MULTIPOINT, LINESTRING, MULTILINESTRING, POLYGON` or `MULTIPOLYGON` WKT string into a [Terraformer.Primitive](./core.md#terraformerprimitive).
 
 ```js
 var geojson = Terraformer.WKT.parse("LINESTRING (30 10, 10 30, 40 40)");

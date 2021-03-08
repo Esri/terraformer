@@ -50,10 +50,10 @@ this.magicdb.put(geojson.id, JSON.stringify(geojson));
 
 If a `FeatureCollection` is passed in instead, each `Feature` inside of the `FeatureCollection` needs to be added before the `callback` is called.
 
-| Option                           | Value      | Description                                                           |
-| -------------------------------- | ---------- | --------------------------------------------------------------------- |
-| [`GeoJSON`](./glossary/#geojson) | `object`   | Must be either a `Feature` or `FeatureCollection` and contain an `id` |
-| callback                         | `function` | Callback to be fired when the `add` has been completed                |
+| Option                               | Value      | Description                                                           |
+| ------------------------------------ | ---------- | --------------------------------------------------------------------- |
+| [`GeoJSON`](../glossary.md/#geojson) | `object`   | Must be either a `Feature` or `FeatureCollection` and contain an `id` |
+| callback                             | `function` | Callback to be fired when the `add` has been completed                |
 
 _Example:_
 
@@ -67,10 +67,10 @@ ds.add(geojson, function (err, res) {
 
 Update a `geojson` object already in a DataStore. Only a `Feature` should be able to be updated, the `id` should be used as the primary key for update:
 
-| Option                           | Value      | Description                                               |
-| -------------------------------- | ---------- | --------------------------------------------------------- |
-| [`GeoJSON`](./glossary/#geojson) | `object`   | Must be a `Feature` and contain an `id`                   |
-| callback                         | `function` | Callback to be fired when the `update` has been completed |
+| Option                               | Value      | Description                                               |
+| ------------------------------------ | ---------- | --------------------------------------------------------- |
+| [`GeoJSON`](../glossary.md/#geojson) | `object`   | Must be a `Feature` and contain an `id`                   |
+| callback                             | `function` | Callback to be fired when the `update` has been completed |
 
 _Example:_
 
