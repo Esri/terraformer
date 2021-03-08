@@ -1,3 +1,7 @@
+# IMPORTANT!
+
+Terraformer is now depreacted and this repo is marked as read-only. Development activity has moved to https://github.com/terraformer-js/terraformer.
+
 # Terraformer
 
 [![Build Status](https://travis-ci.org/Esri/terraformer.svg?branch=master)](https://travis-ci.org/Esri/terraformer)
@@ -8,10 +12,10 @@
 
 The Terraformer project is broken up into a series of smaller modules.
 
-- [Terraformer Core](docs/core.md) - Contains methods and objects for working with GeoJSON. This also contains common methods used by other modules.
-- [WKT Parser](docs/wkt-parser.md) - Parse Well Known Text into GeoJSON and vice versa.
-- [ArcGIS Geometry Parser](docs/arcgis-parser.md) - Parse the [ArcGIS Geometry Format](http://resources.arcgis.com/en/help/arcgis-rest-api/#/Geometry_Objects/02r3000000n1000000/) into GeoJSON and vice versa.
-- [GeoStore](docs/glossary.md) - A framework for persisting and querying GeoJSON features with pluggable indexes and persistent stores.
+- [Terraformer Core](./docs/core.md) - Contains methods and objects for working with GeoJSON. This also contains common methods used by other modules.
+- [WKT Parser](./docs/wkt-parser.md) - Parse Well Known Text into GeoJSON and vice versa.
+- [ArcGIS Geometry Parser](./docs/arcgis-parser.md) - Parse the [ArcGIS Geometry Format](http://resources.arcgis.com/en/help/arcgis-rest-api/#/Geometry_Objects/02r3000000n1000000/) into GeoJSON and vice versa.
+- [GeoStore](./docs/glossary.md) - A framework for persisting and querying GeoJSON features with pluggable indexes and persistent stores.
 
 ## Features
 
