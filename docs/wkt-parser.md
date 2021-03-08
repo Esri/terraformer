@@ -1,8 +1,3 @@
----
-title: WKT Parser
-layout: documentation
----
-
 # WKT Parser
 
 <!-- table_of_contents -->
@@ -15,15 +10,27 @@ The WKT parser can be used client-side in a browser and server-side via Node.js.
 
 ```js
 // parse a WKT string, converting it into a Terraformer.Primitive
-var geojson = Terraformer.WKT.parse('LINESTRING (30 10, 10 30, 40 40)');
+var geojson = Terraformer.WKT.parse("LINESTRING (30 10, 10 30, 40 40)");
 
 // take a primitive and convert it into a WKT representation
 var polygon = Terraformer.WKT.convert({
-  "type": "Polygon",
-  "coordinates": [
-    [ [100.0, 0.0], [101.0, 0.0], [101.0, 1.0], [100.0, 1.0], [100.0, 0.0] ],
-    [ [100.2, 0.2], [100.8, 0.2], [100.8, 0.8], [100.2, 0.8], [100.2, 0.2] ]
-  ]
+  type: "Polygon",
+  coordinates: [
+    [
+      [100.0, 0.0],
+      [101.0, 0.0],
+      [101.0, 1.0],
+      [100.0, 1.0],
+      [100.0, 0.0],
+    ],
+    [
+      [100.2, 0.2],
+      [100.8, 0.2],
+      [100.8, 0.8],
+      [100.2, 0.8],
+      [100.2, 0.2],
+    ],
+  ],
 });
 ```
 
@@ -50,7 +57,7 @@ $ bower install terraformer-wkt-parser
 Just install the package from NPM with `$ npm install terraformer-wkt-parser`. Then include it in your application.
 
 ```js
-var WKT = require('terraformer-wkt-parser');
+var WKT = require("terraformer-wkt-parser");
 
 // Start using the parse and convert methods!
 ```
@@ -59,10 +66,10 @@ var WKT = require('terraformer-wkt-parser');
 
 #### WKT.parse(string)
 
-`Terraformer.WKT.parse(string)` - Used to convert a `POINT, MULTIPOINT, LINESTRING, MULTILINESTRING, POLYGON` or `MULTIPOLYGON` WKT string into a [Terraformer.Primitive](/core/#terraformerprimitive).
+`Terraformer.WKT.parse(string)` - Used to convert a `POINT, MULTIPOINT, LINESTRING, MULTILINESTRING, POLYGON` or `MULTIPOLYGON` WKT string into a [Terraformer.Primitive](./core.md#terraformerprimitive).
 
 ```js
-var geojson = Terraformer.WKT.parse('LINESTRING (30 10, 10 30, 40 40)');
+var geojson = Terraformer.WKT.parse("LINESTRING (30 10, 10 30, 40 40)");
 ```
 
 #### WKT.convert(geojson)
@@ -73,10 +80,22 @@ var geojson = Terraformer.WKT.parse('LINESTRING (30 10, 10 30, 40 40)');
 
 ```js
 var polygon = Terraformer.WKT.convert({
-  "type": "Polygon",
-  "coordinates": [
-    [ [100.0, 0.0], [101.0, 0.0], [101.0, 1.0], [100.0, 1.0], [100.0, 0.0] ],
-    [ [100.2, 0.2], [100.8, 0.2], [100.8, 0.8], [100.2, 0.8], [100.2, 0.2] ]
-  ]
+  type: "Polygon",
+  coordinates: [
+    [
+      [100.0, 0.0],
+      [101.0, 0.0],
+      [101.0, 1.0],
+      [100.0, 1.0],
+      [100.0, 0.0],
+    ],
+    [
+      [100.2, 0.2],
+      [100.8, 0.2],
+      [100.8, 0.8],
+      [100.2, 0.8],
+      [100.2, 0.2],
+    ],
+  ],
 });
 ```
